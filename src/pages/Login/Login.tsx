@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Button, Container, Paper, TextField, Typography } from "@mui/material";
@@ -13,7 +13,7 @@ const Login = () => {
   const navigate = useNavigate();
   const { handleLogin, isLoading, error, setError } = useLogin();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError(null);
 
