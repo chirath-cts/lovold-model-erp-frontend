@@ -1,27 +1,27 @@
 {
-  "productCategories": [
+  "categories": [
     {
-      "id": "3f1c7a92-4d4b-4f18-9a3d-2e7c8a1f5b21",
+      "id": "1",
       "name": "Fish Cages",
       "description": "Floating and submersible cages used for fish farming operations."
     },
     {
-      "id": "9b2d6e3f-8c21-4a61-90a1-7e2b1f4c3a11",
+      "id": "2",
       "name": "Fishing Nets",
       "description": "Durable nets used for aquaculture cages, harvesting, and fish handling."
     },
     {
-      "id": "6a4f9c8b-1e7d-4f5a-b2c1-5e7a3b8d9c33",
+      "id": "3",
       "name": "Bolts & Fasteners",
       "description": "Stainless steel bolts, nuts, and fasteners used for assembling aquaculture equipment."
     },
     {
-      "id": "c5e2a9d7-0b4c-4a8e-bf4d-1d3e7a9c6f55",
+      "id": "4",
       "name": "Mooring Equipment",
       "description": "Anchors, ropes, and mooring systems used to secure fish cages in water."
     },
     {
-      "id": "8d1f3b7a-5e2c-4a90-9f7b-2c6a8e4d1b99",
+      "id": "5",
       "name": "Feeding Equipment",
       "description": "Automatic feeders, feeding pipes, and accessories used for fish feeding systems."
     }

@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": "c7d1a7a4-2d79-4f47-9c64-0c1b5a1f8b21",
+      "id": "1",
       "username": "ola.admin",
       "password": "password123",
       "firstName": "Ola",
@@ -12,7 +12,7 @@
       "createdAt": "2025-11-10T08:30:12Z"
     },
     {
-      "id": "f3b6c0b7-0b3c-4d4a-9a7e-1c5a8a1e3f02",
+      "id": "2",
       "username": "kari.manager",
       "password": "password123",
       "firstName": "Kari",
@@ -23,7 +23,7 @@
       "createdAt": "2025-11-12T09:22:45Z"
     },
     {
-      "id": "a8e1f7c2-8d2c-4b57-bfd5-0b7e1c9f5e31",
+      "id": "3",
       "username": "lars.sales",
       "password": "password123",
       "firstName": "Lars",
@@ -34,7 +34,7 @@
       "createdAt": "2025-11-15T13:10:08Z"
     },
     {
-      "id": "b6d2f3a4-1c6b-4c82-b1f3-9a3d7c8e2b55",
+      "id": "4",
       "username": "ingrid.warehouse",
       "password": "password123",
       "firstName": "Ingrid",
@@ -45,7 +45,7 @@
       "createdAt": "2025-11-18T10:41:19Z"
     },
     {
-      "id": "d9c5a2e8-6f7b-4a91-9e4c-2a8f1c3d7b90",
+      "id": "5",
       "username": "erik.support",
       "password": "password123",
       "firstName": "Erik",
