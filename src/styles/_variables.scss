@@ -1,0 +1,22 @@
+$primary-color: #00526C;
+$second-color: #005671;
+
+$default-font-size: 12px;
+
+$font-color1: #ffffff;
+$font-color2: #000000;
+$font-family: 'Roboto', sans-serif;
+
+$white: #ffffff;
+$black: #000000;
+
+$envLabel: #d21919; 
+
+:root{
+    --primary-color: #{$primary-color};
+    --second-color: #{$second-color};
+    --default-font-size: #{$default-font-size};
+    --font-color1: #{$font-color1};
+    --font-color2: #{$font-color2};
+    --font-family: #{$font-family}; 
+}
