@@ -34,9 +34,11 @@
     "globals": "^16.5.0",
     "json-server": "^1.0.0-beta.13",
     "postcss": "^8.5.8",
+    "sass-embedded": "^1.98.0",
     "tailwindcss": "^4.2.1",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.48.0",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "vite-tsconfig-paths": "^6.1.1"
   }
 }

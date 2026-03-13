@@ -1,0 +1,10 @@
+@use './variables' as vars;
+
+body {
+    font-family: vars.$font-family;
+    margin: 0;
+    padding: 0;
+    /* Optional: improve font rendering */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
