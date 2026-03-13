@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "outline": "#70787d",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#c0c8cd",
+                        "on-primary-container": "#88c4e2",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#90cfee",
+                        "surface-container-high": "#ddeaf3",
+                        "surface-bright": "#f4faff",
+                        "secondary-fixed": "#bfe8ff",
+                        "inverse-on-surface": "#e5f3fb",
+                        "tertiary": "#183947",
+                        "tertiary-container": "#31505e",
+                        "surface-tint": "#236580",
+                        "primary-container": "#00526c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#d7e5ed",
+                        "background": "#f4faff",
+                        "primary-fixed": "#bfe8ff",
+                        "secondary": "#1f6581",
+                        "on-primary-fixed": "#001f2b",
+                        "on-secondary-fixed": "#001f2b",
+                        "on-tertiary-fixed": "#001f2a",
+                        "on-surface-variant": "#40484c",
+                        "on-secondary-container": "#1a627e",
+                        "inverse-surface": "#263239",
+                        "surface-container": "#e2f0f8",
+                        "surface": "#f4faff",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#c7e7f9",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#004d65",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#a1c1d2",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#93cfed",
+                        "on-background": "#111d23",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#abcbdc",
+                        "surface-container-highest": "#d7e5ed",
+                        "inverse-primary": "#93cfed",
+                        "on-tertiary-fixed-variant": "#2b4b59",
+                        "primary": "#003a4d",
+                        "on-surface": "#111d23",
+                        "surface-dim": "#cedce4",
+                        "secondary-container": "#9eddfd",
+                        "on-primary-fixed-variant": "#004d65",
+                        "surface-container-low": "#e8f6fe"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.5rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-headline { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .bg-primary-gradient {
+            background: linear-gradient(135deg, #003a4d 0%, #00526c 100%);
+        }
+        .glass-panel {
+            background: rgba(215, 229, 237, 0.7);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex">
+<!-- SideNavBar -->
+<aside class="w-64 bg-surface-container-low min-h-screen flex flex-col sticky top-0">
+<div class="p-6 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary-gradient flex items-center justify-center text-on-primary shadow-lg">
+<span class="material-symbols-outlined" data-icon="water_drop">water_drop</span>
+</div>
+<div>
+<h1 class="font-headline font-bold text-lg leading-tight text-primary">AquaERP</h1>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-semibold">Enterprise Portal</p>
+</div>
+</div>
+<nav class="flex-1 px-4 py-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-sm font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="category">category</span>
+<span class="text-sm font-medium">Categories</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="sell">sell</span>
+<span class="text-sm font-medium">Discounts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded bg-surface-container-highest text-primary font-semibold" href="#">
+<span class="material-symbols-outlined" data-icon="group" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="text-sm font-medium">Customers</span>
+</a>
+</nav>
+<div class="p-4 border-t border-outline-variant/10 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span class="text-sm font-medium">Support</span>
+</a>
+</div>
+</aside>
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar -->
+<header class="h-16 px-8 flex items-center justify-between bg-surface-bright sticky top-0 z-10">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant text-xl">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary" placeholder="Search customer records..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="relative p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant opacity-30"></div>
+<div class="flex items-center gap-3">
+<span class="text-right">
+<p class="text-sm font-bold text-on-surface">Erik Larsson</p>
+<p class="text-[10px] text-on-surface-variant">Regional Director</p>
+</span>
+<img alt="User Avatar" class="w-10 h-10 rounded-full border-2 border-surface-container-high" data-alt="Portrait of a professional man in a dark shirt" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUJI0GwPYqQGMYT9Yjuq-W9qpgdRpNENqSxqCUv78O2XrG9zHO4fQFbu2LBP7pJ6Ztv1ttn7ijH7NKvNB7ou7d_k4hvbYn1SsQR5GT7RwRcvefLiykJTua-XjAqbLu7cN0gAgR36YKc6PjXvSljCi50wxl4RkXggCH-4v9zOXxV50Bz2MjcD4mtpfhwkW31fHpx5959ldawc5DS7J6Vut_YQpiXLNMEpU4Z063HfWKt7VJtFsI_PRzNb_VIBHZYY2B7triYwyM8pQ"/>
+</div>
+</div>
+</header>
+<div class="p-8 space-y-8 max-w-7xl mx-auto w-full">
+<!-- Breadcrumbs & Actions -->
+<div class="flex items-end justify-between">
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-sm text-on-surface-variant">
+<span>Customers</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-primary font-medium">Nordic Fjord Harvest AS</span>
+</div>
+<h2 class="font-headline text-4xl font-extrabold text-primary tracking-tight">Customer Profile</h2>
+</div>
+<div class="flex gap-3">
+<button class="px-5 py-2.5 rounded bg-surface-container-high text-on-secondary-fixed-variant font-semibold text-sm hover:bg-surface-variant transition-all">Edit Record</button>
+<button class="px-5 py-2.5 rounded bg-primary-gradient text-on-primary font-semibold text-sm shadow-md hover:shadow-xl transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                        New Order
+                    </button>
+</div>
+</div>
+<!-- Profile Summary Card (Bento Style Layout) -->
+<div class="grid grid-cols-12 gap-6">
+<div class="col-span-12 lg:col-span-8 bg-surface-container-lowest rounded-xl p-8 shadow-sm relative overflow-hidden flex flex-col justify-between min-h-[280px]">
+<div class="flex flex-col md:flex-row gap-8 relative z-10">
+<div class="w-32 h-32 rounded-xl bg-surface-container-low flex items-center justify-center border border-outline-variant/20 flex-shrink-0">
+<span class="material-symbols-outlined text-6xl text-primary/20">corporate_fare</span>
+</div>
+<div class="space-y-4 flex-1">
+<div class="flex items-center gap-3">
+<h3 class="font-headline text-2xl font-bold text-primary">Nordic Fjord Harvest AS</h3>
+<span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase tracking-wider">Active Account</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-1">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Primary Contact</p>
+<p class="text-sm font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">person</span>
+                                        Svein Amundsen
+                                    </p>
+<p class="text-sm text-on-surface-variant ml-7">Chief Operations Officer</p>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Registered Address</p>
+<p class="text-sm font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">location_on</span>
+                                        Strandveien 42
+                                    </p>
+<p class="text-sm text-on-surface-variant ml-7">9008 Tromsø, Norway</p>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-outline-variant/10 flex gap-10">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-surface-container rounded">
+<span class="material-symbols-outlined text-primary">mail</span>
+</div>
+<div>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase">Email</p>
+<p class="text-sm font-medium">svein@nordicfjord.no</p>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<div class="p-2 bg-surface-container rounded">
+<span class="material-symbols-outlined text-primary">call</span>
+</div>
+<div>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase">Phone</p>
+<p class="text-sm font-medium">+47 400 22 111</p>
+</div>
+</div>
+</div>
+<!-- Decorative Background Element -->
+<div class="absolute -right-16 -top-16 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+</div>
+<!-- Secondary Detail Cards -->
+<div class="col-span-12 lg:col-span-4 grid grid-cols-2 gap-4">
+<div class="col-span-1 bg-surface-container-low rounded-xl p-5 flex flex-col justify-between">
+<span class="material-symbols-outlined text-primary/60" data-icon="shopping_basket">shopping_basket</span>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1">Total Orders</p>
+<p class="font-headline text-3xl font-extrabold text-primary">142</p>
+</div>
+</div>
+<div class="col-span-1 bg-surface-container-low rounded-xl p-5 flex flex-col justify-between">
+<span class="material-symbols-outlined text-primary/60" data-icon="payments">payments</span>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1">Total Sales</p>
+<p class="font-headline text-2xl font-extrabold text-primary">$842k</p>
+</div>
+</div>
+<div class="col-span-1 bg-surface-container-low rounded-xl p-5 flex flex-col justify-between">
+<span class="material-symbols-outlined text-primary/60" data-icon="loyalty">loyalty</span>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1">Discounts Given</p>
+<p class="font-headline text-2xl font-extrabold text-primary">12.5%</p>
+</div>
+</div>
+<div class="col-span-1 bg-surface-container-low rounded-xl p-5 flex flex-col justify-between">
+<span class="material-symbols-outlined text-primary/60" data-icon="event">event</span>
+<div>
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1">Last Order</p>
+<p class="font-headline text-lg font-extrabold text-primary leading-none mt-2">Oct 24, 2023</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Section: Order History -->
+<section class="space-y-6">
+<div class="flex items-center justify-between">
+<h3 class="font-headline text-xl font-bold text-primary flex items-center gap-2">
+                        Order History
+                        <span class="px-2 py-0.5 rounded bg-surface-container-high text-xs font-medium text-on-surface-variant">Last 12 Months</span>
+</h3>
+<div class="flex gap-2">
+<button class="p-2 rounded bg-surface-container hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">filter_list</span>
+</button>
+<button class="p-2 rounded bg-surface-container hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">download</span>
+</button>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="py-4 px-6 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Order Number</th>
+<th class="py-4 px-6 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Date</th>
+<th class="py-4 px-6 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Status</th>
+<th class="py-4 px-6 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest text-right">Total</th>
+<th class="py-4 px-6 text-[10px] font-bold text-on-surface-variant uppercase tracking-widest text-right">Profit</th>
+<th class="py-4 px-6 w-10"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low">
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="py-5 px-6 font-semibold text-primary">#AQ-98231</td>
+<td class="py-5 px-6 text-sm text-on-surface-variant">Oct 24, 2023</td>
+<td class="py-5 px-6">
+<span class="px-3 py-1 rounded-full bg-secondary-container text-on-secondary-container text-[10px] font-bold uppercase">Processing</span>
+</td>
+<td class="py-5 px-6 text-sm font-bold text-right text-primary">$12,450.00</td>
+<td class="py-5 px-6 text-sm font-semibold text-right text-secondary">+$2,140.00</td>
+<td class="py-5 px-6 text-right">
+<button class="material-symbols-outlined text-outline-variant hover:text-primary transition-colors cursor-pointer">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="py-5 px-6 font-semibold text-primary">#AQ-97552</td>
+<td class="py-5 px-6 text-sm text-on-surface-variant">Sep 12, 2023</td>
+<td class="py-5 px-6">
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-[10px] font-bold uppercase">Delivered</span>
+</td>
+<td class="py-5 px-6 text-sm font-bold text-right text-primary">$48,200.00</td>
+<td class="py-5 px-6 text-sm font-semibold text-right text-secondary">+$8,900.00</td>
+<td class="py-5 px-6 text-right">
+<button class="material-symbols-outlined text-outline-variant hover:text-primary transition-colors cursor-pointer">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="py-5 px-6 font-semibold text-primary">#AQ-96881</td>
+<td class="py-5 px-6 text-sm text-on-surface-variant">Aug 05, 2023</td>
+<td class="py-5 px-6">
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-[10px] font-bold uppercase">Delivered</span>
+</td>
+<td class="py-5 px-6 text-sm font-bold text-right text-primary">$9,150.00</td>
+<td class="py-5 px-6 text-sm font-semibold text-right text-secondary">+$1,550.00</td>
+<td class="py-5 px-6 text-right">
+<button class="material-symbols-outlined text-outline-variant hover:text-primary transition-colors cursor-pointer">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="py-5 px-6 font-semibold text-primary">#AQ-95120</td>
+<td class="py-5 px-6 text-sm text-on-surface-variant">Jul 21, 2023</td>
+<td class="py-5 px-6">
+<span class="px-3 py-1 rounded-full bg-error-container text-on-error-container text-[10px] font-bold uppercase">Returned</span>
+</td>
+<td class="py-5 px-6 text-sm font-bold text-right text-primary">$2,400.00</td>
+<td class="py-5 px-6 text-sm font-semibold text-right text-error">-$450.00</td>
+<td class="py-5 px-6 text-right">
+<button class="material-symbols-outlined text-outline-variant hover:text-primary transition-colors cursor-pointer">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="py-5 px-6 font-semibold text-primary">#AQ-94229</td>
+<td class="py-5 px-6 text-sm text-on-surface-variant">Jun 15, 2023</td>
+<td class="py-5 px-6">
+<span class="px-3 py-1 rounded-full bg-surface-variant text-on-surface-variant text-[10px] font-bold uppercase">Delivered</span>
+</td>
+<td class="py-5 px-6 text-sm font-bold text-right text-primary">$104,000.00</td>
+<td class="py-5 px-6 text-sm font-semibold text-right text-secondary">+$22,400.00</td>
+<td class="py-5 px-6 text-right">
+<button class="material-symbols-outlined text-outline-variant hover:text-primary transition-colors cursor-pointer">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="p-6 bg-surface-container-low/20 flex items-center justify-between">
+<p class="text-xs text-on-surface-variant">Showing 5 of 142 orders</p>
+<div class="flex gap-2">
+<button class="px-4 py-2 text-xs font-bold text-primary hover:bg-surface-container transition-colors rounded">Previous</button>
+<button class="px-4 py-2 text-xs font-bold text-on-primary bg-primary-gradient shadow-sm rounded">Next</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Bottom Context Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 pb-10">
+<div class="bg-surface-container-high/40 rounded-xl p-6 border border-outline-variant/10">
+<h4 class="font-headline font-bold text-primary mb-3">Supply Chain Notes</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">Client prefers cold-storage shipments only on Tuesdays. Requires ISO certifications for all nutrient batches.</p>
+</div>
+<div class="bg-surface-container-high/40 rounded-xl p-6 border border-outline-variant/10">
+<h4 class="font-headline font-bold text-primary mb-3">Payment Terms</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">NET 30. Tier 1 pricing activated. Current outstanding balance: <span class="font-bold text-primary">$14,200</span>.</p>
+</div>
+<div class="bg-surface-container-high/40 rounded-xl p-6 border border-outline-variant/10">
+<h4 class="font-headline font-bold text-primary mb-3">Associated Facilities</h4>
+<div class="flex flex-wrap gap-2 mt-2">
+<span class="px-2 py-1 bg-surface-container rounded text-[10px] font-medium">Tromsø Hatchery</span>
+<span class="px-2 py-1 bg-surface-container rounded text-[10px] font-medium">Bergen Lab</span>
+<span class="px-2 py-1 bg-surface-container rounded text-[10px] font-medium">Oslo HQ</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

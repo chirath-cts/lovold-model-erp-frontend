@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AquaERP - Categories</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline": "#70787d",
+              "on-primary": "#ffffff",
+              "outline-variant": "#c0c8cd",
+              "on-primary-container": "#88c4e2",
+              "on-tertiary": "#ffffff",
+              "secondary-fixed-dim": "#90cfee",
+              "surface-container-high": "#ddeaf3",
+              "surface-bright": "#f4faff",
+              "secondary-fixed": "#bfe8ff",
+              "inverse-on-surface": "#e5f3fb",
+              "tertiary": "#183947",
+              "tertiary-container": "#31505e",
+              "surface-tint": "#236580",
+              "primary-container": "#00526c",
+              "surface-container-lowest": "#ffffff",
+              "surface-variant": "#d7e5ed",
+              "background": "#f4faff",
+              "primary-fixed": "#bfe8ff",
+              "secondary": "#1f6581",
+              "on-primary-fixed": "#001f2b",
+              "on-secondary-fixed": "#001f2b",
+              "on-tertiary-fixed": "#001f2a",
+              "on-surface-variant": "#40484c",
+              "on-secondary-container": "#1a627e",
+              "inverse-surface": "#263239",
+              "surface-container": "#e2f0f8",
+              "surface": "#f4faff",
+              "error-container": "#ffdad6",
+              "tertiary-fixed": "#c7e7f9",
+              "on-error": "#ffffff",
+              "on-secondary-fixed-variant": "#004d65",
+              "on-secondary": "#ffffff",
+              "on-tertiary-container": "#a1c1d2",
+              "error": "#ba1a1a",
+              "primary-fixed-dim": "#93cfed",
+              "on-background": "#111d23",
+              "on-error-container": "#93000a",
+              "tertiary-fixed-dim": "#abcbdc",
+              "surface-container-highest": "#d7e5ed",
+              "inverse-primary": "#93cfed",
+              "on-tertiary-fixed-variant": "#2b4b59",
+              "primary": "#003a4d",
+              "on-surface": "#111d23",
+              "surface-dim": "#cedce4",
+              "secondary-container": "#9eddfd",
+              "on-primary-fixed-variant": "#004d65",
+              "surface-container-low": "#e8f6fe"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f4faff;
+        color: #111d23;
+        margin: 0;
+      }
+      .font-headline { font-family: 'Manrope', sans-serif; }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-effect {
+        backdrop-filter: blur(12px);
+        background-color: rgba(215, 229, 237, 0.7);
+      }
+      .primary-gradient {
+        background: linear-gradient(135deg, #003a4d 0%, #00526c 100%);
+      }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar (Shared Component) -->
+<aside class="w-72 bg-surface-container-low flex flex-col sticky top-0 h-screen">
+<div class="p-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+</div>
+<div>
+<h1 class="font-headline font-bold text-lg leading-none text-primary">AquaERP</h1>
+<p class="text-[10px] uppercase tracking-wider text-on-surface-variant font-semibold mt-1">Enterprise Portal</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-medium text-sm">Products</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary text-on-primary shadow-lg shadow-primary/20 transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">category</span>
+<span class="font-medium text-sm">Categories</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">sell</span>
+<span class="font-medium text-sm">Discounts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-medium text-sm">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="font-medium text-sm">Customers</span>
+</a>
+</nav>
+<div class="p-4 border-t border-outline-variant/10 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium text-sm">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-medium text-sm">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar (Shared Component) -->
+<header class="h-20 bg-surface flex items-center justify-between px-10 sticky top-0 z-10">
+<div class="flex items-center gap-6 flex-1">
+<h2 class="font-headline font-bold text-2xl text-primary">Dashboard</h2>
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant">search</span>
+<input class="w-full pl-12 pr-4 py-2.5 bg-surface-container-low border-none rounded-full text-sm focus:ring-2 focus:ring-primary/20 placeholder:text-outline-variant" placeholder="Search categories, metrics or inventory..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-high transition-colors text-on-surface-variant relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2.5 right-2.5 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="Professional user profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwTulAP2qAddvaZ5PAfvjla9jAl_wqVq9vedNYJoxQam0kN69AC6jIlLoTYo-Lm52jDKcrkhatRSLjxXZWQoJ1WI7EZahdGRQfZ8TEOintx6m8vOXaFtZ-5BdfLKEN9VY_IvT7aJ_xeZWRsSJ9sDDt58wO1yszPM3y4ZqzOTS5VNdrbjUalQP8l4LF7J77pWmAIuxWfPac7DzLV9FxcDwyY4trdq_vBy9HyALyjr7nbNuvDSL6BTRgq50fP5SjqL84reDVIFRu390"/>
+</div>
+</div>
+</header>
+<!-- Page Canvas -->
+<div class="p-10 space-y-10 max-w-7xl mx-auto w-full">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<nav class="flex items-center gap-2 text-xs font-semibold text-outline-variant uppercase tracking-widest mb-2">
+<span>Inventory</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary">Categories</span>
+</nav>
+<h1 class="font-headline text-5xl font-extrabold text-primary tracking-tight">Categories</h1>
+<p class="text-on-surface-variant mt-2 max-w-lg">Manage aquaculture stock classifications, monitor biodiversity metrics, and organize your operational resource pools.</p>
+</div>
+<button class="primary-gradient text-on-primary px-6 py-3.5 rounded-lg font-bold flex items-center gap-2 shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined">add_circle</span>
+                    Add Category
+                </button>
+</div>
+<!-- Bento Stats Overview (Visual Polish) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="md:col-span-2 p-6 rounded-xl bg-surface-container-low flex flex-col justify-between">
+<span class="label-sm font-semibold text-primary uppercase tracking-wider">Total Classifications</span>
+<div class="mt-8 flex items-end gap-4">
+<span class="font-headline text-6xl font-bold tracking-tighter text-primary">24</span>
+<div class="mb-2 flex items-center text-secondary font-bold text-sm">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+                            +12% this quarter
+                        </div>
+</div>
+</div>
+<div class="p-6 rounded-xl bg-primary text-on-primary flex flex-col justify-between">
+<span class="label-sm font-semibold opacity-70 uppercase tracking-wider">Active Stocks</span>
+<div class="mt-4">
+<span class="font-headline text-4xl font-bold">1.2k</span>
+<p class="text-xs opacity-60 mt-1">Live specimens tracked</p>
+</div>
+</div>
+<div class="p-6 rounded-xl bg-secondary-container text-on-secondary-container flex flex-col justify-between">
+<span class="label-sm font-semibold opacity-70 uppercase tracking-wider">System Health</span>
+<div class="mt-4">
+<span class="font-headline text-4xl font-bold">98.4%</span>
+<p class="text-xs opacity-60 mt-1">Metadata completeness</p>
+</div>
+</div>
+</div>
+<!-- Main Data Table Container -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="p-6 border-b border-surface-container-low flex items-center justify-between">
+<h3 class="font-headline font-bold text-lg text-primary">Category Management</h3>
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 text-sm font-semibold text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+                            Filter
+                        </button>
+<button class="px-4 py-2 text-sm font-semibold text-on-surface-variant hover:bg-surface-container-low rounded-lg transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">download</span>
+                            Export
+                        </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Category Name</th>
+<th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Description</th>
+<th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Product Count</th>
+<th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Status</th>
+<th class="px-8 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-transparent">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-highest transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">set_meal</span>
+</div>
+<span class="font-semibold text-primary">Salmonidae Finfish</span>
+</div>
+</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant max-w-xs truncate">Atlantic, Chinook, and Coho salmon species across all hatcheries.</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold text-primary">412</span>
+<div class="h-1.5 w-16 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-3/4 rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-secondary-container text-on-secondary-container uppercase tracking-tight">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                        Active
+                                    </span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="p-2 rounded-full hover:bg-surface-variant text-outline transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-highest transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">waves</span>
+</div>
+<span class="font-semibold text-primary">Crustaceans</span>
+</div>
+</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant max-w-xs truncate">Pacific White Shrimp and Blue Swimmer Crab intensive stocks.</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold text-primary">89</span>
+<div class="h-1.5 w-16 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-1/4 rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-secondary-container text-on-secondary-container uppercase tracking-tight">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                        Active
+                                    </span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="p-2 rounded-full hover:bg-surface-variant text-outline transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-highest transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">science</span>
+</div>
+<span class="font-semibold text-primary">Experimental Feed</span>
+</div>
+</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant max-w-xs truncate">High-protein micro-pellet trials for nursery stage development.</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold text-primary">12</span>
+<div class="h-1.5 w-16 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-1/12 rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-surface-container-high text-on-surface-variant uppercase tracking-tight">
+<span class="w-1.5 h-1.5 rounded-full bg-outline-variant"></span>
+                                        Pending
+                                    </span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="p-2 rounded-full hover:bg-surface-variant text-outline transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-highest transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">water_heater</span>
+</div>
+<span class="font-semibold text-primary">Filtration Spares</span>
+</div>
+</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant max-w-xs truncate">Mechanical and bio-filters for RAS (Recirculating Aquaculture Systems).</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold text-primary">254</span>
+<div class="h-1.5 w-16 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-1/2 rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-secondary-container text-on-secondary-container uppercase tracking-tight">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                        Active
+                                    </span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="p-2 rounded-full hover:bg-surface-variant text-outline transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-highest transition-colors group">
+<td class="px-8 py-5">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined">sanitizer</span>
+</div>
+<span class="font-semibold text-primary">Bio-security Agents</span>
+</div>
+</td>
+<td class="px-8 py-5 text-sm text-on-surface-variant max-w-xs truncate">Disinfectants and prophylactic treatments for pond maintenance.</td>
+<td class="px-8 py-5">
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold text-primary">34</span>
+<div class="h-1.5 w-16 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-secondary w-1/5 rounded-full"></div>
+</div>
+</div>
+</td>
+<td class="px-8 py-5">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-bold bg-secondary-container text-on-secondary-container uppercase tracking-tight">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                                        Active
+                                    </span>
+</td>
+<td class="px-8 py-5 text-right">
+<button class="p-2 rounded-full hover:bg-surface-variant text-outline transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination / Footer -->
+<div class="px-8 py-6 bg-surface-container-low/30 border-t border-surface-container-low flex items-center justify-between">
+<span class="text-xs font-medium text-on-surface-variant">Showing 5 of 24 categories</span>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-on-primary text-xs font-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors text-xs font-bold">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors text-xs font-bold">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg border border-outline-variant/30 text-on-surface-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Operational Insights (Secondary Content Area) -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<div class="lg:col-span-2 p-8 rounded-xl bg-surface-container-low relative overflow-hidden group">
+<div class="relative z-10">
+<h4 class="font-headline font-bold text-xl text-primary mb-2">Inventory Distribution</h4>
+<p class="text-on-surface-variant text-sm mb-6 max-w-sm">A visual breakdown of current livestock versus operational equipment by category weight.</p>
+<div class="h-32 flex items-end gap-3 mt-4">
+<div class="w-full bg-primary/20 rounded-t-lg group-hover:bg-primary/40 transition-colors" style="height: 60%"></div>
+<div class="w-full bg-primary/20 rounded-t-lg group-hover:bg-primary/40 transition-colors" style="height: 90%"></div>
+<div class="w-full bg-primary/20 rounded-t-lg group-hover:bg-primary/40 transition-colors" style="height: 40%"></div>
+<div class="w-full bg-primary/20 rounded-t-lg group-hover:bg-primary/40 transition-colors" style="height: 75%"></div>
+<div class="w-full bg-primary/20 rounded-t-lg group-hover:bg-primary/40 transition-colors" style="height: 55%"></div>
+</div>
+</div>
+<div class="absolute -right-16 -bottom-16 w-64 h-64 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-colors"></div>
+</div>
+<div class="p-8 rounded-xl bg-tertiary text-on-tertiary flex flex-col justify-between overflow-hidden relative">
+<div class="relative z-10">
+<span class="material-symbols-outlined text-4xl opacity-50 mb-4" style="font-variation-settings: 'FILL' 1;">inventory</span>
+<h4 class="font-headline font-bold text-lg leading-tight mb-2">Category Health Checklist</h4>
+<ul class="space-y-3 mt-4">
+<li class="flex items-center gap-3 text-sm opacity-90">
+<span class="material-symbols-outlined text-[18px] text-on-primary-container">check_circle</span>
+                                SKU Mapping Complete
+                            </li>
+<li class="flex items-center gap-3 text-sm opacity-90">
+<span class="material-symbols-outlined text-[18px] text-on-primary-container">check_circle</span>
+                                Tax Codes Assigned
+                            </li>
+<li class="flex items-center gap-3 text-sm opacity-40">
+<span class="material-symbols-outlined text-[18px]">radio_button_unchecked</span>
+                                Vendor Linking (3 Left)
+                            </li>
+</ul>
+</div>
+<!-- Abstract Background Pattern -->
+<div class="absolute inset-0 opacity-10" data-alt="Subtle geometric dots pattern" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 24px 24px;"></div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

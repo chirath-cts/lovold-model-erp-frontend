@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AquaERP - Customers Directory</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "outline": "#70787d",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#c0c8cd",
+                        "on-primary-container": "#88c4e2",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#90cfee",
+                        "surface-container-high": "#ddeaf3",
+                        "surface-bright": "#f4faff",
+                        "secondary-fixed": "#bfe8ff",
+                        "inverse-on-surface": "#e5f3fb",
+                        "tertiary": "#183947",
+                        "tertiary-container": "#31505e",
+                        "surface-tint": "#236580",
+                        "primary-container": "#00526c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#d7e5ed",
+                        "background": "#f4faff",
+                        "primary-fixed": "#bfe8ff",
+                        "secondary": "#1f6581",
+                        "on-primary-fixed": "#001f2b",
+                        "on-secondary-fixed": "#001f2b",
+                        "on-tertiary-fixed": "#001f2a",
+                        "on-surface-variant": "#40484c",
+                        "on-secondary-container": "#1a627e",
+                        "inverse-surface": "#263239",
+                        "surface-container": "#e2f0f8",
+                        "surface": "#f4faff",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#c7e7f9",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#004d65",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#a1c1d2",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#93cfed",
+                        "on-background": "#111d23",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#abcbdc",
+                        "surface-container-highest": "#d7e5ed",
+                        "inverse-primary": "#93cfed",
+                        "on-tertiary-fixed-variant": "#2b4b59",
+                        "primary": "#003a4d",
+                        "on-surface": "#111d23",
+                        "surface-dim": "#cedce4",
+                        "secondary-container": "#9eddfd",
+                        "on-primary-fixed-variant": "#004d65",
+                        "surface-container-low": "#e8f6fe"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f4faff; color: #111d23; margin: 0; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c0c8cd; border-radius: 10px; }
+        .primary-gradient { background: linear-gradient(135deg, #003a4d 0%, #00526c 100%); }
+    </style>
+</head>
+<body class="flex min-h-screen">
+<!-- SideNavBar (Shared Component) -->
+<aside class="w-72 bg-surface-container-low flex flex-col h-screen sticky top-0">
+<div class="px-8 py-10 flex items-center gap-4">
+<div class="w-10 h-10 primary-gradient rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">tsunami</span>
+</div>
+<div>
+<h1 class="font-headline font-bold text-xl text-primary leading-tight">AquaERP</h1>
+<p class="text-xs text-on-surface-variant tracking-wider font-medium">Enterprise Portal</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">category</span>
+<span class="font-medium">Categories</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">sell</span>
+<span class="font-medium">Discounts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span class="font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-surface-container-highest text-primary rounded-lg transition-colors duration-200 border-l-4 border-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="font-semibold">Customers</span>
+</a>
+</nav>
+<div class="p-4 border-t border-outline-variant/10 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium text-sm">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors duration-200" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="font-medium text-sm">Support</span>
+</a>
+</div>
+</aside>
+<div class="flex-1 flex flex-col">
+<!-- TopNavBar (Shared Component) -->
+<header class="h-20 bg-surface flex items-center justify-between px-10 sticky top-0 z-10">
+<div class="flex items-center gap-8 w-1/2">
+<h2 class="font-headline font-bold text-2xl text-primary">Dashboard</h2>
+<div class="relative flex-1 max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg py-2.5 pl-11 pr-4 focus:ring-2 focus:ring-primary text-sm placeholder:text-on-surface-variant/60" placeholder="Search customers, regions, or orders..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="relative p-2 text-on-surface-variant hover:bg-surface-container rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full ring-2 ring-surface"></span>
+</button>
+<div class="flex items-center gap-3 pl-6 border-l border-outline-variant/20">
+<div class="text-right">
+<p class="text-sm font-semibold text-primary">Admin User</p>
+<p class="text-xs text-on-surface-variant">Global Controller</p>
+</div>
+<img alt="User Avatar" class="w-10 h-10 rounded-full object-cover ring-2 ring-primary/10" data-alt="Corporate headshot of a male executive" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCOzDqNISgJLmZ1kBBdUeqMDvae7x6YYCd7sArt86zb5irLaHELE_VlKd7vuhMwuJ7F_14_qwgZoCVzivCCrfQb5w8gSdtggGNQ4iasqEucKf9mnvXL_T7kaape8LHxkDN1uxdtkVEMFF9NiVqnQN7HZOajkTu_Iq8er9Eqh3zzcjlHyPSsXUSozK4or-T2WLg3FSvivJzUJhgfPozIkNT_a5TelOpvWuBihtZ33JkC6MKgCwwA3lYktuigVnoeAhoaBXEXwJYBhgo"/>
+</div>
+</div>
+</header>
+<!-- Main Content (Creative Canvas) -->
+<main class="p-10 space-y-8 overflow-y-auto">
+<!-- Header Section with Stats -->
+<div class="flex justify-between items-end">
+<div class="space-y-1">
+<p class="text-on-surface-variant text-sm font-medium tracking-wide uppercase">Partnership Directory</p>
+<h3 class="font-headline text-4xl font-extrabold text-primary">Customer Network</h3>
+</div>
+<div class="flex gap-4">
+<button class="flex items-center gap-2 px-5 py-2.5 bg-surface-container-high text-on-secondary-fixed-variant font-semibold rounded-lg hover:bg-surface-container-highest transition-all duration-300">
+<span class="material-symbols-outlined text-[20px]">file_download</span>
+                        Export Data
+                    </button>
+<button class="primary-gradient flex items-center gap-2 px-6 py-2.5 text-white font-semibold rounded-lg shadow-lg shadow-primary/20 hover:scale-[1.02] transition-all duration-300">
+<span class="material-symbols-outlined text-[20px]">person_add</span>
+                        Add Customer
+                    </button>
+</div>
+</div>
+<!-- Bento Filter Bar -->
+<div class="grid grid-cols-12 gap-6 bg-surface-container-low p-6 rounded-xl">
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-2">
+<label class="text-xs font-bold text-on-surface-variant/70 uppercase px-1">Search Database</label>
+<div class="relative">
+<input class="w-full bg-surface-container-lowest border-none rounded-lg py-3 px-4 focus:ring-2 focus:ring-primary text-sm shadow-sm" placeholder="By company, person, or email..." type="text"/>
+</div>
+</div>
+<div class="col-span-12 md:col-span-6 lg:col-span-3 flex flex-col gap-2">
+<label class="text-xs font-bold text-on-surface-variant/70 uppercase px-1">Lifecycle Status</label>
+<select class="w-full bg-surface-container-lowest border-none rounded-lg py-3 px-4 focus:ring-2 focus:ring-primary text-sm shadow-sm">
+<option>All Statuses</option>
+<option>Active Enterprise</option>
+<option>Pending Validation</option>
+<option>Inactive/Archived</option>
+<option>Premium Partner</option>
+</select>
+</div>
+<div class="col-span-12 md:col-span-6 lg:col-span-3 flex flex-col gap-2">
+<label class="text-xs font-bold text-on-surface-variant/70 uppercase px-1">Region</label>
+<select class="w-full bg-surface-container-lowest border-none rounded-lg py-3 px-4 focus:ring-2 focus:ring-primary text-sm shadow-sm">
+<option>Global Markets</option>
+<option>North Sea Aquaculture</option>
+<option>Pacific Rim Fisheries</option>
+<option>Mediterranean Coastal</option>
+</select>
+</div>
+<div class="col-span-12 lg:col-span-2 flex items-end">
+<button class="w-full bg-surface-variant text-primary font-bold py-3 rounded-lg hover:bg-surface-container-highest transition-colors">
+                        Apply Filters
+                    </button>
+</div>
+</div>
+<!-- Modern Editorial Table -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-6 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest border-none">Customer Code</th>
+<th class="px-6 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest border-none">Company Name</th>
+<th class="px-6 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest border-none">Key Contact</th>
+<th class="px-6 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest border-none text-center">Country</th>
+<th class="px-6 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest border-none text-right">Orders</th>
+<th class="px-6 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest border-none text-right">Revenue</th>
+<th class="px-6 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest border-none">Last Order</th>
+<th class="px-6 py-5 text-xs font-bold text-on-surface-variant uppercase tracking-widest border-none">Status</th>
+<th class="px-6 py-5 border-none"></th>
+</tr>
+</thead>
+<tbody class="divide-y-0">
+<!-- Row 1 -->
+<tr class="group hover:bg-surface-container-highest transition-all duration-150 cursor-pointer border-none">
+<td class="px-6 py-5 font-mono text-sm font-semibold text-primary">#AQ-2024-001</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container/10 flex items-center justify-center text-primary font-bold text-xs">NF</div>
+<span class="font-bold text-primary">Nordic Fisheries AS</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-on-surface">Erik Larsson</span>
+<span class="text-xs text-on-surface-variant">e.larsson@nordicfish.no</span>
+</div>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="text-sm">Norway</span>
+</td>
+<td class="px-6 py-5 text-right font-medium text-primary">142</td>
+<td class="px-6 py-5 text-right font-bold text-primary">$1.2M</td>
+<td class="px-6 py-5 text-sm text-on-surface-variant">2024-05-12</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container text-[11px] font-bold rounded-full uppercase tracking-tighter">Active</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="group hover:bg-surface-container-highest transition-all duration-150 cursor-pointer border-none">
+<td class="px-6 py-5 font-mono text-sm font-semibold text-primary">#AQ-2024-042</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container/10 flex items-center justify-center text-primary font-bold text-xs">BP</div>
+<span class="font-bold text-primary">Blue Pacific Aqua</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-on-surface">Elena Rodriguez</span>
+<span class="text-xs text-on-surface-variant">elena@bluepacific.cl</span>
+</div>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="text-sm">Chile</span>
+</td>
+<td class="px-6 py-5 text-right font-medium text-primary">89</td>
+<td class="px-6 py-5 text-right font-bold text-primary">$845k</td>
+<td class="px-6 py-5 text-sm text-on-surface-variant">2024-05-10</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container text-[11px] font-bold rounded-full uppercase tracking-tighter">Active</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="group hover:bg-surface-container-highest transition-all duration-150 cursor-pointer border-none">
+<td class="px-6 py-5 font-mono text-sm font-semibold text-primary">#AQ-2024-118</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container/10 flex items-center justify-center text-primary font-bold text-xs">OC</div>
+<span class="font-bold text-primary">Oceanic Cultivars</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-on-surface">Sarah Jenkins</span>
+<span class="text-xs text-on-surface-variant">s.jenkins@oceanic.com</span>
+</div>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="text-sm">Canada</span>
+</td>
+<td class="px-6 py-5 text-right font-medium text-primary">12</td>
+<td class="px-6 py-5 text-right font-bold text-primary">$42k</td>
+<td class="px-6 py-5 text-sm text-on-surface-variant">2023-11-28</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-surface-variant text-on-surface-variant text-[11px] font-bold rounded-full uppercase tracking-tighter">On Hold</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="group hover:bg-surface-container-highest transition-all duration-150 cursor-pointer border-none">
+<td class="px-6 py-5 font-mono text-sm font-semibold text-primary">#AQ-2023-942</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container/10 flex items-center justify-center text-primary font-bold text-xs">TA</div>
+<span class="font-bold text-primary">Thai Aqua Farms</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-on-surface">Somsak P.</span>
+<span class="text-xs text-on-surface-variant">somsak@thaiaqua.th</span>
+</div>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="text-sm">Thailand</span>
+</td>
+<td class="px-6 py-5 text-right font-medium text-primary">312</td>
+<td class="px-6 py-5 text-right font-bold text-primary">$2.4M</td>
+<td class="px-6 py-5 text-sm text-on-surface-variant">2024-05-14</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-tertiary-fixed-dim/40 text-on-tertiary-fixed-variant text-[11px] font-bold rounded-full uppercase tracking-tighter">VIP Partner</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="group hover:bg-surface-container-highest transition-all duration-150 cursor-pointer border-none">
+<td class="px-6 py-5 font-mono text-sm font-semibold text-primary">#AQ-2024-205</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-primary-container/10 flex items-center justify-center text-primary font-bold text-xs">SS</div>
+<span class="font-bold text-primary">Silver Stream Systems</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-sm font-semibold text-on-surface">Mark Walton</span>
+<span class="text-xs text-on-surface-variant">mwalton@silverstream.au</span>
+</div>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="text-sm">Australia</span>
+</td>
+<td class="px-6 py-5 text-right font-medium text-primary">0</td>
+<td class="px-6 py-5 text-right font-bold text-primary">$0</td>
+<td class="px-6 py-5 text-sm text-on-surface-variant">—</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-error-container text-on-error-container text-[11px] font-bold rounded-full uppercase tracking-tighter">Incomplete</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="material-symbols-outlined text-outline hover:text-primary transition-colors">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="p-6 bg-surface-container-low/30 border-t border-outline-variant/10 flex items-center justify-between">
+<p class="text-sm text-on-surface-variant">Showing <span class="font-bold text-primary">1 - 5</span> of 248 enterprise accounts</p>
+<div class="flex gap-2">
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant/30 hover:bg-surface-container-high text-on-surface-variant disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-white font-bold">1</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant/30 hover:bg-surface-container-high text-on-surface-variant font-medium">2</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant/30 hover:bg-surface-container-high text-on-surface-variant font-medium">3</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-lg border border-outline-variant/30 hover:bg-surface-container-high text-on-surface-variant">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Contextual Insight Panel -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-primary p-8 rounded-xl text-white relative overflow-hidden">
+<div class="relative z-10">
+<p class="text-on-primary-container text-xs font-bold uppercase tracking-widest mb-4">Network Growth</p>
+<h4 class="font-headline text-3xl font-extrabold">+24 New Partners</h4>
+<p class="text-sm text-on-primary-container mt-2 opacity-80">Since the start of Q2, expanding primarily in Latin American coastal sectors.</p>
+</div>
+<div class="absolute -right-8 -bottom-8 opacity-10">
+<span class="material-symbols-outlined text-[160px]" style="font-variation-settings: 'FILL' 1;">groups</span>
+</div>
+</div>
+<div class="bg-surface-container-high p-8 rounded-xl relative overflow-hidden border border-primary/5">
+<div class="relative z-10">
+<p class="text-primary/60 text-xs font-bold uppercase tracking-widest mb-4">Revenue Quality</p>
+<h4 class="font-headline text-3xl font-extrabold text-primary">$4.8k Avg. Order</h4>
+<p class="text-sm text-on-surface-variant mt-2">Up 12% following the introduction of the Enterprise Tier discounts.</p>
+</div>
+<div class="absolute -right-8 -bottom-8 opacity-10">
+<span class="material-symbols-outlined text-[160px]" style="font-variation-settings: 'FILL' 1;">monitoring</span>
+</div>
+</div>
+<div class="bg-secondary-container p-8 rounded-xl relative overflow-hidden">
+<div class="relative z-10">
+<p class="text-on-secondary-container/60 text-xs font-bold uppercase tracking-widest mb-4">Global Reach</p>
+<h4 class="font-headline text-3xl font-extrabold text-on-secondary-container">32 Nations</h4>
+<p class="text-sm text-on-secondary-container/80 mt-2">Active customer logistics mapping spanning four continents.</p>
+</div>
+<div class="absolute -right-8 -bottom-8 opacity-10">
+<span class="material-symbols-outlined text-[160px]" style="font-variation-settings: 'FILL' 1;">public</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

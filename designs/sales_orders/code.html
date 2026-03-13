@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AquaERP - Sales Orders</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "outline": "#70787d",
+                        "on-primary": "#ffffff",
+                        "outline-variant": "#c0c8cd",
+                        "on-primary-container": "#88c4e2",
+                        "on-tertiary": "#ffffff",
+                        "secondary-fixed-dim": "#90cfee",
+                        "surface-container-high": "#ddeaf3",
+                        "surface-bright": "#f4faff",
+                        "secondary-fixed": "#bfe8ff",
+                        "inverse-on-surface": "#e5f3fb",
+                        "tertiary": "#183947",
+                        "tertiary-container": "#31505e",
+                        "surface-tint": "#236580",
+                        "primary-container": "#00526c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#d7e5ed",
+                        "background": "#f4faff",
+                        "primary-fixed": "#bfe8ff",
+                        "secondary": "#1f6581",
+                        "on-primary-fixed": "#001f2b",
+                        "on-secondary-fixed": "#001f2b",
+                        "on-tertiary-fixed": "#001f2a",
+                        "on-surface-variant": "#40484c",
+                        "on-secondary-container": "#1a627e",
+                        "inverse-surface": "#263239",
+                        "surface-container": "#e2f0f8",
+                        "surface": "#f4faff",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed": "#c7e7f9",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#004d65",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-container": "#a1c1d2",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#93cfed",
+                        "on-background": "#111d23",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed-dim": "#abcbdc",
+                        "surface-container-highest": "#d7e5ed",
+                        "inverse-primary": "#93cfed",
+                        "on-tertiary-fixed-variant": "#2b4b59",
+                        "primary": "#003a4d",
+                        "on-surface": "#111d23",
+                        "surface-dim": "#cedce4",
+                        "secondary-container": "#9eddfd",
+                        "on-primary-fixed-variant": "#004d65",
+                        "surface-container-low": "#e8f6fe"
+                    },
+                    fontFamily: {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #003a4d 0%, #00526c 100%);
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #111d23;
+        }
+        h1, h2, h3, .font-headline {
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<div class="flex min-h-screen">
+<!-- SideNavBar -->
+<aside class="w-64 bg-surface-container-low flex flex-col sticky top-0 h-screen">
+<div class="p-6 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined" data-icon="water_drop">water_drop</span>
+</div>
+<div>
+<h1 class="font-headline font-bold text-lg leading-none">AquaERP</h1>
+<span class="text-[10px] uppercase tracking-wider text-on-surface-variant font-semibold">Enterprise Portal</span>
+</div>
+</div>
+<nav class="flex-1 px-4 mt-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded transition-colors group" href="#">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100" data-icon="dashboard">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded transition-colors group" href="#">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100" data-icon="inventory_2">inventory_2</span>
+<span class="text-sm font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded transition-colors group" href="#">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100" data-icon="category">category</span>
+<span class="text-sm font-medium">Categories</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded transition-colors group" href="#">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100" data-icon="sell">sell</span>
+<span class="text-sm font-medium">Discounts</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary text-on-primary rounded transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span class="text-sm font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded transition-colors group" href="#">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100" data-icon="group">group</span>
+<span class="text-sm font-medium">Customers</span>
+</a>
+</nav>
+<div class="p-4 mt-auto border-t border-outline-variant/10">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded transition-colors group" href="#">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100" data-icon="settings">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high rounded transition-colors group" href="#">
+<span class="material-symbols-outlined opacity-70 group-hover:opacity-100" data-icon="help">help</span>
+<span class="text-sm font-medium">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar -->
+<header class="h-16 bg-surface flex items-center justify-between px-8 sticky top-0 z-20">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative max-w-md w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary" placeholder="Search orders..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="relative p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full ring-2 ring-surface"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant/20">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-semibold leading-none">Erik Nielsen</p>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-tighter mt-1">Operations Lead</p>
+</div>
+<img class="w-10 h-10 rounded-full object-cover" data-alt="User Avatar Profile Image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBySnxxSLZshv9xY92O3YH7iJypoxamUljphIWD2d66DhAeSPVj_C4aE3RhV4-dKU-Yc54kuUf4LofTAoPF8j8WSQ4U7FSCzo9NCoYlNBLu0ktpE00j114A-bAb1t8ihdcg0PzI1UzyaXW4MASQu5heGUGGYv3jLQ9IBuNA1EPiLDNij9xU_pc1sbqVNajMOXb_bVEc_PeMl_NlCCIs08niCjp-hz2n6ILwHW9j-QBp_25P6tk_9mEvIyGN-DL5V_7e_932MF_4-Kw"/>
+</div>
+</div>
+</header>
+<div class="p-8 space-y-8">
+<!-- Dashboard Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="font-headline text-3xl font-extrabold tracking-tight">Orders</h2>
+<p class="text-on-surface-variant mt-1">Manage and track your global aquaculture distribution.</p>
+</div>
+<button class="primary-gradient text-on-primary px-6 py-2.5 rounded-lg font-semibold flex items-center gap-2 shadow-lg shadow-primary/10 hover:shadow-primary/20 transition-all">
+<span class="material-symbols-outlined text-lg" data-icon="add">add</span>
+                        Create Order
+                    </button>
+</div>
+<!-- Bento Stats (Quick Insight) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="bg-surface-container-low p-5 rounded-xl flex flex-col gap-1 border border-outline-variant/5">
+<span class="text-label-sm text-on-surface-variant font-medium uppercase tracking-widest text-[10px]">Active Orders</span>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="text-3xl font-headline font-bold">124</span>
+<span class="text-xs text-primary font-bold">+12%</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-5 rounded-xl flex flex-col gap-1 border border-outline-variant/5">
+<span class="text-label-sm text-on-surface-variant font-medium uppercase tracking-widest text-[10px]">Total Revenue</span>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="text-3xl font-headline font-bold">$842k</span>
+<span class="text-xs text-primary font-bold">Today</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-5 rounded-xl flex flex-col gap-1 border border-outline-variant/5">
+<span class="text-label-sm text-on-surface-variant font-medium uppercase tracking-widest text-[10px]">Processing Time</span>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="text-3xl font-headline font-bold">1.2d</span>
+<span class="text-xs text-secondary font-bold">Fast</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-5 rounded-xl flex flex-col gap-1 border border-outline-variant/5">
+<span class="text-label-sm text-on-surface-variant font-medium uppercase tracking-widest text-[10px]">Profit Margin</span>
+<div class="flex items-baseline gap-2 mt-2">
+<span class="text-3xl font-headline font-bold">18.4%</span>
+<span class="text-xs text-primary font-bold">Target</span>
+</div>
+</div>
+</div>
+<!-- Filter Strip -->
+<div class="flex flex-wrap items-center gap-4 bg-surface-container-low/50 p-4 rounded-xl">
+<div class="flex items-center gap-2 bg-surface-container-lowest px-3 py-1.5 rounded-lg border-outline-variant/10 border">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="filter_list">filter_list</span>
+<select class="bg-transparent border-none text-sm font-medium focus:ring-0 py-0 cursor-pointer">
+<option>All Statuses</option>
+<option>Pending</option>
+<option>Shipped</option>
+<option>Delivered</option>
+</select>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-lowest px-3 py-1.5 rounded-lg border-outline-variant/10 border">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="person">person</span>
+<select class="bg-transparent border-none text-sm font-medium focus:ring-0 py-0 cursor-pointer">
+<option>All Customers</option>
+<option>Nordic Fisheries</option>
+<option>Oceanic Exports</option>
+<option>Coastal Supply Co.</option>
+</select>
+</div>
+<div class="flex items-center gap-2 bg-surface-container-lowest px-3 py-1.5 rounded-lg border-outline-variant/10 border">
+<span class="material-symbols-outlined text-on-surface-variant text-sm" data-icon="calendar_today">calendar_today</span>
+<input class="bg-transparent border-none text-sm font-medium focus:ring-0 py-0 w-28 cursor-pointer" readonly="" type="text" value="Last 30 Days"/>
+</div>
+<button class="ml-auto text-sm font-semibold text-primary hover:underline">Clear Filters</button>
+</div>
+<!-- Orders Table Container -->
+<div class="bg-surface-container-lowest rounded-2xl shadow-sm overflow-hidden border border-outline-variant/10">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/30">
+<th class="px-6 py-4 text-[11px] uppercase tracking-widest text-on-surface-variant font-bold">Order Number</th>
+<th class="px-6 py-4 text-[11px] uppercase tracking-widest text-on-surface-variant font-bold">Customer</th>
+<th class="px-6 py-4 text-[11px] uppercase tracking-widest text-on-surface-variant font-bold">Date</th>
+<th class="px-6 py-4 text-[11px] uppercase tracking-widest text-on-surface-variant font-bold">Status</th>
+<th class="px-6 py-4 text-[11px] uppercase tracking-widest text-on-surface-variant font-bold text-right">Total Amount</th>
+<th class="px-6 py-4 text-[11px] uppercase tracking-widest text-on-surface-variant font-bold text-right">Est. Profit</th>
+<th class="px-6 py-4 text-[11px] uppercase tracking-widest text-on-surface-variant font-bold text-center">Items</th>
+<th class="px-6 py-4 text-[11px] uppercase tracking-widest text-on-surface-variant font-bold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low">
+<!-- Row 1: Pending -->
+<tr class="hover:bg-surface-container-highest/40 transition-colors group">
+<td class="px-6 py-5">
+<span class="font-headline font-bold text-primary">#ORD-2849</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-[10px] font-bold text-on-secondary-container">NF</div>
+<span class="font-medium">Nordic Fisheries</span>
+</div>
+</td>
+<td class="px-6 py-5 text-on-surface-variant text-sm">Oct 24, 2023</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-[11px] font-bold uppercase tracking-wider">Pending</span>
+</td>
+<td class="px-6 py-5 text-right font-headline font-bold">$12,450.00</td>
+<td class="px-6 py-5 text-right text-sm text-secondary font-medium">$2,140.00</td>
+<td class="px-6 py-5 text-center text-sm font-medium">14</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined text-lg opacity-40 group-hover:opacity-100" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Shipped -->
+<tr class="hover:bg-surface-container-highest/40 transition-colors group">
+<td class="px-6 py-5">
+<span class="font-headline font-bold text-primary">#ORD-2848</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-fixed flex items-center justify-center text-[10px] font-bold text-primary">OE</div>
+<span class="font-medium">Oceanic Exports</span>
+</div>
+</td>
+<td class="px-6 py-5 text-on-surface-variant text-sm">Oct 23, 2023</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 rounded-full bg-secondary-container/30 text-secondary text-[11px] font-bold uppercase tracking-wider">Shipped</span>
+</td>
+<td class="px-6 py-5 text-right font-headline font-bold">$8,120.50</td>
+<td class="px-6 py-5 text-right text-sm text-secondary font-medium">$1,250.00</td>
+<td class="px-6 py-5 text-center text-sm font-medium">8</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined text-lg opacity-40 group-hover:opacity-100" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Delivered -->
+<tr class="hover:bg-surface-container-highest/40 transition-colors group">
+<td class="px-6 py-5">
+<span class="font-headline font-bold text-primary">#ORD-2847</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed flex items-center justify-center text-[10px] font-bold text-tertiary">CS</div>
+<span class="font-medium">Coastal Supply Co.</span>
+</div>
+</td>
+<td class="px-6 py-5 text-on-surface-variant text-sm">Oct 22, 2023</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-[11px] font-bold uppercase tracking-wider">Delivered</span>
+</td>
+<td class="px-6 py-5 text-right font-headline font-bold">$42,800.00</td>
+<td class="px-6 py-5 text-right text-sm text-secondary font-medium">$7,420.00</td>
+<td class="px-6 py-5 text-center text-sm font-medium">112</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined text-lg opacity-40 group-hover:opacity-100" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: Shipped -->
+<tr class="hover:bg-surface-container-highest/40 transition-colors group">
+<td class="px-6 py-5">
+<span class="font-headline font-bold text-primary">#ORD-2846</span>
+</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-fixed-dim flex items-center justify-center text-[10px] font-bold text-on-secondary-fixed-variant">BA</div>
+<span class="font-medium">Blue Anchor Ltd.</span>
+</div>
+</td>
+<td class="px-6 py-5 text-on-surface-variant text-sm">Oct 22, 2023</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 rounded-full bg-secondary-container/30 text-secondary text-[11px] font-bold uppercase tracking-wider">Shipped</span>
+</td>
+<td class="px-6 py-5 text-right font-headline font-bold">$1,400.00</td>
+<td class="px-6 py-5 text-right text-sm text-secondary font-medium">$320.00</td>
+<td class="px-6 py-5 text-center text-sm font-medium">3</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined text-lg opacity-40 group-hover:opacity-100" data-icon="more_vert">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination -->
+<div class="px-6 py-4 flex items-center justify-between bg-surface-container-low/20">
+<span class="text-xs text-on-surface-variant font-medium">Showing 1-10 of 2,492 orders</span>
+<div class="flex gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-on-primary text-xs font-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-high text-xs font-bold">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-high text-xs font-bold">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Summary (Bento-lite) -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div class="bg-primary text-on-primary p-8 rounded-2xl relative overflow-hidden group">
+<div class="relative z-10">
+<h3 class="font-headline text-2xl font-bold">Logistics Optimization</h3>
+<p class="text-on-primary-container text-sm mt-2 max-w-xs">Your shipping routes are currently 8% more efficient than last month. Consider bulk shipping to Oslo to save an additional 4%.</p>
+<button class="mt-6 bg-surface-container-lowest text-primary px-4 py-2 rounded font-bold text-xs hover:bg-white transition-colors">View Routing Logic</button>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-9xl opacity-10 rotate-12" data-icon="local_shipping">local_shipping</span>
+</div>
+<div class="bg-surface-container-low p-8 rounded-2xl flex flex-col justify-between border border-outline-variant/10">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline text-lg font-bold">Export Compliance</h3>
+<p class="text-on-surface-variant text-xs mt-1">All documentation for current orders is verified.</p>
+</div>
+<span class="material-symbols-outlined text-secondary" data-icon="verified" data-weight="fill">verified</span>
+</div>
+<div class="mt-8 flex gap-2">
+<div class="h-2 flex-1 bg-secondary rounded-full"></div>
+<div class="h-2 flex-1 bg-secondary rounded-full"></div>
+<div class="h-2 flex-1 bg-secondary/20 rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

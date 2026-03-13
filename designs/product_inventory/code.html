@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline": "#70787d",
+              "on-primary": "#ffffff",
+              "outline-variant": "#c0c8cd",
+              "on-primary-container": "#88c4e2",
+              "on-tertiary": "#ffffff",
+              "secondary-fixed-dim": "#90cfee",
+              "surface-container-high": "#ddeaf3",
+              "surface-bright": "#f4faff",
+              "secondary-fixed": "#bfe8ff",
+              "inverse-on-surface": "#e5f3fb",
+              "tertiary": "#183947",
+              "tertiary-container": "#31505e",
+              "surface-tint": "#236580",
+              "primary-container": "#00526c",
+              "surface-container-lowest": "#ffffff",
+              "surface-variant": "#d7e5ed",
+              "background": "#f4faff",
+              "primary-fixed": "#bfe8ff",
+              "secondary": "#1f6581",
+              "on-primary-fixed": "#001f2b",
+              "on-secondary-fixed": "#001f2b",
+              "on-tertiary-fixed": "#001f2a",
+              "on-surface-variant": "#40484c",
+              "on-secondary-container": "#1a627e",
+              "inverse-surface": "#263239",
+              "surface-container": "#e2f0f8",
+              "surface": "#f4faff",
+              "error-container": "#ffdad6",
+              "tertiary-fixed": "#c7e7f9",
+              "on-error": "#ffffff",
+              "on-secondary-fixed-variant": "#004d65",
+              "on-secondary": "#ffffff",
+              "on-tertiary-container": "#a1c1d2",
+              "error": "#ba1a1a",
+              "primary-fixed-dim": "#93cfed",
+              "on-background": "#111d23",
+              "on-error-container": "#93000a",
+              "tertiary-fixed-dim": "#abcbdc",
+              "surface-container-highest": "#d7e5ed",
+              "inverse-primary": "#93cfed",
+              "on-tertiary-fixed-variant": "#2b4b59",
+              "primary": "#003a4d",
+              "on-surface": "#111d23",
+              "surface-dim": "#cedce4",
+              "secondary-container": "#9eddfd",
+              "on-primary-fixed-variant": "#004d65",
+              "surface-container-low": "#e8f6fe"
+            },
+            fontFamily: {
+              "headline": ["Manrope"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        vertical-align: middle;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(12px);
+      }
+      .primary-gradient {
+        background: linear-gradient(135deg, #003a4d 0%, #00526c 100%);
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f4faff;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #c0c8cd;
+        border-radius: 10px;
+      }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface flex min-h-screen overflow-hidden">
+<!-- SideNavBar -->
+<aside class="w-64 bg-surface-container-low flex flex-col h-screen sticky top-0 shrink-0">
+<div class="p-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg primary-gradient flex items-center justify-center text-on-primary shadow-lg overflow-hidden">
+<img alt="Aquaculture Tech Logo" class="w-full h-full object-cover" data-alt="Stylized geometric fish logo for AquaERP" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxDp3WXIBmtm-ehZQQX9S_ObL7wVzEBx9Y2_2x5Le1SLerVYakC6IkIlV3m8oTCa2GngYCA6Sr3lkMdocNi2R2TvhekNKglEox7ehIwp3548bHPpeszoBW1VaK_hz08sPocmQoRwgKIzAWcLFQyX3ndgaf1hdHZJNF0ETTAv2yQyynm5tE2GVi96h-HuOTN3tXZlAphr9_e7je9xfos-jT2fIHGBsHPQ0OyWk0x4YGEONpq7TttaSGzPyC_faPWidXqCVhqNtBepU"/>
+</div>
+<div>
+<h1 class="font-headline font-extrabold text-lg leading-tight tracking-tight text-primary">AquaERP</h1>
+<p class="text-[10px] uppercase tracking-widest font-bold text-on-surface-variant/60">Enterprise Portal</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg bg-primary-container text-on-primary shadow-sm transition-all group" href="#">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+<span class="font-medium">Products</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">category</span>
+<span class="font-medium">Categories</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">sell</span>
+<span class="font-medium">Discounts</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">shopping_cart</span>
+<span class="font-medium">Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span class="font-medium">Customers</span>
+</a>
+</nav>
+<div class="p-4 mt-auto space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 rounded-lg text-on-surface-variant hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px]">help</span>
+<span class="font-medium">Support</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col min-w-0 h-screen overflow-y-auto relative">
+<!-- TopNavBar -->
+<header class="h-20 bg-surface/80 backdrop-blur-md px-10 flex items-center justify-between sticky top-0 z-30">
+<div class="flex items-center gap-8 flex-1">
+<h2 class="font-headline font-bold text-2xl text-on-surface">Products</h2>
+<div class="max-w-md w-full relative">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant">search</span>
+<input class="w-full bg-surface-container-lowest border-none rounded-xl pl-12 pr-4 py-2.5 text-sm focus:ring-2 focus:ring-primary shadow-sm" placeholder="Search across inventory..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 rounded-full flex items-center justify-center hover:bg-surface-container-high transition-colors relative">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="h-8 w-[1px] bg-outline-variant/30 mx-2"></div>
+<div class="flex items-center gap-3 pl-2 cursor-pointer hover:opacity-80 transition-opacity">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-semibold leading-none">Erik Thorne</p>
+<p class="text-[11px] text-on-surface-variant font-medium">Operations Chief</p>
+</div>
+<img alt="User Avatar" class="w-10 h-10 rounded-full bg-surface-variant object-cover" data-alt="Professional portrait of a male executive" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDwladUG7E16-gl7Rq1LdPhFQRYjnVLBx0ejx5Pcnez7O_arFvkhEvQFukkOqGOEPgyImQ2q93kh7RMn8x6fseeTJ9P12gsyqGl15OQZ70GZhkC-v0BuOXI1q3WHmRyw2OABtWV-Tw5Xh8-wrLLliZLVL11QkqdoV7A-fTB688a36nkJOGZgSRsSGcJcPPWpwHCIRtjkg5JPaUmaiFR4R-AF--zAUqUsq6Z9ySHLOS7vHmbqdPR2MAATMgAnQqfIHE7CtvExAHc-0A"/>
+</div>
+</div>
+</header>
+<!-- Content Body -->
+<div class="p-10 pb-20 space-y-8">
+<!-- Filters & Actions -->
+<div class="flex flex-wrap items-center justify-between gap-4">
+<div class="flex items-center gap-3">
+<div class="relative">
+<select class="appearance-none bg-surface-container-lowest border-none rounded-lg px-4 pr-10 py-2.5 text-sm font-medium shadow-sm focus:ring-2 focus:ring-primary cursor-pointer">
+<option>All Categories</option>
+<option>Feed &amp; Nutrition</option>
+<option>Monitoring Systems</option>
+<option>Aeration Tech</option>
+<option>Water Treatment</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline-variant">expand_more</span>
+</div>
+<div class="relative">
+<select class="appearance-none bg-surface-container-lowest border-none rounded-lg px-4 pr-10 py-2.5 text-sm font-medium shadow-sm focus:ring-2 focus:ring-primary cursor-pointer">
+<option>Stock Status</option>
+<option>Healthy</option>
+<option>Low Stock</option>
+<option>Critical</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline-variant">expand_more</span>
+</div>
+</div>
+<button class="primary-gradient text-on-primary px-6 py-2.5 rounded-lg font-semibold flex items-center gap-2 shadow-md hover:shadow-lg transition-all active:scale-95">
+<span class="material-symbols-outlined">add</span>
+                    Add Product
+                </button>
+</div>
+<!-- Bento Stats Grid (Editorial Aesthetic) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border-l-4 border-primary">
+<p class="text-xs font-bold text-on-surface-variant/60 uppercase tracking-widest mb-1">Total Assets</p>
+<h3 class="font-headline text-3xl font-extrabold text-primary">1,284</h3>
+<div class="mt-4 flex items-center gap-2 text-xs font-medium text-on-secondary-container">
+<span class="material-symbols-outlined text-sm">trending_up</span>
+<span>+12% from last month</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm border-l-4 border-error">
+<p class="text-xs font-bold text-on-surface-variant/60 uppercase tracking-widest mb-1">Low Inventory</p>
+<h3 class="font-headline text-3xl font-extrabold text-error">24</h3>
+<div class="mt-4 flex items-center gap-2 text-xs font-medium text-error">
+<span class="material-symbols-outlined text-sm">priority_high</span>
+<span>Action required immediately</span>
+</div>
+</div>
+<div class="col-span-1 md:col-span-2 bg-primary text-on-primary p-6 rounded-xl shadow-lg relative overflow-hidden flex flex-col justify-between">
+<div class="z-10">
+<p class="text-xs font-bold opacity-60 uppercase tracking-widest mb-1">Inventory Valuation</p>
+<h3 class="font-headline text-3xl font-extrabold">$2,481,200.00</h3>
+</div>
+<div class="mt-4 z-10 flex items-center gap-4">
+<div class="flex -space-x-2">
+<img alt="Supplier A" class="w-6 h-6 rounded-full border-2 border-primary" data-alt="Abstract circle pattern" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXzT2JkUwGY2ljbrkvzxlgtXvx7mBG1uPJj0hfSTSUHVRPNJvk77lEe1CQ65s7R0BtqfzWdcGS7HHYXdywlIu0B7bGz24hxrVR4TaGkcQR0qCGaoBTJbHunxewiVm1Fg4UphDQZGu80GBW4lvTUiWly0Gr3mkbAfa0NPF6_n3z0W7xLqYF1Tf_W1vd53Bxz7wbNFgzAs3I1Sphtmnp_MPZIw1FTPhRPbukoL5P5i5Y2zjRt62fP39b-wkwzW3FpcZPPmlJXeJaVos"/>
+<img alt="Supplier B" class="w-6 h-6 rounded-full border-2 border-primary" data-alt="Abstract circle pattern" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMsak9wCqXBTeAAdbqWc7LKDN_VAnSp8LH3HvcsbBHRDR0NUAggII_9vuJguksg0Sw_9Dqj1OsogSoapj-KtaI0Ci79XhKTwcE0-5fpVlsZw0tIr8dYSngmLr1f8ah8a2rTOqPxfZDQNEHCgc4W64cbxkjlsGoIlCOUju5qFwUPR4HTF9D26-9nQ-sk0Cb4LJ_BmQTmWNYIO3qrTPHA7hgNm_nkPtq35qhKgEUZuBCzOtVdeIex5TJV-gihIY97OUDiIfNlOzO6k8"/>
+<img alt="Supplier C" class="w-6 h-6 rounded-full border-2 border-primary" data-alt="Abstract circle pattern" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZDMY2PsqK25uwrAinUL1BuJC66rPxYpRzdW9ry6VpYle6SGpLjUncXrBhbPs48H3Tzj1dF6anWIBPzlNu0DTSo97tL770OrpVVAob4ddkXn_MYKTnPKfAJLvwNgHMGptyJuDijQJWTFHZz9Vc8VliRxctipKwrti56Qo9Wcr0dZQajbflbHzYuHmsTZ3q0R_bsiZZ0qjhhURc1fDDwTtCdiHSRuAjTK4sVFX8bfnopSHqsi1NEv9C1ue6RK-8S4C8UTciZfx7beE"/>
+</div>
+<span class="text-xs opacity-80">Supplied by 12 Global Vendors</span>
+</div>
+<!-- Decorative background graphic -->
+<div class="absolute -right-10 -bottom-10 opacity-10">
+<span class="material-symbols-outlined text-[160px]">inventory</span>
+</div>
+</div>
+</div>
+<!-- Products Table Container -->
+<div class="bg-surface-container-lowest rounded-2xl shadow-sm overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high/50">
+<th class="px-6 py-4 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">Product Code</th>
+<th class="px-6 py-4 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">Product Name</th>
+<th class="px-6 py-4 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider">Category</th>
+<th class="px-6 py-4 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider text-right">Selling Price</th>
+<th class="px-6 py-4 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider text-right">Cost Price</th>
+<th class="px-6 py-4 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider text-center">Stock</th>
+<th class="px-6 py-4 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider text-center">Status</th>
+<th class="px-6 py-4 text-[11px] font-bold text-on-surface-variant uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y-0">
+<!-- Row 1 (Selected/Active) -->
+<tr class="bg-surface-container-highest/40 hover:bg-surface-container-highest transition-colors cursor-pointer group">
+<td class="px-6 py-5 font-mono text-xs text-primary font-bold">AQ-882-SYS</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high overflow-hidden flex items-center justify-center">
+<img alt="Product" class="w-full h-full object-cover" data-alt="High-tech submersible sensor device" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTJRl7v-80uoSfcNEecSdxhCBgLXrNNzxGiJO60FiZbsEZq3qUOJCu3saFrj4pOrYe-eSHJmJOAtcvLQmpbh6OpXaN1NSTZ8dmRhqtzTAmmmR4mOC3HPbFOiXCsuaXs0xXn3bATEzrIb3nLJxDAOPAdARV-TPL1wNuuGZlgrLh-TsYinacKEidx8w-GAr4mo5245JwT1gE4RjzlupXS59KA6KnJFzdtrl5IH6iKCdNkGNZ0ze2CoMi_7fViD5m56STm9tnVjpJV0Q"/>
+</div>
+<div>
+<p class="font-semibold text-on-surface leading-tight">SonarFlow Pro II</p>
+<p class="text-[10px] text-on-surface-variant">Monitoring Systems</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5"><span class="text-sm font-medium">IoT Tech</span></td>
+<td class="px-6 py-5 text-right font-semibold text-sm">$4,299.00</td>
+<td class="px-6 py-5 text-right font-medium text-sm text-on-surface-variant">$2,850.00</td>
+<td class="px-6 py-5 text-center font-bold text-sm">48</td>
+<td class="px-6 py-5 text-center">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-secondary-container text-on-secondary-container">Healthy</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 rounded-full hover:bg-white/50 text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-high transition-colors cursor-pointer border-t border-surface-variant/20">
+<td class="px-6 py-5 font-mono text-xs text-primary font-bold">AQ-FD-901</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high overflow-hidden flex items-center justify-center">
+<img alt="Product" class="w-full h-full object-cover" data-alt="Industrial bag of premium fish feed" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAqvfL793lUqCPiTcA7t8ZzTsy5PEFfoOd6oFnML-HiVgjkQiwN46oxXtpl4acHqyxHuh1qyWqlAP0fSm4tDh-DkrFRfbMyVA5JXNBYsdUbb8rDrWLSpZTy74yU4pON-iOgDJwsN5ZOTvW0kHrwlSpTqdpIa8FPSr844VXi-_x2lJDirn_V24mciDwVBMf_-7kdbtEM36uVW0XyAoXUYnyvYoe7N8QlD5IubV_DS1Z8yP6UDFPU_b7DUw7AJAtNTMsWi8QInXa7-_I"/>
+</div>
+<div>
+<p class="font-semibold text-on-surface leading-tight">TurboGrowth Pellets (25kg)</p>
+<p class="text-[10px] text-on-surface-variant">Feed &amp; Nutrition</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5"><span class="text-sm font-medium">Supplies</span></td>
+<td class="px-6 py-5 text-right font-semibold text-sm">$125.00</td>
+<td class="px-6 py-5 text-right font-medium text-sm text-on-surface-variant">$88.50</td>
+<td class="px-6 py-5 text-center font-bold text-sm">12</td>
+<td class="px-6 py-5 text-center">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-surface-variant text-on-surface-variant">Low Stock</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 rounded-full hover:bg-surface-container-high text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-high transition-colors cursor-pointer border-t border-surface-variant/20">
+<td class="px-6 py-5 font-mono text-xs text-primary font-bold">AQ-TX-004</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high overflow-hidden flex items-center justify-center">
+<img alt="Product" class="w-full h-full object-cover" data-alt="Professional grade water testing kit" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA5Rn8AH5TVUZ3EXNBnKEjJpnKwY5i93ElYE-6VZKVKBQ4lh_SfFoS0MJQyjvgiePlQ5ITlqSaUJz5MiZEa7__j9z74T9QaLvzMNa8rvtJLnRbqkhad44ubf-6NsQDfIfsLpbuyI4uoOW03Sfo4FwE1ZxX_Gs9Hg7x17BMiwy7EmZRE8PVlTmQqZjH2GLR_HpTTRKuBYvPj0gv09-ywSB40BPDK_CaXU-MGrYzLxkc2Vzzh1954so9bFPbQfDJ_IztTworpF1iP0NU"/>
+</div>
+<div>
+<p class="font-semibold text-on-surface leading-tight">Nitrate Sentinel Kit</p>
+<p class="text-[10px] text-on-surface-variant">Water Treatment</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5"><span class="text-sm font-medium">Lab Equip</span></td>
+<td class="px-6 py-5 text-right font-semibold text-sm">$899.00</td>
+<td class="px-6 py-5 text-right font-medium text-sm text-on-surface-variant">$610.00</td>
+<td class="px-6 py-5 text-center font-bold text-sm text-error">4</td>
+<td class="px-6 py-5 text-center">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-error-container text-on-error-container">Critical</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 rounded-full hover:bg-surface-container-high text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-high transition-colors cursor-pointer border-t border-surface-variant/20">
+<td class="px-6 py-5 font-mono text-xs text-primary font-bold">AQ-AR-220</td>
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container-high overflow-hidden flex items-center justify-center">
+<img alt="Product" class="w-full h-full object-cover" data-alt="Mechanical industrial aerator wheel" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbf3uBe5ygOQTg9M08_2nCDvV36ZBc2UR25SPfh1VUbqKNd4wptqn57q48I2LUKGLHXCjHY6lrP2dCWruNdGs-rHAdUOIBVB_7QhZsENe2x5J5MXVfb_ndrRyp8MedZGIl20KtSDENphYXELXu3CS6ffMBLq3KppSo20xWKsU9f_QFV2YXGTzqu17ZIGiwZgDYTMzVUNf0mPeUY9EKJ27ckesXWF0vGi12pR63pk2oh2gylfbXQG3LgjUom4FScL6E1niskI71ey8"/>
+</div>
+<div>
+<p class="font-semibold text-on-surface leading-tight">OxyFlow Paddlewheel 3HP</p>
+<p class="text-[10px] text-on-surface-variant">Aeration Tech</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5"><span class="text-sm font-medium">Hardware</span></td>
+<td class="px-6 py-5 text-right font-semibold text-sm">$1,540.00</td>
+<td class="px-6 py-5 text-right font-medium text-sm text-on-surface-variant">$1,100.00</td>
+<td class="px-6 py-5 text-center font-bold text-sm">28</td>
+<td class="px-6 py-5 text-center">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider bg-secondary-container text-on-secondary-container">Healthy</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="p-2 rounded-full hover:bg-surface-container-high text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="px-10 py-6 flex items-center justify-between bg-surface-container-low/30">
+<p class="text-xs font-medium text-on-surface-variant">Showing 1 to 4 of 284 products</p>
+<div class="flex items-center gap-2">
+<button class="w-8 h-8 rounded flex items-center justify-center hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded bg-primary text-on-primary font-bold text-xs">1</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container-high text-xs font-medium transition-colors">2</button>
+<button class="w-8 h-8 rounded hover:bg-surface-container-high text-xs font-medium transition-colors">3</button>
+<button class="w-8 h-8 rounded flex items-center justify-center hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Side Drawer (Product Detail Deep Dive) -->
+<div class="fixed inset-y-0 right-0 w-[420px] bg-surface-container-lowest shadow-2xl z-50 border-l border-outline-variant/10 flex flex-col">
+<div class="p-8 border-b border-surface-variant flex items-center justify-between bg-surface-container-low/20">
+<h3 class="font-headline font-extrabold text-xl text-primary">Product Details</h3>
+<button class="w-8 h-8 rounded-full hover:bg-surface-container-high flex items-center justify-center">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="flex-1 overflow-y-auto p-8 space-y-8">
+<!-- Product Header Info -->
+<div class="space-y-4">
+<div class="aspect-video rounded-2xl bg-surface-container-high overflow-hidden shadow-inner relative group">
+<img alt="SonarFlow Pro II Detail" class="w-full h-full object-cover" data-alt="High-resolution close-up of an electronic underwater sensor" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8ERbhqsrbZj8xT2VpbsajF6s6edlZpCUm2BgJ0m4-NwuF42Gr9DzZqD5osOsgxUYmGkyAA9mgX4RKyzLYBWMQ7ASi7hB-_6MPQ5zUcFs6qpHapSYbdLUfybfRgKYaykBvZJZ4F7x1n5MwKo4LuaXC1EcbZ9TdS9SAq05Xw09IgLUP2P33cSUFTxjiK2NQkZ3juuZg6Lt5lyxcsJdaidp8OFyhrI0SzzsQ9EXs2NJuyMDXZGQbFplqJoNrSCpl96ftdzpFS4XV-mk"/>
+<div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md p-2 rounded-lg text-primary shadow-sm cursor-pointer">
+<span class="material-symbols-outlined">zoom_in</span>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest bg-primary-container/20 text-primary">AQ-882-SYS</span>
+<span class="px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest bg-secondary-container text-on-secondary-container">In Stock</span>
+</div>
+<h4 class="font-headline font-extrabold text-2xl text-on-surface">SonarFlow Pro II</h4>
+<p class="text-sm text-on-surface-variant mt-1">High-frequency ultrasonic depth and flow sensor with cloud telemetry integration.</p>
+</div>
+</div>
+<!-- Metrics Grid inside Drawer -->
+<div class="grid grid-cols-2 gap-4">
+<div class="p-4 bg-surface-container-low rounded-xl">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">MSRP</p>
+<p class="font-headline font-bold text-lg text-primary">$4,299.00</p>
+</div>
+<div class="p-4 bg-surface-container-low rounded-xl">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Stock Level</p>
+<p class="font-headline font-bold text-lg text-on-surface">48 Units</p>
+</div>
+<div class="p-4 bg-surface-container-low rounded-xl">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Lead Time</p>
+<p class="font-headline font-bold text-lg text-on-surface">14 Days</p>
+</div>
+<div class="p-4 bg-surface-container-low rounded-xl">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest mb-1">Warehouse</p>
+<p class="font-headline font-bold text-lg text-on-surface">Zone B-12</p>
+</div>
+</div>
+<!-- Secondary Info Section -->
+<div class="space-y-4">
+<h5 class="text-[11px] font-bold text-on-surface-variant uppercase tracking-widest">Inventory History</h5>
+<div class="space-y-4">
+<div class="flex gap-4 relative">
+<div class="w-px bg-outline-variant absolute left-[7px] top-6 bottom-0"></div>
+<div class="w-4 h-4 rounded-full bg-primary shrink-0 relative z-10"></div>
+<div class="pb-4">
+<p class="text-xs font-bold leading-none">Restocked: 20 Units</p>
+<p class="text-[10px] text-on-surface-variant mt-1">Oct 24, 2023 • Admin User</p>
+</div>
+</div>
+<div class="flex gap-4 relative">
+<div class="w-px bg-outline-variant absolute left-[7px] top-6 bottom-0"></div>
+<div class="w-4 h-4 rounded-full bg-surface-variant border-4 border-surface-container-lowest shrink-0 relative z-10"></div>
+<div class="pb-4">
+<p class="text-xs font-bold leading-none">Price Updated: +$200.00</p>
+<p class="text-[10px] text-on-surface-variant mt-1">Sep 12, 2023 • System Sync</p>
+</div>
+</div>
+<div class="flex gap-4 relative">
+<div class="w-4 h-4 rounded-full bg-surface-variant border-4 border-surface-container-lowest shrink-0 relative z-10"></div>
+<div>
+<p class="text-xs font-bold leading-none">Initial Entry</p>
+<p class="text-[10px] text-on-surface-variant mt-1">Aug 01, 2023 • Warehouse A</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="p-8 border-t border-surface-variant bg-surface-container-low/20 flex gap-4">
+<button class="flex-1 border-2 border-primary text-primary font-bold py-3 rounded-lg hover:bg-primary/5 transition-colors">Edit Product</button>
+<button class="flex-1 primary-gradient text-on-primary font-bold py-3 rounded-lg shadow-md">Create PO</button>
+</div>
+</div>
+</main>
+</body></html>

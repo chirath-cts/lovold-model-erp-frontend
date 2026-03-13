@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Create Order - AquaERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "outline": "#70787d",
+                "on-primary": "#ffffff",
+                "outline-variant": "#c0c8cd",
+                "on-primary-container": "#88c4e2",
+                "on-tertiary": "#ffffff",
+                "secondary-fixed-dim": "#90cfee",
+                "surface-container-high": "#ddeaf3",
+                "surface-bright": "#f4faff",
+                "secondary-fixed": "#bfe8ff",
+                "inverse-on-surface": "#e5f3fb",
+                "tertiary": "#183947",
+                "tertiary-container": "#31505e",
+                "surface-tint": "#236580",
+                "primary-container": "#00526c",
+                "surface-container-lowest": "#ffffff",
+                "surface-variant": "#d7e5ed",
+                "background": "#f4faff",
+                "primary-fixed": "#bfe8ff",
+                "secondary": "#1f6581",
+                "on-primary-fixed": "#001f2b",
+                "on-secondary-fixed": "#001f2b",
+                "on-tertiary-fixed": "#001f2a",
+                "on-surface-variant": "#40484c",
+                "on-secondary-container": "#1a627e",
+                "inverse-surface": "#263239",
+                "surface-container": "#e2f0f8",
+                "surface": "#f4faff",
+                "error-container": "#ffdad6",
+                "tertiary-fixed": "#c7e7f9",
+                "on-error": "#ffffff",
+                "on-secondary-fixed-variant": "#004d65",
+                "on-secondary": "#ffffff",
+                "on-tertiary-container": "#a1c1d2",
+                "error": "#ba1a1a",
+                "primary-fixed-dim": "#93cfed",
+                "on-background": "#111d23",
+                "on-error-container": "#93000a",
+                "tertiary-fixed-dim": "#abcbdc",
+                "surface-container-highest": "#d7e5ed",
+                "inverse-primary": "#93cfed",
+                "on-tertiary-fixed-variant": "#2b4b59",
+                "primary": "#003a4d",
+                "on-surface": "#111d23",
+                "surface-dim": "#cedce4",
+                "secondary-container": "#9eddfd",
+                "on-primary-fixed-variant": "#004d65",
+                "surface-container-low": "#e8f6fe"
+              },
+              fontFamily: {
+                "headline": ["Manrope"],
+                "body": ["Inter"],
+                "label": ["Inter"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-headline { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel {
+            background: rgba(215, 229, 237, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c0c8cd; border-radius: 10px; }
+        .primary-gradient { background: linear-gradient(135deg, #003A4D 0%, #00526C 100%); }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- Linear Flow: BottomNavBar and SideNavBar are hidden to focus on the task -->
+<!-- Main Modal Overlay -->
+<div class="fixed inset-0 bg-on-surface/20 backdrop-blur-md flex items-center justify-center p-4 z-50">
+<!-- Large Modal Dialog -->
+<div class="w-full max-w-6xl h-[90vh] bg-surface-container-low rounded-xl shadow-2xl overflow-hidden flex flex-col">
+<!-- Modal Header (TopNavBar Integration Logic) -->
+<div class="px-8 py-6 bg-surface-container-low flex items-center justify-between">
+<div>
+<h1 class="text-2xl font-headline font-extrabold tracking-tight text-primary">New Sales Order</h1>
+<p class="text-sm text-on-surface-variant font-medium">Enterprise Portal • Order Management</p>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container-high rounded-full text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+<button class="p-2 hover:bg-error/10 hover:text-error rounded-full text-on-surface-variant transition-colors">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+</div>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto px-8 pb-8 custom-scrollbar">
+<div class="grid grid-cols-12 gap-8">
+<!-- Left Column: Order Form (Canvas) -->
+<div class="col-span-12 lg:col-span-8 space-y-8">
+<!-- Customer Selection Section -->
+<section class="p-6 bg-surface-container-lowest rounded-xl">
+<h2 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">group</span>
+                                Customer Selection
+                            </h2>
+<div class="relative">
+<label class="block text-xs font-semibold text-on-surface-variant mb-1 ml-1">Select Active Account</label>
+<div class="flex items-center bg-surface-container-low rounded-lg px-4 py-3 focus-within:ring-2 ring-primary transition-all">
+<span class="material-symbols-outlined text-on-surface-variant mr-3">search</span>
+<input class="bg-transparent border-none focus:ring-0 w-full text-sm placeholder:text-outline" placeholder="Search by name, ID or aquaculture farm..." type="text"/>
+<span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+</div>
+</div>
+</section>
+<!-- Order Items Grid (Canvas) -->
+<section class="p-6 bg-surface-container-lowest rounded-xl">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+                                    Order Items Grid
+                                </h2>
+<button class="text-xs font-bold text-primary flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+                                    Add Custom Item
+                                </button>
+</div>
+<!-- Column Headers -->
+<div class="grid grid-cols-12 gap-4 px-2 mb-2">
+<div class="col-span-5 text-[10px] font-bold text-outline uppercase tracking-tighter">Product Spec</div>
+<div class="col-span-2 text-[10px] font-bold text-outline uppercase tracking-tighter">Quantity</div>
+<div class="col-span-2 text-[10px] font-bold text-outline uppercase tracking-tighter">Unit Price</div>
+<div class="col-span-2 text-[10px] font-bold text-outline uppercase tracking-tighter text-right">Line Total</div>
+<div class="col-span-1"></div>
+</div>
+<div class="space-y-3">
+<!-- Row 1 -->
+<div class="grid grid-cols-12 gap-4 p-2 bg-surface hover:bg-surface-container-highest rounded-lg transition-colors items-center group">
+<div class="col-span-5">
+<select class="w-full bg-surface-container-lowest border-none text-sm rounded-md focus:ring-2 ring-primary">
+<option>Premium Atlantic Salmon Fry</option>
+<option>Omega-3 Enriched Feed (25kg)</option>
+<option>Digital pH Monitoring Sensor</option>
+</select>
+</div>
+<div class="col-span-2">
+<input class="w-full bg-surface-container-lowest border-none text-sm rounded-md focus:ring-2 ring-primary" type="number" value="150"/>
+</div>
+<div class="col-span-2">
+<div class="relative">
+<span class="absolute left-2 top-1/2 -translate-y-1/2 text-xs text-outline">$</span>
+<input class="w-full bg-surface-container-lowest border-none text-sm pl-5 rounded-md focus:ring-2 ring-primary text-right" type="text" value="12.50"/>
+</div>
+</div>
+<div class="col-span-2 text-right">
+<span class="text-sm font-semibold text-primary">$1,875.00</span>
+</div>
+<div class="col-span-1 flex justify-end">
+<button class="p-1.5 opacity-0 group-hover:opacity-100 text-outline hover:text-error transition-all">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="grid grid-cols-12 gap-4 p-2 bg-surface hover:bg-surface-container-highest rounded-lg transition-colors items-center group">
+<div class="col-span-5">
+<select class="w-full bg-surface-container-lowest border-none text-sm rounded-md focus:ring-2 ring-primary">
+<option>Omega-3 Enriched Feed (25kg)</option>
+<option>Premium Atlantic Salmon Fry</option>
+<option>Digital pH Monitoring Sensor</option>
+</select>
+</div>
+<div class="col-span-2">
+<input class="w-full bg-surface-container-lowest border-none text-sm rounded-md focus:ring-2 ring-primary" type="number" value="40"/>
+</div>
+<div class="col-span-2">
+<div class="relative">
+<span class="absolute left-2 top-1/2 -translate-y-1/2 text-xs text-outline">$</span>
+<input class="w-full bg-surface-container-lowest border-none text-sm pl-5 rounded-md focus:ring-2 ring-primary text-right" type="text" value="85.00"/>
+</div>
+</div>
+<div class="col-span-2 text-right">
+<span class="text-sm font-semibold text-primary">$3,400.00</span>
+</div>
+<div class="col-span-1 flex justify-end">
+<button class="p-1.5 opacity-0 group-hover:opacity-100 text-outline hover:text-error transition-all">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<button class="mt-6 w-full py-3 border-2 border-dashed border-outline-variant rounded-lg text-outline font-medium hover:border-primary hover:text-primary transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">add</span>
+                                Add New Product Line
+                            </button>
+</section>
+</div>
+<!-- Right Column: Summary Panel (Canvas) -->
+<div class="col-span-12 lg:col-span-4">
+<div class="sticky top-0 space-y-6">
+<!-- Financial Summary Card -->
+<div class="bg-primary text-on-primary rounded-xl overflow-hidden shadow-xl">
+<div class="p-6 bg-white/5 border-b border-white/10">
+<h2 class="text-xs font-bold uppercase tracking-widest opacity-80 mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+                                        Order Summary
+                                    </h2>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-sm opacity-70">Subtotal</span>
+<span class="text-sm font-medium">$5,275.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm opacity-70">Applied Discounts</span>
+<span class="text-sm font-medium text-secondary-container">-$250.00</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm opacity-70">Tax (Estimated 5%)</span>
+<span class="text-sm font-medium">$251.25</span>
+</div>
+<div class="pt-4 mt-4 border-t border-white/10 flex justify-between items-end">
+<span class="text-sm font-bold">Total Payable</span>
+<span class="text-3xl font-headline font-extrabold">$5,276.25</span>
+</div>
+</div>
+</div>
+<div class="p-6 bg-primary-container/30">
+<div class="flex items-center gap-4">
+<div class="p-2 bg-on-primary-container/20 rounded-lg">
+<span class="material-symbols-outlined text-secondary-container">trending_up</span>
+</div>
+<div>
+<p class="text-[10px] font-bold uppercase tracking-wider opacity-60">Estimated Net Profit</p>
+<p class="text-xl font-bold text-secondary-container">$1,142.80</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Order Settings -->
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm">
+<h3 class="text-[11px] font-bold uppercase text-on-surface-variant mb-4">Logistics &amp; Timeline</h3>
+<div class="space-y-4">
+<div>
+<label class="block text-[10px] font-bold text-outline uppercase mb-1">Expected Delivery</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border-none rounded-lg text-sm px-4 py-2 focus:ring-2 ring-primary" type="date" value="2023-11-24"/>
+</div>
+</div>
+<div>
+<label class="block text-[10px] font-bold text-outline uppercase mb-1">Shipping Method</label>
+<select class="w-full bg-surface-container-low border-none rounded-lg text-sm px-4 py-2 focus:ring-2 ring-primary">
+<option>Cold Chain Logistics - Ocean</option>
+<option>Express Air Freight</option>
+<option>Local Pickup</option>
+</select>
+</div>
+<div>
+<label class="block text-[10px] font-bold text-outline uppercase mb-1">Internal Notes</label>
+<textarea class="w-full bg-surface-container-low border-none rounded-lg text-sm px-4 py-2 focus:ring-2 ring-primary resize-none" placeholder="Add specific handling instructions..." rows="3"></textarea>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Footer (Action Buttons) -->
+<div class="px-8 py-6 bg-surface-container-lowest border-t border-surface-container-high flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="text-xs font-medium text-on-surface-variant">Draft saved automatically 2m ago</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="px-6 py-2.5 rounded-lg text-sm font-semibold text-primary hover:bg-surface-container-high transition-colors">
+                        Cancel
+                    </button>
+<button class="px-10 py-2.5 primary-gradient text-on-primary rounded-lg text-sm font-bold shadow-lg shadow-primary/20 hover:scale-[1.02] transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+                        Save Order
+                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Abstract Water Pattern Background Element -->
+<div class="fixed inset-0 -z-10 pointer-events-none opacity-50">
+<div class="absolute top-0 right-0 w-[600px] h-[600px] bg-secondary-container/20 rounded-full blur-[120px]"></div>
+<div class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-primary-container/10 rounded-full blur-[80px]"></div>
+</div>
+</body></html>
