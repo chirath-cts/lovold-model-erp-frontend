@@ -1,0 +1,31 @@
+@use "styles/variables" as vars;
+
+.loadingOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    width: 100%;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(2px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .customLoadingIcon {
+        font-size: 60px;
+        color: vars.$primary-color;
+        animation: rotate 1s linear infinite;
+    }
+}
+
+// Keyframes for rotation
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

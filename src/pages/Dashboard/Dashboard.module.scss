@@ -1,0 +1,40 @@
+@use "styles/variables" as vars;
+
+.dashboardWrapper {
+    background: #f5f5f5;
+    min-height: 100vh;
+    padding: 40px 0;
+
+    .dashboardContainer {
+        .header {
+            padding: 30px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, vars.$primary-color 0%, vars.$secondary-color 100%);
+            border-radius: 8px;
+
+            .headerContent {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .title {
+                    color: white !important;
+                    font-weight: 600;
+                }
+
+                .logoutButton {
+                    background-color: vars.$primary-color !important;
+                    border: 2px solid white !important;
+                    color: white !important;
+                    font-weight: 500;
+                    padding: 8px 24px;
+                    transition: all 0.3s ease;
+
+                    &:hover {
+                        background-color: rgba(255, 255, 255, 0.3) !important;
+                    }
+                }
+            }
+        }
+    }
+}
