@@ -5,12 +5,20 @@ $default-font-size: 12px;
 
 $font-color1: #ffffff;
 $font-color2: #000000;
-$font-family: 'Roboto', sans-serif;
+$font-family: 'Poppins', sans-serif;
 
 $white: #ffffff;
 $black: #000000;
 
 $envLabel: #d21919; 
+
+$input-height: 40px;
+
+$button-height: 36px;
+
+$cancel-button-background-color: #e5e5e5;
+$cancel-button-hover-color: #f3efef;
+$cancel-button-font-color: #676767;
 
 :root{
     --primary-color: #{$primary-color};
@@ -19,4 +27,9 @@ $envLabel: #d21919;
     --font-color1: #{$font-color1};
     --font-color2: #{$font-color2};
     --font-family: #{$font-family}; 
+    --input-height: #{$input-height};
+    --button-height: #{$button-height};
+    --cancel-button-background-color: #{$cancel-button-background-color};
+    --cancel-button-hover-color: #{$cancel-button-hover-color};
+    --cancel-button-font-color: #{$cancel-button-font-color};
 }

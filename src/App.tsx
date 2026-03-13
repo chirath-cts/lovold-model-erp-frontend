@@ -1,11 +1,12 @@
 import { ToastContainer } from "react-toastify";
-import EnvironmentLabel from "./components/EnvironmentLabel/EnvironmentLabel";
+import EnvironmentLabel from "components/layout/EnvironmentLabel/EnvironmentLabel";
+import AppRouter from "routes/AppRouter";
 
 function App() {
   return (
     <>
-      <h1>Vite + React</h1>
-      <ToastContainer position="top-right" autoClose={3000}/>
+      <AppRouter />
+      <ToastContainer position="top-right" autoClose={3000} />
       <EnvironmentLabel />
     </>
   );

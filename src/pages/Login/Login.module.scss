@@ -1,0 +1,55 @@
+@use "styles/variables" as vars;
+
+.loginWrapper {
+    background: #f3f3f3;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .loginContainer {
+        width: 100%;
+        max-width: 100% !important;
+        display: flex;
+        justify-content: center;
+
+        .loginCard {
+            padding: 40px 30px;
+            border-radius: 8px;
+            background-color: vars.$white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+            transition: transform 0.3s ease;
+            width: 350px;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+
+            &:hover {
+                transform: translateY(-4px);
+            }
+
+            .loginTitle {
+                text-align: center;
+                font-weight: 500 !important;
+                margin-bottom: 20px;
+                color: vars.$primary-color;
+                font-size: 46px !important;
+
+                .loginLogo {
+                    margin-right: 8px;
+                    color: vars.$primary-color;
+                    font-size: 32px;
+                }
+            }
+
+            .loginForm {
+                display: flex;
+                flex-direction: column;
+
+                .loginButton {
+                    margin-top: 24px !important;
+                }
+            }
+        }
+    }
+}

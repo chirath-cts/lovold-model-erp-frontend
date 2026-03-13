@@ -9,7 +9,13 @@
     "paths": {
       "@/*": ["*"],
       "components/*": ["components/*"],
-      "styles/*": ["styles/*"]
+      "constants/*": ["constants/*"],
+      "models/*": ["models/*"],
+      "styles/*": ["styles/*"],
+      "pages/*": ["pages/*"],
+      "themes/*": ["themes/*"],
+      "utils/*": ["utils/*"],
+      "routes/*": ["routes/*"]
     },
     "ignoreDeprecations": "6.0"
   }
