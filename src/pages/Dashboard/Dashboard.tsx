@@ -1,15 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import {
-  Button,
-  Card,
-  CardContent,
-  Container,
-  Grid,
-  Paper,
-  Typography,
-} from "@mui/material";
+import { Button, Container, Paper, Typography } from "@mui/material";
 import { LoadingOverlay } from "components/common";
 import styles from "./Dashboard.module.scss";
 
@@ -72,71 +64,6 @@ const Dashboard = () => {
               </Button>
             </div>
           </Paper>
-
-          {/* User Info Card */}
-          <Grid container spacing={3} className={styles.content}>
-            <Grid item xs={12} sm={6} md={4}>
-              <Card className={styles.infoCard}>
-                <CardContent>
-                  <Typography color="textSecondary" gutterBottom>
-                    Username
-                  </Typography>
-                  <Typography variant="h6">{user.username}</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={4}>
-              <Card className={styles.infoCard}>
-                <CardContent>
-                  <Typography color="textSecondary" gutterBottom>
-                    Role
-                  </Typography>
-                  <Typography variant="h6">{user.role}</Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={12} sm={6} md={4}>
-              <Card className={styles.infoCard}>
-                <CardContent>
-                  <Typography color="textSecondary" gutterBottom>
-                    Status
-                  </Typography>
-                  <Typography
-                    variant="h6"
-                    className={
-                      user.status === "active"
-                        ? styles.statusActive
-                        : styles.statusInactive
-                    }
-                  >
-                    {user.status}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-
-            <Grid item xs={12}>
-              <Card className={styles.detailsCard}>
-                <CardContent>
-                  <Typography variant="h6" gutterBottom>
-                    Personal Information
-                  </Typography>
-                  <div className={styles.detailsGrid}>
-                    <div className={styles.detailItem}>
-                      <Typography color="textSecondary">Email</Typography>
-                      <Typography variant="body1">{user.email}</Typography>
-                    </div>
-                    <div className={styles.detailItem}>
-                      <Typography color="textSecondary">User ID</Typography>
-                      <Typography variant="body1">{user.id}</Typography>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </Grid>
-          </Grid>
         </Container>
       </div>
     </>

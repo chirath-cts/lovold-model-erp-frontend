@@ -1,5 +1,5 @@
 $primary-color: #00526C;
-$second-color: #005671;
+$secondary-color: #005671;
 
 $default-font-size: 12px;
 
@@ -22,7 +22,7 @@ $cancel-button-font-color: #676767;
 
 :root{
     --primary-color: #{$primary-color};
-    --second-color: #{$second-color};
+    --secondary-color: #{$secondary-color};
     --default-font-size: #{$default-font-size};
     --font-color1: #{$font-color1};
     --font-color2: #{$font-color2};

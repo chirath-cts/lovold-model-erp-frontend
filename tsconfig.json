@@ -15,7 +15,8 @@
       "pages/*": ["pages/*"],
       "themes/*": ["themes/*"],
       "utils/*": ["utils/*"],
-      "routes/*": ["routes/*"]
+      "routes/*": ["routes/*"],
+      "hooks/*": ["hooks/*"]
     },
     "ignoreDeprecations": "6.0"
   }

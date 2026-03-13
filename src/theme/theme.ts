@@ -61,7 +61,7 @@ const theme = createTheme({
           fontWeight: 600,
           textTransform: "none",
           "&:hover": {
-            backgroundColor: "var(--second-color)",
+            backgroundColor: "var(--secondary-color)",
           },
         },
         outlinedSecondary: {

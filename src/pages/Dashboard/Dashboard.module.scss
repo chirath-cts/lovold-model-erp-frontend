@@ -1,94 +1,40 @@
 @use "styles/variables" as vars;
 
 .dashboardWrapper {
-  background: #f5f5f5;
-  min-height: 100vh;
-  padding: 40px 0;
+    background: #f5f5f5;
+    min-height: 100vh;
+    padding: 40px 0;
 
-  .dashboardContainer {
-    .header {
-      padding: 30px;
-      margin-bottom: 30px;
-      background: linear-gradient(135deg, vars.$primary-color 0%, #1976d2 100%);
-      border-radius: 8px;
+    .dashboardContainer {
+        .header {
+            padding: 30px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, vars.$primary-color 0%, vars.$secondary-color 100%);
+            border-radius: 8px;
 
-      .headerContent {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+            .headerContent {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
 
-        .title {
-          color: white !important;
-          font-weight: 600;
-        }
+                .title {
+                    color: white !important;
+                    font-weight: 600;
+                }
 
-        .logoutButton {
-          background-color: rgba(255, 255, 255, 0.2) !important;
-          border: 2px solid white !important;
-          color: white !important;
-          font-weight: 500;
-          padding: 8px 24px;
-          transition: all 0.3s ease;
+                .logoutButton {
+                    background-color: vars.$primary-color !important;
+                    border: 2px solid white !important;
+                    color: white !important;
+                    font-weight: 500;
+                    padding: 8px 24px;
+                    transition: all 0.3s ease;
 
-          &:hover {
-            background-color: rgba(255, 255, 255, 0.3) !important;
-          }
-        }
-      }
-    }
-
-    .content {
-      margin-top: 30px;
-
-      .infoCard {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        height: 100%;
-        border-radius: 8px;
-
-        &:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
-        }
-      }
-
-      .statusActive {
-        color: #4caf50;
-        font-weight: 600;
-      }
-
-      .statusInactive {
-        color: #f44336;
-        font-weight: 600;
-      }
-
-      .detailsCard {
-        background-color: white;
-        border-radius: 8px;
-
-        .detailsGrid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-          gap: 20px;
-          margin-top: 15px;
-
-          .detailItem {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-
-            p:first-child {
-              font-size: 0.875rem;
-              font-weight: 500;
+                    &:hover {
+                        background-color: rgba(255, 255, 255, 0.3) !important;
+                    }
+                }
             }
-
-            p:last-child {
-              font-size: 1rem;
-              font-weight: 500;
-              color: #333;
-            }
-          }
         }
-      }
     }
-  }
 }
