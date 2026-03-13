@@ -1,0 +1,59 @@
+{
+  "products": [
+    {
+      "id": "1a7c4f61-9c4d-4b32-bd51-2a5e7c1f0a11",
+      "name": "HDPE Fish Cage 50m",
+      "sku": "CAGE-50-HDPE",
+      "categoryId": "3f1c7a92-4d4b-4f18-9a3d-2e7c8a1f5b21",
+      "unitPrice": 18500,
+      "currency": "NOK",
+      "unit": "pcs",
+      "description": "Heavy-duty HDPE floating cage used for offshore salmon farming.",
+      "status": "active"
+    },
+    {
+      "id": "2b8e5a72-7d4f-4c44-ae23-3f7b8d2e1a22",
+      "name": "Nylon Fishing Net 100m",
+      "sku": "NET-100-NYL",
+      "categoryId": "9b2d6e3f-8c21-4a61-90a1-7e2b1f4c3a11",
+      "unitPrice": 4200,
+      "currency": "NOK",
+      "unit": "pcs",
+      "description": "Durable nylon net used for fish cage enclosures and harvesting.",
+      "status": "active"
+    },
+    {
+      "id": "3c9f6b83-8e5d-4d55-bf34-4a8c9e3f2b33",
+      "name": "Stainless Steel Bolt M16",
+      "sku": "BOLT-M16-SS",
+      "categoryId": "6a4f9c8b-1e7d-4f5a-b2c1-5e7a3b8d9c33",
+      "unitPrice": 12.5,
+      "currency": "NOK",
+      "unit": "pcs",
+      "description": "Marine-grade stainless steel bolt used for assembling aquaculture equipment.",
+      "status": "active"
+    },
+    {
+      "id": "4d1a7c94-9f6e-4e66-c045-5b9d0f4a3c44",
+      "name": "Mooring Rope 30mm",
+      "sku": "MOOR-ROPE-30",
+      "categoryId": "c5e2a9d7-0b4c-4a8e-bf4d-1d3e7a9c6f55",
+      "unitPrice": 95,
+      "currency": "NOK",
+      "unit": "m",
+      "description": "Heavy-duty rope used for securing fish cages and aquaculture structures.",
+      "status": "active"
+    },
+    {
+      "id": "5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
+      "name": "Automatic Fish Feeder 200kg",
+      "sku": "FEED-AUTO-200",
+      "categoryId": "8d1f3b7a-5e2c-4a90-9f7b-2c6a8e4d1b99",
+      "unitPrice": 7200,
+      "currency": "NOK",
+      "unit": "pcs",
+      "description": "Automatic feeding system used in aquaculture farms for efficient fish feeding.",
+      "status": "active"
+    }
+  ]
+}

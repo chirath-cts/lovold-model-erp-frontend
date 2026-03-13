@@ -5,6 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "generate-mock": "node mock/generateDb.js",
+    "mock": "json-server --watch mock/db.json --port 4000",
+    "start": "npm run generate-mock && concurrently \"npm run dev\" \"npm run mock\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"

@@ -1,0 +1,191 @@
+{
+  "customers": [
+    {
+      "id": "9a2c2f1a-4a5f-4fcb-9f3b-3e7a1c1b8d01",
+      "name": "Ola Nordmann",
+      "email": "ola.nordmann@example.no",
+      "phone": "+47 915 34 221",
+      "address": "Karl Johans gate 15, 0154 Oslo, Norway",
+      "status": "active",
+      "createdAt": "2025-11-10T09:15:22Z"
+    },
+    {
+      "id": "f0c6d8a2-93d5-4c17-b71b-9e0d7f1a2a11",
+      "name": "Bergen Seafood AS",
+      "email": "contact@bergenseafood.no",
+      "phone": "+47 482 19 774",
+      "address": "Bryggen 12, 5003 Bergen, Norway",
+      "status": "active",
+      "createdAt": "2025-12-01T13:42:10Z"
+    },
+    {
+      "id": "b3d4e51c-0a22-4c78-98c6-2b9c1f0e7d45",
+      "name": "Lars Hansen",
+      "email": "lars.hansen@example.no",
+      "phone": "+47 907 55 663",
+      "address": "Storgata 44, 9008 Tromsø, Norway",
+      "status": "inactive",
+      "createdAt": "2025-10-18T08:21:03Z"
+    },
+    {
+      "id": "1e8b6a3f-9e51-4d6c-8a34-4a0d2c9c8b77",
+      "name": "Nordic Aqua Supplies AS",
+      "email": "sales@nordicaqua.no",
+      "phone": "+47 468 72 990",
+      "address": "Haakon VIIs gate 7, 7041 Trondheim, Norway",
+      "status": "active",
+      "createdAt": "2025-12-12T11:05:47Z"
+    },
+    {
+      "id": "6c9d7b2f-0f6b-4c23-9a1a-8e4b9a2f1e33",
+      "name": "Ingrid Solberg",
+      "email": "ingrid.solberg@example.no",
+      "phone": "+47 934 88 102",
+      "address": "Kirkegata 21, 4006 Stavanger, Norway",
+      "status": "active",
+      "createdAt": "2025-11-25T16:33:58Z"
+    }
+  ],
+  "orders": [],
+  "productCategories": [
+    {
+      "id": "3f1c7a92-4d4b-4f18-9a3d-2e7c8a1f5b21",
+      "name": "Fish Cages",
+      "description": "Floating and submersible cages used for fish farming operations."
+    },
+    {
+      "id": "9b2d6e3f-8c21-4a61-90a1-7e2b1f4c3a11",
+      "name": "Fishing Nets",
+      "description": "Durable nets used for aquaculture cages, harvesting, and fish handling."
+    },
+    {
+      "id": "6a4f9c8b-1e7d-4f5a-b2c1-5e7a3b8d9c33",
+      "name": "Bolts & Fasteners",
+      "description": "Stainless steel bolts, nuts, and fasteners used for assembling aquaculture equipment."
+    },
+    {
+      "id": "c5e2a9d7-0b4c-4a8e-bf4d-1d3e7a9c6f55",
+      "name": "Mooring Equipment",
+      "description": "Anchors, ropes, and mooring systems used to secure fish cages in water."
+    },
+    {
+      "id": "8d1f3b7a-5e2c-4a90-9f7b-2c6a8e4d1b99",
+      "name": "Feeding Equipment",
+      "description": "Automatic feeders, feeding pipes, and accessories used for fish feeding systems."
+    }
+  ],
+  "products": [
+    {
+      "id": "1a7c4f61-9c4d-4b32-bd51-2a5e7c1f0a11",
+      "name": "HDPE Fish Cage 50m",
+      "sku": "CAGE-50-HDPE",
+      "categoryId": "3f1c7a92-4d4b-4f18-9a3d-2e7c8a1f5b21",
+      "unitPrice": 18500,
+      "currency": "NOK",
+      "unit": "pcs",
+      "description": "Heavy-duty HDPE floating cage used for offshore salmon farming.",
+      "status": "active"
+    },
+    {
+      "id": "2b8e5a72-7d4f-4c44-ae23-3f7b8d2e1a22",
+      "name": "Nylon Fishing Net 100m",
+      "sku": "NET-100-NYL",
+      "categoryId": "9b2d6e3f-8c21-4a61-90a1-7e2b1f4c3a11",
+      "unitPrice": 4200,
+      "currency": "NOK",
+      "unit": "pcs",
+      "description": "Durable nylon net used for fish cage enclosures and harvesting.",
+      "status": "active"
+    },
+    {
+      "id": "3c9f6b83-8e5d-4d55-bf34-4a8c9e3f2b33",
+      "name": "Stainless Steel Bolt M16",
+      "sku": "BOLT-M16-SS",
+      "categoryId": "6a4f9c8b-1e7d-4f5a-b2c1-5e7a3b8d9c33",
+      "unitPrice": 12.5,
+      "currency": "NOK",
+      "unit": "pcs",
+      "description": "Marine-grade stainless steel bolt used for assembling aquaculture equipment.",
+      "status": "active"
+    },
+    {
+      "id": "4d1a7c94-9f6e-4e66-c045-5b9d0f4a3c44",
+      "name": "Mooring Rope 30mm",
+      "sku": "MOOR-ROPE-30",
+      "categoryId": "c5e2a9d7-0b4c-4a8e-bf4d-1d3e7a9c6f55",
+      "unitPrice": 95,
+      "currency": "NOK",
+      "unit": "m",
+      "description": "Heavy-duty rope used for securing fish cages and aquaculture structures.",
+      "status": "active"
+    },
+    {
+      "id": "5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
+      "name": "Automatic Fish Feeder 200kg",
+      "sku": "FEED-AUTO-200",
+      "categoryId": "8d1f3b7a-5e2c-4a90-9f7b-2c6a8e4d1b99",
+      "unitPrice": 7200,
+      "currency": "NOK",
+      "unit": "pcs",
+      "description": "Automatic feeding system used in aquaculture farms for efficient fish feeding.",
+      "status": "active"
+    }
+  ],
+  "users": [
+    {
+      "id": "c7d1a7a4-2d79-4f47-9c64-0c1b5a1f8b21",
+      "username": "ola.admin",
+      "password": "password123",
+      "firstName": "Ola",
+      "lastName": "Nordmann",
+      "email": "ola.nordmann@fjordsea.no",
+      "role": "Admin",
+      "status": "active",
+      "createdAt": "2025-11-10T08:30:12Z"
+    },
+    {
+      "id": "f3b6c0b7-0b3c-4d4a-9a7e-1c5a8a1e3f02",
+      "username": "kari.manager",
+      "password": "password123",
+      "firstName": "Kari",
+      "lastName": "Hansen",
+      "email": "kari.hansen@fjordsea.no",
+      "role": "Manager",
+      "status": "active",
+      "createdAt": "2025-11-12T09:22:45Z"
+    },
+    {
+      "id": "a8e1f7c2-8d2c-4b57-bfd5-0b7e1c9f5e31",
+      "username": "lars.sales",
+      "password": "password123",
+      "firstName": "Lars",
+      "lastName": "Johansen",
+      "email": "lars.johansen@fjordsea.no",
+      "role": "Sales",
+      "status": "active",
+      "createdAt": "2025-11-15T13:10:08Z"
+    },
+    {
+      "id": "b6d2f3a4-1c6b-4c82-b1f3-9a3d7c8e2b55",
+      "username": "ingrid.warehouse",
+      "password": "password123",
+      "firstName": "Ingrid",
+      "lastName": "Solberg",
+      "email": "ingrid.solberg@fjordsea.no",
+      "role": "Warehouse",
+      "status": "active",
+      "createdAt": "2025-11-18T10:41:19Z"
+    },
+    {
+      "id": "d9c5a2e8-6f7b-4a91-9e4c-2a8f1c3d7b90",
+      "username": "erik.support",
+      "password": "password123",
+      "firstName": "Erik",
+      "lastName": "Berg",
+      "email": "erik.berg@fjordsea.no",
+      "role": "Support",
+      "status": "inactive",
+      "createdAt": "2025-11-20T15:05:33Z"
+    }
+  ]
+}
