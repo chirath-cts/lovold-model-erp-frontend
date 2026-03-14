@@ -1,0 +1,71 @@
+@use "styles/variables" as vars;
+
+.sidebarDrawer {
+    .MuiDrawer-paper {
+        background-color: vars.$primary-color;
+    }
+}
+
+.sidebarHeader {
+    padding: 16px;
+    margin-top: 12px;
+}
+
+.sidebarLogo {
+    color: vars.$white;
+    font-weight: 500;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+
+.sidebarLogoIcon {
+    margin-right: 8px;
+    color: vars.$white;
+    font-size: 14px;
+}
+
+.sidebarList {
+    margin-top: 32px;
+    padding-left: 0;
+
+    .sidebarSection {
+        margin-bottom: 30px;
+
+        ul {
+            padding: 0;
+        }
+
+        .sidebarSubheader {
+            background-color: transparent;
+            line-height: 0;
+            color: #bdc6e9;
+            font-size: 12px;
+            margin: 12px 0;
+        }
+
+        .sidebarItem {
+            border-radius: 6px;
+            height: 32px;
+            min-height: 32px;
+            padding: 0 16px;
+            margin: 2px 12px;
+            width: auto;
+
+            &:hover {
+                background-color: vars.$secondary-color;
+                cursor: pointer;
+            }
+
+            &.active {
+                background-color: vars.$secondary-color;
+            }
+
+            .sidebarIcon {
+                margin-right: 8px;
+                color: vars.$white;
+                font-size: 14px;
+            }
+        }
+    }
+}

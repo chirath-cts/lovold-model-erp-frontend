@@ -1,0 +1,174 @@
+@use "styles/variables" as vars;
+
+.mainLayout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.mainAppbar {
+    background-color: #f4faff !important;
+    color: #111d23 !important;
+    box-shadow: 0 2px 4px rgba(0, 58, 77, 0.06) !important;
+    border-bottom: 1px solid #d7e5ed !important;
+}
+
+.mainToolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding-left: 32px;
+    padding-right: 32px;
+    min-height: 64px;
+}
+
+.leftSection {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex: 1;
+}
+
+.pageTitle {
+    font-weight: 500;
+    color: #111d23;
+    font-size: 20px;
+    white-space: nowrap;
+}
+
+.searchInput {
+    max-width: 328px;
+    width: 100%;
+
+    & .MuiOutlinedInput-root {
+        background-color: #e8f6fe;
+        border-radius: 24px;
+        color: #111d23;
+
+        & fieldset {
+            border: none;
+        }
+
+        &:hover fieldset {
+            border: none;
+        }
+
+        &.Mui-focused fieldset {
+            border: 2px solid #003a4d;
+        }
+    }
+
+    & .MuiOutlinedInput-input {
+        padding: 8px 16px;
+        font-size: 14px;
+
+        &::placeholder {
+            color: #70787d;
+            opacity: 0.6;
+        }
+    }
+}
+
+.rightSection {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.notificationButton {
+    width: 40px;
+    height: 40px;
+    color: #40484c;
+    transition: all 0.2s ease;
+
+    &:hover {
+        background-color: #e2f0f8;
+    }
+}
+
+.dividerVertical {
+    height: 20px;
+    border-color: rgba(192, 200, 205, 0.27);
+}
+
+.userProfileBox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-left: 16px;
+    cursor: pointer;
+}
+
+.userAvatar {
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+
+.userInfo {
+    line-height: 1.2;
+}
+
+.userNameText {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111d23;
+}
+
+.userRoleText {
+    font-size: 12px;
+    color: #70787d;
+}
+
+.menuPaper {
+    background-color: #f4faff !important;
+    border: 1px solid #d7e5ed !important;
+}
+
+.menuContentBox {
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+}
+
+.menuAvatar {
+    width: 40px;
+    height: 40px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 8px;
+}
+
+.menuUserName {
+    font-weight: 600;
+    color: #111d23;
+}
+
+.menuUserRole {
+    color: #70787d;
+}
+
+.logoutMenuItem {
+    justify-content: center;
+    font-weight: 600;
+    color: #ba1a1a;
+
+    &:hover {
+        background-color: #e8f6fe;
+    }
+}
+
+.mainContent {
+    width: calc(100% - 256px);
+    margin-top: 64px;
+    padding: 12px;
+    overflow: auto;
+    flex-grow: 1;
+}
