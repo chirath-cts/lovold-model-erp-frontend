@@ -1,0 +1,72 @@
+@use "styles/variables" as vars;
+
+.mainLayout {
+    display: flex;
+}
+
+.mainAppbar {
+    background-color: vars.$white !important;
+    box-shadow: none !important;
+    margin-bottom: 20px;
+    padding-top: 8px;
+}
+
+.mainToolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.mainTitle {
+    color: vars.$black; 
+    font-size: 28px !important;
+}
+
+.mainAvatar {
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    background-color: vars.$primary-color !important;
+}
+
+.mainMenu {
+    .MuiMenu-paper {
+        width: 160px;
+        padding: 0 !important;
+    }
+
+    .MuiMenu-list {
+        padding: 0 !important;
+    }
+}
+
+.mainMenuPaper {
+    width: 160px;
+    padding: 0 !important;
+}
+
+.mainMenuList {
+    padding: 0 !important;
+}
+
+.mainMenuItem {
+    padding-top: 2px;
+    padding-bottom: 2px;
+    min-height: 28px;
+    font-size: vars.$font-size2 !important;
+    line-height: 2;
+
+    &:hover {
+        background-color: vars.$primary-color !important;
+        color: vars.$white;
+    }
+}
+
+.mainMenuDivider {
+    margin: 0 !important;
+}
+
+.mainContent {
+    flex-grow: 1;
+    padding: 24px;
+    margin-top: 64px;
+}
