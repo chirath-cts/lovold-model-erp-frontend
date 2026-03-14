@@ -1,0 +1,19 @@
+{
+  "warehouses": [
+    {
+      "id": "wh-001",
+      "name": "Oslo Central Warehouse",
+      "location": "Oslo, Norway"
+    },
+    {
+      "id": "wh-002",
+      "name": "Bergen Coastal Warehouse",
+      "location": "Bergen, Norway"
+    },
+    {
+      "id": "wh-003",
+      "name": "Trondheim Service Warehouse",
+      "location": "Trondheim, Norway"
+    }
+  ]
+}

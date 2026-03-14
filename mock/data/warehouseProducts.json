@@ -1,0 +1,244 @@
+{
+  "warehouseProducts": [
+    {
+      "id": "wp-001",
+      "warehouseId": "wh-001",
+      "productId": "1a7c4f61-9c4d-4b32-bd51-2a5e7c1f0a11",
+      "supplierId": "sup-001",
+      "stockQuantity": 5,
+      "reorderLevel": 12,
+      "supplierPrice": 12834,
+      "supplierDiscount": 3
+    },
+    {
+      "id": "wp-002",
+      "warehouseId": "wh-002",
+      "productId": "1a7c4f61-9c4d-4b32-bd51-2a5e7c1f0a11",
+      "supplierId": "sup-003",
+      "stockQuantity": 3,
+      "reorderLevel": 12,
+      "supplierPrice": 13392,
+      "supplierDiscount": 1.5
+    },
+    {
+      "id": "wp-003",
+      "warehouseId": "wh-002",
+      "productId": "2b8e5a72-7d4f-4c44-ae23-3f7b8d2e1a22",
+      "supplierId": "sup-002",
+      "stockQuantity": 23,
+      "reorderLevel": 20,
+      "supplierPrice": 2769.2,
+      "supplierDiscount": 3
+    },
+    {
+      "id": "wp-004",
+      "warehouseId": "wh-003",
+      "productId": "2b8e5a72-7d4f-4c44-ae23-3f7b8d2e1a22",
+      "supplierId": "sup-004",
+      "stockQuantity": 13,
+      "reorderLevel": 20,
+      "supplierPrice": 2889.6,
+      "supplierDiscount": 1.5
+    },
+    {
+      "id": "wp-005",
+      "warehouseId": "wh-003",
+      "productId": "3c9f6b83-8e5d-4d55-bf34-4a8c9e3f2b33",
+      "supplierId": "sup-003",
+      "stockQuantity": 416,
+      "reorderLevel": 220,
+      "supplierPrice": 7.54,
+      "supplierDiscount": 3
+    },
+    {
+      "id": "wp-006",
+      "warehouseId": "wh-001",
+      "productId": "3c9f6b83-8e5d-4d55-bf34-4a8c9e3f2b33",
+      "supplierId": "sup-005",
+      "stockQuantity": 224,
+      "reorderLevel": 220,
+      "supplierPrice": 7.87,
+      "supplierDiscount": 1.5
+    },
+    {
+      "id": "wp-007",
+      "warehouseId": "wh-001",
+      "productId": "4d1a7c94-9f6e-4e66-c045-5b9d0f4a3c44",
+      "supplierId": "sup-004",
+      "stockQuantity": 637,
+      "reorderLevel": 320,
+      "supplierPrice": 56.12,
+      "supplierDiscount": 3
+    },
+    {
+      "id": "wp-008",
+      "warehouseId": "wh-002",
+      "productId": "4d1a7c94-9f6e-4e66-c045-5b9d0f4a3c44",
+      "supplierId": "sup-001",
+      "stockQuantity": 343,
+      "reorderLevel": 320,
+      "supplierPrice": 58.56,
+      "supplierDiscount": 1.5
+    },
+    {
+      "id": "wp-009",
+      "warehouseId": "wh-002",
+      "productId": "5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
+      "supplierId": "sup-005",
+      "stockQuantity": 9,
+      "reorderLevel": 10,
+      "supplierPrice": 4765.6,
+      "supplierDiscount": 3
+    },
+    {
+      "id": "wp-010",
+      "warehouseId": "wh-003",
+      "productId": "5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
+      "supplierId": "sup-002",
+      "stockQuantity": 5,
+      "reorderLevel": 10,
+      "supplierPrice": 4972.8,
+      "supplierDiscount": 1.5
+    },
+    {
+      "id": "wp-011",
+      "warehouseId": "wh-003",
+      "productId": "6f4e9ab1-3c67-49c1-95b9-0b7a8f6d1011",
+      "supplierId": "sup-001",
+      "stockQuantity": 14,
+      "reorderLevel": 15,
+      "supplierPrice": 2369,
+      "supplierDiscount": 3
+    },
+    {
+      "id": "wp-012",
+      "warehouseId": "wh-001",
+      "productId": "6f4e9ab1-3c67-49c1-95b9-0b7a8f6d1011",
+      "supplierId": "sup-003",
+      "stockQuantity": 8,
+      "reorderLevel": 15,
+      "supplierPrice": 2472,
+      "supplierDiscount": 1.5
+    },
+    {
+      "id": "wp-013",
+      "warehouseId": "wh-001",
+      "productId": "7a6b5c2d-8e31-4f02-9b4f-6d2a1c3e2022",
+      "supplierId": "sup-002",
+      "stockQuantity": 8,
+      "reorderLevel": 14,
+      "supplierPrice": 1886,
+      "supplierDiscount": 3
+    },
+    {
+      "id": "wp-014",
+      "warehouseId": "wh-002",
+      "productId": "7a6b5c2d-8e31-4f02-9b4f-6d2a1c3e2022",
+      "supplierId": "sup-004",
+      "stockQuantity": 4,
+      "reorderLevel": 14,
+      "supplierPrice": 1968,
+      "supplierDiscount": 1.5
+    },
+    {
+      "id": "wp-015",
+      "warehouseId": "wh-002",
+      "productId": "8b7c6d3e-9f42-4a13-8c5a-7e3b2d4f3033",
+      "supplierId": "sup-003",
+      "stockQuantity": 7,
+      "reorderLevel": 8,
+      "supplierPrice": 7801.6,
+      "supplierDiscount": 3
+    },
+    {
+      "id": "wp-016",
+      "warehouseId": "wh-003",
+      "productId": "8b7c6d3e-9f42-4a13-8c5a-7e3b2d4f3033",
+      "supplierId": "sup-005",
+      "stockQuantity": 4,
+      "reorderLevel": 8,
+      "supplierPrice": 8140.8,
+      "supplierDiscount": 1.5
+    },
+    {
+      "id": "wp-017",
+      "warehouseId": "wh-003",
+      "productId": "9c8d7e4f-0a53-4b24-9d6b-8f4c3e5a4044",
+      "supplierId": "sup-004",
+      "stockQuantity": 6,
+      "reorderLevel": 10,
+      "supplierPrice": 4305.6,
+      "supplierDiscount": 3
+    },
+    {
+      "id": "wp-018",
+      "warehouseId": "wh-001",
+      "productId": "9c8d7e4f-0a53-4b24-9d6b-8f4c3e5a4044",
+      "supplierId": "sup-001",
+      "stockQuantity": 3,
+      "reorderLevel": 10,
+      "supplierPrice": 4492.8,
+      "supplierDiscount": 1.5
+    },
+    {
+      "id": "wp-019",
+      "warehouseId": "wh-001",
+      "productId": "ad9e8f5a-1b64-4c35-ae7c-9a5d4f6b5055",
+      "supplierId": "sup-005",
+      "stockQuantity": 11,
+      "reorderLevel": 10,
+      "supplierPrice": 3514.4,
+      "supplierDiscount": 3
+    },
+    {
+      "id": "wp-020",
+      "warehouseId": "wh-002",
+      "productId": "ad9e8f5a-1b64-4c35-ae7c-9a5d4f6b5055",
+      "supplierId": "sup-002",
+      "stockQuantity": 6,
+      "reorderLevel": 10,
+      "supplierPrice": 3667.2,
+      "supplierDiscount": 1.5
+    },
+    {
+      "id": "wp-021",
+      "warehouseId": "wh-002",
+      "productId": "beaf9a6b-2c75-4d46-bf8d-ab6e5c7d6066",
+      "supplierId": "sup-001",
+      "stockQuantity": 49,
+      "reorderLevel": 30,
+      "supplierPrice": 434.24,
+      "supplierDiscount": 3
+    },
+    {
+      "id": "wp-022",
+      "warehouseId": "wh-003",
+      "productId": "beaf9a6b-2c75-4d46-bf8d-ab6e5c7d6066",
+      "supplierId": "sup-003",
+      "stockQuantity": 26,
+      "reorderLevel": 30,
+      "supplierPrice": 453.12,
+      "supplierDiscount": 1.5
+    },
+    {
+      "id": "wp-023",
+      "warehouseId": "wh-003",
+      "productId": "cfb0ab7c-3d86-4e57-c09e-bc7f6d8e7077",
+      "supplierId": "sup-002",
+      "stockQuantity": 267,
+      "reorderLevel": 180,
+      "supplierPrice": 136.16,
+      "supplierDiscount": 3
+    },
+    {
+      "id": "wp-024",
+      "warehouseId": "wh-001",
+      "productId": "cfb0ab7c-3d86-4e57-c09e-bc7f6d8e7077",
+      "supplierId": "sup-004",
+      "stockQuantity": 144,
+      "reorderLevel": 180,
+      "supplierPrice": 142.08,
+      "supplierDiscount": 1.5
+    }
+  ]
+}

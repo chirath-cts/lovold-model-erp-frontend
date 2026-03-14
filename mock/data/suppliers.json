@@ -1,0 +1,44 @@
+{
+  "suppliers": [
+    {
+      "id": "sup-001",
+      "name": "Nordic Industrial Metals",
+      "email": "sales@nim.no",
+      "phone": "+47 22 11 88 00",
+      "address": "Drammensveien 88, 0271 Oslo, Norway",
+      "status": "active"
+    },
+    {
+      "id": "sup-002",
+      "name": "BlueWave Polymers",
+      "email": "contact@bluewavepoly.no",
+      "phone": "+47 55 23 40 19",
+      "address": "Sandslihaugen 10, 5254 Bergen, Norway",
+      "status": "active"
+    },
+    {
+      "id": "sup-003",
+      "name": "Arctic Sensor Labs",
+      "email": "ops@arcticsensor.se",
+      "phone": "+46 8 511 220 44",
+      "address": "Sveavagen 122, 113 50 Stockholm, Sweden",
+      "status": "active"
+    },
+    {
+      "id": "sup-004",
+      "name": "Ocean Pumps Europe",
+      "email": "parts@oceanpumps.dk",
+      "phone": "+45 35 70 91 80",
+      "address": "Nordre Fasanvej 203, 2000 Frederiksberg, Denmark",
+      "status": "active"
+    },
+    {
+      "id": "sup-005",
+      "name": "Aqua Process Components",
+      "email": "supply@aquaprocess.fi",
+      "phone": "+358 10 661 5700",
+      "address": "Lonnrotinkatu 7, 00120 Helsinki, Finland",
+      "status": "active"
+    }
+  ]
+}

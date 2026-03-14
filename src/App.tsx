@@ -1,11 +1,13 @@
-import EnvironmentLabel from "./components/EnvironmentLabel/EnvironmentLabel";
+import EnvironmentLabel from "@/components/EnvironmentLabel/EnvironmentLabel";
+import { AppProviders } from "@/app/AppProviders";
+import { AppRouter } from "@/app/router";
 
 function App() {
   return (
-    <>
-      <h1>Vite + React</h1>
+    <AppProviders>
+      <AppRouter />
       <EnvironmentLabel />
-    </>
+    </AppProviders>
   );
 }
 

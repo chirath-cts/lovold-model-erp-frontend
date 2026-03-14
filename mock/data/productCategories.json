@@ -24,6 +24,16 @@
       "id": "8d1f3b7a-5e2c-4a90-9f7b-2c6a8e4d1b99",
       "name": "Feeding Equipment",
       "description": "Automatic feeders, feeding pipes, and accessories used for fish feeding systems."
+    },
+    {
+      "id": "7f2e4a61-1b23-4a9c-a2f1-6e4b8c2d9001",
+      "name": "Sensors & Monitoring",
+      "description": "Environmental and process sensors for oxygen, pH, and temperature monitoring."
+    },
+    {
+      "id": "2d8a5f73-9c41-4f2b-b8e3-1c7a9d4e2002",
+      "name": "Water Treatment",
+      "description": "Filtration, UV treatment, and oxygen management systems for water quality."
     }
   ]
 }
