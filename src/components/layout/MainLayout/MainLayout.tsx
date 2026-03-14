@@ -20,6 +20,7 @@ import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import Sidebar from "../Sidebar/Sidebar";
+import styles from "./MainLayout.module.scss";
 
 const drawerWidth = 256;
 
@@ -56,41 +57,21 @@ const MainLayout = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", minHeight: "100vh" }}>
+    <Box className={styles.mainLayout}>
       <CssBaseline />
       <AppBar
         position="fixed"
+        className={styles.mainAppbar}
         sx={{
           width: `calc(100% - ${drawerWidth}px)`,
           ml: `${drawerWidth}px`,
-          backgroundColor: "#f4faff",
-          color: "#111d23",
-          boxShadow: "0 2px 4px rgba(0, 58, 77, 0.06)",
-          borderBottom: "1px solid #d7e5ed",
         }}
       >
-        <Toolbar
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: 3,
-            px: 4,
-            minHeight: 64,
-          }}
-        >
+        <Toolbar className={styles.mainToolbar}>
           {/* Left Section: Title & Search */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 3, flex: 1 }}>
+          <Box className={styles.leftSection}>
             {/* Page Title */}
-            <Typography
-              variant="h5"
-              sx={{
-                fontWeight: 500,
-                color: "#111d23",
-                fontSize: "20px",
-                whiteSpace: "nowrap",
-              }}
-            >
+            <Typography className={styles.pageTitle}>
               {getPageTitle()}
             </Typography>
 
@@ -100,32 +81,7 @@ const MainLayout = () => {
               size="small"
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
-              sx={{
-                maxWidth: 328,
-                width: "100%",
-                "& .MuiOutlinedInput-root": {
-                  backgroundColor: "#e8f6fe",
-                  borderRadius: "24px",
-                  color: "#111d23",
-                  "& fieldset": {
-                    border: "none",
-                  },
-                  "&:hover fieldset": {
-                    border: "none",
-                  },
-                  "&.Mui-focused fieldset": {
-                    border: "2px solid #003a4d",
-                  },
-                },
-                "& .MuiOutlinedInput-input": {
-                  padding: "8px 16px",
-                  fontSize: "14px",
-                  "&::placeholder": {
-                    color: "#70787d",
-                    opacity: 0.6,
-                  },
-                },
-              }}
+              className={styles.searchInput}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -137,18 +93,10 @@ const MainLayout = () => {
           </Box>
 
           {/* Right Section: Notifications & Profile */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+          <Box className={styles.rightSection}>
             {/* Notifications Button */}
             <IconButton
-              sx={{
-                width: 40,
-                height: 40,
-                color: "#40484c",
-                transition: "all 0.2s ease",
-                "&:hover": {
-                  backgroundColor: "#e2f0f8",
-                },
-              }}
+              className={styles.notificationButton}
             >
               <Badge
                 badgeContent={1}
@@ -156,7 +104,7 @@ const MainLayout = () => {
                   "& .MuiBadge-badge": {
                     backgroundColor: "#ba1a1a",
                     color: "#ba1a1a",
-                    boxShadow: `0 0 0 2px #f4faff`,
+                    boxShadow: "0 0 0 2px #f4faff",
                     width: 8,
                     height: 8,
                     borderRadius: "50%",
@@ -172,54 +120,26 @@ const MainLayout = () => {
             {/* Divider */}
             <Divider
               orientation="vertical"
-              sx={{
-                height: 20,
-                borderColor: "#c0c8cd44",
-              }}
+              className={styles.dividerVertical}
             />
 
             {/* User Profile Section */}
             <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1.5,
-                pl: 2,
-                cursor: "pointer",
-              }}
+              className={styles.userProfileBox}
               onClick={handleMenuOpen}
             >
               <Avatar
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJr-81-ct22niioNCe6txV6VDlzBYT0B5-4L_1P6H88kI6ROpyY9tzPmbMMV_2Vwl2bfmOq5Dfejp1-7JAtDgy2eysTanY2SzXrgWlY6EK6gdbsAWB1fuz7BRnRH-xtoDVvXjNZho14nxqGMYSoTAV88hPLBwCczpfd0hQMJuOoUcFFdZozZB52qRmswkqktvAt3VgKEvuPb4hpSYQ-8TuNhrK7fAbH7CDo65X2p2OYY6W22vo0gWBOZADGl4ltFZIOjg4i9gFMQM"
-                sx={{
-                  width: 32,
-                  height: 32,
-                  cursor: "pointer",
-                  transition: "transform 0.2s ease",
-                  "&:hover": {
-                    transform: "scale(1.05)",
-                  },
-                }}
+                className={styles.userAvatar}
               />
 
               {/* User Info - Hidden on small screens */}
               {isMdUp && (
-                <Box sx={{ lineHeight: 1.2 }}>
-                  <Typography
-                    sx={{
-                      fontSize: "14px",
-                      fontWeight: 600,
-                      color: "#111d23",
-                    }}
-                  >
+                <Box className={styles.userInfo}>
+                  <Typography className={styles.userNameText}>
                     Alex Mercer
                   </Typography>
-                  <Typography
-                    sx={{
-                      fontSize: "12px",
-                      color: "#70787d",
-                    }}
-                  >
+                  <Typography className={styles.userRoleText}>
                     Fleet Manager
                   </Typography>
                 </Box>
@@ -234,57 +154,25 @@ const MainLayout = () => {
               anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
               transformOrigin={{ vertical: "top", horizontal: "right" }}
               PaperProps={{
-                sx: {
-                  backgroundColor: "#f4faff",
-                  border: "1px solid #d7e5ed",
-                },
+                className: styles.menuPaper,
               }}
             >
-              <Box
-                sx={{
-                  px: 2,
-                  py: 1.5,
-                  textAlign: "center",
-                }}
-              >
+              <Box className={styles.menuContentBox}>
                 <Avatar
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJr-81-ct22niioNCe6txV6VDlzBYT0B5-4L_1P6H88kI6ROpyY9tzPmbMMV_2Vwl2bfmOq5Dfejp1-7JAtDgy2eysTanY2SzXrgWlY6EK6gdbsAWB1fuz7BRnRH-xtoDVvXjNZho14nxqGMYSoTAV88hPLBwCczpfd0hQMJuOoUcFFdZozZB52qRmswkqktvAt3VgKEvuPb4hpSYQ-8TuNhrK7fAbH7CDo65X2p2OYY6W22vo0gWBOZADGl4ltFZIOjg4i9gFMQM"
-                  sx={{
-                    width: 40,
-                    height: 40,
-                    mx: "auto",
-                    mb: 1,
-                  }}
+                  className={styles.menuAvatar}
                 />
-                <Typography
-                  variant="subtitle2"
-                  sx={{
-                    fontWeight: 600,
-                    color: "#111d23",
-                  }}
-                >
+                <Typography className={styles.menuUserName}>
                   Alex Mercer
                 </Typography>
-                <Typography
-                  variant="caption"
-                  sx={{
-                    color: "#70787d",
-                  }}
-                >
+                <Typography variant="caption" className={styles.menuUserRole}>
                   Fleet Manager
                 </Typography>
               </Box>
               <Divider sx={{ borderColor: "#d7e5ed" }} />
               <MenuItem
                 onClick={handleLogout}
-                sx={{
-                  justifyContent: "center",
-                  fontWeight: 600,
-                  color: "#ba1a1a",
-                  "&:hover": {
-                    backgroundColor: "#e8f6fe",
-                  },
-                }}
+                className={styles.logoutMenuItem}
               >
                 Logout
               </MenuItem>
@@ -299,13 +187,7 @@ const MainLayout = () => {
       {/* Main Content */}
       <Box
         component="main"
-        sx={{
-          width: `calc(100% - ${drawerWidth}px)`,
-          mt: 8,
-          p: 3,
-          overflow: "auto",
-          flexGrow: 1,
-        }}
+        className={styles.mainContent}
       >
         <Outlet />
       </Box>
