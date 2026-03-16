@@ -126,6 +126,11 @@ const rowToUser = (row) => ({
   createdAt: row.created_at,
 });
 
+const toSafeUser = (row) => {
+  const { password, ...user } = rowToUser(row);
+  return user;
+};
+
 const rowToSupplier = (row) => ({
   id: row.id,
   name: row.name,
@@ -643,6 +648,28 @@ app.get(
     );
 
     res.json(rows.map(rowToUser));
+  }),
+);
+
+app.post(
+  "/auth/login",
+  withErrorHandling(async (req, res) => {
+    const { username, password } = req.body ?? {};
+    if (!username || !password) return badRequest(res, "username and password are required");
+
+    const row = await db.get(
+      `SELECT id, username, password, first_name, last_name, email, role, status, created_at
+       FROM users
+       WHERE LOWER(username) = LOWER(?)
+       LIMIT 1`,
+      username,
+    );
+
+    if (!row) return res.status(401).send("Invalid username or password");
+    if (row.status && row.status !== "active") return res.status(403).send("User is not active");
+    if (row.password !== password) return res.status(401).send("Invalid username or password");
+
+    res.json(toSafeUser(row));
   }),
 );
 
