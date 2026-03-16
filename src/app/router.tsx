@@ -8,12 +8,15 @@ import { CategoriesPage } from "@/features/inventory/categories/pages/Categories
 import { DiscountsPage } from "@/features/inventory/discounts/pages/DiscountsPage";
 import { ProductsPage } from "@/features/inventory/products/pages/ProductsPage";
 import { OrdersPage } from "@/features/orders/pages/OrdersPage";
+import { LoginPage } from "@/features/auth/pages/LoginPage";
+import { RequireAuth } from "@/app/auth/RequireAuth";
 
 export function AppRouter() {
   return (
     <Routes>
-      <Route element={<AppLayout />}>
-        <Route path="/" element={<Navigate replace to="/dashboard" />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route element={<RequireAuth><AppLayout /></RequireAuth>}>
+        <Route path="/" element={<Navigate replace to="/login" />} />
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/inventory/products" element={<ProductsPage />} />
         <Route path="/inventory/categories" element={<CategoriesPage />} />
@@ -22,7 +25,7 @@ export function AppRouter() {
         <Route path="/customers" element={<CustomersPage />} />
         <Route path="/customers/:customerId" element={<CustomerDetailsPage />} />
       </Route>
-      <Route path="*" element={<Navigate replace to="/dashboard" />} />
+      <Route path="*" element={<Navigate replace to="/login" />} />
     </Routes>
   );
 }
