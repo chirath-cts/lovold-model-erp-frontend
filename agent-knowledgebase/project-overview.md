@@ -1,340 +1,343 @@
 # Lovold ERP MVP (Phase 1)
 
-## 📌 Project Overview
+## Project Overview
 
-This project is a frontend-first ERP MVP prototype being developed for **Lovold**, a company operating in the aquaculture technology domain.
+Lovold ERP MVP is a Phase 1 working vertical slice for Lovold’s aquaculture business workflows.
 
-The goal of this MVP is to demonstrate how Lovold can manage:
+The current system covers:
 
-- Products & Inventory
-- Customer-specific pricing (Discounts)
-- Sales Orders
-- Customer Data
-- Business Performance Dashboard
+- Inventory visibility (products and categories)
+- Customer-specific discount campaigns
+- Sales orders with stock impact
+- Customer directory and customer detail analytics
+- Operational dashboard with KPI and chart visibility
 
-This MVP is NOT a full ERP system.  
-It is a **simulation of core ERP workflows using dummy data**, intended to:
+This is still an MVP, but it is no longer only a frontend simulation. The current Phase 1 build runs with a lightweight Express + SQLite backend, seeded with realistic demo data.
 
-- Validate product direction with stakeholders
-- Demonstrate operational value
-- Establish UI/UX and architecture foundations
-- Enable iterative phased development toward a full ERP
+## Current Status (Implemented Now)
 
----
+Phase 1 is implemented as a modular frontend + lightweight backend stack:
 
-## 🎯 Phase 1 Objectives
+- Frontend: React + Vite + TypeScript, MUI-first UI, SCSS for custom styling
+- Backend: Express API with SQLite persistence
+- Data seeding: deterministic seed bootstrap from `mock/db.json`
+- Fallback mode: JSON Server is still available for local fallback/demo mode
 
-Phase 1 focuses on delivering a **thin but realistic operational slice** of the ERP.
+Key business behavior already in place:
 
-The MVP must allow users to:
+- Orders can be created with multiple lines
+- Product stock is reduced when an order is saved
+- Dashboard and lists refresh from live collections
+- Order and line-level profit values are persisted and displayed
 
-- View business performance on a Dashboard
-- Manage product inventory
-- Define customer-specific discounts
-- Create and manage sales orders
-- Track customers and their order history
-- See stock reduction immediately after order creation
-- View estimated profit using fixed product cost
+## Phase 1 Objectives
 
-The system must feel **interactive, believable, and enterprise-ready**, even though backend logic is simulated.
+Phase 1 delivers a realistic, demo-ready ERP slice that enables users to:
 
----
+- Monitor business KPIs and trends on the dashboard
+- View product inventory with stock health
+- Manage categories and discount campaigns
+- Create and track sales orders
+- Browse customers and inspect customer-level commercial metrics
 
-## 🧩 Domain Context (Aquaculture ERP)
+The intent is still validation-first, but with real API interactions and persisted MVP data.
 
-Lovold operates in a B2B industrial environment supplying equipment and systems such as:
+## Domain Context
 
-- Feeding system components
-- Sensors and monitoring devices
-- Mechanical and control equipment
-- Infrastructure hardware
+Lovold operates in a B2B aquaculture context with equipment, components, and operational products.
 
-Typical ERP needs include:
+Core ERP needs reflected in this MVP:
 
 - Inventory tracking
-- Customer pricing flexibility
-- Order lifecycle tracking
+- Customer-specific pricing control
+- Order lifecycle monitoring
 - Profit visibility
-- Operational dashboards
+- Business dashboarding
 
-This MVP reflects those business realities.
+## Tech Stack (Current)
 
----
+### Frontend
 
-## 🏗 Tech Stack
-
-- React
+- React 19 + TypeScript
 - Vite
-- Tailwind CSS
-- Material UI
-- JSON Server (mock backend)
-- Dummy seed data
+- Material UI (MUI) + MUI Icons
+- MUI X Charts
+- SCSS modules/partials for custom styling
+- React Query
+- React Hook Form + Zod
 
----
+### Backend
 
-## 🎨 Design System
+- Node.js + Express
+- SQLite (persisted local DB)
 
-### Brand Colors
+### Data/Dev Utilities
 
-Primary: `#00526C`  
-Secondary: `#005671`  
-Background: `#FFFFFF`  
-Text: Dark neutral gray / black  
+- Seed generation from `mock/db.json`
+- JSON Server (fallback mode)
 
-### UI Principles
+### Runtime Configuration
 
-- Clean Scandinavian SaaS style
-- High readability
-- Consistent spacing grid
-- 8px border radius
-- Soft shadows
-- Status badges and chips
-- Minimalistic charts
-- Consistent table patterns
-- Modal-driven workflows
+- Default frontend API base URL: `http://localhost:4001`
+- Override with `VITE_API_BASE_URL` when needed
 
-All screens must feel like part of a **single ERP product**, not isolated pages.
+## Design and Branding
 
----
+Current UI direction:
 
-## 🧭 Navigation Structure
-Dashboard
-Inventory
-├── Products
-├── Categories
-└── Discounts
-Sales
-└── Orders
-Customers
+- MUI-first design system
+- SCSS used only for custom/non-standard visuals
+- Consistent enterprise layout and table patterns
+- Standard monetary display in `NOK`
 
+Primary palette (current direction):
 
----
+- Primary: `#003A4D`
+- Primary container: `#00526C`
+- Secondary: `#1F6581`
+- App background: `#F4FAFF`
 
-## 📊 Module Breakdown
+## Navigation Structure
 
----
+- Dashboard
+- Inventory
+  - Products
+  - Categories
+  - Discounts
+- Sales
+  - Orders
+- Customers
 
-### 1. Dashboard
+## Module Breakdown
 
-Provides business visibility.
+### 1) Dashboard
 
-Features:
+Implemented now:
 
-- KPI Cards
+- KPI cards:
   - Total Sales
   - Total Orders
   - Estimated Profit
   - Low Stock Items
   - Active Customers
-
-- Time Filters
-  - Today
-  - Week
-  - Month
-
-- Charts
+- Charts:
   - Sales trend
   - Orders by status
-  - Top products
-
-- Panels
+- Panels:
   - Recent orders
-  - Low stock list
-  - Top customers
+  - Low stock products
+  - Top customers and top products
 
----
+Not in current Phase 1 dashboard:
 
-### 2. Inventory
+- Time-scope filter controls (Today/Week/Month)
+
+### 2) Inventory
 
 #### Products
 
-- Product Code
-- Name
+Implemented fields/behavior:
+
+- Product name + SKU
 - Category
-- Selling Price
-- Fixed Cost Price
-- Stock Quantity
-- Stock Status (Healthy / Low / Critical)
-- Assigned Discounts
-
-Behavior:
-
-- Stock reduces **immediately when order is saved**
+- Selling price (`unitPrice`)
+- Fixed cost price (`fixedCostPrice`)
+- Stock quantity and unit
+- Stock health badge (Healthy/Low/Critical)
 
 #### Categories
 
-- Organize products logically
-- Used for filtering and reporting
+Implemented now:
+
+- List categories
+- Create category (modal/dialog flow)
 
 #### Discounts
 
-Supports **customer-specific discounts**.
+Implemented now:
 
-Fields:
+- Campaign list with customer/scope/type/value/status
+- Filter by status
+- Create discount campaign
 
-- Discount Type (percentage / fixed)
-- Value
-- Applies to Product or Category
-- Assigned Customer
-- Validity Period
-- Status
+Model behavior in current Phase 1:
 
-Discount selection is **manual during order creation**.
+- Simple discount model only
+- No advanced discount stacking or precedence engine
+- Order dialog supports line-level discount input and shows matching active campaigns for assistance
 
----
+### 3) Sales
 
-### 3. Sales
+#### Orders List
 
-#### Orders
+Implemented now:
 
-- Order lifecycle
-  - Draft
-  - Confirmed
-  - Dispatched
-  - Delivered
+- Status filter
+- Revenue/profit/active order summaries
+- Orders table with status, totals, and profit
 
-- Order contains multiple order items.
+#### Create Order Flow
 
-#### Order Creation Modal
+Implemented now:
 
-Fields:
+- Customer selection
+- Multi-line order items
+- Product selection and quantity
+- Discount type/value per line
+- Live subtotal/discount/total/profit summary
 
-- Customer selector
-- Product selector
-- Quantity
-- Unit price auto-fill
-- Discount selector (filtered by customer)
-- Line totals
-- Profit summary
+Write behavior:
 
-Behavior:
+1. Create order
+2. Create order items
+3. Patch product stock quantities
+4. Refresh related views via query invalidation
 
-- Saving an order:
-  - Reduces product stock immediately
-  - Updates dashboard metrics
+Failure handling:
 
-#### Profit Formula
-Line Profit = (Selling Price - Discount - Fixed Cost) × Quantity
-Order Profit = Sum of Line Profits
+- Compensating rollback logic restores consistency on partial write failures
 
+Profit model:
 
----
+- Line profit and order profit are calculated and stored
+- Order default status on save: `confirmed`
 
-### 4. Customers
+### 4) Customers
 
-#### Customer List
+#### Customer Directory
 
-- Customer Code
-- Company Name
-- Contact Person
-- Country
-- Total Orders
-- Total Sales
-- Last Order Date
-- Status
+Implemented now:
 
-#### Customer Detail Page
+- Customer code/company/contact/country/status
+- Derived order count and total sales
+- Last order date
 
-- Customer Summary
-- Commercial Metrics
-- Order History Table
+#### Customer Detail
 
----
+Implemented now:
 
-## 🗃 Data Model (Mock JSON Server)
+- Customer summary block
+- Aggregated commercial metrics
+- Order history table
 
-Collections:
+## Data Model and Storage (Current)
 
-- products
-- categories
-- customers
-- discounts
-- orders
-- orderItems
+Backend schema includes full ER coverage:
 
-Important Design Decision:
+- `customers`
+- `suppliers`
+- `warehouses`
+- `categories`
+- `products`
+- `orders`
+- `order_product`
+- `product_customer`
+- `warehouse_product`
+- `users`
 
-Order items store **price and cost snapshot** so historical orders remain stable even if product pricing changes later.
+All core relations are enforced with SQLite foreign keys and supporting indexes.
 
----
+### Frontend Compatibility Mapping
 
-## 🔗 Module Interaction
+Frontend resource contracts are preserved via API mapping:
 
-- Orders use Products and Customers
-- Discounts depend on Customer selection
-- Orders reduce Product stock
-- Dashboard reads from Orders, Products, Customers
-- Low stock indicators come from product thresholds
+- `/orderItems` ↔ `order_product`
+- `/discounts` ↔ `product_customer`
+- `/productCategories` is a compatibility alias of `categories`
 
----
+Canonical endpoint for categories remains:
 
-## 🚧 Phase Strategy
+- `/categories`
+
+### Seed Coverage Notes
+
+- Warehouse/supplier-related tables are seeded and relationally valid
+- These entities are not exposed in Phase 1 UI workflows
+- Order line snapshots keep historical pricing/cost integrity
+
+## Public API Contracts (Phase 1)
+
+Primary frontend resources:
+
+- `/categories`
+- `/productCategories` (alias)
+- `/products`
+- `/customers`
+- `/orders`
+- `/orderItems`
+- `/discounts`
+- `/users`
+
+Supported query behavior (current):
+
+- Filtering: `status`, `customerId`, `categoryId`, `orderId`
+- Search: `q` (products)
+- Sorting: `_sort`, `_order` with allowlisted sortable columns
+
+## Architecture and Run Modes
+
+### Recommended Phase 1 run mode
+
+- Frontend + Express/SQLite backend:
+  - `npm run start:backend`
+
+### Fallback run mode
+
+- Frontend + JSON Server:
+  - `npm run start`
+
+### Backend utility scripts
+
+- Start backend only: `npm run backend:start`
+- Dev backend only: `npm run backend:dev`
+- Reset DB + reseed: `npm run backend:reset`
+
+### Default ports
+
+- Frontend (Vite): `5000`
+- Express backend: `4001`
+- JSON Server fallback: `4000`
+
+## Phase Strategy
 
 ### Phase 1 (Current)
 
-Frontend simulation:
+Implemented MVP slice with:
 
-- Core modules
-- Basic workflows
-- Realistic dummy data
-- UI/UX validation
+- Real persisted backend
+- Modular frontend architecture
+- Core inventory/sales/customer/dashboard workflows
+- Manual validation readiness for stakeholder demos
 
 ### Phase 2 (Planned)
 
-- Order approval workflows
-- Stock threshold alert engine
-- Customer interaction tracking
-- Advanced reporting filters
-- Purchase planning simulation
+Likely next improvements:
+
+- Order approval and richer operational workflow states
+- Inventory alerting and threshold automation
+- Stronger customer interaction/history insights
+- Expanded reporting filters and drill-downs
 
 ### Phase 3 (Planned)
 
-- Backend service layer
-- Authentication and roles
-- Real profit calculations
-- Integration readiness
+Hardening path:
 
-### Final MVP Goal
+- Auth and authorization model
+- Broader API/service hardening
+- Automated test coverage strategy
+- Production-readiness and deployment concerns
 
-- Full ERP-lite system
-- Inventory + Sales + CRM + Reporting
-- Scalable architecture
-- API-driven backend
-- Production-ready UX
+## Known Gaps / Non-goals (Phase 1)
 
----
+- No authentication/authorization
+- No advanced discount stacking/precedence rules
+- No automated test suite yet (manual acceptance + lint/build quality checks)
+- Warehouse/supplier operations are modeled in DB but not surfaced in current UI
 
-## 🧠 Development Philosophy
+## Success Criteria for Phase 1
 
-- Keep components reusable
-- Maintain consistent layout patterns
-- Avoid over-engineering early
-- Prioritize believable interactions
-- Simulate real business logic even with dummy data
-- Focus on demo storytelling value
-
----
-
-## 🎬 Demo Flow (Stakeholder Pitch)
-
-1. Open Dashboard → show KPIs
-2. Navigate to Products → explain stock health
-3. Show Customer-specific Discounts
-4. Open Customer Profile → show order history
-5. Create Order → apply discount
-6. Save Order → stock reduces immediately
-7. Return to Dashboard → KPIs updated
-
-This demonstrates the ERP value clearly.
-
----
-
-## ✅ Success Criteria for Phase 1
-
-- Stakeholders understand workflow
-- UI feels like real enterprise product
-- Data interactions feel realistic
-- System appears scalable
-- Approval obtained for next phase
-
----
+- Stakeholders can understand and validate end-to-end workflows
+- UI/UX appears coherent and enterprise-ready
+- Data interactions feel realistic and consistent
+- Architecture supports incremental scale into later phases
+- Team has a clear, aligned baseline for Phase 2 planning
