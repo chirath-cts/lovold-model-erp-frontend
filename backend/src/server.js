@@ -236,23 +236,124 @@ app.get(
   }),
 );
 
+app.post(
+  "/products",
+  withErrorHandling(async (req, res) => {
+    const { id, name, categoryId, unit } = req.body ?? {};
+
+    if (!id || !name || !categoryId || !unit) {
+      return badRequest(res, "id, name, categoryId, and unit are required");
+    }
+
+    const category = await db.get("SELECT id FROM categories WHERE id = ?", categoryId);
+    if (!category) {
+      return badRequest(res, "Invalid categoryId");
+    }
+
+    const unitPrice = Number(req.body.unitPrice ?? 0);
+    const fixedCostPrice = Number(req.body.fixedCostPrice ?? 0);
+    const stockQuantity = Number(req.body.stockQuantity ?? 0);
+    const reorderLevel = Number(req.body.reorderLevel ?? 0);
+
+    if (!Number.isFinite(unitPrice) || unitPrice < 0) {
+      return badRequest(res, "unitPrice must be a non-negative number");
+    }
+
+    if (!Number.isFinite(fixedCostPrice) || fixedCostPrice < 0) {
+      return badRequest(res, "fixedCostPrice must be a non-negative number");
+    }
+
+    if (!Number.isInteger(stockQuantity) || stockQuantity < 0) {
+      return badRequest(res, "stockQuantity must be a non-negative integer");
+    }
+
+    if (!Number.isInteger(reorderLevel) || reorderLevel < 0) {
+      return badRequest(res, "reorderLevel must be a non-negative integer");
+    }
+
+    const currency = "NOK";
+    const status = req.body.status === "inactive" ? "inactive" : "active";
+    const sku = typeof req.body.sku === "string" ? req.body.sku : "";
+    const description = typeof req.body.description === "string" ? req.body.description : "";
+
+    await db.run(
+      `INSERT INTO products (id, name, sku, category_id, unit_price, fixed_cost_price, currency, unit, stock_quantity, reorder_level, description, status)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      id,
+      name,
+      sku,
+      categoryId,
+      unitPrice,
+      fixedCostPrice,
+      currency,
+      unit,
+      stockQuantity,
+      reorderLevel,
+      description,
+      status,
+    );
+
+    const created = await db.get("SELECT * FROM products WHERE id = ?", id);
+    res.status(201).json(rowToProduct(created));
+  }),
+);
+
 app.patch(
   "/products/:id",
   withErrorHandling(async (req, res) => {
     const current = await db.get("SELECT * FROM products WHERE id = ?", req.params.id);
     if (!current) return notFound(res, "Product not found");
 
+    if (req.body.categoryId !== undefined) {
+      if (typeof req.body.categoryId !== "string" || !req.body.categoryId) {
+        return badRequest(res, "categoryId must be a non-empty string");
+      }
+
+      const category = await db.get("SELECT id FROM categories WHERE id = ?", req.body.categoryId);
+      if (!category) {
+        return badRequest(res, "Invalid categoryId");
+      }
+    }
+
+    if (req.body.unitPrice !== undefined) {
+      const unitPrice = Number(req.body.unitPrice);
+      if (!Number.isFinite(unitPrice) || unitPrice < 0) {
+        return badRequest(res, "unitPrice must be a non-negative number");
+      }
+    }
+
+    if (req.body.fixedCostPrice !== undefined) {
+      const fixedCostPrice = Number(req.body.fixedCostPrice);
+      if (!Number.isFinite(fixedCostPrice) || fixedCostPrice < 0) {
+        return badRequest(res, "fixedCostPrice must be a non-negative number");
+      }
+    }
+
+    if (req.body.stockQuantity !== undefined) {
+      const stockQuantity = Number(req.body.stockQuantity);
+      if (!Number.isInteger(stockQuantity) || stockQuantity < 0) {
+        return badRequest(res, "stockQuantity must be a non-negative integer");
+      }
+    }
+
+    if (req.body.reorderLevel !== undefined) {
+      const reorderLevel = Number(req.body.reorderLevel);
+      if (!Number.isInteger(reorderLevel) || reorderLevel < 0) {
+        return badRequest(res, "reorderLevel must be a non-negative integer");
+      }
+    }
+
     const next = {
-      stock_quantity: req.body.stockQuantity ?? current.stock_quantity,
-      unit_price: req.body.unitPrice ?? current.unit_price,
-      fixed_cost_price: req.body.fixedCostPrice ?? current.fixed_cost_price,
+      stock_quantity: req.body.stockQuantity !== undefined ? Number(req.body.stockQuantity) : current.stock_quantity,
+      unit_price: req.body.unitPrice !== undefined ? Number(req.body.unitPrice) : current.unit_price,
+      fixed_cost_price: req.body.fixedCostPrice !== undefined ? Number(req.body.fixedCostPrice) : current.fixed_cost_price,
       status: req.body.status ?? current.status,
       category_id: req.body.categoryId ?? current.category_id,
       name: req.body.name ?? current.name,
       sku: req.body.sku ?? current.sku,
       currency: req.body.currency ?? current.currency,
       unit: req.body.unit ?? current.unit,
-      reorder_level: req.body.reorderLevel ?? current.reorder_level,
+      reorder_level: req.body.reorderLevel !== undefined ? Number(req.body.reorderLevel) : current.reorder_level,
       description: req.body.description ?? current.description,
     };
 
@@ -264,12 +365,12 @@ app.patch(
       next.name,
       next.sku,
       next.category_id,
-      Number(next.unit_price),
-      Number(next.fixed_cost_price),
+      next.unit_price,
+      next.fixed_cost_price,
       next.currency,
       next.unit,
-      Number(next.stock_quantity),
-      Number(next.reorder_level),
+      next.stock_quantity,
+      next.reorder_level,
       next.description,
       next.status,
       req.params.id,
