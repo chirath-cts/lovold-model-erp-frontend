@@ -13,6 +13,8 @@ import {
 } from "@mui/material";
 import { useLocation } from "react-router-dom";
 
+import { UserProfileMenu } from "@/app/layout/UserProfileMenu";
+
 const titleMap: Record<string, string> = {
   "/dashboard": "Dashboard",
   "/inventory/products": "Products",
@@ -33,7 +35,7 @@ export function Topbar({ onMenuClick }: TopbarProps) {
 
   const title = location.pathname.startsWith("/customers/")
     ? "Customer Profile"
-    : (titleMap[location.pathname] ?? "LOVOLD ERP");
+    : (titleMap[location.pathname] ?? "PengVinERP");
 
   return (
     <AppBar
@@ -75,12 +77,14 @@ export function Topbar({ onMenuClick }: TopbarProps) {
           />
         </Box>
 
-        <Box sx={{ ml: "auto" }}>
+        <Box sx={{ ml: "auto", display: "flex", alignItems: "center", gap: { xs: 1, md: 1.5, lg: 2 } }}>
           <IconButton color="inherit" aria-label="notifications">
             <Badge variant="dot" color="error">
               <NotificationsNoneRoundedIcon />
             </Badge>
           </IconButton>
+
+          <UserProfileMenu />
         </Box>
       </Toolbar>
     </AppBar>
