@@ -39,7 +39,7 @@ const theme = createTheme({
   },
   spacing: 8,
   shape: {
-    borderRadius: 10,
+    borderRadius: 4,
   },
   typography: {
     fontFamily: "var(--font-family)",
@@ -63,70 +63,70 @@ const theme = createTheme({
       fontSize: "0.72rem",
     },
   },
-  components: {
-    MuiCard: {
-      styleOverrides: {
-        root: {
-          border: `1px solid ${COLORS.border}`,
-          boxShadow: "0 2px 10px rgba(0, 28, 38, 0.06)",
-        },
-      },
-    },
-    MuiPaper: {
-      styleOverrides: {
-        root: {
-          backgroundImage: "none",
-        },
-      },
-    },
-    MuiTableCell: {
-      styleOverrides: {
-        head: {
-          fontWeight: 700,
-          color: COLORS.textSecondary,
-          textTransform: "uppercase",
-          fontSize: "0.72rem",
-          letterSpacing: "0.05em",
-        },
-      },
-    },
-    MuiOutlinedInput: {
-      styleOverrides: {
-        root: {
-          backgroundColor: "#ffffff",
-        },
-      },
-    },
-    MuiButton: {
-      defaultProps: {
-        disableElevation: true,
-      },
-      styleOverrides: {
-        root: {
-          borderRadius: 10,
-          textTransform: "none",
-          fontWeight: 700,
-        },
-      },
-    },
-    MuiChip: {
-      styleOverrides: {
-        root: {
-          fontWeight: 600,
-          textTransform: "capitalize",
-        },
-      },
-    },
-    MuiAppBar: {
-      styleOverrides: {
-        root: {
-          borderBottom: `1px solid ${COLORS.border}`,
-          backgroundColor: "rgba(255,255,255,0.95)",
-          backdropFilter: "blur(8px)",
-        },
-      },
-    },
-  },
+  // components: {
+  //   MuiCard: {
+  //     styleOverrides: {
+  //       root: {
+  //         border: `1px solid ${COLORS.border}`,
+  //         boxShadow: "0 2px 10px rgba(0, 28, 38, 0.06)",
+  //       },
+  //     },
+  //   },
+  //   MuiPaper: {
+  //     styleOverrides: {
+  //       root: {
+  //         backgroundImage: "none",
+  //       },
+  //     },
+  //   },
+  //   MuiTableCell: {
+  //     styleOverrides: {
+  //       head: {
+  //         fontWeight: 700,
+  //         color: COLORS.textSecondary,
+  //         textTransform: "uppercase",
+  //         fontSize: "0.72rem",
+  //         letterSpacing: "0.05em",
+  //       },
+  //     },
+  //   },
+  //   MuiOutlinedInput: {
+  //     styleOverrides: {
+  //       root: {
+  //         backgroundColor: "#ffffff",
+  //       },
+  //     },
+  //   },
+  //   MuiButton: {
+  //     defaultProps: {
+  //       disableElevation: true,
+  //     },
+  //     styleOverrides: {
+  //       root: {
+  //         borderRadius: 10,
+  //         textTransform: "none",
+  //         fontWeight: 700,
+  //       },
+  //     },
+  //   },
+  //   MuiChip: {
+  //     styleOverrides: {
+  //       root: {
+  //         fontWeight: 600,
+  //         textTransform: "capitalize",
+  //       },
+  //     },
+  //   },
+  //   MuiAppBar: {
+  //     styleOverrides: {
+  //       root: {
+  //         borderBottom: `1px solid ${COLORS.border}`,
+  //         backgroundColor: "rgba(255,255,255,0.95)",
+  //         backdropFilter: "blur(8px)",
+  //       },
+  //     },
+  //   },
+  // },
 });
 
 export default theme;
