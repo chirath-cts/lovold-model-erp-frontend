@@ -41,7 +41,7 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
           </Box>
           <Box>
             <Typography variant="subtitle1" sx={{ fontWeight: 800, lineHeight: 1.1 }}>
-              LOVOLD ERP
+              PengVinERP
             </Typography>
             <Typography variant="caption" color="text.secondary">
               Enterprise Portal
