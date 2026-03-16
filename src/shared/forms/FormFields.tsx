@@ -1,4 +1,16 @@
-import { Controller, type Control, type FieldValues, type Path } from "react-hook-form";
+import {
+  Controller,
+  type Control,
+  type FieldValues,
+  type Path,
+} from "react-hook-form";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField as MuiTextField,
+} from "@mui/material";
 
 interface BaseProps<TFieldValues extends FieldValues> {
   control: Control<TFieldValues>;
@@ -22,78 +34,81 @@ export function SelectField<TFieldValues extends FieldValues>({
   options,
 }: SelectFieldProps<TFieldValues>) {
   return (
-    <label className="block space-y-1">
-      <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</span>
-      <Controller
-        control={control}
-        name={name}
-        render={({ field }) => (
-          <select {...field} className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-[#00526C] focus:outline-none">
+    <Controller
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <FormControl fullWidth size="small">
+          <InputLabel>{label}</InputLabel>
+          <Select {...field} label={label}>
             {options.map((option) => (
-              <option key={option.value} value={option.value}>
+              <MenuItem key={option.value} value={option.value}>
                 {option.label}
-              </option>
+              </MenuItem>
             ))}
-          </select>
-        )}
-      />
-    </label>
+          </Select>
+        </FormControl>
+      )}
+    />
   );
 }
 
-export function NumberField<TFieldValues extends FieldValues>({ control, name, label }: BaseProps<TFieldValues>) {
+export function NumberField<TFieldValues extends FieldValues>({
+  control,
+  name,
+  label,
+}: BaseProps<TFieldValues>) {
   return (
-    <label className="block space-y-1">
-      <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</span>
-      <Controller
-        control={control}
-        name={name}
-        render={({ field }) => (
-          <input
-            {...field}
-            type="number"
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-[#00526C] focus:outline-none"
-            onChange={(event) => field.onChange(Number(event.target.value))}
-          />
-        )}
-      />
-    </label>
+    <Controller
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <MuiTextField
+          {...field}
+          fullWidth
+          size="small"
+          type="number"
+          label={label}
+          onChange={(event) => field.onChange(Number(event.target.value))}
+        />
+      )}
+    />
   );
 }
 
-export function TextField<TFieldValues extends FieldValues>({ control, name, label }: BaseProps<TFieldValues>) {
+export function TextField<TFieldValues extends FieldValues>({
+  control,
+  name,
+  label,
+}: BaseProps<TFieldValues>) {
   return (
-    <label className="block space-y-1">
-      <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</span>
-      <Controller
-        control={control}
-        name={name}
-        render={({ field }) => (
-          <input
-            {...field}
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-[#00526C] focus:outline-none"
-          />
-        )}
-      />
-    </label>
+    <Controller
+      control={control}
+      name={name}
+      render={({ field }) => <MuiTextField {...field} fullWidth size="small" label={label} />}
+    />
   );
 }
 
-export function DateField<TFieldValues extends FieldValues>({ control, name, label }: BaseProps<TFieldValues>) {
+export function DateField<TFieldValues extends FieldValues>({
+  control,
+  name,
+  label,
+}: BaseProps<TFieldValues>) {
   return (
-    <label className="block space-y-1">
-      <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">{label}</span>
-      <Controller
-        control={control}
-        name={name}
-        render={({ field }) => (
-          <input
-            {...field}
-            type="date"
-            className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm focus:border-[#00526C] focus:outline-none"
-          />
-        )}
-      />
-    </label>
+    <Controller
+      control={control}
+      name={name}
+      render={({ field }) => (
+        <MuiTextField
+          {...field}
+          fullWidth
+          size="small"
+          label={label}
+          type="date"
+          InputLabelProps={{ shrink: true }}
+        />
+      )}
+    />
   );
 }

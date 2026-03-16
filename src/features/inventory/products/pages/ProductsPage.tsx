@@ -1,4 +1,13 @@
 import { useState } from "react";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 import { useCategories, useProducts } from "@/services/hooks/useDomainQueries";
 import { CurrencyText } from "@/shared/ui/CurrencyText";
@@ -20,8 +29,13 @@ export function ProductsPage() {
   const categories = categoriesQuery.data ?? [];
   const products = productsQuery.data ?? [];
 
-  if (categoriesQuery.isLoading || productsQuery.isLoading) return <LoadingState label="Loading products..." />;
-  if (categoriesQuery.error || productsQuery.error) return <ErrorState message="Failed to load products." />;
+  if (categoriesQuery.isLoading || productsQuery.isLoading) {
+    return <LoadingState label="Loading products..." />;
+  }
+
+  if (categoriesQuery.error || productsQuery.error) {
+    return <ErrorState message="Failed to load products." />;
+  }
 
   const categoryLookup = new Map(categories.map((item) => [item.id, item.name]));
   const rows = products.map((product) => ({
@@ -35,33 +49,49 @@ export function ProductsPage() {
   }));
 
   return (
-    <div className="space-y-5">
-      <div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-[#003a4d]">Products Inventory</h1>
-        <p className="text-sm text-slate-500">Stock health, pricing, and category mapping in one place.</p>
-      </div>
+    <Stack spacing={3}>
+      <Box>
+        <Typography variant="h1">Products Inventory</Typography>
+        <Typography variant="body2" color="text.secondary">
+          Stock health, pricing, and category mapping in one place.
+        </Typography>
+      </Box>
 
       <FilterBar>
-        <div className="md:col-span-2">
-          <SearchInput placeholder="Search products by name or SKU..." value={search} onChange={setSearch} />
-        </div>
-        <select
-          className="rounded-lg border border-slate-200 px-3 py-2 text-sm"
-          value={categoryId}
-          onChange={(event) => setCategoryId(event.target.value)}
-        >
-          <option value="">All categories</option>
-          {categories.map((category) => (
-            <option key={category.id} value={category.id}>
-              {category.name}
-            </option>
-          ))}
-        </select>
-        <div className="rounded-lg border border-slate-100 bg-slate-50 px-3 py-2 text-sm text-slate-600">{rows.length} products</div>
+        <Box sx={{ flex: 2, minWidth: 220 }}>
+          <SearchInput
+            placeholder="Search products by name or SKU..."
+            value={search}
+            onChange={setSearch}
+          />
+        </Box>
+
+        <FormControl size="small" sx={{ minWidth: 200 }}>
+          <InputLabel>Category</InputLabel>
+          <Select
+            value={categoryId}
+            label="Category"
+            onChange={(event) => setCategoryId(event.target.value)}
+          >
+            <MenuItem value="">All categories</MenuItem>
+            {categories.map((category) => (
+              <MenuItem key={category.id} value={category.id}>
+                {category.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <Typography variant="body2" color="text.secondary" sx={{ minWidth: 100 }}>
+          {rows.length} products
+        </Typography>
       </FilterBar>
 
       {rows.length === 0 ? (
-        <EmptyState title="No products found" description="Try another search or category filter." />
+        <EmptyState
+          title="No products found"
+          description="Try another search or category filter."
+        />
       ) : (
         <DataTable
           rows={rows}
@@ -71,10 +101,14 @@ export function ProductsPage() {
               key: "sku",
               header: "Product",
               render: (row) => (
-                <div>
-                  <p className="font-semibold text-slate-800">{row.name}</p>
-                  <p className="text-xs text-slate-500">{row.sku}</p>
-                </div>
+                <Box>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                    {row.name}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {row.sku}
+                  </Typography>
+                </Box>
               ),
             },
             {
@@ -108,6 +142,6 @@ export function ProductsPage() {
           ]}
         />
       )}
-    </div>
+    </Stack>
   );
 }

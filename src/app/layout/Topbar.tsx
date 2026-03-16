@@ -1,5 +1,16 @@
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import {
+  AppBar,
+  Badge,
+  Box,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import { useLocation } from "react-router-dom";
 
 const titleMap: Record<string, string> = {
@@ -11,7 +22,13 @@ const titleMap: Record<string, string> = {
   "/customers": "Customers",
 };
 
-export function Topbar() {
+interface TopbarProps {
+  onMenuClick: () => void;
+}
+
+const drawerWidth = 260;
+
+export function Topbar({ onMenuClick }: TopbarProps) {
   const location = useLocation();
 
   const title = location.pathname.startsWith("/customers/")
@@ -19,23 +36,53 @@ export function Topbar() {
     : (titleMap[location.pathname] ?? "LOVOLD ERP");
 
   return (
-    <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
-      <div className="flex h-16 items-center justify-between px-4 lg:px-8">
-        <div className="flex items-center gap-4">
-          <h2 className="text-lg font-bold text-slate-900">{title}</h2>
-          <div className="hidden items-center gap-2 rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 md:flex">
-            <SearchRoundedIcon sx={{ fontSize: 18, color: "#64748b" }} />
-            <input
-              className="w-64 bg-transparent text-sm text-slate-700 outline-none"
-              placeholder="Search..."
-              type="text"
-            />
-          </div>
-        </div>
-        <button className="rounded-full p-2 text-slate-600 transition-colors hover:bg-slate-100">
-          <NotificationsNoneRoundedIcon />
-        </button>
-      </div>
-    </header>
+    <AppBar
+      position="fixed"
+      color="inherit"
+      elevation={0}
+      sx={{
+        width: { lg: `calc(100% - ${drawerWidth}px)` },
+        ml: { lg: `${drawerWidth}px` },
+      }}
+    >
+      <Toolbar sx={{ minHeight: "64px !important", gap: 2, px: { xs: 2, md: 3, lg: 4 } }}>
+        <IconButton
+          color="inherit"
+          edge="start"
+          onClick={onMenuClick}
+          sx={{ display: { lg: "none" } }}
+          aria-label="open navigation"
+        >
+          <MenuRoundedIcon />
+        </IconButton>
+
+        <Typography variant="h6" sx={{ fontWeight: 700 }}>
+          {title}
+        </Typography>
+
+        <Box sx={{ display: { xs: "none", md: "block" }, flexGrow: 1, maxWidth: 420 }}>
+          <TextField
+            fullWidth
+            size="small"
+            placeholder="Search..."
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchRoundedIcon fontSize="small" color="action" />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Box>
+
+        <Box sx={{ ml: "auto" }}>
+          <IconButton color="inherit" aria-label="notifications">
+            <Badge variant="dot" color="error">
+              <NotificationsNoneRoundedIcon />
+            </Badge>
+          </IconButton>
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 }

@@ -1,16 +1,33 @@
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import { InputAdornment, TextField } from "@mui/material";
+
 interface SearchInputProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+  fullWidth?: boolean;
 }
 
-export function SearchInput({ value, onChange, placeholder = "Search..." }: SearchInputProps) {
+export function SearchInput({
+  value,
+  onChange,
+  placeholder = "Search...",
+  fullWidth = true,
+}: SearchInputProps) {
   return (
-    <input
-      className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm focus:border-[#00526C] focus:outline-none"
-      placeholder={placeholder}
+    <TextField
+      size="small"
+      fullWidth={fullWidth}
       value={value}
+      placeholder={placeholder}
       onChange={(event) => onChange(event.target.value)}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchRoundedIcon fontSize="small" color="action" />
+          </InputAdornment>
+        ),
+      }}
     />
   );
 }

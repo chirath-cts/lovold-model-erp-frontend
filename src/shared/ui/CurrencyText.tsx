@@ -1,3 +1,5 @@
+import { Typography } from "@mui/material";
+
 import { formatNok } from "@/shared/lib/format";
 
 interface CurrencyTextProps {
@@ -6,5 +8,13 @@ interface CurrencyTextProps {
 }
 
 export function CurrencyText({ value, className }: CurrencyTextProps) {
-  return <span className={className}>{formatNok(value)}</span>;
+  if (!className) {
+    return <>{formatNok(value)}</>;
+  }
+
+  return (
+    <Typography component="span" className={className}>
+      {formatNok(value)}
+    </Typography>
+  );
 }

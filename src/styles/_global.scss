@@ -1,10 +1,25 @@
 @use './variables' as vars;
 
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
 body {
-    font-family: vars.$font-family;
-    margin: 0;
-    padding: 0;
-    /* Optional: improve font rendering */
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  font-family: vars.$font-family;
+  margin: 0;
+  padding: 0;
+  background-color: vars.$surface-bg;
+  color: vars.$font-color2;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
 }

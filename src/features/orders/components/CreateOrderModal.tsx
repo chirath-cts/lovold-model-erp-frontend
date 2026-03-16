@@ -4,10 +4,32 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { Controller, useFieldArray, useForm } from "react-hook-form";
+import { Controller, useFieldArray, useForm, useWatch } from "react-hook-form";
+import {
+  Alert,
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Paper,
+  Select,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 import { queryClient } from "@/app/queryClient";
-import { createOrderSchema, type CreateOrderFormValues } from "@/features/orders/model/createOrderSchema";
+import {
+  createOrderSchema,
+  type CreateOrderFormValues,
+} from "@/features/orders/model/createOrderSchema";
 import { createOrderWorkflow } from "@/features/orders/services/createOrderWorkflow";
 import { queryKeys } from "@/shared/constants/queryKeys";
 import { computeLineTotals } from "@/shared/lib/orderCalculations";
@@ -47,14 +69,18 @@ export function CreateOrderModal({
     },
   });
 
-  const { control, handleSubmit, watch, reset } = form;
+  const { control, handleSubmit, reset } = form;
   const { fields, append, remove } = useFieldArray({
     control,
     name: "lines",
   });
 
-  const selectedCustomerId = watch("customerId");
-  const watchedLines = watch("lines");
+  const selectedCustomerId = useWatch({ control, name: "customerId" });
+  const watchedLines = useWatch({
+    control,
+    name: "lines",
+    defaultValue: [],
+  });
 
   const lineSummaries = useMemo(
     () =>
@@ -114,56 +140,66 @@ export function CreateOrderModal({
     },
   });
 
-  if (!open) return null;
-
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/40 p-4 backdrop-blur-sm">
-      <div className="max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-2xl border border-slate-200 bg-white shadow-2xl">
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-slate-200 bg-white px-6 py-4">
-          <div>
-            <h3 className="text-xl font-bold text-[#003a4d]">New Sales Order</h3>
-            <p className="text-sm text-slate-500">Create a confirmed order and update stock instantly.</p>
-          </div>
-          <button className="rounded-full p-1 text-slate-500 hover:bg-slate-100" onClick={onClose}>
-            <CloseRoundedIcon />
-          </button>
-        </div>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="lg" scroll="paper">
+      <DialogTitle sx={{ pr: 6 }}>
+        <Typography variant="h2">New Sales Order</Typography>
+        <Typography variant="body2" color="text.secondary">
+          Create a confirmed order and update stock instantly.
+        </Typography>
+        <IconButton
+          onClick={onClose}
+          sx={{ position: "absolute", top: 10, right: 10 }}
+          aria-label="close"
+        >
+          <CloseRoundedIcon />
+        </IconButton>
+      </DialogTitle>
 
-        <form className="space-y-6 p-6" onSubmit={handleSubmit((values) => mutation.mutate(values))}>
-          <div className="grid gap-4 md:grid-cols-2">
-            <label className="space-y-1">
-              <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Customer</span>
-              <Controller
-                control={control}
-                name="customerId"
-                render={({ field }) => (
-                  <select {...field} className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm">
+      <DialogContent dividers>
+        <Stack spacing={3} component="form" onSubmit={handleSubmit((values) => mutation.mutate(values))}>
+          <Box
+            sx={{
+              display: "grid",
+              gap: 2,
+              gridTemplateColumns: { xs: "1fr", md: "repeat(2, minmax(0, 1fr))" },
+            }}
+          >
+            <Controller
+              control={control}
+              name="customerId"
+              render={({ field }) => (
+                <FormControl fullWidth size="small">
+                  <InputLabel>Customer</InputLabel>
+                  <Select {...field} label="Customer">
                     {customers.map((customer) => (
-                      <option key={customer.id} value={customer.id}>
+                      <MenuItem key={customer.id} value={customer.id}>
                         {customer.companyName}
-                      </option>
+                      </MenuItem>
                     ))}
-                  </select>
-                )}
-              />
-            </label>
+                  </Select>
+                </FormControl>
+              )}
+            />
 
-            <label className="space-y-1">
-              <span className="text-xs font-semibold uppercase tracking-wide text-slate-500">Order date</span>
-              <Controller
-                control={control}
-                name="orderDate"
-                render={({ field }) => <input {...field} type="date" className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm" />}
-              />
-            </label>
-          </div>
+            <Controller
+              control={control}
+              name="orderDate"
+              render={({ field }) => (
+                <TextField {...field} size="small" fullWidth label="Order Date" type="date" InputLabelProps={{ shrink: true }} />
+              )}
+            />
+          </Box>
 
-          <div className="space-y-3">
-            <div className="flex items-center justify-between">
-              <h4 className="text-sm font-semibold uppercase tracking-wide text-slate-600">Order lines</h4>
-              <button
+          <Stack spacing={1.5}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 2 }}>
+              <Typography variant="subtitle2" color="text.secondary">
+                Order Lines
+              </Typography>
+              <Button
                 type="button"
-                className="inline-flex items-center gap-1 rounded-lg bg-slate-100 px-3 py-1.5 text-sm font-semibold text-slate-700"
+                variant="outlined"
+                startIcon={<AddRoundedIcon />}
                 onClick={() =>
                   append({
                     productId: products[0]?.id ?? "",
@@ -173,157 +209,172 @@ export function CreateOrderModal({
                   })
                 }
               >
-                <AddRoundedIcon sx={{ fontSize: 18 }} /> Add line
-              </button>
-            </div>
+                Add line
+              </Button>
+            </Box>
 
-            <div className="space-y-3">
-              {fields.map((field, index) => {
-                const selectedProduct = products.find((item) => item.id === watchedLines[index]?.productId);
-                const matchingDiscounts = discounts.filter(
-                  (discount) =>
-                    discount.customerId === selectedCustomerId &&
-                    discount.status === "active" &&
-                    selectedProduct &&
-                    ((discount.scopeType === "product" && discount.scopeId === selectedProduct.id) ||
-                      (discount.scopeType === "category" && discount.scopeId === selectedProduct.categoryId)),
-                );
+            {fields.map((field, index) => {
+              const selectedProduct = products.find(
+                (item) => item.id === watchedLines[index]?.productId,
+              );
+              const matchingDiscounts = discounts.filter(
+                (discount) =>
+                  discount.customerId === selectedCustomerId &&
+                  discount.status === "active" &&
+                  selectedProduct &&
+                  ((discount.scopeType === "product" && discount.scopeId === selectedProduct.id) ||
+                    (discount.scopeType === "category" &&
+                      discount.scopeId === selectedProduct.categoryId)),
+              );
 
-                return (
-                  <div key={field.id} className="grid gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 lg:grid-cols-12">
-                    <div className="lg:col-span-4">
-                      <Controller
-                        control={control}
-                        name={`lines.${index}.productId`}
-                        render={({ field: lineField }) => (
-                          <select {...lineField} className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm">
+              return (
+                <Paper key={field.id} variant="outlined" sx={{ p: 2 }}>
+                  <Box
+                    sx={{
+                      display: "grid",
+                      gap: 1.5,
+                      gridTemplateColumns: {
+                        xs: "repeat(2, minmax(0, 1fr))",
+                        lg: "3fr 1fr 1fr 1fr auto",
+                      },
+                      alignItems: "center",
+                    }}
+                  >
+                    <Controller
+                      control={control}
+                      name={`lines.${index}.productId`}
+                      render={({ field: lineField }) => (
+                        <FormControl size="small" fullWidth sx={{ gridColumn: { xs: "span 2", lg: "span 1" } }}>
+                          <InputLabel>Product</InputLabel>
+                          <Select {...lineField} label="Product">
                             {products.map((product) => (
-                              <option key={product.id} value={product.id}>
+                              <MenuItem key={product.id} value={product.id}>
                                 {product.name}
-                              </option>
+                              </MenuItem>
                             ))}
-                          </select>
-                        )}
-                      />
-                    </div>
+                          </Select>
+                        </FormControl>
+                      )}
+                    />
 
-                    <div className="lg:col-span-2">
-                      <Controller
-                        control={control}
-                        name={`lines.${index}.quantity`}
-                        render={({ field: lineField }) => (
-                          <input
-                            {...lineField}
-                            type="number"
-                            min={1}
-                            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm"
-                            onChange={(event) => lineField.onChange(Number(event.target.value))}
-                          />
-                        )}
-                      />
-                    </div>
+                    <Controller
+                      control={control}
+                      name={`lines.${index}.quantity`}
+                      render={({ field: lineField }) => (
+                        <TextField
+                          {...lineField}
+                          size="small"
+                          label="Qty"
+                          type="number"
+                          inputProps={{ min: 1 }}
+                          onChange={(event) => lineField.onChange(Number(event.target.value))}
+                        />
+                      )}
+                    />
 
-                    <div className="lg:col-span-2">
-                      <Controller
-                        control={control}
-                        name={`lines.${index}.discountType`}
-                        render={({ field: lineField }) => (
-                          <select {...lineField} className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm">
-                            <option value="percentage">%</option>
-                            <option value="fixed">NOK</option>
-                          </select>
-                        )}
-                      />
-                    </div>
+                    <Controller
+                      control={control}
+                      name={`lines.${index}.discountType`}
+                      render={({ field: lineField }) => (
+                        <FormControl size="small" fullWidth>
+                          <InputLabel>Disc Type</InputLabel>
+                          <Select {...lineField} label="Disc Type">
+                            <MenuItem value="percentage">%</MenuItem>
+                            <MenuItem value="fixed">NOK</MenuItem>
+                          </Select>
+                        </FormControl>
+                      )}
+                    />
 
-                    <div className="lg:col-span-2">
-                      <Controller
-                        control={control}
-                        name={`lines.${index}.discountValue`}
-                        render={({ field: lineField }) => (
-                          <input
-                            {...lineField}
-                            type="number"
-                            min={0}
-                            className="w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm"
-                            onChange={(event) => lineField.onChange(Number(event.target.value))}
-                          />
-                        )}
-                      />
-                    </div>
+                    <Controller
+                      control={control}
+                      name={`lines.${index}.discountValue`}
+                      render={({ field: lineField }) => (
+                        <TextField
+                          {...lineField}
+                          size="small"
+                          label="Disc Value"
+                          type="number"
+                          inputProps={{ min: 0 }}
+                          onChange={(event) => lineField.onChange(Number(event.target.value))}
+                        />
+                      )}
+                    />
 
-                    <div className="flex items-center justify-end lg:col-span-2">
-                      <button
-                        type="button"
-                        className="rounded-lg p-2 text-slate-500 hover:bg-white"
-                        onClick={() => remove(index)}
-                        disabled={fields.length === 1}
-                      >
-                        <DeleteRoundedIcon />
-                      </button>
-                    </div>
+                    <IconButton
+                      aria-label="delete"
+                      onClick={() => remove(index)}
+                      disabled={fields.length === 1}
+                    >
+                      <DeleteRoundedIcon />
+                    </IconButton>
+                  </Box>
 
-                    <div className="lg:col-span-12">
-                      <div className="flex flex-wrap items-center justify-between gap-2 rounded-lg bg-white px-3 py-2 text-xs text-slate-600">
-                        <span>
-                          Unit Price: <CurrencyText value={selectedProduct?.unitPrice ?? 0} />
-                        </span>
-                        <span>
-                          Line Total: <CurrencyText value={lineSummaries[index]?.lineTotal ?? 0} />
-                        </span>
-                        <span>
-                          Profit: <CurrencyText value={lineSummaries[index]?.lineProfit ?? 0} />
-                        </span>
-                      </div>
-                      {matchingDiscounts.length > 0 ? (
-                        <p className="mt-1 text-xs text-[#00526C]">
-                          Matching active discounts: {matchingDiscounts.map((item) => item.name).join(", ")}
-                        </p>
-                      ) : null}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+                  <Divider sx={{ my: 1.5 }} />
 
-          <div className="rounded-xl border border-[#00526C]/20 bg-[#00526C]/5 p-4">
-            <div className="grid gap-2 text-sm sm:grid-cols-2">
-              <p>
-                Subtotal: <CurrencyText className="font-semibold" value={totals.subtotal} />
-              </p>
-              <p>
-                Discount: <CurrencyText className="font-semibold" value={totals.discount} />
-              </p>
-              <p>
-                Total: <CurrencyText className="font-semibold" value={totals.total} />
-              </p>
-              <p>
-                Estimated Profit: <CurrencyText className="font-semibold" value={totals.profit} />
-              </p>
-            </div>
-          </div>
+                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
+                    <Typography variant="caption" color="text.secondary">
+                      Unit Price: <CurrencyText value={selectedProduct?.unitPrice ?? 0} />
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      Line Total: <CurrencyText value={lineSummaries[index]?.lineTotal ?? 0} />
+                    </Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      Profit: <CurrencyText value={lineSummaries[index]?.lineProfit ?? 0} />
+                    </Typography>
+                  </Box>
+
+                  {matchingDiscounts.length > 0 ? (
+                    <Typography variant="caption" color="primary" sx={{ mt: 1, display: "block" }}>
+                      Matching active discounts: {matchingDiscounts.map((item) => item.name).join(", ")}
+                    </Typography>
+                  ) : null}
+                </Paper>
+              );
+            })}
+          </Stack>
+
+          <Paper variant="outlined" sx={{ p: 2, bgcolor: "rgba(0, 82, 108, 0.05)", borderColor: "primary.light" }}>
+            <Box
+              sx={{
+                display: "grid",
+                gap: 1,
+                gridTemplateColumns: { xs: "1fr", sm: "repeat(2, minmax(0, 1fr))" },
+              }}
+            >
+              <Typography variant="body2">
+                Subtotal: <strong><CurrencyText value={totals.subtotal} /></strong>
+              </Typography>
+              <Typography variant="body2">
+                Discount: <strong><CurrencyText value={totals.discount} /></strong>
+              </Typography>
+              <Typography variant="body2">
+                Total: <strong><CurrencyText value={totals.total} /></strong>
+              </Typography>
+              <Typography variant="body2">
+                Estimated Profit: <strong><CurrencyText value={totals.profit} /></strong>
+              </Typography>
+            </Box>
+          </Paper>
 
           {mutation.error ? (
-            <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
-              {mutation.error instanceof Error ? mutation.error.message : "Failed to create order."}
-            </p>
+            <Alert severity="error">
+              {mutation.error instanceof Error
+                ? mutation.error.message
+                : "Failed to create order."}
+            </Alert>
           ) : null}
 
-          <div className="flex justify-end gap-3">
-            <button type="button" className="rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold" onClick={onClose}>
+          <DialogActions sx={{ px: 0 }}>
+            <Button type="button" onClick={onClose}>
               Cancel
-            </button>
-            <button
-              type="submit"
-              className="rounded-lg bg-[#00526C] px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
-              disabled={mutation.isPending}
-            >
+            </Button>
+            <Button type="submit" variant="contained" disabled={mutation.isPending}>
               {mutation.isPending ? "Saving..." : "Save Order"}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+            </Button>
+          </DialogActions>
+        </Stack>
+      </DialogContent>
+    </Dialog>
   );
 }

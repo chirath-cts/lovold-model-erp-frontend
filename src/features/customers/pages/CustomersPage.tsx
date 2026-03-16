@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
+import { Box, Link, Stack, Typography } from "@mui/material";
 
 import { buildCustomerAggregates } from "@/features/customers/model/customerSelectors";
 import { useCustomers, useOrders } from "@/services/hooks/useDomainQueries";
@@ -19,8 +20,13 @@ export function CustomersPage() {
   const customers = customersQuery.data ?? [];
   const orders = ordersQuery.data ?? [];
 
-  if (customersQuery.isLoading || ordersQuery.isLoading) return <LoadingState label="Loading customers..." />;
-  if (customersQuery.error || ordersQuery.error) return <ErrorState message="Failed to load customers." />;
+  if (customersQuery.isLoading || ordersQuery.isLoading) {
+    return <LoadingState label="Loading customers..." />;
+  }
+
+  if (customersQuery.error || ordersQuery.error) {
+    return <ErrorState message="Failed to load customers." />;
+  }
 
   const aggregateLookup = new Map(
     buildCustomerAggregates(customers, orders).map((item) => [item.customerId, item]),
@@ -34,17 +40,17 @@ export function CustomersPage() {
   );
 
   return (
-    <div className="space-y-5">
-      <div className="flex items-end justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-[#003a4d]">Customer Network</h1>
-          <p className="text-sm text-slate-500">Commercial view of customers, sales and order performance.</p>
-        </div>
-      </div>
+    <Stack spacing={3}>
+      <Box>
+        <Typography variant="h1">Customer Network</Typography>
+        <Typography variant="body2" color="text.secondary">
+          Commercial view of customers, sales and order performance.
+        </Typography>
+      </Box>
 
-      <div className="max-w-md">
+      <Box sx={{ maxWidth: 420 }}>
         <SearchInput placeholder="Search customers..." value={search} onChange={setSearch} />
-      </div>
+      </Box>
 
       <DataTable
         rows={rows}
@@ -54,20 +60,26 @@ export function CustomersPage() {
             key: "code",
             header: "Customer",
             render: (row) => (
-              <div>
-                <p className="font-semibold text-slate-800">{row.companyName}</p>
-                <p className="text-xs text-slate-500">{row.customerCode}</p>
-              </div>
+              <Box>
+                <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                  {row.companyName}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {row.customerCode}
+                </Typography>
+              </Box>
             ),
           },
           {
             key: "contact",
             header: "Contact",
             render: (row) => (
-              <div>
-                <p>{row.contactPerson}</p>
-                <p className="text-xs text-slate-500">{row.country}</p>
-              </div>
+              <Box>
+                <Typography variant="body2">{row.contactPerson}</Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {row.country}
+                </Typography>
+              </Box>
             ),
           },
           {
@@ -100,13 +112,13 @@ export function CustomersPage() {
             header: "",
             align: "right",
             render: (row) => (
-              <Link className="text-sm font-semibold text-[#00526C]" to={`/customers/${row.id}`}>
+              <Link component={RouterLink} to={`/customers/${row.id}`} underline="hover" fontWeight={700}>
                 View
               </Link>
             ),
           },
         ]}
       />
-    </div>
+    </Stack>
   );
 }

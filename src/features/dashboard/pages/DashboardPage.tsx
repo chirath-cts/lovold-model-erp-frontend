@@ -1,17 +1,25 @@
+import { BarChart } from "@mui/x-charts/BarChart";
+import { LineChart } from "@mui/x-charts/LineChart";
 import {
-  Bar,
-  BarChart,
-  CartesianGrid,
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+  Box,
+  List,
+  ListItemText,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 
-import { getDashboardMetrics, getTopCustomers, getTopProducts } from "@/features/dashboard/model/dashboardSelectors";
-import { useCustomers, useOrderItems, useOrders, useProducts } from "@/services/hooks/useDomainQueries";
+import {
+  getDashboardMetrics,
+  getTopCustomers,
+  getTopProducts,
+} from "@/features/dashboard/model/dashboardSelectors";
+import {
+  useCustomers,
+  useOrderItems,
+  useOrders,
+  useProducts,
+} from "@/services/hooks/useDomainQueries";
 import { formatDate } from "@/shared/lib/format";
 import { CurrencyText } from "@/shared/ui/CurrencyText";
 import { ErrorState } from "@/shared/ui/ErrorState";
@@ -31,11 +39,21 @@ export function DashboardPage() {
   const customers = customersQuery.data ?? [];
   const orderItems = orderItemsQuery.data ?? [];
 
-  if (ordersQuery.isLoading || productsQuery.isLoading || customersQuery.isLoading || orderItemsQuery.isLoading) {
+  if (
+    ordersQuery.isLoading ||
+    productsQuery.isLoading ||
+    customersQuery.isLoading ||
+    orderItemsQuery.isLoading
+  ) {
     return <LoadingState label="Loading dashboard..." />;
   }
 
-  if (ordersQuery.error || productsQuery.error || customersQuery.error || orderItemsQuery.error) {
+  if (
+    ordersQuery.error ||
+    productsQuery.error ||
+    customersQuery.error ||
+    orderItemsQuery.error
+  ) {
     return <ErrorState message="Failed to load dashboard data." />;
   }
 
@@ -51,8 +69,13 @@ export function DashboardPage() {
     .slice(-10);
 
   const statusMap = new Map<string, number>();
-  orders.forEach((order) => statusMap.set(order.status, (statusMap.get(order.status) ?? 0) + 1));
-  const orderStatusData = [...statusMap.entries()].map(([status, count]) => ({ status, count }));
+  orders.forEach((order) =>
+    statusMap.set(order.status, (statusMap.get(order.status) ?? 0) + 1),
+  );
+  const orderStatusData = [...statusMap.entries()].map(([status, count]) => ({
+    status,
+    count,
+  }));
 
   const topCustomers = getTopCustomers(orders, customers);
   const topProducts = getTopProducts(orderItems, products);
@@ -64,111 +87,176 @@ export function DashboardPage() {
   const recentOrders = orders.slice(0, 6);
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-extrabold tracking-tight text-[#003a4d]">Enterprise Overview</h1>
-        <p className="text-sm text-slate-500">Real-time operational and sales visibility for Lovold.</p>
-      </div>
+    <Stack spacing={3}>
+      <Box>
+        <Typography variant="h1">Enterprise Overview</Typography>
+        <Typography variant="body2" color="text.secondary">
+          Real-time operational and sales visibility for Lovold.
+        </Typography>
+      </Box>
 
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
-        <KpiCard label="Total Sales" value={<CurrencyText value={metrics.totalSales} />} tone="accent" />
+      <Box
+        sx={{
+          display: "grid",
+          gap: 2,
+          gridTemplateColumns: {
+            xs: "1fr",
+            sm: "repeat(2, minmax(0, 1fr))",
+            xl: "repeat(5, minmax(0, 1fr))",
+          },
+        }}
+      >
+        <KpiCard
+          label="Total Sales"
+          value={<CurrencyText value={metrics.totalSales} />}
+          tone="accent"
+        />
         <KpiCard label="Total Orders" value={metrics.totalOrders} />
-        <KpiCard label="Estimated Profit" value={<CurrencyText value={metrics.estimatedProfit} />} />
+        <KpiCard
+          label="Estimated Profit"
+          value={<CurrencyText value={metrics.estimatedProfit} />}
+        />
         <KpiCard label="Low Stock" value={metrics.lowStockCount} tone="warn" />
         <KpiCard label="Active Customers" value={metrics.activeCustomers} />
-      </div>
+      </Box>
 
-      <div className="grid gap-6 xl:grid-cols-2">
+      <Box
+        sx={{
+          display: "grid",
+          gap: 3,
+          gridTemplateColumns: { xs: "1fr", xl: "repeat(2, minmax(0, 1fr))" },
+        }}
+      >
         <MetricPanel title="Sales Trend">
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={salesTrend}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                <XAxis dataKey="name" tick={{ fontSize: 11 }} />
-                <YAxis tick={{ fontSize: 11 }} />
-                <Tooltip formatter={(value) => Number(value ?? 0).toLocaleString("nb-NO")} />
-                <Line type="monotone" dataKey="sales" stroke="#00526C" strokeWidth={2.5} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
+          <LineChart
+            height={260}
+            xAxis={[{ scaleType: "point", data: salesTrend.map((item) => item.name) }]}
+            series={[
+              {
+                data: salesTrend.map((item) => item.sales),
+                label: "Sales",
+                color: "#00526C",
+              },
+            ]}
+            margin={{ top: 16, right: 16, left: 20, bottom: 24 }}
+          />
         </MetricPanel>
 
         <MetricPanel title="Orders by Status">
-          <div className="h-64">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={orderStatusData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                <XAxis dataKey="status" tick={{ fontSize: 11 }} />
-                <YAxis tick={{ fontSize: 11 }} />
-                <Tooltip />
-                <Bar dataKey="count" fill="#1f6581" radius={[6, 6, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </div>
+          <BarChart
+            height={260}
+            xAxis={[{ scaleType: "band", data: orderStatusData.map((item) => item.status) }]}
+            series={[{ data: orderStatusData.map((item) => item.count), color: "#1f6581" }]}
+            margin={{ top: 16, right: 16, left: 20, bottom: 24 }}
+          />
         </MetricPanel>
-      </div>
+      </Box>
 
-      <div className="grid gap-6 xl:grid-cols-3">
+      <Box
+        sx={{
+          display: "grid",
+          gap: 3,
+          gridTemplateColumns: { xs: "1fr", xl: "repeat(3, minmax(0, 1fr))" },
+        }}
+      >
         <MetricPanel title="Recent Orders">
-          <div className="space-y-3">
+          <List disablePadding>
             {recentOrders.map((order) => (
-              <div key={order.id} className="flex items-center justify-between rounded-lg border border-slate-100 px-3 py-2">
-                <div>
-                  <p className="text-sm font-semibold text-slate-800">{order.orderNumber}</p>
-                  <p className="text-xs text-slate-500">{formatDate(order.orderDate)}</p>
-                </div>
-                <div className="text-right">
-                  <CurrencyText className="text-sm font-semibold text-slate-800" value={order.totalAmount} />
-                  <div className="mt-1">
-                    <StatusBadge value={order.status} />
-                  </div>
-                </div>
-              </div>
+              <Paper
+                key={order.id}
+                variant="outlined"
+                sx={{
+                  p: 1.5,
+                  mb: 1,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <ListItemText
+                  primary={
+                    <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                      {order.orderNumber}
+                    </Typography>
+                  }
+                  secondary={formatDate(order.orderDate)}
+                  sx={{ m: 0 }}
+                />
+                <Box sx={{ textAlign: "right" }}>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                    <CurrencyText value={order.totalAmount} />
+                  </Typography>
+                  <StatusBadge value={order.status} />
+                </Box>
+              </Paper>
             ))}
-          </div>
+          </List>
         </MetricPanel>
 
         <MetricPanel title="Low Stock Products">
-          <div className="space-y-2">
+          <List disablePadding>
             {lowStockProducts.map((product) => (
-              <div key={product.id} className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2">
-                <p className="text-sm font-semibold text-slate-800">{product.name}</p>
-                <p className="text-xs text-slate-600">
+              <Paper
+                key={product.id}
+                variant="outlined"
+                sx={{
+                  p: 1.5,
+                  mb: 1,
+                  borderColor: "warning.light",
+                  bgcolor: "rgba(255, 208, 129, 0.12)",
+                }}
+              >
+                <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                  {product.name}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
                   {product.stockQuantity} in stock / reorder at {product.reorderLevel}
-                </p>
-              </div>
+                </Typography>
+              </Paper>
             ))}
-          </div>
+          </List>
         </MetricPanel>
 
         <MetricPanel title="Top Customers & Products">
-          <div className="space-y-4">
-            <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Top Customers</p>
-              <div className="space-y-2">
-                {topCustomers.slice(0, 3).map((item) => (
-                  <div key={item.customerId} className="flex items-center justify-between rounded-lg border border-slate-100 px-3 py-2">
-                    <p className="text-sm text-slate-700">{item.companyName}</p>
-                    <CurrencyText className="text-sm font-semibold" value={item.totalSales} />
-                  </div>
-                ))}
-              </div>
-            </div>
+          <Box>
+            <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1.5 }}>
+              Top Customers
+            </Typography>
+            <List disablePadding sx={{ mb: 2 }}>
+              {topCustomers.slice(0, 3).map((item) => (
+                <Paper
+                  key={item.customerId}
+                  variant="outlined"
+                  sx={{ p: 1.5, mb: 1, display: "flex", justifyContent: "space-between" }}
+                >
+                  <Typography variant="body2">{item.companyName}</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                    <CurrencyText value={item.totalSales} />
+                  </Typography>
+                </Paper>
+              ))}
+            </List>
 
-            <div>
-              <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Top Products</p>
-              <div className="space-y-2">
-                {topProducts.slice(0, 3).map((item) => (
-                  <div key={item.productId} className="flex items-center justify-between rounded-lg border border-slate-100 px-3 py-2">
-                    <p className="text-sm text-slate-700">{item.name}</p>
-                    <CurrencyText className="text-sm font-semibold" value={item.revenue} />
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+            <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1.5 }}>
+              Top Products
+            </Typography>
+            <List disablePadding>
+              {topProducts.slice(0, 3).map((item) => (
+                <Paper
+                  key={item.productId}
+                  variant="outlined"
+                  sx={{ p: 1.5, mb: 1, display: "flex", justifyContent: "space-between" }}
+                >
+                  <Typography variant="body2">{item.name}</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                    <CurrencyText value={item.revenue} />
+                  </Typography>
+                </Paper>
+              ))}
+            </List>
+          </Box>
         </MetricPanel>
-      </div>
-    </div>
+      </Box>
+    </Stack>
   );
 }

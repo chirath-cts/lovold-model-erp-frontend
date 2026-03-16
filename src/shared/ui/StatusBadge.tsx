@@ -1,24 +1,23 @@
+import { Chip } from "@mui/material";
+
 interface StatusBadgeProps {
   value: string;
 }
 
-const colorMap: Record<string, string> = {
-  active: "bg-emerald-100 text-emerald-700",
-  inactive: "bg-slate-200 text-slate-600",
-  future: "bg-blue-100 text-blue-700",
-  expired: "bg-rose-100 text-rose-700",
-  draft: "bg-slate-100 text-slate-700",
-  confirmed: "bg-indigo-100 text-indigo-700",
-  dispatched: "bg-amber-100 text-amber-700",
-  delivered: "bg-emerald-100 text-emerald-700",
+const styleMap: Record<string, object> = {
+  active: { bgcolor: "success.light", color: "success.dark" },
+  inactive: { bgcolor: "grey.200", color: "text.secondary" },
+  future: { bgcolor: "info.light", color: "info.dark" },
+  expired: { bgcolor: "error.light", color: "error.dark" },
+  draft: { bgcolor: "grey.200", color: "text.secondary" },
+  confirmed: { bgcolor: "secondary.light", color: "secondary.contrastText" },
+  dispatched: { bgcolor: "warning.light", color: "warning.dark" },
+  delivered: { bgcolor: "success.light", color: "success.dark" },
+  critical: { bgcolor: "error.light", color: "error.dark" },
+  low: { bgcolor: "warning.light", color: "warning.dark" },
+  healthy: { bgcolor: "success.light", color: "success.dark" },
 };
 
 export function StatusBadge({ value }: StatusBadgeProps) {
-  const className = colorMap[value] ?? "bg-slate-100 text-slate-700";
-
-  return (
-    <span className={`inline-flex rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${className}`}>
-      {value}
-    </span>
-  );
+  return <Chip size="small" label={value} sx={styleMap[value] ?? { bgcolor: "grey.200", color: "text.primary" }} />;
 }

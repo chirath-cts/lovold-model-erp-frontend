@@ -1,8 +1,25 @@
 import { useState } from "react";
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 import { queryClient } from "@/app/queryClient";
 import { CreateOrderModal } from "@/features/orders/components/CreateOrderModal";
-import { useCustomers, useDiscounts, useOrders, useProducts } from "@/services/hooks/useDomainQueries";
+import {
+  useCustomers,
+  useDiscounts,
+  useOrders,
+  useProducts,
+} from "@/services/hooks/useDomainQueries";
 import { formatDate } from "@/shared/lib/format";
 import { CurrencyText } from "@/shared/ui/CurrencyText";
 import { DataTable } from "@/shared/ui/DataTable";
@@ -27,7 +44,12 @@ export function OrdersPage() {
   const products = productsQuery.data ?? [];
   const discounts = discountsQuery.data ?? [];
 
-  if (ordersQuery.isLoading || customersQuery.isLoading || productsQuery.isLoading || discountsQuery.isLoading) {
+  if (
+    ordersQuery.isLoading ||
+    customersQuery.isLoading ||
+    productsQuery.isLoading ||
+    discountsQuery.isLoading
+  ) {
     return <LoadingState label="Loading orders..." />;
   }
 
@@ -44,48 +66,74 @@ export function OrdersPage() {
   };
 
   return (
-    <div className="space-y-5">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-[#003a4d]">Sales Orders</h1>
-          <p className="text-sm text-slate-500">Manage lifecycle and create orders with live stock impact.</p>
-        </div>
-        <button className="rounded-lg bg-[#00526C] px-4 py-2 text-sm font-semibold text-white" onClick={() => setOpenModal(true)}>
-          Create Order
-        </button>
-      </div>
+    <Stack spacing={3}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
+        <Box>
+          <Typography variant="h1">Sales Orders</Typography>
+          <Typography variant="body2" color="text.secondary">
+            Manage lifecycle and create orders with live stock impact.
+          </Typography>
+        </Box>
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <div className="rounded-xl border border-slate-200 bg-white p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Active Orders</p>
-          <p className="mt-2 text-2xl font-bold text-slate-900">{totals.active}</p>
-        </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Revenue</p>
-          <p className="mt-2 text-2xl font-bold text-slate-900">
-            <CurrencyText value={totals.revenue} />
-          </p>
-        </div>
-        <div className="rounded-xl border border-slate-200 bg-white p-4">
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Estimated Profit</p>
-          <p className="mt-2 text-2xl font-bold text-slate-900">
-            <CurrencyText value={totals.profit} />
-          </p>
-        </div>
-      </div>
+        <Button variant="contained" onClick={() => setOpenModal(true)}>
+          Create Order
+        </Button>
+      </Box>
+
+      <Box
+        sx={{
+          display: "grid",
+          gap: 2,
+          gridTemplateColumns: { xs: "1fr", md: "repeat(3, minmax(0, 1fr))" },
+        }}
+      >
+        <Card>
+          <CardContent>
+            <Typography variant="subtitle2" color="text.secondary">
+              Active Orders
+            </Typography>
+            <Typography variant="h4" sx={{ mt: 1, fontWeight: 700 }}>
+              {totals.active}
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent>
+            <Typography variant="subtitle2" color="text.secondary">
+              Revenue
+            </Typography>
+            <Typography variant="h4" sx={{ mt: 1, fontWeight: 700 }}>
+              <CurrencyText value={totals.revenue} />
+            </Typography>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent>
+            <Typography variant="subtitle2" color="text.secondary">
+              Estimated Profit
+            </Typography>
+            <Typography variant="h4" sx={{ mt: 1, fontWeight: 700 }}>
+              <CurrencyText value={totals.profit} />
+            </Typography>
+          </CardContent>
+        </Card>
+      </Box>
 
       <FilterBar>
-        <select
-          className="rounded-lg border border-slate-200 px-3 py-2 text-sm"
-          value={status}
-          onChange={(event) => setStatus(event.target.value as StatusFilter)}
-        >
-          <option value="">All statuses</option>
-          <option value="draft">Draft</option>
-          <option value="confirmed">Confirmed</option>
-          <option value="dispatched">Dispatched</option>
-          <option value="delivered">Delivered</option>
-        </select>
+        <FormControl size="small" sx={{ minWidth: 220 }}>
+          <InputLabel>Status</InputLabel>
+          <Select
+            value={status}
+            label="Status"
+            onChange={(event) => setStatus(event.target.value as StatusFilter)}
+          >
+            <MenuItem value="">All statuses</MenuItem>
+            <MenuItem value="draft">Draft</MenuItem>
+            <MenuItem value="confirmed">Confirmed</MenuItem>
+            <MenuItem value="dispatched">Dispatched</MenuItem>
+            <MenuItem value="delivered">Delivered</MenuItem>
+          </Select>
+        </FormControl>
       </FilterBar>
 
       <DataTable
@@ -96,10 +144,14 @@ export function OrdersPage() {
             key: "order",
             header: "Order",
             render: (row) => (
-              <div>
-                <p className="font-semibold text-slate-800">{row.orderNumber}</p>
-                <p className="text-xs text-slate-500">{formatDate(row.orderDate)}</p>
-              </div>
+              <Box>
+                <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                  {row.orderNumber}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {formatDate(row.orderDate)}
+                </Typography>
+              </Box>
             ),
           },
           {
@@ -138,6 +190,6 @@ export function OrdersPage() {
         discounts={discounts}
         orders={orders}
       />
-    </div>
+    </Stack>
   );
 }

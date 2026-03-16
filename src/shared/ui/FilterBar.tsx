@@ -1,9 +1,16 @@
 import type { ReactNode } from "react";
+import { Paper, Stack } from "@mui/material";
 
 interface FilterBarProps {
   children: ReactNode;
 }
 
 export function FilterBar({ children }: FilterBarProps) {
-  return <div className="grid gap-3 rounded-xl border border-slate-200 bg-white p-4 md:grid-cols-4">{children}</div>;
+  return (
+    <Paper sx={{ p: 2 }}>
+      <Stack direction={{ xs: "column", md: "row" }} spacing={2} alignItems={{ md: "center" }}>
+        {children}
+      </Stack>
+    </Paper>
+  );
 }

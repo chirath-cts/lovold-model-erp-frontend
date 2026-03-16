@@ -1,5 +1,16 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 import { queryClient } from "@/app/queryClient";
 import { categoriesService } from "@/services/endpoints/categoriesService";
@@ -37,12 +48,20 @@ export function CategoriesPage() {
     },
   });
 
-  if (categoriesQuery.isLoading || productsQuery.isLoading) return <LoadingState label="Loading categories..." />;
-  if (categoriesQuery.error || productsQuery.error) return <ErrorState message="Failed to load categories." />;
+  if (categoriesQuery.isLoading || productsQuery.isLoading) {
+    return <LoadingState label="Loading categories..." />;
+  }
+
+  if (categoriesQuery.error || productsQuery.error) {
+    return <ErrorState message="Failed to load categories." />;
+  }
 
   const rows = categories
     .filter((category) =>
-      [category.name, category.description].join(" ").toLowerCase().includes(search.toLowerCase()),
+      [category.name, category.description]
+        .join(" ")
+        .toLowerCase()
+        .includes(search.toLowerCase()),
     )
     .map((category) => ({
       ...category,
@@ -50,23 +69,26 @@ export function CategoriesPage() {
     }));
 
   return (
-    <div className="space-y-5">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-[#003a4d]">Product Categories</h1>
-          <p className="text-sm text-slate-500">Category structure used across inventory and discounts.</p>
-        </div>
-        <button
-          className="rounded-lg bg-[#00526C] px-4 py-2 text-sm font-semibold text-white"
-          onClick={() => setOpenModal(true)}
-        >
+    <Stack spacing={3}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
+        <Box>
+          <Typography variant="h1">Product Categories</Typography>
+          <Typography variant="body2" color="text.secondary">
+            Category structure used across inventory and discounts.
+          </Typography>
+        </Box>
+        <Button variant="contained" onClick={() => setOpenModal(true)}>
           Add Category
-        </button>
-      </div>
+        </Button>
+      </Box>
 
-      <div className="max-w-md">
-        <SearchInput placeholder="Search categories..." value={search} onChange={setSearch} />
-      </div>
+      <Box sx={{ maxWidth: 420 }}>
+        <SearchInput
+          placeholder="Search categories..."
+          value={search}
+          onChange={setSearch}
+        />
+      </Box>
 
       <DataTable
         rows={rows}
@@ -75,7 +97,11 @@ export function CategoriesPage() {
           {
             key: "name",
             header: "Name",
-            render: (row) => <span className="font-semibold text-slate-800">{row.name}</span>,
+            render: (row) => (
+              <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                {row.name}
+              </Typography>
+            ),
           },
           {
             key: "description",
@@ -91,40 +117,39 @@ export function CategoriesPage() {
         ]}
       />
 
-      {openModal ? (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/40 p-4">
-          <div className="w-full max-w-lg rounded-xl border border-slate-200 bg-white p-5">
-            <h3 className="text-lg font-bold text-[#003a4d]">Create Category</h3>
-            <div className="mt-4 space-y-3">
-              <input
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
-                placeholder="Category name"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-              />
-              <textarea
-                className="w-full rounded-lg border border-slate-200 px-3 py-2 text-sm"
-                placeholder="Description"
-                rows={4}
-                value={description}
-                onChange={(event) => setDescription(event.target.value)}
-              />
-            </div>
-            <div className="mt-5 flex justify-end gap-2">
-              <button className="rounded-lg border border-slate-200 px-4 py-2 text-sm" onClick={() => setOpenModal(false)}>
-                Cancel
-              </button>
-              <button
-                className="rounded-lg bg-[#00526C] px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
-                onClick={() => createMutation.mutate()}
-                disabled={!name || !description || createMutation.isPending}
-              >
-                {createMutation.isPending ? "Saving..." : "Save"}
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
-    </div>
+      <Dialog open={openModal} onClose={() => setOpenModal(false)} fullWidth maxWidth="sm">
+        <DialogTitle>Create Category</DialogTitle>
+        <DialogContent>
+          <Stack spacing={2} sx={{ pt: 1 }}>
+            <TextField
+              label="Category name"
+              size="small"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+              fullWidth
+            />
+            <TextField
+              label="Description"
+              size="small"
+              multiline
+              rows={4}
+              value={description}
+              onChange={(event) => setDescription(event.target.value)}
+              fullWidth
+            />
+          </Stack>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenModal(false)}>Cancel</Button>
+          <Button
+            variant="contained"
+            onClick={() => createMutation.mutate()}
+            disabled={!name || !description || createMutation.isPending}
+          >
+            {createMutation.isPending ? "Saving..." : "Save"}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Stack>
   );
 }

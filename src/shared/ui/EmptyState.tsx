@@ -1,3 +1,5 @@
+import { Paper, Typography } from "@mui/material";
+
 interface EmptyStateProps {
   title: string;
   description: string;
@@ -5,9 +7,13 @@ interface EmptyStateProps {
 
 export function EmptyState({ title, description }: EmptyStateProps) {
   return (
-    <div className="rounded-xl border border-slate-200 bg-white p-8 text-center">
-      <h3 className="text-lg font-semibold text-slate-800">{title}</h3>
-      <p className="mt-2 text-sm text-slate-500">{description}</p>
-    </div>
+    <Paper sx={{ p: 6, textAlign: "center" }}>
+      <Typography variant="h3" sx={{ mb: 1 }}>
+        {title}
+      </Typography>
+      <Typography variant="body2" color="text.secondary">
+        {description}
+      </Typography>
+    </Paper>
   );
 }

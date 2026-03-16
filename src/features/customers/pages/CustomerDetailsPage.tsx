@@ -1,4 +1,13 @@
-import { Link, useParams } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
+import {
+  Box,
+  Breadcrumbs,
+  Card,
+  CardContent,
+  Link,
+  Stack,
+  Typography,
+} from "@mui/material";
 
 import { useCustomerById, useOrderItems, useOrders } from "@/services/hooks/useDomainQueries";
 import { formatDate } from "@/shared/lib/format";
@@ -41,51 +50,91 @@ export function CustomerDetailsPage() {
   };
 
   return (
-    <div className="space-y-5">
-      <div className="flex items-center gap-2 text-sm text-slate-500">
-        <Link to="/customers" className="font-semibold text-[#00526C]">
+    <Stack spacing={3}>
+      <Breadcrumbs separator="/" aria-label="breadcrumb">
+        <Link component={RouterLink} to="/customers" underline="hover" color="primary" fontWeight={700}>
           Customers
         </Link>
-        <span>/</span>
-        <span>{customer.companyName}</span>
-      </div>
+        <Typography color="text.secondary">{customer.companyName}</Typography>
+      </Breadcrumbs>
 
-      <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <h1 className="text-3xl font-extrabold tracking-tight text-[#003a4d]">{customer.companyName}</h1>
-            <p className="text-sm text-slate-500">{customer.customerCode}</p>
-            <p className="mt-2 text-sm text-slate-700">{customer.contactPerson}</p>
-            <p className="text-sm text-slate-600">{customer.email}</p>
-            <p className="text-sm text-slate-600">{customer.phone}</p>
-            <p className="text-sm text-slate-500">{customer.address}</p>
-          </div>
-          <StatusBadge value={customer.status} />
-        </div>
+      <Card>
+        <CardContent>
+          <Box sx={{ display: "flex", justifyContent: "space-between", gap: 2, flexWrap: "wrap" }}>
+            <Box>
+              <Typography variant="h1" sx={{ mb: 0.5 }}>
+                {customer.companyName}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {customer.customerCode}
+              </Typography>
+              <Typography variant="body2" sx={{ mt: 1.5 }}>
+                {customer.contactPerson}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {customer.email}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {customer.phone}
+              </Typography>
+              <Typography variant="body2" color="text.secondary">
+                {customer.address}
+              </Typography>
+            </Box>
+            <StatusBadge value={customer.status} />
+          </Box>
 
-        <div className="mt-5 grid gap-4 md:grid-cols-4">
-          <div className="rounded-lg bg-slate-50 p-3">
-            <p className="text-xs text-slate-500">Total Orders</p>
-            <p className="text-xl font-bold">{totals.totalOrders}</p>
-          </div>
-          <div className="rounded-lg bg-slate-50 p-3">
-            <p className="text-xs text-slate-500">Total Sales</p>
-            <p className="text-xl font-bold">
-              <CurrencyText value={totals.totalSales} />
-            </p>
-          </div>
-          <div className="rounded-lg bg-slate-50 p-3">
-            <p className="text-xs text-slate-500">Estimated Profit</p>
-            <p className="text-xl font-bold">
-              <CurrencyText value={totals.totalProfit} />
-            </p>
-          </div>
-          <div className="rounded-lg bg-slate-50 p-3">
-            <p className="text-xs text-slate-500">Items Purchased</p>
-            <p className="text-xl font-bold">{totals.totalItems}</p>
-          </div>
-        </div>
-      </section>
+          <Box
+            sx={{
+              mt: 3,
+              display: "grid",
+              gap: 2,
+              gridTemplateColumns: { xs: "1fr", md: "repeat(4, minmax(0, 1fr))" },
+            }}
+          >
+            <Card variant="outlined">
+              <CardContent>
+                <Typography variant="caption" color="text.secondary">
+                  Total Orders
+                </Typography>
+                <Typography variant="h5" sx={{ mt: 1, fontWeight: 700 }}>
+                  {totals.totalOrders}
+                </Typography>
+              </CardContent>
+            </Card>
+            <Card variant="outlined">
+              <CardContent>
+                <Typography variant="caption" color="text.secondary">
+                  Total Sales
+                </Typography>
+                <Typography variant="h5" sx={{ mt: 1, fontWeight: 700 }}>
+                  <CurrencyText value={totals.totalSales} />
+                </Typography>
+              </CardContent>
+            </Card>
+            <Card variant="outlined">
+              <CardContent>
+                <Typography variant="caption" color="text.secondary">
+                  Estimated Profit
+                </Typography>
+                <Typography variant="h5" sx={{ mt: 1, fontWeight: 700 }}>
+                  <CurrencyText value={totals.totalProfit} />
+                </Typography>
+              </CardContent>
+            </Card>
+            <Card variant="outlined">
+              <CardContent>
+                <Typography variant="caption" color="text.secondary">
+                  Items Purchased
+                </Typography>
+                <Typography variant="h5" sx={{ mt: 1, fontWeight: 700 }}>
+                  {totals.totalItems}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Box>
+        </CardContent>
+      </Card>
 
       <DataTable
         rows={orders}
@@ -120,6 +169,6 @@ export function CustomerDetailsPage() {
           },
         ]}
       />
-    </div>
+    </Stack>
   );
 }

@@ -1,4 +1,13 @@
 import type { ReactNode } from "react";
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
 
 interface Column<TItem> {
   key: string;
@@ -13,49 +22,39 @@ interface DataTableProps<TItem> {
   rowKey: (item: TItem) => string;
 }
 
+const resolveAlign = (align?: "left" | "right" | "center") => align ?? "left";
+
 export function DataTable<TItem>({ rows, columns, rowKey }: DataTableProps<TItem>) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-slate-200 bg-white shadow-sm">
-      <table className="min-w-full divide-y divide-slate-200 text-sm">
-        <thead className="bg-slate-50">
-          <tr>
+    <TableContainer component={Paper}>
+      <Table size="small" sx={{ minWidth: 720 }}>
+        <TableHead>
+          <TableRow>
             {columns.map((column) => (
-              <th
-                key={column.key}
-                className={`px-4 py-3 text-xs font-semibold uppercase tracking-wider text-slate-500 ${
-                  column.align === "right"
-                    ? "text-right"
-                    : column.align === "center"
-                      ? "text-center"
-                      : "text-left"
-                }`}
-              >
+              <TableCell key={column.key} align={resolveAlign(column.align)}>
                 {column.header}
-              </th>
+              </TableCell>
             ))}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-slate-100 bg-white">
+          </TableRow>
+        </TableHead>
+        <TableBody>
           {rows.map((row) => (
-            <tr key={rowKey(row)} className="hover:bg-slate-50">
+            <TableRow
+              key={rowKey(row)}
+              hover
+              sx={{
+                "&:last-child td, &:last-child th": { borderBottom: 0 },
+              }}
+            >
               {columns.map((column) => (
-                <td
-                  key={column.key}
-                  className={`px-4 py-3 text-slate-700 ${
-                    column.align === "right"
-                      ? "text-right"
-                      : column.align === "center"
-                        ? "text-center"
-                        : "text-left"
-                  }`}
-                >
+                <TableCell key={column.key} align={resolveAlign(column.align)}>
                   {column.render(row)}
-                </td>
+                </TableCell>
               ))}
-            </tr>
+            </TableRow>
           ))}
-        </tbody>
-      </table>
-    </div>
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 }

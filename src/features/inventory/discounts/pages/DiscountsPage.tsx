@@ -1,9 +1,29 @@
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
+import {
+  Box,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 
 import { queryClient } from "@/app/queryClient";
 import { discountsService } from "@/services/endpoints/discountsService";
-import { useCategories, useCustomers, useDiscounts, useProducts } from "@/services/hooks/useDomainQueries";
+import {
+  useCategories,
+  useCustomers,
+  useDiscounts,
+  useProducts,
+} from "@/services/hooks/useDomainQueries";
 import { queryKeys } from "@/shared/constants/queryKeys";
 import { DataTable } from "@/shared/ui/DataTable";
 import { ErrorState } from "@/shared/ui/ErrorState";
@@ -89,14 +109,16 @@ export function DiscountsPage() {
   }));
 
   return (
-    <div className="space-y-5">
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-[#003a4d]">Campaign Discounts</h1>
-          <p className="text-sm text-slate-500">Customer-specific pricing campaigns used during order creation.</p>
-        </div>
-        <button
-          className="rounded-lg bg-[#00526C] px-4 py-2 text-sm font-semibold text-white"
+    <Stack spacing={3}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
+        <Box>
+          <Typography variant="h1">Campaign Discounts</Typography>
+          <Typography variant="body2" color="text.secondary">
+            Customer-specific pricing campaigns used during order creation.
+          </Typography>
+        </Box>
+        <Button
+          variant="contained"
           onClick={() => {
             setOpenModal(true);
             setCustomerId(customers[0]?.id ?? "");
@@ -104,20 +126,19 @@ export function DiscountsPage() {
           }}
         >
           Create Discount
-        </button>
-      </div>
+        </Button>
+      </Box>
 
       <FilterBar>
-        <select
-          className="rounded-lg border border-slate-200 px-3 py-2 text-sm"
-          value={status}
-          onChange={(event) => setStatus(event.target.value)}
-        >
-          <option value="">All statuses</option>
-          <option value="active">Active</option>
-          <option value="future">Future</option>
-          <option value="expired">Expired</option>
-        </select>
+        <FormControl size="small" sx={{ minWidth: 200 }}>
+          <InputLabel>Status</InputLabel>
+          <Select value={status} label="Status" onChange={(event) => setStatus(event.target.value)}>
+            <MenuItem value="">All statuses</MenuItem>
+            <MenuItem value="active">Active</MenuItem>
+            <MenuItem value="future">Future</MenuItem>
+            <MenuItem value="expired">Expired</MenuItem>
+          </Select>
+        </FormControl>
       </FilterBar>
 
       <DataTable
@@ -127,7 +148,11 @@ export function DiscountsPage() {
           {
             key: "name",
             header: "Campaign",
-            render: (row) => <span className="font-semibold">{row.name}</span>,
+            render: (row) => (
+              <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                {row.name}
+              </Typography>
+            ),
           },
           {
             key: "customer",
@@ -144,7 +169,9 @@ export function DiscountsPage() {
             header: "Value",
             align: "right",
             render: (row) =>
-              row.discountType === "percentage" ? `${row.value}%` : `${row.value.toLocaleString("nb-NO")} NOK`,
+              row.discountType === "percentage"
+                ? `${row.value}%`
+                : `${row.value.toLocaleString("nb-NO")} NOK`,
           },
           {
             key: "status",
@@ -154,95 +181,114 @@ export function DiscountsPage() {
         ]}
       />
 
-      {openModal ? (
-        <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/40 p-4">
-          <div className="w-full max-w-xl rounded-xl border border-slate-200 bg-white p-5">
-            <h3 className="text-lg font-bold text-[#003a4d]">Create Discount</h3>
-            <div className="mt-4 grid gap-3 md:grid-cols-2">
-              <input
-                className="rounded-lg border border-slate-200 px-3 py-2 text-sm md:col-span-2"
-                placeholder="Campaign name"
-                value={name}
-                onChange={(event) => setName(event.target.value)}
-              />
-              <select
-                className="rounded-lg border border-slate-200 px-3 py-2 text-sm"
-                value={customerId}
-                onChange={(event) => setCustomerId(event.target.value)}
-              >
+      <Dialog open={openModal} onClose={() => setOpenModal(false)} fullWidth maxWidth="md">
+        <DialogTitle>Create Discount</DialogTitle>
+        <DialogContent>
+          <Box
+            sx={{
+              pt: 1,
+              display: "grid",
+              gap: 2,
+              gridTemplateColumns: { xs: "1fr", md: "repeat(2, minmax(0, 1fr))" },
+            }}
+          >
+            <TextField
+              sx={{ gridColumn: { md: "span 2" } }}
+              label="Campaign name"
+              size="small"
+              value={name}
+              onChange={(event) => setName(event.target.value)}
+            />
+
+            <FormControl size="small">
+              <InputLabel>Customer</InputLabel>
+              <Select value={customerId} label="Customer" onChange={(event) => setCustomerId(event.target.value)}>
                 {customers.map((customer) => (
-                  <option key={customer.id} value={customer.id}>
+                  <MenuItem key={customer.id} value={customer.id}>
                     {customer.companyName}
-                  </option>
+                  </MenuItem>
                 ))}
-              </select>
-              <select
-                className="rounded-lg border border-slate-200 px-3 py-2 text-sm"
+              </Select>
+            </FormControl>
+
+            <FormControl size="small">
+              <InputLabel>Discount Type</InputLabel>
+              <Select
                 value={discountType}
+                label="Discount Type"
                 onChange={(event) => setDiscountType(event.target.value as "percentage" | "fixed")}
               >
-                <option value="percentage">Percentage</option>
-                <option value="fixed">Fixed</option>
-              </select>
-              <select
-                className="rounded-lg border border-slate-200 px-3 py-2 text-sm"
+                <MenuItem value="percentage">Percentage</MenuItem>
+                <MenuItem value="fixed">Fixed</MenuItem>
+              </Select>
+            </FormControl>
+
+            <FormControl size="small">
+              <InputLabel>Scope Type</InputLabel>
+              <Select
                 value={scopeType}
+                label="Scope Type"
                 onChange={(event) => {
                   const nextScope = event.target.value as "product" | "category";
                   setScopeType(nextScope);
                   setScopeId((nextScope === "product" ? products[0]?.id : categories[0]?.id) ?? "");
                 }}
               >
-                <option value="product">Product scope</option>
-                <option value="category">Category scope</option>
-              </select>
-              <select
-                className="rounded-lg border border-slate-200 px-3 py-2 text-sm"
-                value={scopeId}
-                onChange={(event) => setScopeId(event.target.value)}
-              >
+                <MenuItem value="product">Product scope</MenuItem>
+                <MenuItem value="category">Category scope</MenuItem>
+              </Select>
+            </FormControl>
+
+            <FormControl size="small">
+              <InputLabel>Scope</InputLabel>
+              <Select value={scopeId} label="Scope" onChange={(event) => setScopeId(event.target.value)}>
                 {scopeOptions.map((option) => (
-                  <option key={option.id} value={option.id}>
+                  <MenuItem key={option.id} value={option.id}>
                     {option.name}
-                  </option>
+                  </MenuItem>
                 ))}
-              </select>
-              <input
-                className="rounded-lg border border-slate-200 px-3 py-2 text-sm"
-                type="number"
-                min={0}
-                placeholder="Discount value"
-                value={value}
-                onChange={(event) => setValue(Number(event.target.value))}
-              />
-              <input
-                className="rounded-lg border border-slate-200 px-3 py-2 text-sm"
-                type="date"
-                value={startDate}
-                onChange={(event) => setStartDate(event.target.value)}
-              />
-              <input
-                className="rounded-lg border border-slate-200 px-3 py-2 text-sm"
-                type="date"
-                value={endDate}
-                onChange={(event) => setEndDate(event.target.value)}
-              />
-            </div>
-            <div className="mt-5 flex justify-end gap-2">
-              <button className="rounded-lg border border-slate-200 px-4 py-2 text-sm" onClick={() => setOpenModal(false)}>
-                Cancel
-              </button>
-              <button
-                className="rounded-lg bg-[#00526C] px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
-                onClick={() => createMutation.mutate()}
-                disabled={!name || !customerId || !scopeId || createMutation.isPending}
-              >
-                {createMutation.isPending ? "Saving..." : "Save"}
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
-    </div>
+              </Select>
+            </FormControl>
+
+            <TextField
+              label="Discount value"
+              size="small"
+              type="number"
+              inputProps={{ min: 0 }}
+              value={value}
+              onChange={(event) => setValue(Number(event.target.value))}
+            />
+
+            <TextField
+              label="Start date"
+              size="small"
+              type="date"
+              value={startDate}
+              onChange={(event) => setStartDate(event.target.value)}
+              InputLabelProps={{ shrink: true }}
+            />
+
+            <TextField
+              label="End date"
+              size="small"
+              type="date"
+              value={endDate}
+              onChange={(event) => setEndDate(event.target.value)}
+              InputLabelProps={{ shrink: true }}
+            />
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenModal(false)}>Cancel</Button>
+          <Button
+            variant="contained"
+            onClick={() => createMutation.mutate()}
+            disabled={!name || !customerId || !scopeId || createMutation.isPending}
+          >
+            {createMutation.isPending ? "Saving..." : "Save"}
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Stack>
   );
 }
