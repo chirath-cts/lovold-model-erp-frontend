@@ -1,14 +1,15 @@
 import type { SvgIconComponent } from "@mui/icons-material";
-import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
-import Inventory2RoundedIcon from "@mui/icons-material/Inventory2Rounded";
 import CategoryRoundedIcon from "@mui/icons-material/CategoryRounded";
-import LocalOfferRoundedIcon from "@mui/icons-material/LocalOfferRounded";
-import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
-import ViewListRoundedIcon from '@mui/icons-material/ViewListRounded';import GroupRoundedIcon from "@mui/icons-material/GroupRounded";
+import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 import GiteRoundedIcon from "@mui/icons-material/GiteRounded";
-import PriceCheckRoundedIcon from '@mui/icons-material/PriceCheckRounded';
+import GroupRoundedIcon from "@mui/icons-material/GroupRounded";
+import Inventory2RoundedIcon from "@mui/icons-material/Inventory2Rounded";
+import LocalOfferRoundedIcon from "@mui/icons-material/LocalOfferRounded"; 
+import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
+import ViewListRoundedIcon from "@mui/icons-material/ViewListRounded";
 
 export interface SidebarNavLink {
+  id: string;
   type: "link";
   label: string;
   path: string;
@@ -16,6 +17,7 @@ export interface SidebarNavLink {
 }
 
 export interface SidebarNavGroup {
+  id: string;
   type: "group";
   label: string;
   icon?: SvgIconComponent;
@@ -26,29 +28,34 @@ export type SidebarNavItem = SidebarNavLink | SidebarNavGroup;
 
 export const sidebarNavStructure: SidebarNavItem[] = [
   {
+    id: "dashboard",
     type: "link",
     label: "Dashboard",
     path: "/dashboard",
     icon: DashboardRoundedIcon,
   },
   {
+    id: "inventory",
     type: "group",
     label: "Inventory",
     icon: GiteRoundedIcon,
     children: [
       {
+        id: "products",
         type: "link",
         label: "Products",
         path: "/inventory/products",
         icon: Inventory2RoundedIcon,
       },
       {
+        id: "categories",
         type: "link",
         label: "Categories",
         path: "/inventory/categories",
         icon: CategoryRoundedIcon,
       },
       {
+        id: "discounts",
         type: "link",
         label: "Discounts",
         path: "/inventory/discounts",
@@ -57,19 +64,22 @@ export const sidebarNavStructure: SidebarNavItem[] = [
     ],
   },
   {
+    id: "sales",
     type: "group",
     label: "Sales",
     icon: ShoppingCartRoundedIcon,
     children: [
       {
+        id: "orders",
         type: "link",
         label: "Orders",
         path: "/sales/orders",
         icon: ViewListRoundedIcon,
       },
     ],
-  },
+  }, 
   {
+    id: "customers",
     type: "link",
     label: "Customers",
     path: "/customers",
