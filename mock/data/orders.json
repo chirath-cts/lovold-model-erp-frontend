@@ -7,11 +7,11 @@
       "orderDate": "2026-01-05T09:15:00.000Z",
       "status": "draft",
       "currency": "NOK",
-      "totalAmount": 51113.2,
-      "totalDiscount": 3606.8,
-      "totalCost": 40444,
-      "estimatedProfit": 10669.2,
-      "itemCount": 3
+      "subtotal": 54720.0,
+      "discountTotal": 3606.8,
+      "costTotal": 40444.0,
+      "profitTotal": 10669.2,
+      "grandTotal": 51113.2
     },
     {
       "id": "ord-2026-0002",
@@ -20,11 +20,11 @@
       "orderDate": "2026-01-08T09:15:00.000Z",
       "status": "confirmed",
       "currency": "NOK",
-      "totalAmount": 19756,
-      "totalDiscount": 2194,
-      "totalCost": 15482.8,
-      "estimatedProfit": 4273.2,
-      "itemCount": 2
+      "subtotal": 21950.0,
+      "discountTotal": 2194.0,
+      "costTotal": 15482.8,
+      "profitTotal": 4273.2,
+      "grandTotal": 19756.0
     },
     {
       "id": "ord-2026-0003",
@@ -33,11 +33,11 @@
       "orderDate": "2026-01-11T09:15:00.000Z",
       "status": "dispatched",
       "currency": "NOK",
-      "totalAmount": 124608,
-      "totalDiscount": 9792,
-      "totalCost": 98920,
-      "estimatedProfit": 25688,
-      "itemCount": 2
+      "subtotal": 134400.0,
+      "discountTotal": 9792.0,
+      "costTotal": 98920.0,
+      "profitTotal": 25688.0,
+      "grandTotal": 124608.0
     },
     {
       "id": "ord-2026-0004",
@@ -46,11 +46,11 @@
       "orderDate": "2026-01-14T09:15:00.000Z",
       "status": "delivered",
       "currency": "NOK",
-      "totalAmount": 104212.8,
-      "totalDiscount": 8907.2,
-      "totalCost": 82500,
-      "estimatedProfit": 21712.8,
-      "itemCount": 3
+      "subtotal": 113120.0,
+      "discountTotal": 8907.2,
+      "costTotal": 82500.0,
+      "profitTotal": 21712.8,
+      "grandTotal": 104212.8
     },
     {
       "id": "ord-2026-0005",
@@ -59,11 +59,11 @@
       "orderDate": "2026-01-17T09:15:00.000Z",
       "status": "draft",
       "currency": "NOK",
-      "totalAmount": 58452.32,
-      "totalDiscount": 6475.68,
-      "totalCost": 47096,
-      "estimatedProfit": 11356.32,
-      "itemCount": 2
+      "subtotal": 64928.0,
+      "discountTotal": 6475.68,
+      "costTotal": 47096.0,
+      "profitTotal": 11356.32,
+      "grandTotal": 58452.32
     },
     {
       "id": "ord-2026-0006",
@@ -72,11 +72,11 @@
       "orderDate": "2026-01-20T09:15:00.000Z",
       "status": "confirmed",
       "currency": "NOK",
-      "totalAmount": 17238.4,
-      "totalDiscount": 921.6,
-      "totalCost": 12984,
-      "estimatedProfit": 4254.4,
-      "itemCount": 2
+      "subtotal": 18160.0,
+      "discountTotal": 921.6,
+      "costTotal": 12984.0,
+      "profitTotal": 4254.4,
+      "grandTotal": 17238.4
     },
     {
       "id": "ord-2026-0007",
@@ -85,11 +85,11 @@
       "orderDate": "2026-01-23T09:15:00.000Z",
       "status": "dispatched",
       "currency": "NOK",
-      "totalAmount": 91643.8,
-      "totalDiscount": 6046.2,
-      "totalCost": 72566,
-      "estimatedProfit": 19077.8,
-      "itemCount": 3
+      "subtotal": 97690.0,
+      "discountTotal": 6046.2,
+      "costTotal": 72566.0,
+      "profitTotal": 19077.8,
+      "grandTotal": 91643.8
     },
     {
       "id": "ord-2026-0008",
@@ -98,11 +98,11 @@
       "orderDate": "2026-01-26T09:15:00.000Z",
       "status": "delivered",
       "currency": "NOK",
-      "totalAmount": 26349,
-      "totalDiscount": 2926,
-      "totalCost": 20649.2,
-      "estimatedProfit": 5699.8,
-      "itemCount": 2
+      "subtotal": 29275.0,
+      "discountTotal": 2926.0,
+      "costTotal": 20649.2,
+      "profitTotal": 5699.8,
+      "grandTotal": 26349.0
     },
     {
       "id": "ord-2026-0009",
@@ -111,11 +111,11 @@
       "orderDate": "2026-01-29T09:15:00.000Z",
       "status": "draft",
       "currency": "NOK",
-      "totalAmount": 159000,
-      "totalDiscount": 12600,
-      "totalCost": 126240,
-      "estimatedProfit": 32760,
-      "itemCount": 2
+      "subtotal": 171600.0,
+      "discountTotal": 12600.0,
+      "costTotal": 126240.0,
+      "profitTotal": 32760.0,
+      "grandTotal": 159000.0
     },
     {
       "id": "ord-2026-0010",
@@ -124,11 +124,11 @@
       "orderDate": "2026-02-01T09:15:00.000Z",
       "status": "confirmed",
       "currency": "NOK",
-      "totalAmount": 106266,
-      "totalDiscount": 7234,
-      "totalCost": 83940,
-      "estimatedProfit": 22326,
-      "itemCount": 3
+      "subtotal": 113500.0,
+      "discountTotal": 7234.0,
+      "costTotal": 83940.0,
+      "profitTotal": 22326.0,
+      "grandTotal": 106266.0
     },
     {
       "id": "ord-2026-0011",
@@ -137,11 +137,11 @@
       "orderDate": "2026-02-04T09:15:00.000Z",
       "status": "dispatched",
       "currency": "NOK",
-      "totalAmount": 12414.64,
-      "totalDiscount": 1341.36,
-      "totalCost": 9952,
-      "estimatedProfit": 2462.64,
-      "itemCount": 2
+      "subtotal": 13756.0,
+      "discountTotal": 1341.36,
+      "costTotal": 9952.0,
+      "profitTotal": 2462.64,
+      "grandTotal": 12414.64
     },
     {
       "id": "ord-2026-0012",
@@ -150,11 +150,11 @@
       "orderDate": "2026-02-07T09:15:00.000Z",
       "status": "delivered",
       "currency": "NOK",
-      "totalAmount": 26496.8,
-      "totalDiscount": 1423.2,
-      "totalCost": 19948,
-      "estimatedProfit": 6548.8,
-      "itemCount": 2
+      "subtotal": 27920.0,
+      "discountTotal": 1423.2,
+      "costTotal": 19948.0,
+      "profitTotal": 6548.8,
+      "grandTotal": 26496.8
     },
     {
       "id": "ord-2026-0013",
@@ -163,11 +163,11 @@
       "orderDate": "2026-02-10T09:15:00.000Z",
       "status": "draft",
       "currency": "NOK",
-      "totalAmount": 132174.4,
-      "totalDiscount": 8485.6,
-      "totalCost": 104688,
-      "estimatedProfit": 27486.4,
-      "itemCount": 3
+      "subtotal": 140660.0,
+      "discountTotal": 8485.6,
+      "costTotal": 104688.0,
+      "profitTotal": 27486.4,
+      "grandTotal": 132174.4
     },
     {
       "id": "ord-2026-0014",
@@ -176,11 +176,11 @@
       "orderDate": "2026-02-13T09:15:00.000Z",
       "status": "confirmed",
       "currency": "NOK",
-      "totalAmount": 32942,
-      "totalDiscount": 3658,
-      "totalCost": 25815.6,
-      "estimatedProfit": 7126.4,
-      "itemCount": 2
+      "subtotal": 36600.0,
+      "discountTotal": 3658.0,
+      "costTotal": 25815.6,
+      "profitTotal": 7126.4,
+      "grandTotal": 32942.0
     },
     {
       "id": "ord-2026-0015",
@@ -189,11 +189,11 @@
       "orderDate": "2026-02-16T09:15:00.000Z",
       "status": "dispatched",
       "currency": "NOK",
-      "totalAmount": 86232,
-      "totalDiscount": 8568,
-      "totalCost": 68760,
-      "estimatedProfit": 17472,
-      "itemCount": 2
+      "subtotal": 94800.0,
+      "discountTotal": 8568.0,
+      "costTotal": 68760.0,
+      "profitTotal": 17472.0,
+      "grandTotal": 86232.0
     },
     {
       "id": "ord-2026-0016",
@@ -202,11 +202,11 @@
       "orderDate": "2026-02-19T09:15:00.000Z",
       "status": "delivered",
       "currency": "NOK",
-      "totalAmount": 128853.2,
-      "totalDiscount": 9126.8,
-      "totalCost": 103080,
-      "estimatedProfit": 25773.2,
-      "itemCount": 3
+      "subtotal": 137980.0,
+      "discountTotal": 9126.8,
+      "costTotal": 103080.0,
+      "profitTotal": 25773.2,
+      "grandTotal": 128853.2
     },
     {
       "id": "ord-2026-0017",
@@ -215,11 +215,11 @@
       "orderDate": "2026-02-22T09:15:00.000Z",
       "status": "draft",
       "currency": "NOK",
-      "totalAmount": 24426.96,
-      "totalDiscount": 2657.04,
-      "totalCost": 19608,
-      "estimatedProfit": 4818.96,
-      "itemCount": 2
+      "subtotal": 27084.0,
+      "discountTotal": 2657.04,
+      "costTotal": 19608.0,
+      "profitTotal": 4818.96,
+      "grandTotal": 24426.96
     },
     {
       "id": "ord-2026-0018",
@@ -228,11 +228,11 @@
       "orderDate": "2026-02-25T09:15:00.000Z",
       "status": "confirmed",
       "currency": "NOK",
-      "totalAmount": 35755.2,
-      "totalDiscount": 1924.8,
-      "totalCost": 26912,
-      "estimatedProfit": 8843.2,
-      "itemCount": 2
+      "subtotal": 37680.0,
+      "discountTotal": 1924.8,
+      "costTotal": 26912.0,
+      "profitTotal": 8843.2,
+      "grandTotal": 35755.2
     },
     {
       "id": "ord-2026-0019",
@@ -241,11 +241,11 @@
       "orderDate": "2026-02-28T09:15:00.000Z",
       "status": "dispatched",
       "currency": "NOK",
-      "totalAmount": 146695,
-      "totalDiscount": 8035,
-      "totalCost": 116310,
-      "estimatedProfit": 30385,
-      "itemCount": 3
+      "subtotal": 154730.0,
+      "discountTotal": 8035.0,
+      "costTotal": 116310.0,
+      "profitTotal": 30385.0,
+      "grandTotal": 146695.0
     },
     {
       "id": "ord-2026-0020",
@@ -254,11 +254,11 @@
       "orderDate": "2026-03-03T09:15:00.000Z",
       "status": "delivered",
       "currency": "NOK",
-      "totalAmount": 6685,
-      "totalDiscount": 740,
-      "totalCost": 5232,
-      "estimatedProfit": 1453,
-      "itemCount": 2
+      "subtotal": 7425.0,
+      "discountTotal": 740.0,
+      "costTotal": 5232.0,
+      "profitTotal": 1453.0,
+      "grandTotal": 6685.0
     },
     {
       "id": "ord-2026-0021",
@@ -267,11 +267,11 @@
       "orderDate": "2026-03-06T09:15:00.000Z",
       "status": "draft",
       "currency": "NOK",
-      "totalAmount": 55824,
-      "totalDiscount": 4176,
-      "totalCost": 44280,
-      "estimatedProfit": 11544,
-      "itemCount": 2
+      "subtotal": 60000.0,
+      "discountTotal": 4176.0,
+      "costTotal": 44280.0,
+      "profitTotal": 11544.0,
+      "grandTotal": 55824.0
     },
     {
       "id": "ord-2026-0022",
@@ -280,11 +280,11 @@
       "orderDate": "2026-03-09T09:15:00.000Z",
       "status": "confirmed",
       "currency": "NOK",
-      "totalAmount": 178606.4,
-      "totalDiscount": 12753.6,
-      "totalCost": 142720,
-      "estimatedProfit": 35886.4,
-      "itemCount": 3
+      "subtotal": 191360.0,
+      "discountTotal": 12753.6,
+      "costTotal": 142720.0,
+      "profitTotal": 35886.4,
+      "grandTotal": 178606.4
     },
     {
       "id": "ord-2026-0023",
@@ -293,11 +293,11 @@
       "orderDate": "2026-03-12T09:15:00.000Z",
       "status": "dispatched",
       "currency": "NOK",
-      "totalAmount": 36439.28,
-      "totalDiscount": 3972.72,
-      "totalCost": 29264,
-      "estimatedProfit": 7175.28,
-      "itemCount": 2
+      "subtotal": 40412.0,
+      "discountTotal": 3972.72,
+      "costTotal": 29264.0,
+      "profitTotal": 7175.28,
+      "grandTotal": 36439.28
     },
     {
       "id": "ord-2026-0024",
@@ -306,11 +306,11 @@
       "orderDate": "2026-03-15T09:15:00.000Z",
       "status": "delivered",
       "currency": "NOK",
-      "totalAmount": 45013.6,
-      "totalDiscount": 2426.4,
-      "totalCost": 33876,
-      "estimatedProfit": 11137.6,
-      "itemCount": 2
+      "subtotal": 47440.0,
+      "discountTotal": 2426.4,
+      "costTotal": 33876.0,
+      "profitTotal": 11137.6,
+      "grandTotal": 45013.6
     }
   ]
 }

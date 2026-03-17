@@ -122,9 +122,7 @@ export function LoginPage() {
         sx={{ position: "relative", zIndex: 1, maxWidth: 1200, width: "100%" }}
       >
         <Grid
-          item
-          xs={12}
-          lg={6}
+          size={{ xs: 12, lg: 6 }}
           sx={{ display: { xs: "none", lg: "flex" }, pr: { lg: 6 } }}
         >
           <Stack spacing={4}>
@@ -215,9 +213,7 @@ export function LoginPage() {
         </Grid>
 
         <Grid
-          item
-          xs={12}
-          lg={6}
+          size={{ xs: 12, lg: 6 }}
           sx={{ display: "flex", justifyContent: { xs: "center", lg: "flex-end" } }}
         >
           <Paper
