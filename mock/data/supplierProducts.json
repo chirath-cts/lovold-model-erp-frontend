@@ -1,0 +1,268 @@
+{
+  "supplierProducts": [
+    {
+      "id": "sp-001",
+      "productId": "1a7c4f61-9c4d-4b32-bd51-2a5e7c1f0a11",
+      "supplierId": "sup-001",
+      "supplierSku": "SUP-001-CAGE-50-HDPE",
+      "purchasePrice": 12834.0,
+      "supplierDiscountPercent": 3.0,
+      "leadTimeDays": 6,
+      "isPrimarySupplier": true,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-002",
+      "productId": "1a7c4f61-9c4d-4b32-bd51-2a5e7c1f0a11",
+      "supplierId": "sup-003",
+      "supplierSku": "SUP-003-CAGE-50-HDPE",
+      "purchasePrice": 13392.0,
+      "supplierDiscountPercent": 1.5,
+      "leadTimeDays": 7,
+      "isPrimarySupplier": false,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-003",
+      "productId": "2b8e5a72-7d4f-4c44-ae23-3f7b8d2e1a22",
+      "supplierId": "sup-002",
+      "supplierSku": "SUP-002-NET-100-NYL",
+      "purchasePrice": 2769.2,
+      "supplierDiscountPercent": 3.0,
+      "leadTimeDays": 8,
+      "isPrimarySupplier": true,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-004",
+      "productId": "2b8e5a72-7d4f-4c44-ae23-3f7b8d2e1a22",
+      "supplierId": "sup-004",
+      "supplierSku": "SUP-004-NET-100-NYL",
+      "purchasePrice": 2889.6,
+      "supplierDiscountPercent": 1.5,
+      "leadTimeDays": 9,
+      "isPrimarySupplier": false,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-005",
+      "productId": "3c9f6b83-8e5d-4d55-bf34-4a8c9e3f2b33",
+      "supplierId": "sup-003",
+      "supplierSku": "SUP-003-BOLT-M16-SS",
+      "purchasePrice": 7.54,
+      "supplierDiscountPercent": 3.0,
+      "leadTimeDays": 10,
+      "isPrimarySupplier": true,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-006",
+      "productId": "3c9f6b83-8e5d-4d55-bf34-4a8c9e3f2b33",
+      "supplierId": "sup-005",
+      "supplierSku": "SUP-005-BOLT-M16-SS",
+      "purchasePrice": 7.87,
+      "supplierDiscountPercent": 1.5,
+      "leadTimeDays": 11,
+      "isPrimarySupplier": false,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-007",
+      "productId": "4d1a7c94-9f6e-4e66-c045-5b9d0f4a3c44",
+      "supplierId": "sup-004",
+      "supplierSku": "SUP-004-MOOR-ROPE-30",
+      "purchasePrice": 56.12,
+      "supplierDiscountPercent": 3.0,
+      "leadTimeDays": 5,
+      "isPrimarySupplier": true,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-008",
+      "productId": "4d1a7c94-9f6e-4e66-c045-5b9d0f4a3c44",
+      "supplierId": "sup-001",
+      "supplierSku": "SUP-001-MOOR-ROPE-30",
+      "purchasePrice": 58.56,
+      "supplierDiscountPercent": 1.5,
+      "leadTimeDays": 6,
+      "isPrimarySupplier": false,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-009",
+      "productId": "5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
+      "supplierId": "sup-005",
+      "supplierSku": "SUP-005-FEED-AUTO-200",
+      "purchasePrice": 4765.6,
+      "supplierDiscountPercent": 3.0,
+      "leadTimeDays": 7,
+      "isPrimarySupplier": true,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-010",
+      "productId": "5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
+      "supplierId": "sup-002",
+      "supplierSku": "SUP-002-FEED-AUTO-200",
+      "purchasePrice": 4972.8,
+      "supplierDiscountPercent": 1.5,
+      "leadTimeDays": 8,
+      "isPrimarySupplier": false,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-011",
+      "productId": "6f4e9ab1-3c67-49c1-95b9-0b7a8f6d1011",
+      "supplierId": "sup-001",
+      "supplierSku": "SUP-001-SENS-DO-PRO",
+      "purchasePrice": 2369.0,
+      "supplierDiscountPercent": 3.0,
+      "leadTimeDays": 9,
+      "isPrimarySupplier": true,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-012",
+      "productId": "6f4e9ab1-3c67-49c1-95b9-0b7a8f6d1011",
+      "supplierId": "sup-003",
+      "supplierSku": "SUP-003-SENS-DO-PRO",
+      "purchasePrice": 2472.0,
+      "supplierDiscountPercent": 1.5,
+      "leadTimeDays": 10,
+      "isPrimarySupplier": false,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-013",
+      "productId": "7a6b5c2d-8e31-4f02-9b4f-6d2a1c3e2022",
+      "supplierId": "sup-002",
+      "supplierSku": "SUP-002-SENS-PH-DIGI",
+      "purchasePrice": 1886.0,
+      "supplierDiscountPercent": 3.0,
+      "leadTimeDays": 11,
+      "isPrimarySupplier": true,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-014",
+      "productId": "7a6b5c2d-8e31-4f02-9b4f-6d2a1c3e2022",
+      "supplierId": "sup-004",
+      "supplierSku": "SUP-004-SENS-PH-DIGI",
+      "purchasePrice": 1968.0,
+      "supplierDiscountPercent": 1.5,
+      "leadTimeDays": 5,
+      "isPrimarySupplier": false,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-015",
+      "productId": "8b7c6d3e-9f42-4a13-8c5a-7e3b2d4f3033",
+      "supplierId": "sup-003",
+      "supplierSku": "SUP-003-WTR-UV-1200",
+      "purchasePrice": 7801.6,
+      "supplierDiscountPercent": 3.0,
+      "leadTimeDays": 6,
+      "isPrimarySupplier": true,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-016",
+      "productId": "8b7c6d3e-9f42-4a13-8c5a-7e3b2d4f3033",
+      "supplierId": "sup-005",
+      "supplierSku": "SUP-005-WTR-UV-1200",
+      "purchasePrice": 8140.8,
+      "supplierDiscountPercent": 1.5,
+      "leadTimeDays": 7,
+      "isPrimarySupplier": false,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-017",
+      "productId": "9c8d7e4f-0a53-4b24-9d6b-8f4c3e5a4044",
+      "supplierId": "sup-004",
+      "supplierSku": "SUP-004-AER-MICRO-50",
+      "purchasePrice": 4305.6,
+      "supplierDiscountPercent": 3.0,
+      "leadTimeDays": 8,
+      "isPrimarySupplier": true,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-018",
+      "productId": "9c8d7e4f-0a53-4b24-9d6b-8f4c3e5a4044",
+      "supplierId": "sup-001",
+      "supplierSku": "SUP-001-AER-MICRO-50",
+      "purchasePrice": 4492.8,
+      "supplierDiscountPercent": 1.5,
+      "leadTimeDays": 9,
+      "isPrimarySupplier": false,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-019",
+      "productId": "ad9e8f5a-1b64-4c35-ae7c-9a5d4f6b5055",
+      "supplierId": "sup-005",
+      "supplierSku": "SUP-005-CTRL-CAB-IP66",
+      "purchasePrice": 3514.4,
+      "supplierDiscountPercent": 3.0,
+      "leadTimeDays": 10,
+      "isPrimarySupplier": true,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-020",
+      "productId": "ad9e8f5a-1b64-4c35-ae7c-9a5d4f6b5055",
+      "supplierId": "sup-002",
+      "supplierSku": "SUP-002-CTRL-CAB-IP66",
+      "purchasePrice": 3667.2,
+      "supplierDiscountPercent": 1.5,
+      "leadTimeDays": 11,
+      "isPrimarySupplier": false,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-021",
+      "productId": "beaf9a6b-2c75-4d46-bf8d-ab6e5c7d6066",
+      "supplierId": "sup-001",
+      "supplierSku": "SUP-001-FEED-PIPE-10",
+      "purchasePrice": 434.24,
+      "supplierDiscountPercent": 3.0,
+      "leadTimeDays": 5,
+      "isPrimarySupplier": true,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-022",
+      "productId": "beaf9a6b-2c75-4d46-bf8d-ab6e5c7d6066",
+      "supplierId": "sup-003",
+      "supplierSku": "SUP-003-FEED-PIPE-10",
+      "purchasePrice": 453.12,
+      "supplierDiscountPercent": 1.5,
+      "leadTimeDays": 6,
+      "isPrimarySupplier": false,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-023",
+      "productId": "cfb0ab7c-3d86-4e57-c09e-bc7f6d8e7077",
+      "supplierId": "sup-002",
+      "supplierSku": "SUP-002-ANCH-CHAIN-18",
+      "purchasePrice": 136.16,
+      "supplierDiscountPercent": 3.0,
+      "leadTimeDays": 7,
+      "isPrimarySupplier": true,
+      "minOrderQty": 1
+    },
+    {
+      "id": "sp-024",
+      "productId": "cfb0ab7c-3d86-4e57-c09e-bc7f6d8e7077",
+      "supplierId": "sup-004",
+      "supplierSku": "SUP-004-ANCH-CHAIN-18",
+      "purchasePrice": 142.08,
+      "supplierDiscountPercent": 1.5,
+      "leadTimeDays": 8,
+      "isPrimarySupplier": false,
+      "minOrderQty": 1
+    }
+  ]
+}
