@@ -1,7 +1,11 @@
+import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import WaterDropRoundedIcon from "@mui/icons-material/WaterDropRounded";
 import {
   Box,
+  Collapse,
   Divider,
   Drawer,
   List,
@@ -23,6 +27,14 @@ interface SidebarProps {
 
 function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   const location = useLocation();
+  const [openGroupId, setOpenGroupId] = useState<string | null>(null);
+
+  const isPathActive = (path: string) =>
+    location.pathname === path || location.pathname.startsWith(`${path}/`);
+
+  const handleGroupToggle = (groupId: string) => {
+    setOpenGroupId((current) => (current === groupId ? null : groupId));
+  };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100%" }}>
@@ -58,22 +70,28 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         {sidebarNavStructure.map((item) => {
           if (item.type === "link") {
             const Icon = item.icon;
+            const isActive = isPathActive(item.path);
 
             return (
               <ListItemButton
-                key={item.path}
+                key={item.id}
                 component={NavLink}
                 to={item.path}
                 onClick={onNavigate}
+                selected={isActive}
                 sx={{
                   borderRadius: 1.5,
                   mb: 0.5,
                   color: "text.secondary",
-                  "&.active": {
+                  "&.Mui-selected": {
                     bgcolor: "primary.main",
                     color: "primary.contrastText",
                   },
-                  "&.active .MuiListItemIcon-root": {
+                  "&.Mui-selected:hover": {
+                    bgcolor: "primary.dark",
+                    color: "primary.contrastText",
+                  },
+                  "& .MuiListItemIcon-root": {
                     color: "inherit",
                   },
                 }}
@@ -87,74 +105,85 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
           }
 
           const GroupIcon = item.icon;
-          const groupIsActive = item.children.some((child) =>
-            location.pathname.startsWith(child.path),
-          );
+          const groupIsActive = item.children.some((child) => isPathActive(child.path));
+          const isOpen = openGroupId === item.id;
 
           return (
-            <Box key={item.label} sx={{ mt: 1, mb: 0.5 }}>
-              <Box
+            <Box key={item.id} sx={{ mb: 0.5 }}>
+              <ListItemButton
+                onClick={() => handleGroupToggle(item.id)}
+                selected={groupIsActive || isOpen}
                 sx={{
-                  px: 2,
-                  py: 1,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1.7,
-                  color: groupIsActive ? "primary.main" : "text.secondary",
+                  borderRadius: 1.5,
+                  mb: 0.25,
+                  color: "text.secondary",
+                  "&.Mui-selected": {
+                    bgcolor: "action.selected",
+                    color: "primary.main",
+                  },
+                  "& .MuiListItemIcon-root": {
+                    color: "inherit",
+                  },
                 }}
               >
                 {GroupIcon ? (
-                  <Box sx={{ width: 20, display: "inline-flex", justifyContent: "center" }}>
+                  <ListItemIcon sx={{ minWidth: 34, color: "inherit" }}>
                     <GroupIcon fontSize="small" />
-                  </Box>
-                ) : null}
-                <Typography
-                  variant="caption"
-                  sx={{
-                    fontSize: 14,
-                    fontWeight: groupIsActive ? 700 : 600,
-                    letterSpacing: "0.04em",
-                    // textTransform: "uppercase",
-                  }}
-                >
-                  {item.label}
-                </Typography>
-              </Box>
+                  </ListItemIcon>
+                ) : (
+                  <Box sx={{ width: 34 }} />
+                )}
+                <ListItemText
+                  primary={item.label}
+                  primaryTypographyProps={{ fontSize: 14, fontWeight: 700 }}
+                />
+                {isOpen ? <ExpandLess fontSize="small" /> : <ExpandMore fontSize="small" />}
+              </ListItemButton>
 
-              {item.children.map((child) => {
-                const ChildIcon = child.icon;
+              <Collapse in={isOpen} timeout="auto" unmountOnExit>
+                <List disablePadding>
+                  {item.children.map((child) => {
+                    const ChildIcon = child.icon;
+                    const isChildActive = isPathActive(child.path);
 
-                return (
-                  <ListItemButton
-                    key={child.path}
-                    component={NavLink}
-                    to={child.path}
-                    onClick={onNavigate}
-                    sx={{
-                      borderRadius: 1.5,
-                      ml: 2.5,
-                      mb: 0.5,
-                      py: 0.75,
-                      color: "text.secondary",
-                      "&.active": {
-                        bgcolor: "primary.main",
-                        color: "primary.contrastText",
-                      },
-                      "&.active .MuiListItemIcon-root": {
-                        color: "inherit",
-                      },
-                    }}
-                  >
-                    <ListItemIcon sx={{ minWidth: 30, color: "inherit" }}>
-                      <ChildIcon sx={{ fontSize: 15 }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={child.label}
-                      primaryTypographyProps={{ fontSize: 13, fontWeight: 600 }}
-                    />
-                  </ListItemButton>
-                );
-              })}
+                    return (
+                      <ListItemButton
+                        key={child.id}
+                        component={NavLink}
+                        to={child.path}
+                        onClick={onNavigate}
+                        selected={isChildActive}
+                        sx={{
+                          borderRadius: 1.25,
+                          ml: 1,
+                          mb: 0.25,
+                          py: 0.75,
+                          color: "text.secondary",
+                          "&.Mui-selected": {
+                            bgcolor: "primary.main",
+                            color: "primary.contrastText",
+                          },
+                          "&.Mui-selected:hover": {
+                            bgcolor: "primary.dark",
+                            color: "primary.contrastText",
+                          },
+                          "& .MuiListItemIcon-root": {
+                            color: "inherit",
+                          },
+                        }}
+                      >
+                        <ListItemIcon sx={{ minWidth: 30, color: "inherit" }}>
+                          <ChildIcon sx={{ fontSize: 15 }} />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={child.label}
+                          primaryTypographyProps={{ fontSize: 13, fontWeight: 600 }}
+                        />
+                      </ListItemButton>
+                    );
+                  })}
+                </List>
+              </Collapse>
             </Box>
           );
         })}
