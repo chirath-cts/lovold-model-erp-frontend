@@ -21,6 +21,20 @@
 - Supporting indexes exist for Phase 1 core relations
 - Order line snapshots preserve historical pricing/cost integrity
 
+## Entity Relationships (Phase 1)
+- `orders.customer_id` -> `customers.customer_code`
+- `order_product.order_id` -> `orders.id`; `order_product.product_id` -> `products.id`
+- `products.category_id` -> `categories.id`
+- `customer_product.customer_id` -> `customers.customer_code`; `customer_product.product_id` -> `products.id`
+- `users` stand alone (ops accounts)
+
+## Field Highlights
+- `orders.order_number` is unique; monetary totals include subtotal, discount_total, cost_total, profit_total, grand_total
+- `order_product` stores quantity, unit_price, line_discount_percent, discount_amount, tax_total, unit_cost_at_sale, profit_amount
+- `customer_product` composite on (customer_id, product_id); captures discount_percent, start_date, end_date, is_active for pricing validity
+- `products` include base_price and `uom`
+- `customers` use `customer_code` as primary key; referenced by orders and customer_product
+
 ## Frontend Compatibility Mapping
 - `/orderItems` <-> `order_product`
 - `/discounts` <-> `customer_product`

@@ -32,7 +32,7 @@ Not included in Phase 1:
 Implemented:
 - Product name
 - SKU
-- Category
+- Category (category_id link)
 - Base selling price
 - Unit of measure
 - Product status
@@ -45,7 +45,7 @@ Implemented:
 
 ### Customer Pricing
 Implemented:
-- Customer-product pricing/discount agreements
+- Customer-product pricing/discount agreements stored in `customer_product` (customer_id, product_id)
 - Discount percent
 - Validity start/end dates
 - Active flag
@@ -67,14 +67,15 @@ Implemented:
 ### Create Order Flow
 Implemented:
 - Customer selection
-- Multi-line order items
+- Multi-line order lines stored in `order_product`
 - Product selection and quantity
 - Discount type/value per line
 - Live subtotal/discount/total/profit summary
+- Order lines persist quantity, unit_price, line_discount_percent, tax_total, unit_cost_at_sale, profit_amount
 
 Write flow:
 1. Create order
-2. Create order items
+2. Create order_product rows
 3. Refresh affected views via query invalidation
 
 Failure handling:
