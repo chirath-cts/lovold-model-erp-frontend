@@ -92,6 +92,18 @@ const parseDiscountId = (id) => {
   return { customerId, productId };
 };
 
+const PRIMARY_SUPPLIER_JOIN_SQL = `
+LEFT JOIN supplier_product sp
+  ON sp.product_id = p.id
+ AND sp.id = (
+   SELECT sp2.id
+   FROM supplier_product sp2
+   WHERE sp2.product_id = p.id
+   ORDER BY COALESCE(sp2.is_primary_supplier, 0) DESC, sp2.id ASC
+   LIMIT 1
+ )
+`;
+
 const rowToCategory = (row) => ({
   id: row.id,
   name: row.name,
@@ -118,7 +130,7 @@ const rowToProduct = (row) => ({
   sku: row.sku,
   categoryId: row.category_id,
   unitPrice: numberValue(row.base_price, 0),
-  fixedCostPrice: numberValue(row.base_price, 0),
+  fixedCostPrice: numberValue(row.purchase_price ?? row.base_price, 0),
   currency: "NOK",
   unit: row.unit,
   stockQuantity: integerValue(row.stock_quantity, 0),
@@ -253,13 +265,14 @@ async function ensureInventoryRow(productId) {
 
 async function getProductById(productId) {
   return db.get(
-    `SELECT p.id, p.name, p.sku, p.category_id, p.base_price, p.unit, p.description, p.status,
+    `SELECT p.id, p.name, p.sku, p.category_id, p.base_price, p.unit, p.description, p.status, sp.purchase_price,
             COALESCE(SUM(i.stock_quantity), 0) AS stock_quantity,
             COALESCE(SUM(i.reorder_level), 0) AS reorder_level
      FROM products p
      LEFT JOIN inventory i ON i.product_id = p.id
+     ${PRIMARY_SUPPLIER_JOIN_SQL}
      WHERE p.id = ?
-     GROUP BY p.id, p.name, p.sku, p.category_id, p.base_price, p.unit, p.description, p.status`,
+     GROUP BY p.id, p.name, p.sku, p.category_id, p.base_price, p.unit, p.description, p.status, sp.purchase_price`,
     productId,
   );
 }
@@ -382,13 +395,14 @@ app.get(
     );
 
     const rows = await db.all(
-      `SELECT p.id, p.name, p.sku, p.category_id, p.base_price, p.unit, p.description, p.status,
+      `SELECT p.id, p.name, p.sku, p.category_id, p.base_price, p.unit, p.description, p.status, sp.purchase_price,
               COALESCE(SUM(i.stock_quantity), 0) AS stock_quantity,
               COALESCE(SUM(i.reorder_level), 0) AS reorder_level
        FROM products p
        LEFT JOIN inventory i ON i.product_id = p.id
+       ${PRIMARY_SUPPLIER_JOIN_SQL}
        ${whereClause}
-       GROUP BY p.id, p.name, p.sku, p.category_id, p.base_price, p.unit, p.description, p.status${orderClause}`,
+       GROUP BY p.id, p.name, p.sku, p.category_id, p.base_price, p.unit, p.description, p.status, sp.purchase_price${orderClause}`,
       ...params,
     );
 
@@ -769,7 +783,13 @@ app.post(
     const order = await db.get("SELECT id FROM orders WHERE id = ?", payload.orderId);
     if (!order) return badRequest(res, "Invalid orderId");
 
-    const product = await db.get("SELECT id, base_price FROM products WHERE id = ?", payload.productId);
+    const product = await db.get(
+      `SELECT p.id, p.base_price, sp.purchase_price
+       FROM products p
+       ${PRIMARY_SUPPLIER_JOIN_SQL}
+       WHERE p.id = ?`,
+      payload.productId,
+    );
     if (!product) return badRequest(res, "Invalid productId");
 
     const quantity = numberValue(payload.quantity, 0);
@@ -797,7 +817,7 @@ app.post(
       discountPercent,
       discountAmount,
       numberValue(payload.lineTotal, 0),
-      numberValue(payload.fixedCostSnapshot ?? payload.unitCostAtSale ?? product.base_price, 0),
+      numberValue(payload.fixedCostSnapshot ?? payload.unitCostAtSale ?? product.purchase_price ?? product.base_price, 0),
       numberValue(payload.lineProfit ?? payload.profitAmount, 0),
     );
 
