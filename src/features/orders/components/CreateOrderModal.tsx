@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
@@ -69,7 +69,7 @@ export function CreateOrderModal({
     },
   });
 
-  const { control, handleSubmit, reset } = form;
+  const { control, handleSubmit, reset, setValue } = form;
   const { fields, append, remove } = useFieldArray({
     control,
     name: "lines",
@@ -82,10 +82,116 @@ export function CreateOrderModal({
     defaultValue: [],
   });
 
+  const productsById = useMemo(
+    () => new Map(products.map((product) => [product.id, product])),
+    [products],
+  );
+
+  const activeDiscounts = useMemo(
+    () =>
+      discounts.filter(
+        (discount) =>
+          discount.customerId === selectedCustomerId && discount.status === "active",
+      ),
+    [discounts, selectedCustomerId],
+  );
+
+  const discountsByProduct = useMemo(() => {
+    const map = new Map<string, Discount>();
+    activeDiscounts.forEach((discount) => {
+      if (discount.scopeType === "product") {
+        map.set(discount.scopeId, discount);
+      }
+    });
+    return map;
+  }, [activeDiscounts]);
+
+  const discountsByCategory = useMemo(() => {
+    const map = new Map<string, Discount>();
+    activeDiscounts.forEach((discount) => {
+      if (discount.scopeType === "category") {
+        map.set(discount.scopeId, discount);
+      }
+    });
+    return map;
+  }, [activeDiscounts]);
+
+  const getDiscountForProduct = useCallback(
+    (product?: Product) => {
+      if (!product) return undefined;
+      return (
+        discountsByProduct.get(product.id) ??
+        discountsByCategory.get(product.categoryId)
+      );
+    },
+    [discountsByCategory, discountsByProduct],
+  );
+
+  const applyDiscountToLine = useCallback(
+    (lineIndex: number, productId?: string) => {
+      const product = productId ? productsById.get(productId) : undefined;
+      const matchedDiscount = getDiscountForProduct(product);
+
+      const nextDiscountType = matchedDiscount?.discountType ?? "percentage";
+      const nextDiscountValue = matchedDiscount?.value ?? 0;
+
+      setValue(`lines.${lineIndex}.discountType`, nextDiscountType, {
+        shouldDirty: true,
+      });
+      setValue(`lines.${lineIndex}.discountValue`, nextDiscountValue, {
+        shouldDirty: true,
+      });
+    },
+    [getDiscountForProduct, productsById, setValue],
+  );
+
+  const getMatchingDiscounts = useCallback(
+    (product?: Product) => {
+      if (!product) return [] as Discount[];
+      return activeDiscounts.filter(
+        (discount) =>
+          (discount.scopeType === "product" && discount.scopeId === product.id) ||
+          (discount.scopeType === "category" && discount.scopeId === product.categoryId),
+      );
+    },
+    [activeDiscounts],
+  );
+
+  const previousCustomerIdRef = useRef<string | undefined>(undefined);
+  const previousProductIdsRef = useRef<string[]>([]);
+  const previousDiscountSignatureRef = useRef<string>("");
+
+  useEffect(() => {
+    const discountSignature = activeDiscounts
+      .map((item) => `${item.id}:${item.discountType}:${item.value}`)
+      .join("|");
+    const discountsChanged = previousDiscountSignatureRef.current !== discountSignature;
+    const customerChanged = previousCustomerIdRef.current !== selectedCustomerId;
+
+    watchedLines.forEach((line, index) => {
+      const prevProductId = previousProductIdsRef.current[index];
+      const productChanged = prevProductId !== line?.productId;
+
+      const shouldUpdateLine = customerChanged || productChanged || discountsChanged;
+      if (!shouldUpdateLine) return;
+
+      applyDiscountToLine(index, line?.productId);
+    });
+
+    previousCustomerIdRef.current = selectedCustomerId;
+    previousProductIdsRef.current = watchedLines.map((line) => line.productId);
+    previousDiscountSignatureRef.current = discountSignature;
+  }, [
+    activeDiscounts,
+    applyDiscountToLine,
+    selectedCustomerId,
+    watchedLines,
+  ]);
+
   const lineSummaries = useMemo(
     () =>
       watchedLines.map((line) => {
-        const product = products.find((item) => item.id === line.productId);
+        const product = productsById.get(line.productId);
         if (!product) {
           return {
             lineSubtotal: 0,
@@ -103,7 +209,7 @@ export function CreateOrderModal({
           discountValue: line.discountValue,
         });
       }),
-    [products, watchedLines],
+    [productsById, watchedLines],
   );
 
   const totals = useMemo(
@@ -214,18 +320,8 @@ export function CreateOrderModal({
             </Box>
 
             {fields.map((field, index) => {
-              const selectedProduct = products.find(
-                (item) => item.id === watchedLines[index]?.productId,
-              );
-              const matchingDiscounts = discounts.filter(
-                (discount) =>
-                  discount.customerId === selectedCustomerId &&
-                  discount.status === "active" &&
-                  selectedProduct &&
-                  ((discount.scopeType === "product" && discount.scopeId === selectedProduct.id) ||
-                    (discount.scopeType === "category" &&
-                      discount.scopeId === selectedProduct.categoryId)),
-              );
+              const selectedProduct = productsById.get(watchedLines[index]?.productId ?? "");
+              const matchingDiscounts = getMatchingDiscounts(selectedProduct);
 
               return (
                 <Paper key={field.id} variant="outlined" sx={{ p: 2 }}>
@@ -246,7 +342,15 @@ export function CreateOrderModal({
                       render={({ field: lineField }) => (
                         <FormControl size="small" fullWidth sx={{ gridColumn: { xs: "span 2", lg: "span 1" } }}>
                           <InputLabel>Product</InputLabel>
-                          <Select {...lineField} label="Product">
+                          <Select
+                            {...lineField}
+                            label="Product"
+                            onChange={(event) => {
+                              const value = event.target.value as string;
+                              lineField.onChange(value);
+                              applyDiscountToLine(index, value);
+                            }}
+                          >
                             {products.map((product) => (
                               <MenuItem key={product.id} value={product.id}>
                                 {product.name}
@@ -295,7 +399,7 @@ export function CreateOrderModal({
                           size="small"
                           label="Disc Value"
                           type="number"
-                          inputProps={{ min: 0 }}
+                          inputProps={{ min: 0, step: "any" }}
                           onChange={(event) => lineField.onChange(Number(event.target.value))}
                         />
                       )}
