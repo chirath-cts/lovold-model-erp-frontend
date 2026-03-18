@@ -1,8 +1,8 @@
 # Agent Guide
 
 ## Scope & Sources
-- Read: `agent-knowledgebase/project-overview.md`, `agent-knowledgebase/modules-phase1.md`, `agent-knowledgebase/data-model-and-api.md`, `agent-knowledgebase/coding-rules.md`, `agent-knowledgebase/roadmap-and-non-goals.md`.
-- Validate entity names/relations with `agent-knowledgebase/er-diagram.jpg` (customers -> orders -> order_product -> products -> categories; customer_product for pricing; users for ops). Phase 2 tables (suppliers, supplier_product, inventory, warehouses, order_status_history) exist in the diagram but stay inactive.
+- Read: `agent-docs/project-overview.md`, `agent-docs/modules-phase1.md`, `agent-docs/data-model-and-api.md`, `agent-docs/coding-rules.md`, `agent-docs/roadmap-and-non-goals.md`.
+- Validate entity names/relations with `agent-docs/er-diagram.jpg` (customers -> orders -> order_product -> products -> categories; customer_product for pricing; users for ops). Phase 2 tables (suppliers, supplier_product, inventory, warehouses, order_status_history) exist in the diagram but stay inactive.
 
 ## Phase 1 Boundaries
 - Ship only catalog, customer pricing (`customer_product`), orders (with line profit/cost/discount fields), customers, and dashboard. No inventory, warehouse, supplier/procurement, status history, or auth additions.
@@ -23,7 +23,7 @@
 - Frontend dev: `npm run dev`; Build: `npm run build`; Lint: `npm run lint`
 
 ## Repo Map
-- `agent-knowledgebase/` - project rules, scope, data model, ERD.
+- `agent-docs/` - project rules, scope, data model, ERD.
 - `src/` - React/MUI frontend.
 - `backend/` - Express + SQLite API.
 - `mock/` - seed data generation; `designs/` - visual references; `public/` - static assets.

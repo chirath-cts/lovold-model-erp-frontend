@@ -71,7 +71,7 @@ Implemented:
 - Product selection and quantity
 - Discount type/value per line
 - Live subtotal/discount/total/profit summary
-- Order lines persist quantity, unit_price, line_discount_percent, tax_total, unit_cost_at_sale, profit_amount
+- Order lines persist quantity, unit_price, line_discount_percent, discount_amount, tax_total, unit_cost_at_sale, profit_amount
 
 Write flow:
 1. Create order

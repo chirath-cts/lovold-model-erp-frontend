@@ -14,9 +14,9 @@ Implement customer pricing edit functionality.
 
 Read first:
 - AGENTS.md
-- agent-knowledgebase/project-overview.md
-- agent-knowledgebase/modules-phase1.md
-- agent-knowledgebase/data-model-and-api.md
+- agent-docs/project-overview.md
+- agent-docs/modules-phase1.md
+- agent-docs/data-model-and-api.md
 
 Constraints:
 - Keep Phase 1 scope only
