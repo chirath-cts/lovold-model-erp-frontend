@@ -1,4 +1,4 @@
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Controller, useForm, type Path, type UseFormReturn } from "react-hook-form";
@@ -89,14 +89,9 @@ function ProductImageUpload<TFormValues extends ProductFormWithImage>({
   placeholder?: string;
 }) {
   const imageFieldName = "imageUrl" as Path<TFormValues>;
-  const imageUrl = form.watch(imageFieldName) ?? null;
+  const imageUrl = (form.watch(imageFieldName) as string | null | undefined) ?? null;
+  const imageErrorMessage = form.formState.errors.imageUrl?.message as string | undefined;
   const [fileName, setFileName] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!imageUrl) {
-      setFileName(null);
-    }
-  }, [imageUrl]);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -117,7 +112,7 @@ function ProductImageUpload<TFormValues extends ProductFormWithImage>({
     const reader = new FileReader();
     reader.onload = () => {
       if (typeof reader.result === "string") {
-        form.setValue(imageFieldName, reader.result, { shouldDirty: true });
+        form.setValue(imageFieldName, reader.result as never, { shouldDirty: true });
         form.clearErrors(imageFieldName);
         setFileName(file.name);
       }
@@ -126,7 +121,7 @@ function ProductImageUpload<TFormValues extends ProductFormWithImage>({
   };
 
   const handleRemove = () => {
-    form.setValue(imageFieldName, null, { shouldDirty: true });
+    form.setValue(imageFieldName, null as never, { shouldDirty: true });
     form.clearErrors(imageFieldName);
     setFileName(null);
   };
@@ -150,7 +145,7 @@ function ProductImageUpload<TFormValues extends ProductFormWithImage>({
             Remove
           </Button>
         ) : null}
-        {fileName ? (
+        {fileName && imageUrl ? (
           <Typography variant="body2" color="text.secondary">
             {fileName}
           </Typography>
@@ -186,9 +181,9 @@ function ProductImageUpload<TFormValues extends ProductFormWithImage>({
         </Typography>
       )}
 
-      {form.formState.errors.imageUrl ? (
+      {imageErrorMessage ? (
         <Typography variant="caption" color="error">
-          {form.formState.errors.imageUrl.message}
+          {imageErrorMessage}
         </Typography>
       ) : null}
     </Stack>

@@ -1,5 +1,10 @@
 import { apiClient } from "@/services/http/apiClient";
-import type { Order, OrderStatus } from "@/shared/types/domain";
+import type {
+  CreateOrderPayload,
+  Order,
+  OrderStatus,
+  UpdateOrderPayload,
+} from "@/shared/types/domain";
 
 const RESOURCE = "orders";
 
@@ -17,11 +22,11 @@ export const ordersService = {
       _order: "desc",
     });
   },
-  create(payload: Order) {
-    return apiClient.create<Order, Order>(RESOURCE, payload);
+  create(payload: CreateOrderPayload) {
+    return apiClient.create<Order, CreateOrderPayload>(RESOURCE, payload);
   },
-  update(id: string, payload: Partial<Order>) {
-    return apiClient.update<Order, Partial<Order>>(RESOURCE, id, payload);
+  update(id: string, payload: UpdateOrderPayload) {
+    return apiClient.update<Order, UpdateOrderPayload>(RESOURCE, id, payload);
   },
   remove(id: string) {
     return apiClient.remove(RESOURCE, id);

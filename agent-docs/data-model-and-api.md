@@ -58,6 +58,9 @@ Canonical category endpoint:
 Product payload note:
 - `/products` includes additive optional field `imageUrl` mapped from DB column `products.image_url`
 
+Order payload note:
+- `/orders` and `/orderItems` expose DB-aligned camelCase names such as `grandTotal`, `profitTotal`, `discountPercent`, `unitCostAtSale`, and `profitAmount`
+
 ## Supported Query Behavior
 - Filtering: `status`, `customerId`, `categoryId`, `orderId`
 - Search: `q` for products

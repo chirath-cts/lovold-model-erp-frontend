@@ -3,7 +3,16 @@ import { ordersService } from "@/services/endpoints/ordersService";
 import { productsService } from "@/services/endpoints/productsService";
 import { computeLineTotals, computeOrderTotals } from "@/shared/lib/orderCalculations";
 import { toFixed2 } from "@/shared/lib/format";
-import type { Customer, Discount, Order, OrderItem, OrderStatus, Product } from "@/shared/types/domain";
+import type {
+  CreateOrderItemPayload,
+  CreateOrderPayload,
+  Customer,
+  Discount,
+  Order,
+  OrderItem,
+  OrderStatus,
+  Product,
+} from "@/shared/types/domain";
 import type { CreateOrderFormValues } from "@/features/orders/model/createOrderSchema";
 
 interface CreateOrderWorkflowInput {
@@ -68,41 +77,36 @@ export const createOrderWorkflow = async ({
   const totalCost = toFixed2(lines.reduce((sum, line) => sum + line.product.fixedCostPrice * line.quantity, 0));
   const totals = computeOrderTotals(lines, totalCost);
 
-  const orderPayload: Order = {
+  const orderPayload: CreateOrderPayload = {
     id: orderId,
     orderNumber,
     customerId: customer.id,
     orderDate: new Date(values.orderDate).toISOString(),
     status: "confirmed" satisfies OrderStatus,
     currency: "NOK",
-    totalAmount: totals.totalAmount,
-    totalDiscount: totals.totalDiscount,
-    totalCost: totals.totalCost,
-    estimatedProfit: totals.estimatedProfit,
-    itemCount: totals.itemCount,
+    subtotal: totals.subtotal,
+    discountTotal: totals.discountTotal,
+    costTotal: totals.costTotal,
+    profitTotal: totals.profitTotal,
+    grandTotal: totals.grandTotal,
   };
 
   await ordersService.create(orderPayload);
 
   try {
     for (const line of lines) {
-      const payload: OrderItem = {
+      const payload: CreateOrderItemPayload = {
         id: createId("oi"),
         orderId,
         productId: line.product.id,
-        productSku: line.product.sku,
-        productNameSnapshot: line.product.name,
         quantity: line.quantity,
-        unit: line.product.unit,
-        currency: "NOK",
-        sellingPriceSnapshot: line.product.unitPrice,
-        fixedCostSnapshot: line.product.fixedCostPrice,
-        discountType: line.discountType,
-        discountValue: line.discountValue,
+        unitPrice: line.product.unitPrice,
+        discountPercent: line.discountType === "percentage" ? line.discountValue : 0,
         discountAmount: line.discountAmount,
         lineSubtotal: line.lineSubtotal,
         lineTotal: line.lineTotal,
-        lineProfit: line.lineProfit,
+        unitCostAtSale: line.product.fixedCostPrice,
+        profitAmount: line.profitAmount,
       };
 
       const created = await orderItemsService.create(payload);

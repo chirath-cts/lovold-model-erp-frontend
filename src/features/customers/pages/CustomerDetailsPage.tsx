@@ -42,8 +42,8 @@ export function CustomerDetailsPage() {
 
   const totals = {
     totalOrders: orders.length,
-    totalSales: orders.reduce((sum, order) => sum + order.totalAmount, 0),
-    totalProfit: orders.reduce((sum, order) => sum + order.estimatedProfit, 0),
+    totalSales: orders.reduce((sum, order) => sum + order.grandTotal, 0),
+    totalProfit: orders.reduce((sum, order) => sum + order.profitTotal, 0),
     totalItems: orderItems
       .filter((item) => orders.some((order) => order.id === item.orderId))
       .reduce((sum, item) => sum + item.quantity, 0),
@@ -154,13 +154,13 @@ export function CustomerDetailsPage() {
             key: "amount",
             header: "Total Amount",
             align: "right",
-            render: (row) => <CurrencyText value={row.totalAmount} />,
+            render: (row) => <CurrencyText value={row.grandTotal} />,
           },
           {
             key: "profit",
             header: "Estimated Profit",
             align: "right",
-            render: (row) => <CurrencyText value={row.estimatedProfit} />,
+            render: (row) => <CurrencyText value={row.profitTotal} />,
           },
           {
             key: "status",

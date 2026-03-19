@@ -18,7 +18,7 @@ export function createOrderItemRepository(db) {
           id: "op.id",
           quantity: "op.quantity",
           lineTotal: "op.line_total",
-          lineProfit: "op.profit_amount",
+          profitAmount: "op.profit_amount",
         },
         "id",
         "ASC",

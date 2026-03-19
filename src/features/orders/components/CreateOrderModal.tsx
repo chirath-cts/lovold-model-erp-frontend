@@ -197,7 +197,7 @@ export function CreateOrderModal({
             lineSubtotal: 0,
             discountAmount: 0,
             lineTotal: 0,
-            lineProfit: 0,
+            profitAmount: 0,
           };
         }
 
@@ -217,11 +217,11 @@ export function CreateOrderModal({
       lineSummaries.reduce(
         (acc, line) => ({
           subtotal: acc.subtotal + line.lineSubtotal,
-          discount: acc.discount + line.discountAmount,
-          total: acc.total + line.lineTotal,
-          profit: acc.profit + line.lineProfit,
+          discountTotal: acc.discountTotal + line.discountAmount,
+          grandTotal: acc.grandTotal + line.lineTotal,
+          profitTotal: acc.profitTotal + line.profitAmount,
         }),
-        { subtotal: 0, discount: 0, total: 0, profit: 0 },
+        { subtotal: 0, discountTotal: 0, grandTotal: 0, profitTotal: 0 },
       ),
     [lineSummaries],
   );
@@ -424,7 +424,7 @@ export function CreateOrderModal({
                       Line Total: <CurrencyText value={lineSummaries[index]?.lineTotal ?? 0} />
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
-                      Profit: <CurrencyText value={lineSummaries[index]?.lineProfit ?? 0} />
+                      Profit: <CurrencyText value={lineSummaries[index]?.profitAmount ?? 0} />
                     </Typography>
                   </Box>
 
@@ -450,13 +450,13 @@ export function CreateOrderModal({
                 Subtotal: <strong><CurrencyText value={totals.subtotal} /></strong>
               </Typography>
               <Typography variant="body2">
-                Discount: <strong><CurrencyText value={totals.discount} /></strong>
+                Discount: <strong><CurrencyText value={totals.discountTotal} /></strong>
               </Typography>
               <Typography variant="body2">
-                Total: <strong><CurrencyText value={totals.total} /></strong>
+                Grand Total: <strong><CurrencyText value={totals.grandTotal} /></strong>
               </Typography>
               <Typography variant="body2">
-                Estimated Profit: <strong><CurrencyText value={totals.profit} /></strong>
+                Profit: <strong><CurrencyText value={totals.profitTotal} /></strong>
               </Typography>
             </Box>
           </Paper>

@@ -21,8 +21,8 @@ export function createOrderService({ customerRepository, orderRepository }) {
       const customer = await customerRepository.existsById(payload.customerId);
       if (!customer) throw badRequestError("Invalid customerId");
 
-      const grandTotal = numberValue(payload.grandTotal ?? payload.totalAmount, 0);
-      const discountTotal = numberValue(payload.discountTotal ?? payload.totalDiscount, 0);
+      const grandTotal = numberValue(payload.grandTotal, 0);
+      const discountTotal = numberValue(payload.discountTotal, 0);
 
       await orderRepository.createOrder({
         id: payload.id,
@@ -33,8 +33,8 @@ export function createOrderService({ customerRepository, orderRepository }) {
         currency: payload.currency ?? "NOK",
         subtotal: numberValue(payload.subtotal, grandTotal + discountTotal),
         discountTotal,
-        costTotal: numberValue(payload.costTotal ?? payload.totalCost, 0),
-        profitTotal: numberValue(payload.profitTotal ?? payload.estimatedProfit, 0),
+        costTotal: numberValue(payload.costTotal, 0),
+        profitTotal: numberValue(payload.profitTotal, 0),
         grandTotal,
       });
 
@@ -54,16 +54,12 @@ export function createOrderService({ customerRepository, orderRepository }) {
       const nextGrandTotal =
         payload.grandTotal !== undefined
           ? numberValue(payload.grandTotal, current.grand_total)
-          : payload.totalAmount !== undefined
-            ? numberValue(payload.totalAmount, current.grand_total)
-            : numberValue(current.grand_total, 0);
+          : numberValue(current.grand_total, 0);
 
       const nextDiscountTotal =
         payload.discountTotal !== undefined
           ? numberValue(payload.discountTotal, current.discount_total)
-          : payload.totalDiscount !== undefined
-            ? numberValue(payload.totalDiscount, current.discount_total)
-            : numberValue(current.discount_total, 0);
+          : numberValue(current.discount_total, 0);
 
       await orderRepository.updateOrder(id, {
         orderNumber: payload.orderNumber ?? current.order_number,
@@ -79,15 +75,11 @@ export function createOrderService({ customerRepository, orderRepository }) {
         costTotal:
           payload.costTotal !== undefined
             ? numberValue(payload.costTotal, current.cost_total)
-            : payload.totalCost !== undefined
-              ? numberValue(payload.totalCost, current.cost_total)
-              : numberValue(current.cost_total, 0),
+            : numberValue(current.cost_total, 0),
         profitTotal:
           payload.profitTotal !== undefined
             ? numberValue(payload.profitTotal, current.profit_total)
-            : payload.estimatedProfit !== undefined
-              ? numberValue(payload.estimatedProfit, current.profit_total)
-              : numberValue(current.profit_total, 0),
+            : numberValue(current.profit_total, 0),
         grandTotal: nextGrandTotal,
       });
 

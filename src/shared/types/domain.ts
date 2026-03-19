@@ -63,10 +63,11 @@ export interface Order {
   orderDate: string;
   status: OrderStatus;
   currency: "NOK";
-  totalAmount: number;
-  totalDiscount: number;
-  totalCost: number;
-  estimatedProfit: number;
+  subtotal: number;
+  discountTotal: number;
+  costTotal: number;
+  profitTotal: number;
+  grandTotal: number;
   itemCount: number;
 }
 
@@ -74,20 +75,26 @@ export interface OrderItem {
   id: string;
   orderId: string;
   productId: string;
-  productSku: string;
-  productNameSnapshot: string;
   quantity: number;
-  unit: string;
-  currency: "NOK";
-  sellingPriceSnapshot: number;
-  fixedCostSnapshot: number;
-  discountType: DiscountType;
-  discountValue: number;
-  discountAmount: number;
+  unitPrice: number;
   lineSubtotal: number;
+  discountPercent: number;
+  discountAmount: number;
   lineTotal: number;
-  lineProfit: number;
+  unitCostAtSale: number;
+  profitAmount: number;
+  productSku: string | null;
+  productName: string | null;
+  productUnit: string | null;
 }
+
+export type CreateOrderPayload = Omit<Order, "itemCount">;
+export type UpdateOrderPayload = Partial<CreateOrderPayload>;
+
+export type CreateOrderItemPayload = Omit<
+  OrderItem,
+  "productSku" | "productName" | "productUnit"
+>;
 
 export interface User {
   id: string;

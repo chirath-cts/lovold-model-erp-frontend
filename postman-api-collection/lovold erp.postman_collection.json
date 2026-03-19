@@ -800,7 +800,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"ord-example-001\",\n  \"orderNumber\": \"ORD-2026-2001\",\n  \"customerId\": \"{{customerId}}\",\n  \"orderDate\": \"2026-03-19T00:00:00.000Z\",\n  \"status\": \"confirmed\",\n  \"currency\": \"NOK\",\n  \"totalAmount\": 2250,\n  \"totalDiscount\": 250,\n  \"totalCost\": 1500,\n  \"estimatedProfit\": 750,\n  \"itemCount\": 2\n}",
+              "raw": "{\n  \"id\": \"ord-example-001\",\n  \"orderNumber\": \"ORD-2026-2001\",\n  \"customerId\": \"{{customerId}}\",\n  \"orderDate\": \"2026-03-19T00:00:00.000Z\",\n  \"status\": \"confirmed\",\n  \"currency\": \"NOK\",\n  \"subtotal\": 2500,\n  \"discountTotal\": 250,\n  \"costTotal\": 1500,\n  \"profitTotal\": 750,\n  \"grandTotal\": 2250\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -832,7 +832,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"oi-example-001\",\n  \"orderId\": \"{{orderId}}\",\n  \"productId\": \"{{productId}}\",\n  \"productSku\": \"SKU-001\",\n  \"productNameSnapshot\": \"Sample Product\",\n  \"quantity\": 2,\n  \"unit\": \"pcs\",\n  \"currency\": \"NOK\",\n  \"sellingPriceSnapshot\": 1250,\n  \"fixedCostSnapshot\": 800,\n  \"discountType\": \"percentage\",\n  \"discountValue\": 10,\n  \"discountAmount\": 250,\n  \"lineSubtotal\": 2500,\n  \"lineTotal\": 2250,\n  \"lineProfit\": 650\n}",
+              "raw": "{\n  \"id\": \"oi-example-001\",\n  \"orderId\": \"{{orderId}}\",\n  \"productId\": \"{{productId}}\",\n  \"quantity\": 2,\n  \"unitPrice\": 1250,\n  \"lineSubtotal\": 2500,\n  \"discountPercent\": 10,\n  \"discountAmount\": 250,\n  \"lineTotal\": 2250,\n  \"unitCostAtSale\": 800,\n  \"profitAmount\": 650\n}",
               "options": {
                 "raw": {
                   "language": "json"
