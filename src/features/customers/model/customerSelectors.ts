@@ -30,7 +30,7 @@ export const buildCustomerAggregates = (customers: Customer[], orders: Order[]):
     map.set(order.customerId, {
       customerId: order.customerId,
       totalOrders: current.totalOrders + 1,
-      totalSales: current.totalSales + order.totalAmount,
+      totalSales: current.totalSales + order.grandTotal,
       lastOrderDate: nextDate,
     });
   });

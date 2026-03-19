@@ -4,8 +4,8 @@ export const updateProductSchema = z.object({
   name: z.string().min(1, "Name is required"),
   sku: z.string().min(1, "SKU is required"),
   categoryId: z.string().min(1, "Category is required"),
-  unitPrice: z.number().min(0, "Selling price must be 0 or more"),
-  fixedCostPrice: z.number().min(0, "Fixed cost must be 0 or more"),
+  basePrice: z.number().min(0, "Base price must be 0 or more"),
+  purchasePrice: z.number().min(0, "Purchase price must be 0 or more"),
   stockQuantity: z
     .number()
     .int("Stock quantity must be a whole number")

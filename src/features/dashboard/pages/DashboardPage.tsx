@@ -64,7 +64,7 @@ export function DashboardPage() {
     .sort((a, b) => new Date(a.orderDate).getTime() - new Date(b.orderDate).getTime())
     .map((order) => ({
       name: formatDate(order.orderDate),
-      sales: order.totalAmount,
+      sales: order.grandTotal,
     }))
     .slice(-10);
 
@@ -114,7 +114,7 @@ export function DashboardPage() {
         <KpiCard label="Total Orders" value={metrics.totalOrders} />
         <KpiCard
           label="Estimated Profit"
-          value={<CurrencyText value={metrics.estimatedProfit} />}
+          value={<CurrencyText value={metrics.profitTotal} />}
         />
         <KpiCard label="Low Stock" value={metrics.lowStockCount} tone="warn" />
         <KpiCard label="Active Customers" value={metrics.activeCustomers} />
@@ -184,7 +184,7 @@ export function DashboardPage() {
                 />
                 <Box sx={{ textAlign: "right" }}>
                   <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                    <CurrencyText value={order.totalAmount} />
+                    <CurrencyText value={order.grandTotal} />
                   </Typography>
                   <StatusBadge value={order.status} />
                 </Box>

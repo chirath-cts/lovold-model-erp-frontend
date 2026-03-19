@@ -21,7 +21,7 @@ export function createOrderRepository(db) {
         sortQuery,
         {
           orderDate: "o.order_date",
-          totalAmount: "o.grand_total",
+          grandTotal: "o.grand_total",
           status: "o.status",
           orderNumber: "o.order_number",
         },

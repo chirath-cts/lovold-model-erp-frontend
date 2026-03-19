@@ -28,21 +28,13 @@ export function createOrderItemService({
       if (!product) throw badRequestError("Invalid productId");
 
       const quantity = numberValue(payload.quantity, 0);
-      const unitPrice = numberValue(
-        payload.sellingPriceSnapshot ?? payload.unitPrice,
-        0,
-      );
+      const unitPrice = numberValue(payload.unitPrice, 0);
       const lineSubtotal =
         payload.lineSubtotal !== undefined
           ? numberValue(payload.lineSubtotal, 0)
           : quantity * unitPrice;
+      const discountPercent = numberValue(payload.discountPercent, 0);
       const discountAmount = numberValue(payload.discountAmount, 0);
-      const discountPercent =
-        (payload.discountType ?? "percentage") === "percentage"
-          ? numberValue(payload.discountValue, 0)
-          : lineSubtotal > 0
-            ? (discountAmount / lineSubtotal) * 100
-            : 0;
 
       await orderItemRepository.createOrderItem({
         id: payload.id,
@@ -55,13 +47,10 @@ export function createOrderItemService({
         discountAmount,
         lineTotal: numberValue(payload.lineTotal, 0),
         unitCostAtSale: numberValue(
-          payload.fixedCostSnapshot ??
-            payload.unitCostAtSale ??
-            product.purchase_price ??
-            product.base_price,
+          payload.unitCostAtSale ?? product.purchase_price ?? product.base_price,
           0,
         ),
-        profitAmount: numberValue(payload.lineProfit ?? payload.profitAmount, 0),
+        profitAmount: numberValue(payload.profitAmount, 0),
       });
 
       const row = await orderItemRepository.getOrderItemById(payload.id);

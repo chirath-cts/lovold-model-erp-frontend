@@ -42,6 +42,7 @@ const buildCompatibilityCollections = (canonical) => {
 
   const productById = new Map(products.map((product) => [product.id, product]));
   const primarySupplierByProductId = new Map();
+  const inventoryTotalsByProductId = new Map();
 
   for (const supplierProduct of supplierProducts) {
     const current = primarySupplierByProductId.get(supplierProduct.productId);
@@ -56,28 +57,49 @@ const buildCompatibilityCollections = (canonical) => {
     }
   }
 
+  for (const inventory of inventories) {
+    const current = inventoryTotalsByProductId.get(inventory.productId) ?? {
+      stockQuantity: 0,
+      reorderLevel: 0,
+    };
+
+    inventoryTotalsByProductId.set(inventory.productId, {
+      stockQuantity: current.stockQuantity + Number(inventory.stockQuantity ?? 0),
+      reorderLevel: current.reorderLevel + Number(inventory.reorderLevel ?? 0),
+    });
+  }
+
+  const runtimeProducts = products.map((product) => {
+    const inventory = inventoryTotalsByProductId.get(product.id);
+    const supplierProduct = primarySupplierByProductId.get(product.id);
+
+    return {
+      ...product,
+      purchasePrice: Number(supplierProduct?.purchasePrice ?? product.basePrice ?? 0),
+      stockQuantity: Number(inventory?.stockQuantity ?? 0),
+      reorderLevel: Number(inventory?.reorderLevel ?? 0),
+    };
+  });
+
   const orderItems = orderProducts.map((orderProduct) => {
     const product = productById.get(orderProduct.productId);
     const discountPercent = Number(orderProduct.discountPercent ?? 0);
-    const discountAmount = Number(orderProduct.discountAmount ?? 0);
 
     return {
       id: orderProduct.id,
       orderId: orderProduct.orderId,
       productId: orderProduct.productId,
       productSku: product?.sku ?? null,
-      productNameSnapshot: product?.name ?? null,
+      productName: product?.name ?? null,
       quantity: Number(orderProduct.quantity ?? 0),
-      unit: product?.unit ?? null,
-      currency: "NOK",
-      sellingPriceSnapshot: Number(orderProduct.unitPrice ?? 0),
-      fixedCostSnapshot: Number(orderProduct.unitCostAtSale ?? orderProduct.unitPrice ?? 0),
-      discountType: discountPercent > 0 ? "percentage" : "fixed",
-      discountValue: discountPercent > 0 ? discountPercent : discountAmount,
-      discountAmount,
+      productUnit: product?.unit ?? null,
+      unitPrice: Number(orderProduct.unitPrice ?? 0),
+      discountPercent,
+      discountAmount: Number(orderProduct.discountAmount ?? 0),
       lineSubtotal: Number(orderProduct.lineSubtotal ?? 0),
       lineTotal: Number(orderProduct.lineTotal ?? 0),
-      lineProfit: Number(orderProduct.profitAmount ?? 0),
+      unitCostAtSale: Number(orderProduct.unitCostAtSale ?? orderProduct.unitPrice ?? 0),
+      profitAmount: Number(orderProduct.profitAmount ?? 0),
     };
   });
 
@@ -110,6 +132,7 @@ const buildCompatibilityCollections = (canonical) => {
   });
 
   return {
+    products: runtimeProducts,
     productCategories: categories,
     orderItems,
     discounts,

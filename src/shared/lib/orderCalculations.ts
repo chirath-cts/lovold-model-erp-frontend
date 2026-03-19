@@ -13,14 +13,15 @@ export interface OrderLineComputed {
   discountAmount: number;
   lineSubtotal: number;
   lineTotal: number;
-  lineProfit: number;
+  profitAmount: number;
 }
 
 export interface OrderTotals {
-  totalAmount: number;
-  totalDiscount: number;
-  totalCost: number;
-  estimatedProfit: number;
+  subtotal: number;
+  discountTotal: number;
+  costTotal: number;
+  profitTotal: number;
+  grandTotal: number;
   itemCount: number;
 }
 
@@ -34,26 +35,30 @@ export const computeLineTotals = (input: OrderLineInput): OrderLineComputed => {
       : toFixed2(discountValue * quantity);
 
   const lineTotal = toFixed2(lineSubtotal - discountAmount);
-  const lineProfit = toFixed2(unitPrice * quantity - discountAmount - fixedCostPrice * quantity);
+  const profitAmount = toFixed2(
+    unitPrice * quantity - discountAmount - fixedCostPrice * quantity,
+  );
 
   return {
     discountAmount,
     lineSubtotal,
     lineTotal,
-    lineProfit,
+    profitAmount,
   };
 };
 
 export const computeOrderTotals = (lines: OrderLineComputed[], totalCost: number): OrderTotals => {
-  const totalAmount = toFixed2(lines.reduce((sum, line) => sum + line.lineTotal, 0));
-  const totalDiscount = toFixed2(lines.reduce((sum, line) => sum + line.discountAmount, 0));
-  const estimatedProfit = toFixed2(lines.reduce((sum, line) => sum + line.lineProfit, 0));
+  const subtotal = toFixed2(lines.reduce((sum, line) => sum + line.lineSubtotal, 0));
+  const discountTotal = toFixed2(lines.reduce((sum, line) => sum + line.discountAmount, 0));
+  const grandTotal = toFixed2(lines.reduce((sum, line) => sum + line.lineTotal, 0));
+  const profitTotal = toFixed2(lines.reduce((sum, line) => sum + line.profitAmount, 0));
 
   return {
-    totalAmount,
-    totalDiscount,
-    totalCost: toFixed2(totalCost),
-    estimatedProfit,
+    subtotal,
+    discountTotal,
+    costTotal: toFixed2(totalCost),
+    profitTotal,
+    grandTotal,
     itemCount: lines.length,
   };
 };

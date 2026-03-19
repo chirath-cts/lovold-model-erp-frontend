@@ -1,4 +1,4 @@
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useState, type ChangeEvent } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
 import { Controller, useForm, type Path, type UseFormReturn } from "react-hook-form";
@@ -51,8 +51,8 @@ const createFormDefaults: CreateProductFormValues = {
   name: "",
   sku: "",
   categoryId: "",
-  unitPrice: 0,
-  fixedCostPrice: 0,
+  basePrice: 0,
+  purchasePrice: 0,
   stockQuantity: 0,
   reorderLevel: 0,
   unit: "pcs",
@@ -65,8 +65,8 @@ const updateFormDefaults: UpdateProductFormValues = {
   name: "",
   sku: "",
   categoryId: "",
-  unitPrice: 0,
-  fixedCostPrice: 0,
+  basePrice: 0,
+  purchasePrice: 0,
   stockQuantity: 0,
   reorderLevel: 0,
   unit: "pcs",
@@ -89,14 +89,9 @@ function ProductImageUpload<TFormValues extends ProductFormWithImage>({
   placeholder?: string;
 }) {
   const imageFieldName = "imageUrl" as Path<TFormValues>;
-  const imageUrl = form.watch(imageFieldName) ?? null;
+  const imageUrl = (form.watch(imageFieldName) as string | null | undefined) ?? null;
+  const imageErrorMessage = form.formState.errors.imageUrl?.message as string | undefined;
   const [fileName, setFileName] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (!imageUrl) {
-      setFileName(null);
-    }
-  }, [imageUrl]);
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -117,7 +112,7 @@ function ProductImageUpload<TFormValues extends ProductFormWithImage>({
     const reader = new FileReader();
     reader.onload = () => {
       if (typeof reader.result === "string") {
-        form.setValue(imageFieldName, reader.result, { shouldDirty: true });
+        form.setValue(imageFieldName, reader.result as never, { shouldDirty: true });
         form.clearErrors(imageFieldName);
         setFileName(file.name);
       }
@@ -126,7 +121,7 @@ function ProductImageUpload<TFormValues extends ProductFormWithImage>({
   };
 
   const handleRemove = () => {
-    form.setValue(imageFieldName, null, { shouldDirty: true });
+    form.setValue(imageFieldName, null as never, { shouldDirty: true });
     form.clearErrors(imageFieldName);
     setFileName(null);
   };
@@ -150,7 +145,7 @@ function ProductImageUpload<TFormValues extends ProductFormWithImage>({
             Remove
           </Button>
         ) : null}
-        {fileName ? (
+        {fileName && imageUrl ? (
           <Typography variant="body2" color="text.secondary">
             {fileName}
           </Typography>
@@ -186,9 +181,9 @@ function ProductImageUpload<TFormValues extends ProductFormWithImage>({
         </Typography>
       )}
 
-      {form.formState.errors.imageUrl ? (
+      {imageErrorMessage ? (
         <Typography variant="caption" color="error">
-          {form.formState.errors.imageUrl.message}
+          {imageErrorMessage}
         </Typography>
       ) : null}
     </Stack>
@@ -224,15 +219,14 @@ export function ProductsPage() {
         name: values.name.trim(),
         sku: values.sku.trim(),
         categoryId: values.categoryId,
-        unitPrice: values.unitPrice,
-        fixedCostPrice: values.fixedCostPrice,
+        basePrice: values.basePrice,
+        purchasePrice: values.purchasePrice,
         stockQuantity: values.stockQuantity,
         reorderLevel: values.reorderLevel,
         unit: values.unit.trim(),
         status: values.status,
         description: values.description?.trim() ?? "",
         imageUrl: values.imageUrl ?? null,
-        currency: "NOK",
       };
 
       return productsService.create(payload);
@@ -258,8 +252,8 @@ export function ProductsPage() {
         name: values.name.trim(),
         sku: values.sku.trim(),
         categoryId: values.categoryId,
-        unitPrice: values.unitPrice,
-        fixedCostPrice: values.fixedCostPrice,
+        basePrice: values.basePrice,
+        purchasePrice: values.purchasePrice,
         stockQuantity: values.stockQuantity,
         reorderLevel: values.reorderLevel,
         unit: values.unit.trim(),
@@ -291,8 +285,8 @@ export function ProductsPage() {
       name: product.name,
       sku: product.sku,
       categoryId: product.categoryId,
-      unitPrice: product.unitPrice,
-      fixedCostPrice: product.fixedCostPrice,
+      basePrice: product.basePrice,
+      purchasePrice: product.purchasePrice,
       stockQuantity: product.stockQuantity,
       reorderLevel: product.reorderLevel,
       unit: product.unit,
@@ -421,15 +415,15 @@ export function ProductsPage() {
             },
             {
               key: "price",
-              header: "Selling Price",
+              header: "Base Price",
               align: "right",
-              render: (row) => <CurrencyText value={row.unitPrice} />,
+              render: (row) => <CurrencyText value={row.basePrice} />,
             },
             {
               key: "cost",
-              header: "Fixed Cost",
+              header: "Purchase Price",
               align: "right",
-              render: (row) => <CurrencyText value={row.fixedCostPrice} />,
+              render: (row) => <CurrencyText value={row.purchasePrice} />,
             },
             {
               key: "stock",
@@ -529,38 +523,36 @@ export function ProductsPage() {
                 )}
               />
 
-              <TextField size="small" label="Currency" value="NOK" disabled />
-
               <Controller
                 control={createForm.control}
-                name="unitPrice"
+                name="basePrice"
                 render={({ field }) => (
                   <TextField
                     {...field}
                     size="small"
                     type="number"
-                    label="Selling Price"
+                    label="Base Price"
                     inputProps={{ min: 0, step: "0.01" }}
                     onChange={(event) => field.onChange(Number(event.target.value))}
-                    error={Boolean(createForm.formState.errors.unitPrice)}
-                    helperText={createForm.formState.errors.unitPrice?.message}
+                    error={Boolean(createForm.formState.errors.basePrice)}
+                    helperText={createForm.formState.errors.basePrice?.message}
                   />
                 )}
               />
 
               <Controller
                 control={createForm.control}
-                name="fixedCostPrice"
+                name="purchasePrice"
                 render={({ field }) => (
                   <TextField
                     {...field}
                     size="small"
                     type="number"
-                    label="Fixed Cost Price"
+                    label="Purchase Price"
                     inputProps={{ min: 0, step: "0.01" }}
                     onChange={(event) => field.onChange(Number(event.target.value))}
-                    error={Boolean(createForm.formState.errors.fixedCostPrice)}
-                    helperText={createForm.formState.errors.fixedCostPrice?.message}
+                    error={Boolean(createForm.formState.errors.purchasePrice)}
+                    helperText={createForm.formState.errors.purchasePrice?.message}
                   />
                 )}
               />
@@ -745,38 +737,36 @@ export function ProductsPage() {
                 )}
               />
 
-              <TextField size="small" label="Currency" value="NOK" disabled />
-
               <Controller
                 control={updateForm.control}
-                name="unitPrice"
+                name="basePrice"
                 render={({ field }) => (
                   <TextField
                     {...field}
                     size="small"
                     type="number"
-                    label="Selling Price"
+                    label="Base Price"
                     inputProps={{ min: 0, step: "0.01" }}
                     onChange={(event) => field.onChange(Number(event.target.value))}
-                    error={Boolean(updateForm.formState.errors.unitPrice)}
-                    helperText={updateForm.formState.errors.unitPrice?.message}
+                    error={Boolean(updateForm.formState.errors.basePrice)}
+                    helperText={updateForm.formState.errors.basePrice?.message}
                   />
                 )}
               />
 
               <Controller
                 control={updateForm.control}
-                name="fixedCostPrice"
+                name="purchasePrice"
                 render={({ field }) => (
                   <TextField
                     {...field}
                     size="small"
                     type="number"
-                    label="Fixed Cost Price"
+                    label="Purchase Price"
                     inputProps={{ min: 0, step: "0.01" }}
                     onChange={(event) => field.onChange(Number(event.target.value))}
-                    error={Boolean(updateForm.formState.errors.fixedCostPrice)}
-                    helperText={updateForm.formState.errors.fixedCostPrice?.message}
+                    error={Boolean(updateForm.formState.errors.purchasePrice)}
+                    helperText={updateForm.formState.errors.purchasePrice?.message}
                   />
                 )}
               />
