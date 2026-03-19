@@ -8,7 +8,8 @@
       "description": "Heavy-duty HDPE floating cage used for offshore salmon farming.",
       "basePrice": 18500,
       "unit": "pcs",
-      "status": "active"
+      "status": "active",
+      "imageUrl": "https://cdn.lovold.local/products/cage-50-hdpe.jpg"
     },
     {
       "id": "2b8e5a72-7d4f-4c44-ae23-3f7b8d2e1a22",
@@ -18,7 +19,8 @@
       "description": "Durable nylon net used for fish cage enclosures and harvesting.",
       "basePrice": 4200,
       "unit": "pcs",
-      "status": "active"
+      "status": "active",
+      "imageUrl": "https://cdn.lovold.local/products/net-100-nyl.jpg"
     },
     {
       "id": "3c9f6b83-8e5d-4d55-bf34-4a8c9e3f2b33",
@@ -28,7 +30,8 @@
       "description": "Marine-grade stainless steel bolt used for assembling aquaculture equipment.",
       "basePrice": 12.5,
       "unit": "pcs",
-      "status": "active"
+      "status": "active",
+      "imageUrl": "https://cdn.lovold.local/products/bolt-m16-ss.jpg"
     },
     {
       "id": "4d1a7c94-9f6e-4e66-c045-5b9d0f4a3c44",
@@ -38,7 +41,8 @@
       "description": "Heavy-duty rope used for securing fish cages and aquaculture structures.",
       "basePrice": 95,
       "unit": "m",
-      "status": "active"
+      "status": "active",
+      "imageUrl": "https://cdn.lovold.local/products/moor-rope-30.jpg"
     },
     {
       "id": "5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
@@ -48,7 +52,8 @@
       "description": "Automatic feeding system used in aquaculture farms for efficient fish feeding.",
       "basePrice": 7200,
       "unit": "pcs",
-      "status": "active"
+      "status": "active",
+      "imageUrl": "https://cdn.lovold.local/products/feed-auto-200.jpg"
     },
     {
       "id": "6f4e9ab1-3c67-49c1-95b9-0b7a8f6d1011",
@@ -58,7 +63,8 @@
       "description": "Industrial dissolved oxygen probe for aquaculture tanks and offshore sites.",
       "basePrice": 3650,
       "unit": "pcs",
-      "status": "active"
+      "status": "active",
+      "imageUrl": "https://cdn.lovold.local/products/sens-do-pro.jpg"
     },
     {
       "id": "7a6b5c2d-8e31-4f02-9b4f-6d2a1c3e2022",
@@ -68,7 +74,8 @@
       "description": "Real-time pH sensor for recirculating aquaculture systems.",
       "basePrice": 2890,
       "unit": "pcs",
-      "status": "active"
+      "status": "active",
+      "imageUrl": "https://cdn.lovold.local/products/sens-ph-digi.jpg"
     },
     {
       "id": "8b7c6d3e-9f42-4a13-8c5a-7e3b2d4f3033",
@@ -78,7 +85,8 @@
       "description": "UV sterilization module for pathogen reduction in intake water lines.",
       "basePrice": 11400,
       "unit": "pcs",
-      "status": "active"
+      "status": "active",
+      "imageUrl": "https://cdn.lovold.local/products/wtr-uv-1200.jpg"
     },
     {
       "id": "9c8d7e4f-0a53-4b24-9d6b-8f4c3e5a4044",
@@ -88,7 +96,8 @@
       "description": "Energy-efficient aeration pump for improved dissolved oxygen distribution.",
       "basePrice": 6450,
       "unit": "pcs",
-      "status": "active"
+      "status": "active",
+      "imageUrl": "https://cdn.lovold.local/products/aer-micro-50.jpg"
     },
     {
       "id": "ad9e8f5a-1b64-4c35-ae7c-9a5d4f6b5055",
@@ -98,7 +107,8 @@
       "description": "Ruggedized control cabinet for marine-grade electrical protection.",
       "basePrice": 5300,
       "unit": "pcs",
-      "status": "active"
+      "status": "active",
+      "imageUrl": "https://cdn.lovold.local/products/ctrl-cab-ip66.jpg"
     },
     {
       "id": "beaf9a6b-2c75-4d46-bf8d-ab6e5c7d6066",
@@ -108,7 +118,8 @@
       "description": "Flexible submersible pipe segment for automated fish feed transfer lines.",
       "basePrice": 680,
       "unit": "pcs",
-      "status": "active"
+      "status": "active",
+      "imageUrl": "https://cdn.lovold.local/products/feed-pipe-10.jpg"
     },
     {
       "id": "cfb0ab7c-3d86-4e57-c09e-bc7f6d8e7077",
@@ -118,7 +129,8 @@
       "description": "Corrosion-resistant anchoring chain for offshore cage stability.",
       "basePrice": 214,
       "unit": "m",
-      "status": "active"
+      "status": "active",
+      "imageUrl": "https://cdn.lovold.local/products/anch-chain-18.jpg"
     }
   ]
 }

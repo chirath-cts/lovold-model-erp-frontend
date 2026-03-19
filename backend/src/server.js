@@ -129,6 +129,7 @@ const rowToProduct = (row) => ({
   name: row.name,
   sku: row.sku,
   categoryId: row.category_id,
+  imageUrl: row.image_url ?? null,
   unitPrice: numberValue(row.base_price, 0),
   fixedCostPrice: numberValue(row.purchase_price ?? row.base_price, 0),
   currency: "NOK",
@@ -265,14 +266,14 @@ async function ensureInventoryRow(productId) {
 
 async function getProductById(productId) {
   return db.get(
-    `SELECT p.id, p.name, p.sku, p.category_id, p.base_price, p.unit, p.description, p.status, sp.purchase_price,
+    `SELECT p.id, p.name, p.sku, p.category_id, p.description, p.image_url, p.base_price, p.unit, p.status, sp.purchase_price,
             COALESCE(SUM(i.stock_quantity), 0) AS stock_quantity,
             COALESCE(SUM(i.reorder_level), 0) AS reorder_level
      FROM products p
      LEFT JOIN inventory i ON i.product_id = p.id
      ${PRIMARY_SUPPLIER_JOIN_SQL}
      WHERE p.id = ?
-     GROUP BY p.id, p.name, p.sku, p.category_id, p.base_price, p.unit, p.description, p.status, sp.purchase_price`,
+     GROUP BY p.id, p.name, p.sku, p.category_id, p.description, p.image_url, p.base_price, p.unit, p.status, sp.purchase_price`,
     productId,
   );
 }
@@ -395,14 +396,14 @@ app.get(
     );
 
     const rows = await db.all(
-      `SELECT p.id, p.name, p.sku, p.category_id, p.base_price, p.unit, p.description, p.status, sp.purchase_price,
+      `SELECT p.id, p.name, p.sku, p.category_id, p.description, p.image_url, p.base_price, p.unit, p.status, sp.purchase_price,
               COALESCE(SUM(i.stock_quantity), 0) AS stock_quantity,
               COALESCE(SUM(i.reorder_level), 0) AS reorder_level
        FROM products p
        LEFT JOIN inventory i ON i.product_id = p.id
        ${PRIMARY_SUPPLIER_JOIN_SQL}
        ${whereClause}
-       GROUP BY p.id, p.name, p.sku, p.category_id, p.base_price, p.unit, p.description, p.status, sp.purchase_price${orderClause}`,
+       GROUP BY p.id, p.name, p.sku, p.category_id, p.description, p.image_url, p.base_price, p.unit, p.status, sp.purchase_price${orderClause}`,
       ...params,
     );
 
@@ -434,21 +435,39 @@ app.post(
       return badRequest(res, "reorderLevel must be a non-negative integer");
     }
 
+    if (
+      req.body.imageUrl !== undefined &&
+      req.body.imageUrl !== null &&
+      typeof req.body.imageUrl !== "string"
+    ) {
+      return badRequest(res, "imageUrl must be a string or null");
+    }
+
+    if (
+      req.body.image_url !== undefined &&
+      req.body.image_url !== null &&
+      typeof req.body.image_url !== "string"
+    ) {
+      return badRequest(res, "image_url must be a string or null");
+    }
+
     const category = await db.get("SELECT id FROM categories WHERE id = ?", categoryId);
     if (!category) return badRequest(res, "Invalid categoryId");
 
     const basePrice = numberValue(req.body.unitPrice ?? req.body.fixedCostPrice, 0);
     const stockQuantity = integerValue(req.body.stockQuantity, 0);
     const reorderLevel = integerValue(req.body.reorderLevel, 0);
+    const imageUrl = req.body.imageUrl ?? req.body.image_url ?? null;
 
     await db.run(
-      `INSERT INTO products (id, category_id, name, sku, description, base_price, unit, status)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+      `INSERT INTO products (id, category_id, name, sku, description, image_url, base_price, unit, status)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       id,
       categoryId,
       name,
       typeof req.body.sku === "string" ? req.body.sku : "",
       typeof req.body.description === "string" ? req.body.description : "",
+      imageUrl,
       basePrice,
       unit,
       req.body.status === "inactive" ? "inactive" : "active",
@@ -503,11 +522,20 @@ app.patch(
       return badRequest(res, "reorderLevel must be a non-negative integer");
     }
 
+    const hasImageUrlField = Object.prototype.hasOwnProperty.call(req.body, "imageUrl");
+    const hasImageUrlSnakeField = Object.prototype.hasOwnProperty.call(req.body, "image_url");
+    const hasImageUrlUpdate = hasImageUrlField || hasImageUrlSnakeField;
+    const imageUrlInput = hasImageUrlField ? req.body.imageUrl : req.body.image_url;
+    if (hasImageUrlUpdate && imageUrlInput !== null && typeof imageUrlInput !== "string") {
+      return badRequest(res, "imageUrl must be a string or null");
+    }
+
     const next = {
       category_id: req.body.categoryId ?? current.category_id,
       name: req.body.name ?? current.name,
       sku: req.body.sku ?? current.sku,
       description: req.body.description ?? current.description,
+      image_url: hasImageUrlUpdate ? imageUrlInput : current.image_url,
       base_price:
         req.body.unitPrice !== undefined
           ? numberValue(req.body.unitPrice, current.base_price)
@@ -520,12 +548,13 @@ app.patch(
 
     await db.run(
       `UPDATE products
-       SET category_id = ?, name = ?, sku = ?, description = ?, base_price = ?, unit = ?, status = ?
+       SET category_id = ?, name = ?, sku = ?, description = ?, image_url = ?, base_price = ?, unit = ?, status = ?
        WHERE id = ?`,
       next.category_id,
       next.name,
       next.sku,
       next.description,
+      next.image_url,
       numberValue(next.base_price, 0),
       next.unit,
       next.status,
