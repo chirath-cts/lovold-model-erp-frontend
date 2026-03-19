@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "@tanstack/react-query";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, type Path, type UseFormReturn } from "react-hook-form";
 import {
   Alert,
   Box,
@@ -58,6 +58,7 @@ const createFormDefaults: CreateProductFormValues = {
   unit: "pcs",
   status: "active",
   description: "",
+  imageUrl: null,
 };
 
 const updateFormDefaults: UpdateProductFormValues = {
@@ -71,7 +72,128 @@ const updateFormDefaults: UpdateProductFormValues = {
   unit: "pcs",
   status: "active",
   description: "",
+  imageUrl: null,
 };
+
+const MAX_IMAGE_SIZE_BYTES = 1024 * 1024;
+
+type ProductFormWithImage = CreateProductFormValues | UpdateProductFormValues;
+
+function ProductImageUpload<TFormValues extends ProductFormWithImage>({
+  form,
+  inputId,
+  placeholder,
+}: {
+  form: UseFormReturn<TFormValues>;
+  inputId: string;
+  placeholder?: string;
+}) {
+  const imageFieldName = "imageUrl" as Path<TFormValues>;
+  const imageUrl = form.watch(imageFieldName) ?? null;
+  const [fileName, setFileName] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!imageUrl) {
+      setFileName(null);
+    }
+  }, [imageUrl]);
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      form.setError(imageFieldName, { type: "validate", message: "Only image files are allowed" });
+      event.target.value = "";
+      return;
+    }
+
+    if (file.size > MAX_IMAGE_SIZE_BYTES) {
+      form.setError(imageFieldName, { type: "validate", message: "Image must be 1MB or smaller" });
+      event.target.value = "";
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        form.setValue(imageFieldName, reader.result, { shouldDirty: true });
+        form.clearErrors(imageFieldName);
+        setFileName(file.name);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemove = () => {
+    form.setValue(imageFieldName, null, { shouldDirty: true });
+    form.clearErrors(imageFieldName);
+    setFileName(null);
+  };
+
+  return (
+    <Stack spacing={1}>
+      <Typography variant="subtitle2">Product Image</Typography>
+      <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap">
+        <Button component="label" variant="outlined" size="small">
+          Choose image
+          <input
+            hidden
+            id={inputId}
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+          />
+        </Button>
+        {imageUrl ? (
+          <Button size="small" color="secondary" onClick={handleRemove}>
+            Remove
+          </Button>
+        ) : null}
+        {fileName ? (
+          <Typography variant="body2" color="text.secondary">
+            {fileName}
+          </Typography>
+        ) : null}
+      </Stack>
+
+      {imageUrl ? (
+        <Box
+          sx={{
+            mt: 1,
+            width: "100%",
+            maxWidth: 240,
+            borderRadius: 1,
+            border: (theme) => `1px solid ${theme.palette.divider}`,
+            overflow: "hidden",
+            backgroundColor: "grey.50",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            p: 1,
+          }}
+        >
+          <Box
+            component="img"
+            src={imageUrl}
+            alt={fileName ?? "Product image"}
+            sx={{ maxHeight: 180, maxWidth: "100%", objectFit: "contain" }}
+          />
+        </Box>
+      ) : (
+        <Typography variant="body2" color="text.secondary">
+          {placeholder ?? "Upload JPG, PNG, or WebP up to 1MB. Keeps existing image if none selected."}
+        </Typography>
+      )}
+
+      {form.formState.errors.imageUrl ? (
+        <Typography variant="caption" color="error">
+          {form.formState.errors.imageUrl.message}
+        </Typography>
+      ) : null}
+    </Stack>
+  );
+}
 
 export function ProductsPage() {
   const [search, setSearch] = useState("");
@@ -109,6 +231,7 @@ export function ProductsPage() {
         unit: values.unit.trim(),
         status: values.status,
         description: values.description?.trim() ?? "",
+        imageUrl: values.imageUrl ?? null,
         currency: "NOK",
       };
 
@@ -142,6 +265,7 @@ export function ProductsPage() {
         unit: values.unit.trim(),
         status: values.status,
         description: values.description?.trim() ?? "",
+        imageUrl: values.imageUrl ?? editingProduct.imageUrl ?? null,
       };
 
       return productsService.update(editingProduct.id, payload);
@@ -174,6 +298,7 @@ export function ProductsPage() {
       unit: product.unit,
       status: product.status,
       description: product.description,
+      imageUrl: product.imageUrl ?? null,
     });
     setEditingProduct(product);
   };
@@ -516,6 +641,14 @@ export function ProductsPage() {
                   />
                 )}
               />
+
+              <Box sx={{ gridColumn: { xs: "span 1", md: "span 2" } }}>
+                <ProductImageUpload
+                  form={createForm}
+                  inputId="create-product-image"
+                  placeholder="Upload an image or leave empty to use a placeholder."
+                />
+              </Box>
             </Box>
 
             {createMutation.error ? (
@@ -722,6 +855,12 @@ export function ProductsPage() {
                     minRows={3}
                   />
                 )}
+              />
+
+              <ProductImageUpload
+                form={updateForm}
+                inputId="update-product-image"
+                placeholder="Keep current image or upload a new one."
               />
             </Stack>
 
