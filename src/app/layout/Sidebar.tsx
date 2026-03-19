@@ -172,10 +172,8 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                   primary={item.label}
                   primaryTypographyProps={{
                     fontSize: "0.875rem", // text-sm
-                    fontWeight: 600, // font-semibold
                     color: "inherit",
                     lineHeight: 1.2,
-                    fontFamily: fonts.body,
                   }}
                 />
               </ListItemButton>
@@ -247,10 +245,8 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                   primary={item.label}
                   primaryTypographyProps={{
                     fontSize: "0.875rem",
-                    fontWeight: 600,
                     color: "inherit",
                     lineHeight: 1.2,
-                    fontFamily: fonts.body,
                   }}
                 />
 
@@ -327,10 +323,8 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                           primary={child.label}
                           primaryTypographyProps={{
                             fontSize: "0.875rem",
-                            fontWeight: 600,
                             color: "inherit",
                             lineHeight: 1.2,
-                            fontFamily: fonts.body,
                           }}
                         />
                       </ListItemButton>
