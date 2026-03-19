@@ -58,8 +58,8 @@ export const createOrderWorkflow = async ({
     const resolvedDiscountValue = line.discountValue > 0 ? line.discountValue : matchedDiscount?.value ?? 0;
 
     const computed = computeLineTotals({
-      unitPrice: product.unitPrice,
-      fixedCostPrice: product.fixedCostPrice,
+      unitPrice: product.basePrice,
+      fixedCostPrice: product.purchasePrice,
       quantity: line.quantity,
       discountType: resolvedDiscountType,
       discountValue: resolvedDiscountValue,
@@ -74,7 +74,7 @@ export const createOrderWorkflow = async ({
     };
   });
 
-  const totalCost = toFixed2(lines.reduce((sum, line) => sum + line.product.fixedCostPrice * line.quantity, 0));
+  const totalCost = toFixed2(lines.reduce((sum, line) => sum + line.product.purchasePrice * line.quantity, 0));
   const totals = computeOrderTotals(lines, totalCost);
 
   const orderPayload: CreateOrderPayload = {
@@ -100,12 +100,12 @@ export const createOrderWorkflow = async ({
         orderId,
         productId: line.product.id,
         quantity: line.quantity,
-        unitPrice: line.product.unitPrice,
+        unitPrice: line.product.basePrice,
         discountPercent: line.discountType === "percentage" ? line.discountValue : 0,
         discountAmount: line.discountAmount,
         lineSubtotal: line.lineSubtotal,
         lineTotal: line.lineTotal,
-        unitCostAtSale: line.product.fixedCostPrice,
+        unitCostAtSale: line.product.purchasePrice,
         profitAmount: line.profitAmount,
       };
 

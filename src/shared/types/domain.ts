@@ -12,9 +12,8 @@ export interface Product {
   sku: string;
   categoryId: string;
   imageUrl?: string | null;
-  unitPrice: number;
-  fixedCostPrice: number;
-  currency: "NOK";
+  basePrice: number;
+  purchasePrice: number;
   unit: string;
   stockQuantity: number;
   reorderLevel: number;

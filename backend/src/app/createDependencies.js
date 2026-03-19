@@ -55,6 +55,7 @@ export function createDependencies({ db }) {
       productService: createProductService({
         categoryRepository,
         productRepository,
+        supplierRepository,
         warehouseRepository,
       }),
       supplierService: createSupplierService({ supplierRepository }),

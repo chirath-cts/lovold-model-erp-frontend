@@ -507,7 +507,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"{{productId}}\",\n  \"name\": \"Sample Product\",\n  \"sku\": \"SKU-001\",\n  \"categoryId\": \"{{categoryId}}\",\n  \"unitPrice\": 1250,\n  \"fixedCostPrice\": 800,\n  \"stockQuantity\": 25,\n  \"reorderLevel\": 10,\n  \"unit\": \"pcs\",\n  \"status\": \"active\",\n  \"description\": \"Created from the Add Product dialog\",\n  \"imageUrl\": null,\n  \"currency\": \"NOK\"\n}",
+              "raw": "{\n  \"id\": \"{{productId}}\",\n  \"name\": \"Sample Product\",\n  \"sku\": \"SKU-001\",\n  \"categoryId\": \"{{categoryId}}\",\n  \"basePrice\": 1250,\n  \"purchasePrice\": 800,\n  \"stockQuantity\": 25,\n  \"reorderLevel\": 10,\n  \"unit\": \"pcs\",\n  \"status\": \"active\",\n  \"description\": \"Created from the Add Product dialog\",\n  \"imageUrl\": null\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -539,7 +539,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Updated Product Name\",\n  \"sku\": \"SKU-001\",\n  \"categoryId\": \"{{categoryId}}\",\n  \"unitPrice\": 1350,\n  \"fixedCostPrice\": 820,\n  \"stockQuantity\": 20,\n  \"reorderLevel\": 8,\n  \"unit\": \"pcs\",\n  \"status\": \"active\",\n  \"description\": \"Updated from the product edit drawer\",\n  \"imageUrl\": null\n}",
+              "raw": "{\n  \"name\": \"Updated Product Name\",\n  \"sku\": \"SKU-001\",\n  \"categoryId\": \"{{categoryId}}\",\n  \"basePrice\": 1350,\n  \"purchasePrice\": 820,\n  \"stockQuantity\": 20,\n  \"reorderLevel\": 8,\n  \"unit\": \"pcs\",\n  \"status\": \"active\",\n  \"description\": \"Updated from the product edit drawer\",\n  \"imageUrl\": null\n}",
               "options": {
                 "raw": {
                   "language": "json"

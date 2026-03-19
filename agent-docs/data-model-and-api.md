@@ -32,7 +32,7 @@
 - `orders.order_number` is unique; monetary totals include subtotal, discount_total, cost_total, profit_total, grand_total
 - `order_product` stores quantity, unit_price, line_discount_percent, discount_amount, tax_total, unit_cost_at_sale, profit_amount
 - `customer_product` composite on (customer_id, product_id); captures discount_percent, start_date, end_date, is_active for pricing validity
-- `products` include base_price, `uom`, and nullable `image_url`
+- `products` include base_price, `unit`, and nullable `image_url`
 - `customers` use `customer_code` as primary key; referenced by orders and customer_product
 
 ## Frontend Compatibility Mapping
@@ -56,7 +56,7 @@ Canonical category endpoint:
 - `/users`
 
 Product payload note:
-- `/products` includes additive optional field `imageUrl` mapped from DB column `products.image_url`
+- `/products` exposes canonical camelCase fields including `basePrice`, `purchasePrice`, `stockQuantity`, `reorderLevel`, and optional `imageUrl` mapped from `products.image_url`
 
 Order payload note:
 - `/orders` and `/orderItems` expose DB-aligned camelCase names such as `grandTotal`, `profitTotal`, `discountPercent`, `unitCostAtSale`, and `profitAmount`

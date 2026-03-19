@@ -10,29 +10,10 @@ import { mapProduct } from "../mappers/productMapper.js";
 export function createProductService({
   categoryRepository,
   productRepository,
+  supplierRepository,
   warehouseRepository,
 }) {
-  const ensureInventoryRow = async (productId) => {
-    const existing = await productRepository.getInventoryRowByProductId(productId);
-    if (existing) return existing.id;
-
-    const warehouseRow = await warehouseRepository.getPrimaryWarehouseId();
-    const warehouseId = warehouseRow?.id ?? null;
-    if (!warehouseId) return null;
-
-    const inventoryId = `inv-${productId}`;
-    await productRepository.createInventoryRow({
-      id: inventoryId,
-      warehouseId,
-      productId,
-      stockQuantity: 0,
-      reorderLevel: 0,
-      updatedAt: new Date().toISOString(),
-    });
-
-    const created = await productRepository.getInventoryRowByProductId(productId);
-    return created?.id ?? null;
-  };
+  const hasOwn = (payload, key) => Object.prototype.hasOwnProperty.call(payload, key);
 
   return {
     async listProducts({ categoryId, q, query }) {
@@ -51,12 +32,12 @@ export function createProductService({
         throw badRequestError("id, name, categoryId, and unit are required");
       }
 
-      if (!isNonNegativeNumber(payload.unitPrice ?? 0)) {
-        throw badRequestError("unitPrice must be a non-negative number");
+      if (!isNonNegativeNumber(payload.basePrice ?? 0)) {
+        throw badRequestError("basePrice must be a non-negative number");
       }
 
-      if (!isNonNegativeNumber(payload.fixedCostPrice ?? 0)) {
-        throw badRequestError("fixedCostPrice must be a non-negative number");
+      if (!isNonNegativeNumber(payload.purchasePrice ?? 0)) {
+        throw badRequestError("purchasePrice must be a non-negative number");
       }
 
       if (!isNonNegativeInteger(payload.stockQuantity ?? 0)) {
@@ -75,21 +56,26 @@ export function createProductService({
         throw badRequestError("imageUrl must be a string or null");
       }
 
-      if (
-        payload.image_url !== undefined &&
-        payload.image_url !== null &&
-        typeof payload.image_url !== "string"
-      ) {
-        throw badRequestError("image_url must be a string or null");
-      }
-
       const category = await categoryRepository.existsById(categoryId);
       if (!category) throw badRequestError("Invalid categoryId");
 
-      const basePrice = numberValue(payload.unitPrice ?? payload.fixedCostPrice, 0);
+      const supplierRow = await supplierRepository.getDefaultSupplierId();
+      const supplierId = supplierRow?.id ?? null;
+      if (!supplierId) {
+        throw badRequestError("No default supplier available to maintain purchase pricing");
+      }
+
+      const warehouseRow = await warehouseRepository.getPrimaryWarehouseId();
+      const warehouseId = warehouseRow?.id ?? null;
+      if (!warehouseId) {
+        throw badRequestError("No warehouse available to maintain inventory");
+      }
+
+      const basePrice = numberValue(payload.basePrice, 0);
+      const purchasePrice = numberValue(payload.purchasePrice, 0);
       const stockQuantity = integerValue(payload.stockQuantity, 0);
       const reorderLevel = integerValue(payload.reorderLevel, 0);
-      const imageUrl = payload.imageUrl ?? payload.image_url ?? null;
+      const imageUrl = payload.imageUrl ?? null;
 
       await productRepository.createProduct({
         id,
@@ -103,18 +89,22 @@ export function createProductService({
         status: payload.status === "inactive" ? "inactive" : "active",
       });
 
-      const warehouseRow = await warehouseRepository.getPrimaryWarehouseId();
-      const warehouseId = warehouseRow?.id ?? null;
-      if (warehouseId) {
-        await productRepository.createInventoryRow({
-          id: `inv-${id}`,
-          warehouseId,
-          productId: id,
-          stockQuantity,
-          reorderLevel,
-          updatedAt: new Date().toISOString(),
-        });
-      }
+      await productRepository.createPrimarySupplierProduct({
+        id: `sp-${id}`,
+        productId: id,
+        supplierId,
+        supplierSku: null,
+        purchasePrice,
+      });
+
+      await productRepository.createInventoryRow({
+        id: `inv-${id}`,
+        warehouseId,
+        productId: id,
+        stockQuantity,
+        reorderLevel,
+        updatedAt: new Date().toISOString(),
+      });
 
       const created = await productRepository.getProductById(id);
       return mapProduct(created);
@@ -133,15 +123,15 @@ export function createProductService({
         if (!category) throw badRequestError("Invalid categoryId");
       }
 
-      if (payload.unitPrice !== undefined && !isNonNegativeNumber(payload.unitPrice)) {
-        throw badRequestError("unitPrice must be a non-negative number");
+      if (payload.basePrice !== undefined && !isNonNegativeNumber(payload.basePrice)) {
+        throw badRequestError("basePrice must be a non-negative number");
       }
 
       if (
-        payload.fixedCostPrice !== undefined &&
-        !isNonNegativeNumber(payload.fixedCostPrice)
+        payload.purchasePrice !== undefined &&
+        !isNonNegativeNumber(payload.purchasePrice)
       ) {
-        throw badRequestError("fixedCostPrice must be a non-negative number");
+        throw badRequestError("purchasePrice must be a non-negative number");
       }
 
       if (
@@ -158,13 +148,40 @@ export function createProductService({
         throw badRequestError("reorderLevel must be a non-negative integer");
       }
 
-      const hasImageUrlField = Object.prototype.hasOwnProperty.call(payload, "imageUrl");
-      const hasImageUrlSnakeField = Object.prototype.hasOwnProperty.call(payload, "image_url");
-      const hasImageUrlUpdate = hasImageUrlField || hasImageUrlSnakeField;
-      const imageUrlInput = hasImageUrlField ? payload.imageUrl : payload.image_url;
+      const hasImageUrlUpdate = Object.prototype.hasOwnProperty.call(payload, "imageUrl");
+      const imageUrlInput = payload.imageUrl;
 
       if (hasImageUrlUpdate && imageUrlInput !== null && typeof imageUrlInput !== "string") {
         throw badRequestError("imageUrl must be a string or null");
+      }
+
+      const primarySupplier = await productRepository.getPrimarySupplierProductByProductId(id);
+      const needsPurchasePriceWrite = hasOwn(payload, "purchasePrice");
+      const needsInventoryWrite = hasOwn(payload, "stockQuantity") || hasOwn(payload, "reorderLevel");
+
+      let supplierId = primarySupplier?.supplier_id ?? null;
+      if (needsPurchasePriceWrite && !supplierId) {
+        const supplierRow = await supplierRepository.getDefaultSupplierId();
+        supplierId = supplierRow?.id ?? null;
+        if (!supplierId) {
+          throw badRequestError("No default supplier available to maintain purchase pricing");
+        }
+      }
+
+      let inventoryRowId = null;
+      let warehouseId = null;
+      if (needsInventoryWrite) {
+        const inventoryRow = await productRepository.getInventoryRowByProductId(id);
+        inventoryRowId = inventoryRow?.id ?? null;
+
+        if (!inventoryRowId) {
+          const warehouseRow = await warehouseRepository.getPrimaryWarehouseId();
+          warehouseId = warehouseRow?.id ?? null;
+          if (!warehouseId) {
+            throw badRequestError("No warehouse available to maintain inventory");
+          }
+          inventoryRowId = `inv-${id}`;
+        }
       }
 
       const next = {
@@ -174,21 +191,41 @@ export function createProductService({
         description: payload.description ?? current.description,
         image_url: hasImageUrlUpdate ? imageUrlInput : current.image_url,
         base_price:
-          payload.unitPrice !== undefined
-            ? numberValue(payload.unitPrice, current.base_price)
-            : payload.fixedCostPrice !== undefined
-              ? numberValue(payload.fixedCostPrice, current.base_price)
-              : current.base_price,
+          payload.basePrice !== undefined
+            ? numberValue(payload.basePrice, current.base_price)
+            : current.base_price,
         unit: payload.unit ?? current.unit,
         status: payload.status ?? current.status,
       };
 
       await productRepository.updateProductRecord(id, next);
 
-      if (payload.stockQuantity !== undefined || payload.reorderLevel !== undefined) {
-        const inventoryRowId = await ensureInventoryRow(id);
-        if (!inventoryRowId) {
-          throw badRequestError("No warehouse available to maintain inventory");
+      if (needsPurchasePriceWrite) {
+        const purchasePrice = numberValue(payload.purchasePrice, 0);
+
+        if (primarySupplier?.id) {
+          await productRepository.updatePrimarySupplierPurchasePrice(primarySupplier.id, purchasePrice);
+        } else {
+          await productRepository.createPrimarySupplierProduct({
+            id: `sp-${id}`,
+            productId: id,
+            supplierId,
+            supplierSku: null,
+            purchasePrice,
+          });
+        }
+      }
+
+      if (needsInventoryWrite) {
+        if (warehouseId) {
+          await productRepository.createInventoryRow({
+            id: inventoryRowId,
+            warehouseId,
+            productId: id,
+            stockQuantity: 0,
+            reorderLevel: 0,
+            updatedAt: new Date().toISOString(),
+          });
         }
 
         if (payload.stockQuantity !== undefined) {

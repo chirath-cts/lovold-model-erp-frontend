@@ -23,17 +23,18 @@ export function createProductRepository(db) {
         sortQuery,
         {
           name: "p.name",
-          unitPrice: "p.base_price",
+          basePrice: "p.base_price",
+          purchasePrice: "COALESCE(sp.purchase_price, p.base_price)",
           stockQuantity: "stock_quantity",
           status: "p.status",
-          createdAt: "p.id",
         },
         "name",
         "ASC",
       );
 
       return db.all(
-        `SELECT p.id, p.name, p.sku, p.category_id, p.description, p.image_url, p.base_price, p.unit, p.status, sp.purchase_price,
+        `SELECT p.id, p.name, p.sku, p.category_id, p.description, p.image_url, p.base_price, p.unit, p.status,
+                COALESCE(sp.purchase_price, p.base_price) AS purchase_price,
                 COALESCE(SUM(i.stock_quantity), 0) AS stock_quantity,
                 COALESCE(SUM(i.reorder_level), 0) AS reorder_level
          FROM products p
@@ -46,7 +47,8 @@ export function createProductRepository(db) {
     },
     getProductById(id) {
       return db.get(
-        `SELECT p.id, p.name, p.sku, p.category_id, p.description, p.image_url, p.base_price, p.unit, p.status, sp.purchase_price,
+        `SELECT p.id, p.name, p.sku, p.category_id, p.description, p.image_url, p.base_price, p.unit, p.status,
+                COALESCE(sp.purchase_price, p.base_price) AS purchase_price,
                 COALESCE(SUM(i.stock_quantity), 0) AS stock_quantity,
                 COALESCE(SUM(i.reorder_level), 0) AS reorder_level
          FROM products p
@@ -62,7 +64,7 @@ export function createProductRepository(db) {
     },
     getProductPricingById(id) {
       return db.get(
-        `SELECT p.id, p.base_price, sp.purchase_price
+        `SELECT p.id, p.base_price, COALESCE(sp.purchase_price, p.base_price) AS purchase_price
          FROM products p
          ${PRIMARY_SUPPLIER_JOIN_SQL}
          WHERE p.id = ?`,
@@ -116,6 +118,42 @@ export function createProductRepository(db) {
         next.base_price,
         next.unit,
         next.status,
+        id,
+      );
+    },
+    getPrimarySupplierProductByProductId(productId) {
+      return db.get(
+        `SELECT id, supplier_id, purchase_price
+         FROM supplier_product
+         WHERE product_id = ?
+         ORDER BY COALESCE(is_primary_supplier, 0) DESC, id ASC
+         LIMIT 1`,
+        productId,
+      );
+    },
+    createPrimarySupplierProduct({
+      id,
+      productId,
+      supplierId,
+      supplierSku,
+      purchasePrice,
+    }) {
+      return db.run(
+        `INSERT INTO supplier_product (
+          id, product_id, supplier_id, supplier_sku, purchase_price,
+          supplier_discount_percent, lead_time_days, is_primary_supplier, min_order_qty
+        ) VALUES (?, ?, ?, ?, ?, 0, 0, 1, 1)`,
+        id,
+        productId,
+        supplierId,
+        supplierSku,
+        purchasePrice,
+      );
+    },
+    updatePrimarySupplierPurchasePrice(id, purchasePrice) {
+      return db.run(
+        "UPDATE supplier_product SET purchase_price = ?, is_primary_supplier = 1 WHERE id = ?",
+        purchasePrice,
         id,
       );
     },

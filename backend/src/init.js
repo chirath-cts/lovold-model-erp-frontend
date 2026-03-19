@@ -62,7 +62,7 @@ const normalizeProducts = (rows) =>
         typeof (row.imageUrl ?? row.image_url) === "string"
           ? (row.imageUrl ?? row.image_url)
           : null,
-      basePrice: numeric(row.basePrice ?? row.base_price ?? row.unitPrice ?? row.unit_price, 0),
+      basePrice: numeric(row.basePrice ?? row.base_price, 0),
       unit: row.unit ?? null,
       status: row.status ?? "active",
     }));

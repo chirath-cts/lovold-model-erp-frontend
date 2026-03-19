@@ -51,8 +51,8 @@ const createFormDefaults: CreateProductFormValues = {
   name: "",
   sku: "",
   categoryId: "",
-  unitPrice: 0,
-  fixedCostPrice: 0,
+  basePrice: 0,
+  purchasePrice: 0,
   stockQuantity: 0,
   reorderLevel: 0,
   unit: "pcs",
@@ -65,8 +65,8 @@ const updateFormDefaults: UpdateProductFormValues = {
   name: "",
   sku: "",
   categoryId: "",
-  unitPrice: 0,
-  fixedCostPrice: 0,
+  basePrice: 0,
+  purchasePrice: 0,
   stockQuantity: 0,
   reorderLevel: 0,
   unit: "pcs",
@@ -219,15 +219,14 @@ export function ProductsPage() {
         name: values.name.trim(),
         sku: values.sku.trim(),
         categoryId: values.categoryId,
-        unitPrice: values.unitPrice,
-        fixedCostPrice: values.fixedCostPrice,
+        basePrice: values.basePrice,
+        purchasePrice: values.purchasePrice,
         stockQuantity: values.stockQuantity,
         reorderLevel: values.reorderLevel,
         unit: values.unit.trim(),
         status: values.status,
         description: values.description?.trim() ?? "",
         imageUrl: values.imageUrl ?? null,
-        currency: "NOK",
       };
 
       return productsService.create(payload);
@@ -253,8 +252,8 @@ export function ProductsPage() {
         name: values.name.trim(),
         sku: values.sku.trim(),
         categoryId: values.categoryId,
-        unitPrice: values.unitPrice,
-        fixedCostPrice: values.fixedCostPrice,
+        basePrice: values.basePrice,
+        purchasePrice: values.purchasePrice,
         stockQuantity: values.stockQuantity,
         reorderLevel: values.reorderLevel,
         unit: values.unit.trim(),
@@ -286,8 +285,8 @@ export function ProductsPage() {
       name: product.name,
       sku: product.sku,
       categoryId: product.categoryId,
-      unitPrice: product.unitPrice,
-      fixedCostPrice: product.fixedCostPrice,
+      basePrice: product.basePrice,
+      purchasePrice: product.purchasePrice,
       stockQuantity: product.stockQuantity,
       reorderLevel: product.reorderLevel,
       unit: product.unit,
@@ -416,15 +415,15 @@ export function ProductsPage() {
             },
             {
               key: "price",
-              header: "Selling Price",
+              header: "Base Price",
               align: "right",
-              render: (row) => <CurrencyText value={row.unitPrice} />,
+              render: (row) => <CurrencyText value={row.basePrice} />,
             },
             {
               key: "cost",
-              header: "Fixed Cost",
+              header: "Purchase Price",
               align: "right",
-              render: (row) => <CurrencyText value={row.fixedCostPrice} />,
+              render: (row) => <CurrencyText value={row.purchasePrice} />,
             },
             {
               key: "stock",
@@ -524,38 +523,36 @@ export function ProductsPage() {
                 )}
               />
 
-              <TextField size="small" label="Currency" value="NOK" disabled />
-
               <Controller
                 control={createForm.control}
-                name="unitPrice"
+                name="basePrice"
                 render={({ field }) => (
                   <TextField
                     {...field}
                     size="small"
                     type="number"
-                    label="Selling Price"
+                    label="Base Price"
                     inputProps={{ min: 0, step: "0.01" }}
                     onChange={(event) => field.onChange(Number(event.target.value))}
-                    error={Boolean(createForm.formState.errors.unitPrice)}
-                    helperText={createForm.formState.errors.unitPrice?.message}
+                    error={Boolean(createForm.formState.errors.basePrice)}
+                    helperText={createForm.formState.errors.basePrice?.message}
                   />
                 )}
               />
 
               <Controller
                 control={createForm.control}
-                name="fixedCostPrice"
+                name="purchasePrice"
                 render={({ field }) => (
                   <TextField
                     {...field}
                     size="small"
                     type="number"
-                    label="Fixed Cost Price"
+                    label="Purchase Price"
                     inputProps={{ min: 0, step: "0.01" }}
                     onChange={(event) => field.onChange(Number(event.target.value))}
-                    error={Boolean(createForm.formState.errors.fixedCostPrice)}
-                    helperText={createForm.formState.errors.fixedCostPrice?.message}
+                    error={Boolean(createForm.formState.errors.purchasePrice)}
+                    helperText={createForm.formState.errors.purchasePrice?.message}
                   />
                 )}
               />
@@ -740,38 +737,36 @@ export function ProductsPage() {
                 )}
               />
 
-              <TextField size="small" label="Currency" value="NOK" disabled />
-
               <Controller
                 control={updateForm.control}
-                name="unitPrice"
+                name="basePrice"
                 render={({ field }) => (
                   <TextField
                     {...field}
                     size="small"
                     type="number"
-                    label="Selling Price"
+                    label="Base Price"
                     inputProps={{ min: 0, step: "0.01" }}
                     onChange={(event) => field.onChange(Number(event.target.value))}
-                    error={Boolean(updateForm.formState.errors.unitPrice)}
-                    helperText={updateForm.formState.errors.unitPrice?.message}
+                    error={Boolean(updateForm.formState.errors.basePrice)}
+                    helperText={updateForm.formState.errors.basePrice?.message}
                   />
                 )}
               />
 
               <Controller
                 control={updateForm.control}
-                name="fixedCostPrice"
+                name="purchasePrice"
                 render={({ field }) => (
                   <TextField
                     {...field}
                     size="small"
                     type="number"
-                    label="Fixed Cost Price"
+                    label="Purchase Price"
                     inputProps={{ min: 0, step: "0.01" }}
                     onChange={(event) => field.onChange(Number(event.target.value))}
-                    error={Boolean(updateForm.formState.errors.fixedCostPrice)}
-                    helperText={updateForm.formState.errors.fixedCostPrice?.message}
+                    error={Boolean(updateForm.formState.errors.purchasePrice)}
+                    helperText={updateForm.formState.errors.purchasePrice?.message}
                   />
                 )}
               />

@@ -137,8 +137,8 @@ Implemented fields/behavior:
 
 - Product name + SKU
 - Category
-- Base selling price (`base_price`/`unitPrice` mapping)
-- Unit of measure (`uom`)
+- Base selling price (`base_price`/`basePrice` mapping)
+- Unit of measure (`unit`)
 - Product status
 - Description
 
@@ -345,4 +345,3 @@ Hardening path:
 - Data interactions feel realistic and consistent
 - Architecture supports incremental scale into later phases
 - Team has a clear, aligned baseline for Phase 2 planning
-

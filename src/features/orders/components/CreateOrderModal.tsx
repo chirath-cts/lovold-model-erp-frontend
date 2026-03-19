@@ -202,8 +202,8 @@ export function CreateOrderModal({
         }
 
         return computeLineTotals({
-          unitPrice: product.unitPrice,
-          fixedCostPrice: product.fixedCostPrice,
+          unitPrice: product.basePrice,
+          fixedCostPrice: product.purchasePrice,
           quantity: line.quantity,
           discountType: line.discountType,
           discountValue: line.discountValue,
@@ -418,7 +418,7 @@ export function CreateOrderModal({
 
                   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2 }}>
                     <Typography variant="caption" color="text.secondary">
-                      Unit Price: <CurrencyText value={selectedProduct?.unitPrice ?? 0} />
+                      Base Price: <CurrencyText value={selectedProduct?.basePrice ?? 0} />
                     </Typography>
                     <Typography variant="caption" color="text.secondary">
                       Line Total: <CurrencyText value={lineSummaries[index]?.lineTotal ?? 0} />

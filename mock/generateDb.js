@@ -42,6 +42,7 @@ const buildCompatibilityCollections = (canonical) => {
 
   const productById = new Map(products.map((product) => [product.id, product]));
   const primarySupplierByProductId = new Map();
+  const inventoryTotalsByProductId = new Map();
 
   for (const supplierProduct of supplierProducts) {
     const current = primarySupplierByProductId.get(supplierProduct.productId);
@@ -55,6 +56,30 @@ const buildCompatibilityCollections = (canonical) => {
       primarySupplierByProductId.set(supplierProduct.productId, supplierProduct);
     }
   }
+
+  for (const inventory of inventories) {
+    const current = inventoryTotalsByProductId.get(inventory.productId) ?? {
+      stockQuantity: 0,
+      reorderLevel: 0,
+    };
+
+    inventoryTotalsByProductId.set(inventory.productId, {
+      stockQuantity: current.stockQuantity + Number(inventory.stockQuantity ?? 0),
+      reorderLevel: current.reorderLevel + Number(inventory.reorderLevel ?? 0),
+    });
+  }
+
+  const runtimeProducts = products.map((product) => {
+    const inventory = inventoryTotalsByProductId.get(product.id);
+    const supplierProduct = primarySupplierByProductId.get(product.id);
+
+    return {
+      ...product,
+      purchasePrice: Number(supplierProduct?.purchasePrice ?? product.basePrice ?? 0),
+      stockQuantity: Number(inventory?.stockQuantity ?? 0),
+      reorderLevel: Number(inventory?.reorderLevel ?? 0),
+    };
+  });
 
   const orderItems = orderProducts.map((orderProduct) => {
     const product = productById.get(orderProduct.productId);
@@ -107,6 +132,7 @@ const buildCompatibilityCollections = (canonical) => {
   });
 
   return {
+    products: runtimeProducts,
     productCategories: categories,
     orderItems,
     discounts,

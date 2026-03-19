@@ -14,14 +14,13 @@ export interface CreateProductPayload {
   sku: string;
   categoryId: string;
   imageUrl?: string | null;
-  unitPrice: number;
-  fixedCostPrice: number;
+  basePrice: number;
+  purchasePrice: number;
   stockQuantity: number;
   reorderLevel: number;
   unit: string;
   status: Product["status"];
   description?: string;
-  currency?: Product["currency"];
 }
 
 export interface UpdateProductPayload {
@@ -29,8 +28,8 @@ export interface UpdateProductPayload {
   sku: string;
   categoryId: string;
   imageUrl?: string | null;
-  unitPrice: number;
-  fixedCostPrice: number;
+  basePrice: number;
+  purchasePrice: number;
   stockQuantity: number;
   reorderLevel: number;
   unit: string;
