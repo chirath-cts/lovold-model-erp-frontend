@@ -137,6 +137,8 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                     bgcolor: palette.surfaceContainerHighest,
                     color: palette.primary,
                     fontWeight: 600,
+                    "& .MuiListItemText-primary": { fontWeight: 600 },
+                    "& .MuiSvgIcon-root": { fontWeight: 600 },
                   },
                   "&.Mui-selected:hover": {
                     bgcolor: palette.surfaceContainerHighest,
@@ -206,6 +208,8 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                     bgcolor: palette.surfaceContainerHighest,
                     color: palette.primary,
                     fontWeight: 600,
+                    "& .MuiListItemText-primary": { fontWeight: 600 },
+                    "& .MuiSvgIcon-root": { fontWeight: 600 },
                   },
                   "&.Mui-selected:hover": {
                     bgcolor: palette.surfaceContainerHighest,
@@ -288,6 +292,8 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                             bgcolor: palette.surfaceContainerHighest,
                             color: palette.primary,
                             fontWeight: 600,
+                            "& .MuiListItemText-primary": { fontWeight: 600 },
+                            "& .MuiSvgIcon-root": { fontWeight: 600 },
                           },
                           "&.Mui-selected:hover": {
                             bgcolor: palette.surfaceContainerHighest,
