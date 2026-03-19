@@ -17,6 +17,7 @@ export const updateProductSchema = z.object({
   unit: z.string().min(1, "Unit is required"),
   status: z.enum(["active", "inactive"]),
   description: z.string().optional(),
+  imageUrl: z.string().nullable().optional(),
 });
 
 export type UpdateProductFormValues = z.infer<typeof updateProductSchema>;
