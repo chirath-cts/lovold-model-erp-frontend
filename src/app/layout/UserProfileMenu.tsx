@@ -1,5 +1,13 @@
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-import { Avatar, Box, ButtonBase, Divider, Menu, MenuItem, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  ButtonBase,
+  Divider,
+  Menu,
+  MenuItem,
+  Typography,
+} from "@mui/material";
 import { alpha } from "@mui/material/styles";
 import type { MouseEvent } from "react";
 import { useMemo, useState } from "react";
@@ -8,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuthSession } from "@/shared/hooks/useAuthSession";
 import { clearAuthSession } from "@/shared/lib/authSession";
 
-const avatarSize = 40;
+const avatarSize = 32;
 
 export function UserProfileMenu() {
   const session = useAuthSession();
@@ -16,7 +24,10 @@ export function UserProfileMenu() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const displayName = useMemo(() => {
-    const name = [session?.firstName, session?.lastName].filter(Boolean).join(" ").trim();
+    const name = [session?.firstName, session?.lastName]
+      .filter(Boolean)
+      .join(" ")
+      .trim();
     if (name) return name;
     if (session?.username) return session.username;
     if (session?.email) return session.email;
@@ -27,7 +38,11 @@ export function UserProfileMenu() {
   const email = session?.email || "No email available";
 
   const initials = useMemo(() => {
-    const source = [session?.firstName, session?.lastName].filter(Boolean).join(" ").trim() ||
+    const source =
+      [session?.firstName, session?.lastName]
+        .filter(Boolean)
+        .join(" ")
+        .trim() ||
       session?.username ||
       session?.email ||
       "U";
@@ -42,9 +57,12 @@ export function UserProfileMenu() {
   }, [session]);
 
   const avatarSrc =
-    (session as { avatarUrl?: string; avatar?: string; image?: string } | null)?.avatarUrl ??
-    (session as { avatarUrl?: string; avatar?: string; image?: string } | null)?.avatar ??
-    (session as { avatarUrl?: string; avatar?: string; image?: string } | null)?.image;
+    (session as { avatarUrl?: string; avatar?: string; image?: string } | null)
+      ?.avatarUrl ??
+    (session as { avatarUrl?: string; avatar?: string; image?: string } | null)
+      ?.avatar ??
+    (session as { avatarUrl?: string; avatar?: string; image?: string } | null)
+      ?.image;
 
   const open = Boolean(anchorEl);
 
@@ -65,8 +83,8 @@ export function UserProfileMenu() {
       sx={{
         display: "flex",
         alignItems: "center",
-        pl: { xs: 2, md: 3 },
-        borderLeft: (theme) => `1px solid ${alpha(theme.palette.divider, 0.9)}`,
+        pl: { xs: 1, md: 1 },
+        // borderLeft: (theme) => `1px solid ${alpha(theme.palette.divider, 0.9)}`,
       }}
     >
       <ButtonBase
@@ -80,19 +98,10 @@ export function UserProfileMenu() {
           gap: 1.25,
           px: 0.75,
           py: 0.75,
-          borderRadius: 999,
           transition: (theme) =>
             theme.transitions.create(["background-color", "box-shadow"], {
               duration: theme.transitions.duration.shorter,
             }),
-          "&:hover": {
-            backgroundColor: (theme) => alpha(theme.palette.primary.main, 0.06),
-            boxShadow: "0 10px 28px rgba(0, 58, 77, 0.12)",
-          },
-          "&:focus-visible": {
-            outline: (theme) => `2px solid ${alpha(theme.palette.primary.main, 0.35)}`,
-            outlineOffset: 2,
-          },
         }}
       >
         <Avatar
@@ -101,7 +110,8 @@ export function UserProfileMenu() {
             height: avatarSize,
             bgcolor: "primary.main",
             color: "primary.contrastText",
-            fontWeight: 700,
+            fontWeight: 600,
+            fontSize: 12,
           }}
           src={avatarSrc}
           alt={displayName}
@@ -109,8 +119,18 @@ export function UserProfileMenu() {
           {initials}
         </Avatar>
 
-        <Box sx={{ display: { xs: "none", lg: "block" }, textAlign: "left", lineHeight: 1.2 }}>
-          <Typography variant="body2" sx={{ fontWeight: 700, color: "text.primary" }} noWrap>
+        <Box
+          sx={{
+            display: { xs: "none", lg: "block" },
+            textAlign: "left",
+            lineHeight: 1.2,
+          }}
+        >
+          <Typography
+            variant="body2"
+            sx={{ fontWeight: 700, color: "text.primary" }}
+            noWrap
+          >
             {displayName}
           </Typography>
           <Typography
@@ -143,7 +163,11 @@ export function UserProfileMenu() {
         }}
       >
         <Box sx={{ px: 2, py: 1.5, maxWidth: 280 }}>
-          <Typography variant="subtitle2" sx={{ fontWeight: 800, lineHeight: 1.2 }} noWrap>
+          <Typography
+            variant="subtitle2"
+            sx={{ fontWeight: 800, lineHeight: 1.2 }}
+            noWrap
+          >
             {displayName}
           </Typography>
           <Typography variant="body2" color="text.secondary" noWrap>
