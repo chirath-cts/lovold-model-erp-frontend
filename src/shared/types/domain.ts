@@ -11,6 +11,7 @@ export interface Product {
   name: string;
   sku: string;
   categoryId: string;
+  imageUrl?: string | null;
   unitPrice: number;
   fixedCostPrice: number;
   currency: "NOK";

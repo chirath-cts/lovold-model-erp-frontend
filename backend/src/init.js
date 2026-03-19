@@ -58,6 +58,10 @@ const normalizeProducts = (rows) =>
       name: row.name ?? "",
       sku: row.sku ?? null,
       description: row.description ?? null,
+      imageUrl:
+        typeof (row.imageUrl ?? row.image_url) === "string"
+          ? (row.imageUrl ?? row.image_url)
+          : null,
       basePrice: numeric(row.basePrice ?? row.base_price ?? row.unitPrice ?? row.unit_price, 0),
       unit: row.unit ?? null,
       status: row.status ?? "active",
@@ -468,6 +472,7 @@ export async function initializeSchema(db) {
       name TEXT NOT NULL,
       sku TEXT,
       description TEXT,
+      image_url TEXT,
       base_price REAL,
       unit TEXT,
       status TEXT,
@@ -569,6 +574,12 @@ export async function initializeSchema(db) {
     CREATE INDEX IF NOT EXISTS idx_inventory_warehouse_id ON inventory(warehouse_id);
     CREATE INDEX IF NOT EXISTS idx_order_status_history_order_id ON order_status_history(order_id);
   `);
+
+  const productColumns = await db.all("PRAGMA table_info(products)");
+  const hasImageUrl = productColumns.some((column) => column.name === "image_url");
+  if (!hasImageUrl) {
+    await db.exec("ALTER TABLE products ADD COLUMN image_url TEXT");
+  }
 }
 
 async function hasSeedData(db) {
@@ -675,8 +686,8 @@ export async function seedDatabase(db, options = { forceReset: false }) {
     await insertCategory.finalize();
 
     const insertProduct = await db.prepare(`
-      INSERT INTO products (id, category_id, name, sku, description, base_price, unit, status)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO products (id, category_id, name, sku, description, image_url, base_price, unit, status)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
     `);
     for (const row of seed.products) {
       await insertProduct.run(
@@ -685,6 +696,7 @@ export async function seedDatabase(db, options = { forceReset: false }) {
         row.name,
         row.sku ?? null,
         row.description ?? null,
+        row.imageUrl ?? null,
         numeric(row.basePrice, 0),
         row.unit ?? null,
         row.status ?? "active",
