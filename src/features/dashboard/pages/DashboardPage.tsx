@@ -372,7 +372,7 @@ export function DashboardPage() {
     .slice(0, 6);
 
   const customerLookup = new Map(
-    customers.map((customer) => [customer.id, customer.companyName]),
+    customers.map((customer) => [customer.id, customer.name]),
   );
 
   return (
