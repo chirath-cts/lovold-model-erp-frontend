@@ -17,6 +17,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import type { SxProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import CalendarTodayRoundedIcon from "@mui/icons-material/CalendarTodayRounded";
 import VerifiedRoundedIcon from "@mui/icons-material/VerifiedRounded";
@@ -45,6 +46,7 @@ const designPalette = {
   surfaceLow: "#e8f6fe",
   primary: "#003a4d",
   primaryContainer: "#00526c",
+  primaryFixed: "#bfe8ff",
   secondary: "#1f6581",
   outline: "rgba(192, 200, 205, 0.35)",
   muted: "#70787d",
@@ -83,24 +85,31 @@ const SectionHeader = styled(Box)(({ theme }) => ({
 const RangeGroup = styled(Box)(() => ({
   display: "flex",
   alignItems: "center",
-  gap: 8,
-  padding: 6,
+  gap: 12,
+  padding: 4,
   backgroundColor: designPalette.surfaceLow,
   borderRadius: 12,
-  border: `1px solid ${designPalette.outline}`,
 }));
 
 const RangeButton = styled(Button)(() => ({
   textTransform: "none",
-  fontWeight: 700,
-  borderRadius: 10,
-  paddingInline: 14,
+  fontWeight: 600,
+  fontSize: 14,
+  borderRadius: 8,
+  padding: "8px 16px",
+  minHeight: "auto",
+  boxShadow: "none",
 }));
 
 const IconFrame = styled(IconButton)(() => ({
-  backgroundColor: designPalette.surface,
-  color: designPalette.primary,
-  boxShadow: "0px 8px 20px rgba(0, 58, 77, 0.14)",
+  padding: 8,
+  backgroundColor: "transparent",
+  color: designPalette.muted,
+  boxShadow: "none",
+  "&:hover": {
+    color: designPalette.primary,
+    backgroundColor: "transparent",
+  },
 }));
 
 const MutedLabel = styled(Typography)(() => ({
@@ -147,8 +156,8 @@ const KpiValue = styled(Typography)(() => ({
 
 const KpiHelper = styled(Typography)(() => ({
   fontSize: 12,
-  fontWeight: 600,
-  color: designPalette.muted,
+  fontWeight: 'normal',
+  color:'#70787d',
   fontFamily: "'Inter',sans-serif",
   marginTop: 4,
   display: "block",
@@ -159,11 +168,12 @@ interface DashboardKpiCardProps {
   value: ReactNode;
   badge?: { label: string; color: string; textColor?: string };
   helper?: string;
+  cardSx?: SxProps;
 }
 
-function DashboardKpiCard({ label, value, badge, helper }: DashboardKpiCardProps) {
+function DashboardKpiCard({ label, value, badge, helper, cardSx }: DashboardKpiCardProps) {
   return (
-    <KpiCardSurface>
+    <KpiCardSurface sx={cardSx}>
       <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
         <MutedLabel>{label}</MutedLabel>
         {badge ? (
@@ -174,7 +184,7 @@ function DashboardKpiCard({ label, value, badge, helper }: DashboardKpiCardProps
           />
         ) : null}
       </Box>
-      <Box>
+      <Box sx={{ mt: 2 }}>
         <KpiValue>{value}</KpiValue>
         {helper ? (
           <KpiHelper variant="caption">
@@ -311,18 +321,26 @@ export function DashboardPage() {
             sx={{
               bgcolor: designPalette.surface,
               color: designPalette.primary,
-              boxShadow: "0px 6px 18px rgba(0, 58, 77, 0.08)",
+              boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.12)",
             }}
           >
             Today
           </RangeButton>
-          <RangeButton variant="text" color="inherit">
+          <RangeButton
+            variant="text"
+            color="inherit"
+            sx={{ color: designPalette.muted, "&:hover": { color: designPalette.primary } }}
+          >
             Week
           </RangeButton>
-          <RangeButton variant="text" color="inherit">
+          <RangeButton
+            variant="text"
+            color="inherit"
+            sx={{ color: designPalette.muted, "&:hover": { color: designPalette.primary } }}
+          >
             Month
           </RangeButton>
-          <Divider flexItem orientation="vertical" sx={{ opacity: 0.4 }} />
+          <Divider flexItem orientation="vertical" sx={{ opacity: 0.4, height: 16 }} />
           <IconFrame size="small">
             <CalendarTodayRoundedIcon fontSize="small" />
           </IconFrame>
@@ -343,8 +361,12 @@ export function DashboardPage() {
         <DashboardKpiCard
           label="Total Sales"
           value={<CurrencyText value={metrics.totalSales} />}
-          badge={{ label: "Live", color: designPalette.primaryContainer }}
-          helper="Cumulative revenue"
+          badge={{ label: "+12%", color: designPalette.primaryFixed, textColor: designPalette.primaryContainer }}
+          helper="vs. last period"
+          cardSx={{
+            boxShadow: "0px 4px 20px rgba(0, 58, 77, 0.03)",
+            backgroundColor: designPalette.surface,
+          }}
         />
         <DashboardKpiCard
           label="Total Orders"
