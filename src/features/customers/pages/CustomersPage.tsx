@@ -33,7 +33,13 @@ export function CustomersPage() {
   );
 
   const rows = customers.filter((customer) =>
-    [customer.companyName, customer.contactPerson, customer.customerCode]
+    [
+      customer.name,
+      customer.customerCode,
+      customer.email,
+      customer.phone,
+      customer.address,
+    ]
       .join(" ")
       .toLowerCase()
       .includes(search.toLowerCase()),
@@ -44,7 +50,7 @@ export function CustomersPage() {
       <Box>
         <Typography variant="h1">Customer Network</Typography>
         <Typography variant="body2" color="text.secondary">
-          Commercial view of customers, sales and order performance.
+          Commercial view of customer names, contact details, sales, and order performance.
         </Typography>
       </Box>
 
@@ -62,25 +68,30 @@ export function CustomersPage() {
             render: (row) => (
               <Box>
                 <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                  {row.companyName}
+                  {row.name}
                 </Typography>
                 <Typography variant="caption" color="text.secondary">
-                  {row.customerCode}
+                  Customer Code: {row.customerCode}
                 </Typography>
               </Box>
             ),
           },
           {
             key: "contact",
-            header: "Contact",
+            header: "Contact Details",
             render: (row) => (
               <Box>
-                <Typography variant="body2">{row.contactPerson}</Typography>
+                <Typography variant="body2">{row.email || "-"}</Typography>
                 <Typography variant="caption" color="text.secondary">
-                  {row.country}
+                  {row.phone || "-"}
                 </Typography>
               </Box>
             ),
+          },
+          {
+            key: "address",
+            header: "Address",
+            render: (row) => row.address || "-",
           },
           {
             key: "orders",

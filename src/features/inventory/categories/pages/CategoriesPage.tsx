@@ -74,7 +74,7 @@ export function CategoriesPage() {
         <Box>
           <Typography variant="h1">Product Categories</Typography>
           <Typography variant="body2" color="text.secondary">
-            Category structure used across inventory and discounts.
+            Category structure used across inventory and product catalog flows.
           </Typography>
         </Box>
         <Button variant="contained" onClick={() => setOpenModal(true)}>

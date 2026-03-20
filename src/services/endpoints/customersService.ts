@@ -6,7 +6,7 @@ const RESOURCE = "customers";
 export const customersService = {
   getList() {
     return apiClient.getList<Customer>(RESOURCE, {
-      _sort: "companyName",
+      _sort: "name",
       _order: "asc",
     });
   },

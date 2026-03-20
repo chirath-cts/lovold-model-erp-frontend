@@ -15,8 +15,8 @@ import {
 import { queryClient } from "@/app/queryClient";
 import { CreateOrderModal } from "@/features/orders/components/CreateOrderModal";
 import {
+  useCustomerProducts,
   useCustomers,
-  useDiscounts,
   useOrders,
   useProducts,
 } from "@/services/hooks/useDomainQueries";
@@ -37,27 +37,32 @@ export function OrdersPage() {
   const ordersQuery = useOrders({ status });
   const customersQuery = useCustomers();
   const productsQuery = useProducts();
-  const discountsQuery = useDiscounts();
+  const customerProductsQuery = useCustomerProducts();
 
   const orders = ordersQuery.data ?? [];
   const customers = customersQuery.data ?? [];
   const products = productsQuery.data ?? [];
-  const discounts = discountsQuery.data ?? [];
+  const customerProducts = customerProductsQuery.data ?? [];
 
   if (
     ordersQuery.isLoading ||
     customersQuery.isLoading ||
     productsQuery.isLoading ||
-    discountsQuery.isLoading
+    customerProductsQuery.isLoading
   ) {
     return <LoadingState label="Loading orders..." />;
   }
 
-  if (ordersQuery.error || customersQuery.error || productsQuery.error || discountsQuery.error) {
+  if (
+    ordersQuery.error ||
+    customersQuery.error ||
+    productsQuery.error ||
+    customerProductsQuery.error
+  ) {
     return <ErrorState message="Failed to load orders data." />;
   }
 
-  const customerLookup = new Map(customers.map((customer) => [customer.id, customer.companyName]));
+  const customerLookup = new Map(customers.map((customer) => [customer.id, customer.name]));
 
   const totals = {
     revenue: orders.reduce((sum, order) => sum + order.grandTotal, 0),
@@ -187,7 +192,7 @@ export function OrdersPage() {
         }}
         customers={customers}
         products={products}
-        discounts={discounts}
+        customerProducts={customerProducts}
         orders={orders}
       />
     </Stack>

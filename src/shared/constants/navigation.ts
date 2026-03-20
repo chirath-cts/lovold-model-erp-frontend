@@ -57,7 +57,7 @@ export const sidebarNavStructure: SidebarNavItem[] = [
       {
         id: "discounts",
         type: "link",
-        label: "Discounts",
+        label: "Customer Pricing",
         path: "/inventory/discounts",
         icon: LocalOfferRoundedIcon,
       },

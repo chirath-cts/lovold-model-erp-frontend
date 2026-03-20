@@ -206,8 +206,8 @@ const KpiValue = styled(Typography)(() => ({
 
 const KpiHelper = styled(Typography)(() => ({
   fontSize: 12,
-  fontWeight: 'normal',
-  color:'#70787d',
+  fontWeight: "normal",
+  color: "#70787d",
   fontFamily: "'Inter',sans-serif",
   marginTop: 4,
   display: "block",
@@ -221,10 +221,22 @@ interface DashboardKpiCardProps {
   cardSx?: SxProps;
 }
 
-function DashboardKpiCard({ label, value, badge, helper, cardSx }: DashboardKpiCardProps) {
+function DashboardKpiCard({
+  label,
+  value,
+  badge,
+  helper,
+  cardSx,
+}: DashboardKpiCardProps) {
   return (
     <KpiCardSurface sx={cardSx}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+        }}
+      >
         <MutedLabel>{label}</MutedLabel>
         {badge ? (
           <Pill
@@ -236,11 +248,7 @@ function DashboardKpiCard({ label, value, badge, helper, cardSx }: DashboardKpiC
       </Box>
       <Box sx={{ mt: 2 }}>
         <KpiValue>{value}</KpiValue>
-        {helper ? (
-          <KpiHelper variant="caption">
-            {helper}
-          </KpiHelper>
-        ) : null}
+        {helper ? <KpiHelper variant="caption">{helper}</KpiHelper> : null}
       </Box>
     </KpiCardSurface>
   );
@@ -269,7 +277,8 @@ const avatarSwatches = [
   { bg: designPalette.tertiaryFixed, color: designPalette.tertiary },
 ];
 
-const getAvatarStyle = (index: number) => avatarSwatches[index % avatarSwatches.length];
+const getAvatarStyle = (index: number) =>
+  avatarSwatches[index % avatarSwatches.length];
 
 export function DashboardPage() {
   const ordersQuery = useOrders();
@@ -304,13 +313,18 @@ export function DashboardPage() {
 
   const salesTrend = orders
     .slice()
-    .sort((a, b) => new Date(a.orderDate).getTime() - new Date(b.orderDate).getTime())
+    .sort(
+      (a, b) =>
+        new Date(a.orderDate).getTime() - new Date(b.orderDate).getTime(),
+    )
     .map((order) => ({
       name: formatDate(order.orderDate),
       sales: order.grandTotal,
     }))
     .slice(-10);
-  const salesTrendPoints = salesTrend.length ? salesTrend : [{ name: "No data", sales: 0 }];
+  const salesTrendPoints = salesTrend.length
+    ? salesTrend
+    : [{ name: "No data", sales: 0 }];
 
   const statusMap = new Map<string, number>();
   orders.forEach((order) =>
@@ -332,7 +346,8 @@ export function DashboardPage() {
   const fulfilledStatuses = new Set(["delivered", "dispatched"]);
   const fulfillmentRate = orders.length
     ? Math.round(
-        (orders.filter((order) => fulfilledStatuses.has(order.status)).length / orders.length) *
+        (orders.filter((order) => fulfilledStatuses.has(order.status)).length /
+          orders.length) *
           1000,
       ) / 10
     : 0;
@@ -350,10 +365,15 @@ export function DashboardPage() {
 
   const recentOrders = orders
     .slice()
-    .sort((a, b) => new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime())
+    .sort(
+      (a, b) =>
+        new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime(),
+    )
     .slice(0, 6);
 
-  const customerLookup = new Map(customers.map((customer) => [customer.id, customer.companyName]));
+  const customerLookup = new Map(
+    customers.map((customer) => [customer.id, customer.companyName]),
+  );
 
   return (
     <PageContainer>
@@ -364,7 +384,10 @@ export function DashboardPage() {
         alignItems={{ xs: "flex-start", md: "center" }}
       >
         <Box>
-          <Typography variant="h3" sx={{ fontWeight: 800, color: designPalette.primary }}>
+          <Typography
+            variant="h3"
+            sx={{ fontWeight: 800, color: designPalette.primary }}
+          >
             Enterprise Overview
           </Typography>
           <Typography variant="body2" sx={{ color: designPalette.muted }}>
@@ -387,18 +410,28 @@ export function DashboardPage() {
           <RangeButton
             variant="text"
             color="inherit"
-            sx={{ color: designPalette.muted, "&:hover": { color: designPalette.primary } }}
+            sx={{
+              color: designPalette.muted,
+              "&:hover": { color: designPalette.primary },
+            }}
           >
             Week
           </RangeButton>
           <RangeButton
             variant="text"
             color="inherit"
-            sx={{ color: designPalette.muted, "&:hover": { color: designPalette.primary } }}
+            sx={{
+              color: designPalette.muted,
+              "&:hover": { color: designPalette.primary },
+            }}
           >
             Month
           </RangeButton>
-          <Divider flexItem orientation="vertical" sx={{ opacity: 0.4, height: 16 }} />
+          <Divider
+            flexItem
+            orientation="vertical"
+            sx={{ opacity: 0.4, height: 16 }}
+          />
           <IconFrame size="small">
             <CalendarTodayRoundedIcon fontSize="small" />
           </IconFrame>
@@ -419,7 +452,11 @@ export function DashboardPage() {
         <DashboardKpiCard
           label="Total Sales"
           value={<CurrencyText value={metrics.totalSales} />}
-          badge={{ label: "+12%", color: designPalette.primaryFixed, textColor: designPalette.primaryContainer }}
+          badge={{
+            label: "+12%",
+            color: designPalette.primaryFixed,
+            textColor: designPalette.primaryContainer,
+          }}
           helper="vs. last period"
           cardSx={{
             boxShadow: "0px 4px 20px rgba(0, 58, 77, 0.03)",
@@ -429,25 +466,41 @@ export function DashboardPage() {
         <DashboardKpiCard
           label="Total Orders"
           value={metrics.totalOrders}
-          badge={{ label: "Ops", color: designPalette.surfaceLow, textColor: designPalette.primary }}
+          badge={{
+            label: "Ops",
+            color: designPalette.surfaceLow,
+            textColor: designPalette.primary,
+          }}
           helper="All statuses"
         />
         <DashboardKpiCard
           label="Estimated Profit"
           value={<CurrencyText value={metrics.profitTotal} />}
-          badge={{ label: "Stable", color: "#9eddfd", textColor: designPalette.primary }}
+          badge={{
+            label: "Stable",
+            color: "#9eddfd",
+            textColor: designPalette.primary,
+          }}
           helper="Aggregate profit"
         />
         <DashboardKpiCard
           label="Low Stock"
           value={metrics.lowStockCount}
-          badge={{ label: "Action", color: "#ffdad6", textColor: designPalette.error }}
+          badge={{
+            label: "Action",
+            color: "#ffdad6",
+            textColor: designPalette.error,
+          }}
           helper="At/below reorder level"
         />
         <DashboardKpiCard
           label="Active Customers"
           value={metrics.activeCustomers}
-          badge={{ label: "CRM", color: "#d7e5ed", textColor: designPalette.primary }}
+          badge={{
+            label: "CRM",
+            color: "#d7e5ed",
+            textColor: designPalette.primary,
+          }}
           helper="Status: active"
         />
       </Box>
@@ -462,7 +515,10 @@ export function DashboardPage() {
         <SectionCard sx={{ gridColumn: { xs: "1", xl: "span 2" }, p: 4 }}>
           <SectionHeader sx={{ mb: 3 }}>
             <Box>
-              <Typography variant="h6" sx={{ fontWeight: 800, color: designPalette.primary }}>
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: 800, color: designPalette.primary }}
+              >
                 Sales Trend
               </Typography>
               <Typography variant="body2" sx={{ color: designPalette.muted }}>
@@ -484,7 +540,11 @@ export function DashboardPage() {
                 {
                   scaleType: "point",
                   data: salesTrendPoints.map((item) => item.name),
-                  tickLabelStyle: { fontSize: 10, fill: designPalette.muted, fontWeight: 700 },
+                  tickLabelStyle: {
+                    fontSize: 10,
+                    fill: designPalette.muted,
+                    fontWeight: 700,
+                  },
                 },
               ]}
               series={[
@@ -505,41 +565,78 @@ export function DashboardPage() {
         </SectionCard>
 
         <SectionCard>
-          <Typography variant="h6" sx={{ fontWeight: 800, color: designPalette.primary, mb: 0.5 }}>
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: 800, color: designPalette.primary, mb: 0.5 }}
+          >
             Order Distribution
           </Typography>
-          <Typography variant="body2" sx={{ color: designPalette.muted, mb: 2 }}>
+          <Typography
+            variant="body2"
+            sx={{ color: designPalette.muted, mb: 2 }}
+          >
             Current status breakdown
           </Typography>
           <CardStack>
             {orderStatusDistribution.map((item) => (
               <Box key={item.status}>
-                <Box sx={{ display: "flex", justifyContent: "space-between", mb: 0.5 }}>
-                  <Typography variant="body2" sx={{ fontWeight: 700, color: designPalette.primary }}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    mb: 0.5,
+                  }}
+                >
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: 700, color: designPalette.primary }}
+                  >
                     {item.status}
                   </Typography>
-                  <Typography variant="body2" sx={{ color: designPalette.muted }}>
+                  <Typography
+                    variant="body2"
+                    sx={{ color: designPalette.muted }}
+                  >
                     {item.count}
                   </Typography>
                 </Box>
                 <DistributionBar
                   variant="determinate"
                   value={item.percent}
-                  sx={{ "& .MuiLinearProgress-bar": { backgroundColor: item.color } }}
+                  sx={{
+                    "& .MuiLinearProgress-bar": { backgroundColor: item.color },
+                  }}
                 />
               </Box>
             ))}
           </CardStack>
-          <Box sx={{ mt: 3, pt: 2, borderTop: `1px solid ${designPalette.outline}` }}>
+          <Box
+            sx={{
+              mt: 3,
+              pt: 2,
+              borderTop: `1px solid ${designPalette.outline}`,
+            }}
+          >
             <Stack direction="row" spacing={2} alignItems="center">
-              <Avatar sx={{ bgcolor: "rgba(31,101,129,0.12)", color: designPalette.secondary }}>
+              <Avatar
+                sx={{
+                  bgcolor: "rgba(31,101,129,0.12)",
+                  color: designPalette.secondary,
+                }}
+              >
                 <VerifiedRoundedIcon fontSize="small" />
               </Avatar>
               <Box>
-                <Typography variant="caption" sx={{ fontWeight: 700, color: designPalette.muted }}>
+                <Typography
+                  variant="caption"
+                  sx={{ fontWeight: 700, color: designPalette.muted }}
+                >
                   Fulfillment Rate
                 </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 800, color: designPalette.primary }}>
+                <Typography
+                  variant="h5"
+                  sx={{ fontWeight: 800, color: designPalette.primary }}
+                >
                   {fulfillmentRate.toFixed(1)}%
                 </Typography>
               </Box>
@@ -555,14 +652,17 @@ export function DashboardPage() {
           gridTemplateColumns: { xs: "1fr", xl: "repeat(3, minmax(0, 1fr))" },
         }}
       >
-        <RecentOrdersCard sx={{ gridColumn: { xs: "1", xl: "span 2" } , height: "fit-content" }}>
+        <RecentOrdersCard
+          sx={{ gridColumn: { xs: "1", xl: "span 2" }, height: "fit-content" }}
+        >
           <CardHeader>
-            <Typography variant="h6" sx={{ fontWeight: 800, color: designPalette.primary }}>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: 800, color: designPalette.primary }}
+            >
               Recent Orders
             </Typography>
-            <LinkButton variant="text">
-              See all orders
-            </LinkButton>
+            <LinkButton variant="text">See all orders</LinkButton>
           </CardHeader>
           <TableContainer component="div">
             <Table size="medium">
@@ -584,19 +684,35 @@ export function DashboardPage() {
                       hover
                       sx={{
                         cursor: "pointer",
-                        "&:hover": { backgroundColor: designPalette.surfaceHighest },
+                        "&:hover": {
+                          backgroundColor: designPalette.surfaceHighest,
+                        },
                       }}
                     >
-                      <BodyCell sx={{ fontWeight: 700, color: designPalette.primary }}>
+                      <BodyCell
+                        sx={{ fontWeight: 700, color: designPalette.primary }}
+                      >
                         {order.orderNumber}
                       </BodyCell>
                       <BodyCell>
-                        <Stack direction="row" spacing={1.5} alignItems="center">
-                          <RecentAvatar sx={{ bgcolor: avatarStyle.bg, color: avatarStyle.color }}>
-                            {getInitials(customerLookup.get(order.customerId) ?? "NA")}
+                        <Stack
+                          direction="row"
+                          spacing={1.5}
+                          alignItems="center"
+                        >
+                          <RecentAvatar
+                            sx={{
+                              bgcolor: avatarStyle.bg,
+                              color: avatarStyle.color,
+                            }}
+                          >
+                            {getInitials(
+                              customerLookup.get(order.customerId) ?? "NA",
+                            )}
                           </RecentAvatar>
                           <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                            {customerLookup.get(order.customerId) ?? "Unknown customer"}
+                            {customerLookup.get(order.customerId) ??
+                              "Unknown customer"}
                           </Typography>
                         </Stack>
                       </BodyCell>
@@ -619,7 +735,10 @@ export function DashboardPage() {
 
         <Stack spacing={3}>
           <SectionCard sx={{ backgroundColor: designPalette.surfaceLow }}>
-            <Typography variant="h6" sx={{ fontWeight: 800, color: designPalette.primary, mb: 1.5 }}>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: 800, color: designPalette.primary, mb: 1.5 }}
+            >
               <Stack direction="row" spacing={1} alignItems="center">
                 <WarningAmberRoundedIcon sx={{ color: designPalette.error }} />
                 Low Stock Products
@@ -628,20 +747,33 @@ export function DashboardPage() {
             <CardStack>
               {lowStockProducts.map((product) => (
                 <LowStockItem key={product.id} elevation={0}>
-                  <Stack direction="row" justifyContent="space-between" alignItems="center">
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
                     <Box>
                       <Typography variant="body2" sx={{ fontWeight: 700 }}>
                         {product.name}
                       </Typography>
-                      <Typography variant="caption" sx={{ color: designPalette.muted }}>
+                      <Typography
+                        variant="caption"
+                        sx={{ color: designPalette.muted }}
+                      >
                         SKU: {product.sku}
                       </Typography>
                     </Box>
                     <Box sx={{ textAlign: "right" }}>
-                      <Typography variant="body2" sx={{ fontWeight: 700, color: designPalette.error }}>
+                      <Typography
+                        variant="body2"
+                        sx={{ fontWeight: 700, color: designPalette.error }}
+                      >
                         {product.stockQuantity} left
                       </Typography>
-                      <Button size="small" sx={{ fontWeight: 800, color: designPalette.primary }}>
+                      <Button
+                        size="small"
+                        sx={{ fontWeight: 800, color: designPalette.primary }}
+                      >
                         Restock
                       </Button>
                     </Box>
@@ -652,10 +784,16 @@ export function DashboardPage() {
           </SectionCard>
 
           <SectionCard>
-            <Typography variant="h6" sx={{ fontWeight: 800, color: designPalette.primary, mb: 2 }}>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: 800, color: designPalette.primary, mb: 2 }}
+            >
               Top Customers & Products
             </Typography>
-            <Typography variant="subtitle2" sx={{ color: designPalette.muted, mb: 1 }}>
+            <Typography
+              variant="subtitle2"
+              sx={{ color: designPalette.muted, mb: 1 }}
+            >
               Top Customers
             </Typography>
             <CardStack>
@@ -665,20 +803,14 @@ export function DashboardPage() {
                   direction="row"
                   spacing={2}
                   alignItems="center"
-                  sx={{ p: 1.5, borderRadius: 10, bgcolor: designPalette.surfaceLow }}
+                  sx={{
+                    p: 1.5,
+                    borderRadius: 10,
+                    bgcolor: designPalette.surfaceLow,
+                  }}
                 >
-                  <Avatar sx={{ bgcolor: designPalette.surface, color: designPalette.primary }}>
-                    {getInitials(item.companyName)}
-                  </Avatar>
-                  <Box sx={{ flex: 1 }}>
-                    <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                      {item.companyName}
-                    </Typography>
-                    <Typography variant="caption" sx={{ color: designPalette.muted }}>
-                      Orders: {customerOrderCount.get(item.customerId) ?? 0}
-                    </Typography>
-                  </Box>
-                  <Typography variant="body2" sx={{ fontWeight: 800, color: designPalette.primary }}>
+                  <Typography variant="body2">{item.name}</Typography>
+                  <Typography variant="body2" sx={{ fontWeight: 700 }}>
                     <CurrencyText value={item.totalSales} />
                   </Typography>
                 </Stack>
@@ -687,7 +819,10 @@ export function DashboardPage() {
 
             <Divider sx={{ my: 2, borderColor: designPalette.outline }} />
 
-            <Typography variant="subtitle2" sx={{ color: designPalette.muted, mb: 1 }}>
+            <Typography
+              variant="subtitle2"
+              sx={{ color: designPalette.muted, mb: 1 }}
+            >
               Top Products
             </Typography>
             <CardStack>
@@ -697,20 +832,35 @@ export function DashboardPage() {
                   direction="row"
                   spacing={2}
                   alignItems="center"
-                  sx={{ p: 1.25, borderRadius: 10, bgcolor: designPalette.surfaceLow }}
+                  sx={{
+                    p: 1.25,
+                    borderRadius: 10,
+                    bgcolor: designPalette.surfaceLow,
+                  }}
                 >
-                  <Avatar sx={{ bgcolor: designPalette.surface, color: designPalette.secondary }}>
+                  <Avatar
+                    sx={{
+                      bgcolor: designPalette.surface,
+                      color: designPalette.secondary,
+                    }}
+                  >
                     {getInitials(item.name)}
                   </Avatar>
                   <Box sx={{ flex: 1 }}>
                     <Typography variant="body2" sx={{ fontWeight: 700 }}>
                       {item.name}
                     </Typography>
-                    <Typography variant="caption" sx={{ color: designPalette.muted }}>
+                    <Typography
+                      variant="caption"
+                      sx={{ color: designPalette.muted }}
+                    >
                       Revenue leader
                     </Typography>
                   </Box>
-                  <Typography variant="body2" sx={{ fontWeight: 800, color: designPalette.primary }}>
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: 800, color: designPalette.primary }}
+                  >
                     <CurrencyText value={item.revenue} />
                   </Typography>
                 </Stack>

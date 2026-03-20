@@ -130,82 +130,25 @@ const normalizeOrderProducts = (canonicalRows, compatibilityRows) => {
     });
 };
 
-const normalizeCustomerProducts = (canonicalRows, discounts, products) => {
-  const productById = new Map(products.map((product) => [product.id, product]));
-  const productsByCategory = new Map();
+const normalizeCustomerProducts = (canonicalRows, compatibilityRows) => {
+  const sourceRows =
+    Array.isArray(canonicalRows) && canonicalRows.length > 0
+      ? canonicalRows
+      : compatibilityRows;
 
-  for (const product of products) {
-    const list = productsByCategory.get(product.categoryId) ?? [];
-    list.push(product);
-    productsByCategory.set(product.categoryId, list);
-  }
-
-  if (Array.isArray(canonicalRows) && canonicalRows.length > 0) {
-    return uniqueBy(
-      canonicalRows
-        .filter((row) => (row?.customerId ?? row?.customer_id) && (row?.productId ?? row?.product_id))
-        .map((row) => ({
-          customerId: row.customerId ?? row.customer_id,
-          productId: row.productId ?? row.product_id,
-          discountPercent: numeric(row.discountPercent ?? row.discount_percent ?? row.value, 0),
-          startDate: row.startDate ?? row.start_date ?? null,
-          endDate: row.endDate ?? row.end_date ?? null,
-          isActive: boolToSql(row.isActive ?? row.is_active, true),
-        })),
-      (row) => `${row.customerId}::${row.productId}`,
-    );
-  }
-
-  const rows = [];
-  const sortedDiscounts = [...(discounts ?? [])].sort((a, b) => {
-    if ((a.scopeType ?? "") === (b.scopeType ?? "")) return 0;
-    return (a.scopeType ?? "") === "product" ? -1 : 1;
-  });
-
-  for (const discount of sortedDiscounts) {
-    const customerId = discount.customerId ?? discount.customer_id;
-    const scopeType = discount.scopeType ?? discount.scope_type;
-    const scopeId = discount.scopeId ?? discount.scope_id;
-    if (!customerId || !scopeType || !scopeId) continue;
-
-    const resolvePercent = (productId) => {
-      const discountType = discount.discountType ?? discount.discount_type ?? "percentage";
-      const value = numeric(discount.value, 0);
-      if (discountType === "percentage") return value;
-
-      const product = productById.get(productId);
-      const basePrice = numeric(product?.basePrice, 0);
-      if (basePrice <= 0) return 0;
-      return (value / basePrice) * 100;
-    };
-
-    if (scopeType === "product") {
-      rows.push({
-        customerId,
-        productId: scopeId,
-        discountPercent: resolvePercent(scopeId),
-        startDate: discount.startDate ?? discount.start_date ?? null,
-        endDate: discount.endDate ?? discount.end_date ?? null,
-        isActive: boolToSql(discount.isActive ?? discount.is_active ?? discount.status === "active", true),
-      });
-      continue;
-    }
-
-    if (scopeType === "category") {
-      for (const product of productsByCategory.get(scopeId) ?? []) {
-        rows.push({
-          customerId,
-          productId: product.id,
-          discountPercent: resolvePercent(product.id),
-          startDate: discount.startDate ?? discount.start_date ?? null,
-          endDate: discount.endDate ?? discount.end_date ?? null,
-          isActive: boolToSql(discount.isActive ?? discount.is_active ?? discount.status === "active", true),
-        });
-      }
-    }
-  }
-
-  return uniqueBy(rows, (row) => `${row.customerId}::${row.productId}`);
+  return uniqueBy(
+    (sourceRows ?? [])
+      .filter((row) => (row?.customerId ?? row?.customer_id) && (row?.productId ?? row?.product_id))
+      .map((row) => ({
+        customerId: row.customerId ?? row.customer_id,
+        productId: row.productId ?? row.product_id,
+        discountPercent: numeric(row.discountPercent ?? row.discount_percent, 0),
+        startDate: row.startDate ?? row.start_date ?? null,
+        endDate: row.endDate ?? row.end_date ?? null,
+        isActive: boolToSql(row.isActive ?? row.is_active, true),
+      })),
+    (row) => `${row.customerId}::${row.productId}`,
+  );
 };
 
 const normalizeSupplierProducts = (canonicalRows, warehouseProducts) => {
@@ -377,7 +320,7 @@ function deriveSeed(seed) {
   const products = normalizeProducts(seed.products);
   const orders = normalizeOrders(seed.orders).sort(sortDateDesc);
   const orderProducts = normalizeOrderProducts(seed.orderProducts, seed.orderItems);
-  const customerProducts = normalizeCustomerProducts(seed.customerProducts, seed.discounts, products);
+  const customerProducts = normalizeCustomerProducts(seed.customerProducts, seed.discounts);
   const supplierProducts = normalizeSupplierProducts(seed.supplierProducts, seed.warehouseProducts);
   const inventories = normalizeInventories(seed.inventories, seed.warehouseProducts);
   const orderStatusHistories = normalizeOrderStatusHistories(seed.orderStatusHistories, orders, users);

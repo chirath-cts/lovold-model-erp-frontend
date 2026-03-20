@@ -34,14 +34,19 @@ import { createOrderWorkflow } from "@/features/orders/services/createOrderWorkf
 import { queryKeys } from "@/shared/constants/queryKeys";
 import { computeLineTotals } from "@/shared/lib/orderCalculations";
 import { CurrencyText } from "@/shared/ui/CurrencyText";
-import type { Customer, Discount, Order, Product } from "@/shared/types/domain";
+import type {
+  Customer,
+  CustomerProduct,
+  Order,
+  Product,
+} from "@/shared/types/domain";
 
 interface CreateOrderModalProps {
   open: boolean;
   onClose: () => void;
   products: Product[];
   customers: Customer[];
-  discounts: Discount[];
+  customerProducts: CustomerProduct[];
   orders: Order[];
 }
 
@@ -50,7 +55,7 @@ export function CreateOrderModal({
   onClose,
   products,
   customers,
-  discounts,
+  customerProducts,
   orders,
 }: CreateOrderModalProps) {
   const form = useForm<CreateOrderFormValues>({
@@ -87,53 +92,39 @@ export function CreateOrderModal({
     [products],
   );
 
-  const activeDiscounts = useMemo(
+  const activeCustomerProducts = useMemo(
     () =>
-      discounts.filter(
-        (discount) =>
-          discount.customerId === selectedCustomerId && discount.status === "active",
+      customerProducts.filter(
+        (customerProduct) =>
+          customerProduct.customerId === selectedCustomerId &&
+          customerProduct.status === "active",
       ),
-    [discounts, selectedCustomerId],
+    [customerProducts, selectedCustomerId],
   );
 
-  const discountsByProduct = useMemo(() => {
-    const map = new Map<string, Discount>();
-    activeDiscounts.forEach((discount) => {
-      if (discount.scopeType === "product") {
-        map.set(discount.scopeId, discount);
-      }
+  const customerProductsByProduct = useMemo(() => {
+    const map = new Map<string, CustomerProduct>();
+    activeCustomerProducts.forEach((customerProduct) => {
+      map.set(customerProduct.productId, customerProduct);
     });
     return map;
-  }, [activeDiscounts]);
+  }, [activeCustomerProducts]);
 
-  const discountsByCategory = useMemo(() => {
-    const map = new Map<string, Discount>();
-    activeDiscounts.forEach((discount) => {
-      if (discount.scopeType === "category") {
-        map.set(discount.scopeId, discount);
-      }
-    });
-    return map;
-  }, [activeDiscounts]);
-
-  const getDiscountForProduct = useCallback(
+  const getCustomerProductForProduct = useCallback(
     (product?: Product) => {
       if (!product) return undefined;
-      return (
-        discountsByProduct.get(product.id) ??
-        discountsByCategory.get(product.categoryId)
-      );
+      return customerProductsByProduct.get(product.id);
     },
-    [discountsByCategory, discountsByProduct],
+    [customerProductsByProduct],
   );
 
   const applyDiscountToLine = useCallback(
     (lineIndex: number, productId?: string) => {
       const product = productId ? productsById.get(productId) : undefined;
-      const matchedDiscount = getDiscountForProduct(product);
+      const matchedCustomerProduct = getCustomerProductForProduct(product);
 
-      const nextDiscountType = matchedDiscount?.discountType ?? "percentage";
-      const nextDiscountValue = matchedDiscount?.value ?? 0;
+      const nextDiscountType = "percentage";
+      const nextDiscountValue = matchedCustomerProduct?.discountPercent ?? 0;
 
       setValue(`lines.${lineIndex}.discountType`, nextDiscountType, {
         shouldDirty: true,
@@ -142,19 +133,17 @@ export function CreateOrderModal({
         shouldDirty: true,
       });
     },
-    [getDiscountForProduct, productsById, setValue],
+    [getCustomerProductForProduct, productsById, setValue],
   );
 
-  const getMatchingDiscounts = useCallback(
+  const getMatchingCustomerProducts = useCallback(
     (product?: Product) => {
-      if (!product) return [] as Discount[];
-      return activeDiscounts.filter(
-        (discount) =>
-          (discount.scopeType === "product" && discount.scopeId === product.id) ||
-          (discount.scopeType === "category" && discount.scopeId === product.categoryId),
+      if (!product) return [] as CustomerProduct[];
+      return activeCustomerProducts.filter(
+        (customerProduct) => customerProduct.productId === product.id,
       );
     },
-    [activeDiscounts],
+    [activeCustomerProducts],
   );
 
   const previousCustomerIdRef = useRef<string | undefined>(undefined);
@@ -162,8 +151,11 @@ export function CreateOrderModal({
   const previousDiscountSignatureRef = useRef<string>("");
 
   useEffect(() => {
-    const discountSignature = activeDiscounts
-      .map((item) => `${item.id}:${item.discountType}:${item.value}`)
+    const discountSignature = activeCustomerProducts
+      .map(
+        (item) =>
+          `${item.customerId}:${item.productId}:${item.discountPercent}:${item.startDate ?? ""}:${item.endDate ?? ""}:${item.isActive}`,
+      )
       .join("|");
     const discountsChanged = previousDiscountSignatureRef.current !== discountSignature;
     const customerChanged = previousCustomerIdRef.current !== selectedCustomerId;
@@ -182,7 +174,7 @@ export function CreateOrderModal({
     previousProductIdsRef.current = watchedLines.map((line) => line.productId);
     previousDiscountSignatureRef.current = discountSignature;
   }, [
-    activeDiscounts,
+    activeCustomerProducts,
     applyDiscountToLine,
     selectedCustomerId,
     watchedLines,
@@ -232,7 +224,7 @@ export function CreateOrderModal({
         values,
         customers,
         products,
-        discounts,
+        customerProducts,
         existingOrders: orders,
       }),
     onSuccess: () => {
@@ -280,7 +272,7 @@ export function CreateOrderModal({
                   <Select {...field} label="Customer">
                     {customers.map((customer) => (
                       <MenuItem key={customer.id} value={customer.id}>
-                        {customer.companyName}
+                        {customer.name}
                       </MenuItem>
                     ))}
                   </Select>
@@ -321,7 +313,7 @@ export function CreateOrderModal({
 
             {fields.map((field, index) => {
               const selectedProduct = productsById.get(watchedLines[index]?.productId ?? "");
-              const matchingDiscounts = getMatchingDiscounts(selectedProduct);
+              const matchingCustomerProducts = getMatchingCustomerProducts(selectedProduct);
 
               return (
                 <Paper key={field.id} variant="outlined" sx={{ p: 2 }}>
@@ -428,9 +420,12 @@ export function CreateOrderModal({
                     </Typography>
                   </Box>
 
-                  {matchingDiscounts.length > 0 ? (
+                  {matchingCustomerProducts.length > 0 ? (
                     <Typography variant="caption" color="primary" sx={{ mt: 1, display: "block" }}>
-                      Matching active discounts: {matchingDiscounts.map((item) => item.name).join(", ")}
+                      Matching active pricing:{" "}
+                      {matchingCustomerProducts
+                        .map((item) => `${item.discountPercent}%`)
+                        .join(", ")}
                     </Typography>
                   ) : null}
                 </Paper>

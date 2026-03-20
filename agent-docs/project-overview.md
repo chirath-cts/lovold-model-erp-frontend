@@ -204,7 +204,7 @@ Profit model:
 
 Implemented now:
 
-- Customer code/company/contact/country/status
+- Customer code/name/email/phone/address/status
 - Derived order count and total sales
 - Last order date
 
@@ -275,6 +275,16 @@ Supported query behavior (current):
 - Filtering: `status`, `customerId`, `categoryId`, `orderId`
 - Search: `q` (products)
 - Sorting: `_sort`, `_order` with allowlisted sortable columns
+
+Customer pricing API shape:
+
+- `customerId`
+- `productId`
+- `discountPercent`
+- `startDate`
+- `endDate`
+- `isActive`
+- Derived `status`
 
 ## Architecture and Run Modes
 

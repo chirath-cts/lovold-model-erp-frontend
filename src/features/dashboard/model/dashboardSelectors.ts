@@ -10,7 +10,7 @@ export interface DashboardMetrics {
 
 export interface TopCustomer {
   customerId: string;
-  companyName: string;
+  name: string;
   totalSales: number;
 }
 
@@ -43,7 +43,7 @@ export const getTopCustomers = (orders: Order[], customers: Customer[], limit = 
   return [...totals.entries()]
     .map(([customerId, totalSales]) => ({
       customerId,
-      companyName: customerLookup.get(customerId)?.companyName ?? "Unknown",
+      name: customerLookup.get(customerId)?.name ?? "Unknown",
       totalSales,
     }))
     .sort((a, b) => b.totalSales - a.totalSales)

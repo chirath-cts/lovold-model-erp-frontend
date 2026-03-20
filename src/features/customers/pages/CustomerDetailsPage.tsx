@@ -55,7 +55,7 @@ export function CustomerDetailsPage() {
         <Link component={RouterLink} to="/customers" underline="hover" color="primary" fontWeight={700}>
           Customers
         </Link>
-        <Typography color="text.secondary">{customer.companyName}</Typography>
+        <Typography color="text.secondary">{customer.name}</Typography>
       </Breadcrumbs>
 
       <Card>
@@ -63,22 +63,19 @@ export function CustomerDetailsPage() {
           <Box sx={{ display: "flex", justifyContent: "space-between", gap: 2, flexWrap: "wrap" }}>
             <Box>
               <Typography variant="h1" sx={{ mb: 0.5 }}>
-                {customer.companyName}
+                {customer.name}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {customer.customerCode}
+                Customer Code: {customer.customerCode}
               </Typography>
               <Typography variant="body2" sx={{ mt: 1.5 }}>
-                {customer.contactPerson}
+                {customer.email || "-"}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {customer.email}
+                {customer.phone || "-"}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {customer.phone}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                {customer.address}
+                {customer.address || "-"}
               </Typography>
             </Box>
             <StatusBadge value={customer.status} />
