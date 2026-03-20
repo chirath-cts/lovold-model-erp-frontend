@@ -13,6 +13,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableContainer,
   TableHead,
   TableRow,
   Typography,
@@ -22,6 +23,7 @@ import { styled } from "@mui/material/styles";
 import CalendarTodayRoundedIcon from "@mui/icons-material/CalendarTodayRounded";
 import VerifiedRoundedIcon from "@mui/icons-material/VerifiedRounded";
 import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
+import TrendingFlatRoundedIcon from "@mui/icons-material/TrendingFlatRounded";
 
 import {
   getDashboardMetrics,
@@ -44,10 +46,14 @@ const designPalette = {
   background: "#f4faff",
   surface: "#ffffff",
   surfaceLow: "#e8f6fe",
+  surfaceHighest: "#d7e5ed",
   primary: "#003a4d",
   primaryContainer: "#00526c",
   primaryFixed: "#bfe8ff",
+  secondaryFixed: "#bfe8ff",
+  tertiaryFixed: "#c7e7f9",
   secondary: "#1f6581",
+  tertiary: "#183947",
   outline: "rgba(192, 200, 205, 0.35)",
   muted: "#70787d",
   error: "#ba1a1a",
@@ -146,6 +152,50 @@ const LowStockItem = styled(Paper)(() => ({
   backgroundColor: designPalette.surface,
 }));
 
+const HeadCell = styled(TableCell)(() => ({
+  padding: "16px 24px",
+  fontSize: 10,
+  fontWeight: 800,
+  letterSpacing: 1.4,
+  textTransform: "uppercase",
+  color: designPalette.muted,
+  backgroundColor: designPalette.surfaceLow,
+  borderBottom: "1px solid rgba(192, 200, 205, 0.1)",
+}));
+
+const BodyCell = styled(TableCell)(() => ({
+  padding: "16px 24px",
+  borderBottom: "1px solid rgba(192, 200, 205, 0.1)",
+}));
+
+const RecentAvatar = styled(Avatar)(() => ({
+  width: 32,
+  height: 32,
+  fontSize: 10,
+  fontWeight: 700,
+}));
+
+const RecentOrdersCard = styled(SectionCard)(() => ({
+  boxShadow: "0px 4px 20px rgba(0, 58, 77, 0.03)",
+  overflow: "hidden",
+  padding: 0,
+}));
+
+const CardHeader = styled(Box)(() => ({
+  padding: "20px 24px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+}));
+
+const LinkButton = styled(Button)(() => ({
+  color: designPalette.primary,
+  fontWeight: 700,
+  textDecoration: "underline",
+  textUnderlineOffset: 4,
+  textTransform: "none",
+}));
+
 const KpiValue = styled(Typography)(() => ({
   fontSize: 24,
   fontWeight: 800,
@@ -212,6 +262,14 @@ const statusColor = (status: string) => {
   if (normalized === "confirmed") return "#9eddfd";
   return "rgba(64, 72, 76, 0.45)";
 };
+
+const avatarSwatches = [
+  { bg: designPalette.primaryFixed, color: designPalette.primary },
+  { bg: designPalette.secondaryFixed, color: designPalette.secondary },
+  { bg: designPalette.tertiaryFixed, color: designPalette.tertiary },
+];
+
+const getAvatarStyle = (index: number) => avatarSwatches[index % avatarSwatches.length];
 
 export function DashboardPage() {
   const ordersQuery = useOrders();
@@ -401,8 +459,8 @@ export function DashboardPage() {
           gridTemplateColumns: { xs: "1fr", xl: "repeat(3, minmax(0, 1fr))" },
         }}
       >
-        <SectionCard sx={{ gridColumn: { xs: "1", xl: "span 2" } }}>
-          <SectionHeader>
+        <SectionCard sx={{ gridColumn: { xs: "1", xl: "span 2" }, p: 4 }}>
+          <SectionHeader sx={{ mb: 3 }}>
             <Box>
               <Typography variant="h6" sx={{ fontWeight: 800, color: designPalette.primary }}>
                 Sales Trend
@@ -411,21 +469,36 @@ export function DashboardPage() {
                 Revenue performance over time
               </Typography>
             </Box>
-            <Button variant="text" sx={{ color: designPalette.primary, fontWeight: 700 }}>
+            <Button
+              variant="text"
+              sx={{ color: designPalette.primary, fontWeight: 700 }}
+              endIcon={<TrendingFlatRoundedIcon fontSize="small" />}
+            >
               View report
             </Button>
           </SectionHeader>
           <Box sx={{ height: 280 }}>
             <LineChart
               height={260}
-              xAxis={[{ scaleType: "point", data: salesTrendPoints.map((item) => item.name) }]}
+              xAxis={[
+                {
+                  scaleType: "point",
+                  data: salesTrendPoints.map((item) => item.name),
+                  tickLabelStyle: { fontSize: 10, fill: designPalette.muted, fontWeight: 700 },
+                },
+              ]}
               series={[
                 {
                   data: salesTrendPoints.map((item) => item.sales),
                   label: "Sales",
                   color: designPalette.primary,
+                  area: true,
+                  showMark: true,
                 },
               ]}
+              slotProps={{
+                area: { style: { fill: "rgba(255, 255, 255, 0.12)" } },
+              }}
               margin={{ top: 16, right: 16, left: 20, bottom: 24 }}
             />
           </Box>
@@ -482,68 +555,67 @@ export function DashboardPage() {
           gridTemplateColumns: { xs: "1fr", xl: "repeat(3, minmax(0, 1fr))" },
         }}
       >
-        <SectionCard sx={{ gridColumn: { xs: "1", xl: "span 2" }, overflow: "hidden" }}>
-          <SectionHeader sx={{ mb: 1.5 }}>
+        <RecentOrdersCard sx={{ gridColumn: { xs: "1", xl: "span 2" } , height: "fit-content" }}>
+          <CardHeader>
             <Typography variant="h6" sx={{ fontWeight: 800, color: designPalette.primary }}>
               Recent Orders
             </Typography>
-            <Button variant="text" sx={{ color: designPalette.primary, fontWeight: 700 }}>
+            <LinkButton variant="text">
               See all orders
-            </Button>
-          </SectionHeader>
-          <Table size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell>
-                  <MutedLabel>ID</MutedLabel>
-                </TableCell>
-                <TableCell>
-                  <MutedLabel>Customer</MutedLabel>
-                </TableCell>
-                <TableCell>
-                  <MutedLabel>Date</MutedLabel>
-                </TableCell>
-                <TableCell>
-                  <MutedLabel>Amount</MutedLabel>
-                </TableCell>
-                <TableCell>
-                  <MutedLabel>Status</MutedLabel>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {recentOrders.map((order) => (
-                <TableRow key={order.id} hover>
-                  <TableCell sx={{ fontWeight: 700, color: designPalette.primary }}>
-                    {order.orderNumber}
-                  </TableCell>
-                  <TableCell>
-                    <Stack direction="row" spacing={1.5} alignItems="center">
-                      <Avatar sx={{ bgcolor: designPalette.surfaceLow, color: designPalette.primary }}>
-                        {getInitials(customerLookup.get(order.customerId) ?? "NA")}
-                      </Avatar>
-                      <Box>
-                        <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                          {customerLookup.get(order.customerId) ?? "Unknown customer"}
-                        </Typography>
-                        <Typography variant="caption" sx={{ color: designPalette.muted }}>
-                          Ref: {order.customerId}
-                        </Typography>
-                      </Box>
-                    </Stack>
-                  </TableCell>
-                  <TableCell sx={{ color: designPalette.muted }}>{formatDate(order.orderDate)}</TableCell>
-                  <TableCell sx={{ fontWeight: 700 }}>
-                    <CurrencyText value={order.grandTotal} />
-                  </TableCell>
-                  <TableCell>
-                    <StatusBadge value={order.status} />
-                  </TableCell>
+            </LinkButton>
+          </CardHeader>
+          <TableContainer component="div">
+            <Table size="medium">
+              <TableHead>
+                <TableRow>
+                  <HeadCell>ID</HeadCell>
+                  <HeadCell>Customer</HeadCell>
+                  <HeadCell>Date</HeadCell>
+                  <HeadCell>Amount</HeadCell>
+                  <HeadCell>Status</HeadCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </SectionCard>
+              </TableHead>
+              <TableBody>
+                {recentOrders.map((order, index) => {
+                  const avatarStyle = getAvatarStyle(index);
+                  return (
+                    <TableRow
+                      key={order.id}
+                      hover
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": { backgroundColor: designPalette.surfaceHighest },
+                      }}
+                    >
+                      <BodyCell sx={{ fontWeight: 700, color: designPalette.primary }}>
+                        {order.orderNumber}
+                      </BodyCell>
+                      <BodyCell>
+                        <Stack direction="row" spacing={1.5} alignItems="center">
+                          <RecentAvatar sx={{ bgcolor: avatarStyle.bg, color: avatarStyle.color }}>
+                            {getInitials(customerLookup.get(order.customerId) ?? "NA")}
+                          </RecentAvatar>
+                          <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                            {customerLookup.get(order.customerId) ?? "Unknown customer"}
+                          </Typography>
+                        </Stack>
+                      </BodyCell>
+                      <BodyCell sx={{ color: designPalette.muted }}>
+                        {formatDate(order.orderDate)}
+                      </BodyCell>
+                      <BodyCell sx={{ fontWeight: 700 }}>
+                        <CurrencyText value={order.grandTotal} />
+                      </BodyCell>
+                      <BodyCell>
+                        <StatusBadge value={order.status} />
+                      </BodyCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </RecentOrdersCard>
 
         <Stack spacing={3}>
           <SectionCard sx={{ backgroundColor: designPalette.surfaceLow }}>
