@@ -1,13 +1,29 @@
-import { BarChart } from "@mui/x-charts/BarChart";
+import type { ReactNode } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 import {
+  Avatar,
   Box,
-  List,
-  ListItemText,
+  Button,
+  Chip,
+  Divider,
+  IconButton,
+  LinearProgress,
   Paper,
   Stack,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
   Typography,
 } from "@mui/material";
+import type { SxProps } from "@mui/material";
+import { styled } from "@mui/material/styles";
+import CalendarTodayRoundedIcon from "@mui/icons-material/CalendarTodayRounded";
+import VerifiedRoundedIcon from "@mui/icons-material/VerifiedRounded";
+import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
+import TrendingFlatRoundedIcon from "@mui/icons-material/TrendingFlatRounded";
 
 import {
   getDashboardMetrics,
@@ -23,10 +39,246 @@ import {
 import { formatDate } from "@/shared/lib/format";
 import { CurrencyText } from "@/shared/ui/CurrencyText";
 import { ErrorState } from "@/shared/ui/ErrorState";
-import { KpiCard } from "@/shared/ui/KpiCard";
 import { LoadingState } from "@/shared/ui/LoadingState";
-import { MetricPanel } from "@/shared/ui/MetricPanel";
 import { StatusBadge } from "@/shared/ui/StatusBadge";
+
+const designPalette = {
+  background: "#f4faff",
+  surface: "#ffffff",
+  surfaceLow: "#e8f6fe",
+  surfaceHighest: "#d7e5ed",
+  primary: "#003a4d",
+  primaryContainer: "#00526c",
+  primaryFixed: "#bfe8ff",
+  secondaryFixed: "#bfe8ff",
+  tertiaryFixed: "#c7e7f9",
+  secondary: "#1f6581",
+  tertiary: "#183947",
+  outline: "rgba(192, 200, 205, 0.35)",
+  muted: "#70787d",
+  error: "#ba1a1a",
+};
+
+const PageContainer = styled(Stack)(({ theme }) => ({
+  backgroundColor: designPalette.background,
+  minHeight: "100vh",
+  padding: theme.spacing(3),
+  gap: theme.spacing(3),
+}));
+
+const SectionCard = styled(Paper)(({ theme }) => ({
+  backgroundColor: designPalette.surface,
+  borderRadius: 16,
+  boxShadow: "0px 10px 30px rgba(0, 58, 77, 0.06)",
+  padding: theme.spacing(3),
+}));
+
+const KpiCardSurface = styled(SectionCard)(() => ({
+  display: "flex",
+  flexDirection: "column",
+  gap: 12,
+  height: "100%",
+}));
+
+const SectionHeader = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  gap: theme.spacing(1.5),
+  marginBottom: theme.spacing(2),
+}));
+
+const RangeGroup = styled(Box)(() => ({
+  display: "flex",
+  alignItems: "center",
+  gap: 12,
+  padding: 4,
+  backgroundColor: designPalette.surfaceLow,
+  borderRadius: 12,
+}));
+
+const RangeButton = styled(Button)(() => ({
+  textTransform: "none",
+  fontWeight: 600,
+  fontSize: 14,
+  borderRadius: 8,
+  padding: "8px 16px",
+  minHeight: "auto",
+  boxShadow: "none",
+}));
+
+const IconFrame = styled(IconButton)(() => ({
+  padding: 8,
+  backgroundColor: "transparent",
+  color: designPalette.muted,
+  boxShadow: "none",
+  "&:hover": {
+    color: designPalette.primary,
+    backgroundColor: "transparent",
+  },
+}));
+
+const MutedLabel = styled(Typography)(() => ({
+  fontSize: 10,
+  fontWeight: 800,
+  letterSpacing: 1.4,
+  textTransform: "uppercase",
+  color: designPalette.muted,
+}));
+
+const Pill = styled(Chip)(() => ({
+  height: 22,
+  borderRadius: 8,
+  fontWeight: 700,
+  fontSize: 10,
+}));
+
+const DistributionBar = styled(LinearProgress)(() => ({
+  height: 8,
+  borderRadius: 999,
+  backgroundColor: "rgba(31, 101, 129, 0.14)",
+  "& .MuiLinearProgress-bar": {
+    borderRadius: 999,
+  },
+}));
+
+const CardStack = styled(Stack)(({ theme }) => ({
+  gap: theme.spacing(2),
+}));
+
+const LowStockItem = styled(Paper)(() => ({
+  padding: 12,
+  borderRadius: 10,
+  backgroundColor: designPalette.surface,
+}));
+
+const HeadCell = styled(TableCell)(() => ({
+  padding: "16px 24px",
+  fontSize: 10,
+  fontWeight: 800,
+  letterSpacing: 1.4,
+  textTransform: "uppercase",
+  color: designPalette.muted,
+  backgroundColor: designPalette.surfaceLow,
+  borderBottom: "1px solid rgba(192, 200, 205, 0.1)",
+}));
+
+const BodyCell = styled(TableCell)(() => ({
+  padding: "16px 24px",
+  borderBottom: "1px solid rgba(192, 200, 205, 0.1)",
+}));
+
+const RecentAvatar = styled(Avatar)(() => ({
+  width: 32,
+  height: 32,
+  fontSize: 10,
+  fontWeight: 700,
+}));
+
+const RecentOrdersCard = styled(SectionCard)(() => ({
+  boxShadow: "0px 4px 20px rgba(0, 58, 77, 0.03)",
+  overflow: "hidden",
+  padding: 0,
+}));
+
+const CardHeader = styled(Box)(() => ({
+  padding: "20px 24px",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+}));
+
+const LinkButton = styled(Button)(() => ({
+  color: designPalette.primary,
+  fontWeight: 700,
+  textDecoration: "underline",
+  textUnderlineOffset: 4,
+  textTransform: "none",
+}));
+
+const KpiValue = styled(Typography)(() => ({
+  fontSize: 24,
+  fontWeight: 800,
+  lineHeight: 1.2,
+  color: designPalette.primary,
+  fontFamily: "'Manrope','Inter',sans-serif",
+}));
+
+const KpiHelper = styled(Typography)(() => ({
+  fontSize: 12,
+  fontWeight: "normal",
+  color: "#70787d",
+  fontFamily: "'Inter',sans-serif",
+  marginTop: 4,
+  display: "block",
+}));
+
+interface DashboardKpiCardProps {
+  label: string;
+  value: ReactNode;
+  badge?: { label: string; color: string; textColor?: string };
+  helper?: string;
+  cardSx?: SxProps;
+}
+
+function DashboardKpiCard({
+  label,
+  value,
+  badge,
+  helper,
+  cardSx,
+}: DashboardKpiCardProps) {
+  return (
+    <KpiCardSurface sx={cardSx}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+        }}
+      >
+        <MutedLabel>{label}</MutedLabel>
+        {badge ? (
+          <Pill
+            size="small"
+            label={badge.label}
+            sx={{ bgcolor: badge.color, color: badge.textColor ?? "#ffffff" }}
+          />
+        ) : null}
+      </Box>
+      <Box sx={{ mt: 2 }}>
+        <KpiValue>{value}</KpiValue>
+        {helper ? <KpiHelper variant="caption">{helper}</KpiHelper> : null}
+      </Box>
+    </KpiCardSurface>
+  );
+}
+
+const getInitials = (text: string) =>
+  text
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
+
+const statusColor = (status: string) => {
+  const normalized = status.toLowerCase();
+  if (normalized === "delivered") return designPalette.primary;
+  if (normalized === "dispatched") return designPalette.secondary;
+  if (normalized === "confirmed") return "#9eddfd";
+  return "rgba(64, 72, 76, 0.45)";
+};
+
+const avatarSwatches = [
+  { bg: designPalette.primaryFixed, color: designPalette.primary },
+  { bg: designPalette.secondaryFixed, color: designPalette.secondary },
+  { bg: designPalette.tertiaryFixed, color: designPalette.tertiary },
+];
+
+const getAvatarStyle = (index: number) =>
+  avatarSwatches[index % avatarSwatches.length];
 
 export function DashboardPage() {
   const ordersQuery = useOrders();
@@ -61,12 +313,18 @@ export function DashboardPage() {
 
   const salesTrend = orders
     .slice()
-    .sort((a, b) => new Date(a.orderDate).getTime() - new Date(b.orderDate).getTime())
+    .sort(
+      (a, b) =>
+        new Date(a.orderDate).getTime() - new Date(b.orderDate).getTime(),
+    )
     .map((order) => ({
       name: formatDate(order.orderDate),
       sales: order.grandTotal,
     }))
     .slice(-10);
+  const salesTrendPoints = salesTrend.length
+    ? salesTrend
+    : [{ name: "No data", sales: 0 }];
 
   const statusMap = new Map<string, number>();
   orders.forEach((order) =>
@@ -77,28 +335,113 @@ export function DashboardPage() {
     count,
   }));
 
+  const totalOrderCount = orders.length || 1;
+  const orderStatusDistribution = orderStatusData.map(({ status, count }) => ({
+    status,
+    count,
+    percent: Math.round((count / totalOrderCount) * 100),
+    color: statusColor(status),
+  }));
+
+  const fulfilledStatuses = new Set(["delivered", "dispatched"]);
+  const fulfillmentRate = orders.length
+    ? Math.round(
+        (orders.filter((order) => fulfilledStatuses.has(order.status)).length /
+          orders.length) *
+          1000,
+      ) / 10
+    : 0;
+
   const topCustomers = getTopCustomers(orders, customers);
   const topProducts = getTopProducts(orderItems, products);
+  const customerOrderCount = orders.reduce((map, order) => {
+    map.set(order.customerId, (map.get(order.customerId) ?? 0) + 1);
+    return map;
+  }, new Map<string, number>());
   const lowStockProducts = products
     .filter((product) => product.stockQuantity <= product.reorderLevel)
     .sort((a, b) => a.stockQuantity - b.stockQuantity)
     .slice(0, 6);
 
-  const recentOrders = orders.slice(0, 6);
+  const recentOrders = orders
+    .slice()
+    .sort(
+      (a, b) =>
+        new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime(),
+    )
+    .slice(0, 6);
+
+  const customerLookup = new Map(
+    customers.map((customer) => [customer.id, customer.companyName]),
+  );
 
   return (
-    <Stack spacing={3}>
-      <Box>
-        <Typography variant="h1">Enterprise Overview</Typography>
-        <Typography variant="body2" color="text.secondary">
-          Real-time operational and sales visibility for Lovold.
-        </Typography>
-      </Box>
+    <PageContainer>
+      <Stack
+        direction={{ xs: "column", md: "row" }}
+        spacing={2}
+        justifyContent="space-between"
+        alignItems={{ xs: "flex-start", md: "center" }}
+      >
+        <Box>
+          <Typography
+            variant="h3"
+            sx={{ fontWeight: 800, color: designPalette.primary }}
+          >
+            Enterprise Overview
+          </Typography>
+          <Typography variant="body2" sx={{ color: designPalette.muted }}>
+            Real-time performance metrics for aquaculture logistics.
+          </Typography>
+        </Box>
+
+        <RangeGroup>
+          <RangeButton
+            variant="contained"
+            disableElevation
+            sx={{
+              bgcolor: designPalette.surface,
+              color: designPalette.primary,
+              boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.12)",
+            }}
+          >
+            Today
+          </RangeButton>
+          <RangeButton
+            variant="text"
+            color="inherit"
+            sx={{
+              color: designPalette.muted,
+              "&:hover": { color: designPalette.primary },
+            }}
+          >
+            Week
+          </RangeButton>
+          <RangeButton
+            variant="text"
+            color="inherit"
+            sx={{
+              color: designPalette.muted,
+              "&:hover": { color: designPalette.primary },
+            }}
+          >
+            Month
+          </RangeButton>
+          <Divider
+            flexItem
+            orientation="vertical"
+            sx={{ opacity: 0.4, height: 16 }}
+          />
+          <IconFrame size="small">
+            <CalendarTodayRoundedIcon fontSize="small" />
+          </IconFrame>
+        </RangeGroup>
+      </Stack>
 
       <Box
         sx={{
           display: "grid",
-          gap: 2,
+          gap: 2.5,
           gridTemplateColumns: {
             xs: "1fr",
             sm: "repeat(2, minmax(0, 1fr))",
@@ -106,50 +449,60 @@ export function DashboardPage() {
           },
         }}
       >
-        <KpiCard
+        <DashboardKpiCard
           label="Total Sales"
           value={<CurrencyText value={metrics.totalSales} />}
-          tone="accent"
+          badge={{
+            label: "+12%",
+            color: designPalette.primaryFixed,
+            textColor: designPalette.primaryContainer,
+          }}
+          helper="vs. last period"
+          cardSx={{
+            boxShadow: "0px 4px 20px rgba(0, 58, 77, 0.03)",
+            backgroundColor: designPalette.surface,
+          }}
         />
-        <KpiCard label="Total Orders" value={metrics.totalOrders} />
-        <KpiCard
+        <DashboardKpiCard
+          label="Total Orders"
+          value={metrics.totalOrders}
+          badge={{
+            label: "Ops",
+            color: designPalette.surfaceLow,
+            textColor: designPalette.primary,
+          }}
+          helper="All statuses"
+        />
+        <DashboardKpiCard
           label="Estimated Profit"
           value={<CurrencyText value={metrics.profitTotal} />}
+          badge={{
+            label: "Stable",
+            color: "#9eddfd",
+            textColor: designPalette.primary,
+          }}
+          helper="Aggregate profit"
         />
-        <KpiCard label="Low Stock" value={metrics.lowStockCount} tone="warn" />
-        <KpiCard label="Active Customers" value={metrics.activeCustomers} />
-      </Box>
-
-      <Box
-        sx={{
-          display: "grid",
-          gap: 3,
-          gridTemplateColumns: { xs: "1fr", xl: "repeat(2, minmax(0, 1fr))" },
-        }}
-      >
-        <MetricPanel title="Sales Trend">
-          <LineChart
-            height={260}
-            xAxis={[{ scaleType: "point", data: salesTrend.map((item) => item.name) }]}
-            series={[
-              {
-                data: salesTrend.map((item) => item.sales),
-                label: "Sales",
-                color: "#00526C",
-              },
-            ]}
-            margin={{ top: 16, right: 16, left: 20, bottom: 24 }}
-          />
-        </MetricPanel>
-
-        <MetricPanel title="Orders by Status">
-          <BarChart
-            height={260}
-            xAxis={[{ scaleType: "band", data: orderStatusData.map((item) => item.status) }]}
-            series={[{ data: orderStatusData.map((item) => item.count), color: "#1f6581" }]}
-            margin={{ top: 16, right: 16, left: 20, bottom: 24 }}
-          />
-        </MetricPanel>
+        <DashboardKpiCard
+          label="Low Stock"
+          value={metrics.lowStockCount}
+          badge={{
+            label: "Action",
+            color: "#ffdad6",
+            textColor: designPalette.error,
+          }}
+          helper="At/below reorder level"
+        />
+        <DashboardKpiCard
+          label="Active Customers"
+          value={metrics.activeCustomers}
+          badge={{
+            label: "CRM",
+            color: "#d7e5ed",
+            textColor: designPalette.primary,
+          }}
+          helper="Status: active"
+        />
       </Box>
 
       <Box
@@ -159,104 +512,363 @@ export function DashboardPage() {
           gridTemplateColumns: { xs: "1fr", xl: "repeat(3, minmax(0, 1fr))" },
         }}
       >
-        <MetricPanel title="Recent Orders">
-          <List disablePadding>
-            {recentOrders.map((order) => (
-              <Paper
-                key={order.id}
-                variant="outlined"
-                sx={{
-                  p: 1.5,
-                  mb: 1,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                }}
+        <SectionCard sx={{ gridColumn: { xs: "1", xl: "span 2" }, p: 4 }}>
+          <SectionHeader sx={{ mb: 3 }}>
+            <Box>
+              <Typography
+                variant="h6"
+                sx={{ fontWeight: 800, color: designPalette.primary }}
               >
-                <ListItemText
-                  primary={
-                    <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                      {order.orderNumber}
-                    </Typography>
-                  }
-                  secondary={formatDate(order.orderDate)}
-                  sx={{ m: 0 }}
-                />
-                <Box sx={{ textAlign: "right" }}>
-                  <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                    <CurrencyText value={order.grandTotal} />
+                Sales Trend
+              </Typography>
+              <Typography variant="body2" sx={{ color: designPalette.muted }}>
+                Revenue performance over time
+              </Typography>
+            </Box>
+            <Button
+              variant="text"
+              sx={{ color: designPalette.primary, fontWeight: 700 }}
+              endIcon={<TrendingFlatRoundedIcon fontSize="small" />}
+            >
+              View report
+            </Button>
+          </SectionHeader>
+          <Box sx={{ height: 280 }}>
+            <LineChart
+              height={260}
+              xAxis={[
+                {
+                  scaleType: "point",
+                  data: salesTrendPoints.map((item) => item.name),
+                  tickLabelStyle: {
+                    fontSize: 10,
+                    fill: designPalette.muted,
+                    fontWeight: 700,
+                  },
+                },
+              ]}
+              series={[
+                {
+                  data: salesTrendPoints.map((item) => item.sales),
+                  label: "Sales",
+                  color: designPalette.primary,
+                  area: true,
+                  showMark: true,
+                },
+              ]}
+              slotProps={{
+                area: { style: { fill: "rgba(255, 255, 255, 0.12)" } },
+              }}
+              margin={{ top: 16, right: 16, left: 20, bottom: 24 }}
+            />
+          </Box>
+        </SectionCard>
+
+        <SectionCard>
+          <Typography
+            variant="h6"
+            sx={{ fontWeight: 800, color: designPalette.primary, mb: 0.5 }}
+          >
+            Order Distribution
+          </Typography>
+          <Typography
+            variant="body2"
+            sx={{ color: designPalette.muted, mb: 2 }}
+          >
+            Current status breakdown
+          </Typography>
+          <CardStack>
+            {orderStatusDistribution.map((item) => (
+              <Box key={item.status}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    mb: 0.5,
+                  }}
+                >
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: 700, color: designPalette.primary }}
+                  >
+                    {item.status}
                   </Typography>
-                  <StatusBadge value={order.status} />
+                  <Typography
+                    variant="body2"
+                    sx={{ color: designPalette.muted }}
+                  >
+                    {item.count}
+                  </Typography>
                 </Box>
-              </Paper>
+                <DistributionBar
+                  variant="determinate"
+                  value={item.percent}
+                  sx={{
+                    "& .MuiLinearProgress-bar": { backgroundColor: item.color },
+                  }}
+                />
+              </Box>
             ))}
-          </List>
-        </MetricPanel>
-
-        <MetricPanel title="Low Stock Products">
-          <List disablePadding>
-            {lowStockProducts.map((product) => (
-              <Paper
-                key={product.id}
-                variant="outlined"
+          </CardStack>
+          <Box
+            sx={{
+              mt: 3,
+              pt: 2,
+              borderTop: `1px solid ${designPalette.outline}`,
+            }}
+          >
+            <Stack direction="row" spacing={2} alignItems="center">
+              <Avatar
                 sx={{
-                  p: 1.5,
-                  mb: 1,
-                  borderColor: "warning.light",
-                  bgcolor: "rgba(255, 208, 129, 0.12)",
+                  bgcolor: "rgba(31,101,129,0.12)",
+                  color: designPalette.secondary,
                 }}
               >
-                <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                  {product.name}
+                <VerifiedRoundedIcon fontSize="small" />
+              </Avatar>
+              <Box>
+                <Typography
+                  variant="caption"
+                  sx={{ fontWeight: 700, color: designPalette.muted }}
+                >
+                  Fulfillment Rate
                 </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  {product.stockQuantity} in stock / reorder at {product.reorderLevel}
+                <Typography
+                  variant="h5"
+                  sx={{ fontWeight: 800, color: designPalette.primary }}
+                >
+                  {fulfillmentRate.toFixed(1)}%
                 </Typography>
-              </Paper>
-            ))}
-          </List>
-        </MetricPanel>
+              </Box>
+            </Stack>
+          </Box>
+        </SectionCard>
+      </Box>
 
-        <MetricPanel title="Top Customers & Products">
-          <Box>
-            <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1.5 }}>
+      <Box
+        sx={{
+          display: "grid",
+          gap: 3,
+          gridTemplateColumns: { xs: "1fr", xl: "repeat(3, minmax(0, 1fr))" },
+        }}
+      >
+        <RecentOrdersCard
+          sx={{ gridColumn: { xs: "1", xl: "span 2" }, height: "fit-content" }}
+        >
+          <CardHeader>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: 800, color: designPalette.primary }}
+            >
+              Recent Orders
+            </Typography>
+            <LinkButton variant="text">See all orders</LinkButton>
+          </CardHeader>
+          <TableContainer component="div">
+            <Table size="medium">
+              <TableHead>
+                <TableRow>
+                  <HeadCell>ID</HeadCell>
+                  <HeadCell>Customer</HeadCell>
+                  <HeadCell>Date</HeadCell>
+                  <HeadCell>Amount</HeadCell>
+                  <HeadCell>Status</HeadCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {recentOrders.map((order, index) => {
+                  const avatarStyle = getAvatarStyle(index);
+                  return (
+                    <TableRow
+                      key={order.id}
+                      hover
+                      sx={{
+                        cursor: "pointer",
+                        "&:hover": {
+                          backgroundColor: designPalette.surfaceHighest,
+                        },
+                      }}
+                    >
+                      <BodyCell
+                        sx={{ fontWeight: 700, color: designPalette.primary }}
+                      >
+                        {order.orderNumber}
+                      </BodyCell>
+                      <BodyCell>
+                        <Stack
+                          direction="row"
+                          spacing={1.5}
+                          alignItems="center"
+                        >
+                          <RecentAvatar
+                            sx={{
+                              bgcolor: avatarStyle.bg,
+                              color: avatarStyle.color,
+                            }}
+                          >
+                            {getInitials(
+                              customerLookup.get(order.customerId) ?? "NA",
+                            )}
+                          </RecentAvatar>
+                          <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                            {customerLookup.get(order.customerId) ??
+                              "Unknown customer"}
+                          </Typography>
+                        </Stack>
+                      </BodyCell>
+                      <BodyCell sx={{ color: designPalette.muted }}>
+                        {formatDate(order.orderDate)}
+                      </BodyCell>
+                      <BodyCell sx={{ fontWeight: 700 }}>
+                        <CurrencyText value={order.grandTotal} />
+                      </BodyCell>
+                      <BodyCell>
+                        <StatusBadge value={order.status} />
+                      </BodyCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </RecentOrdersCard>
+
+        <Stack spacing={3}>
+          <SectionCard sx={{ backgroundColor: designPalette.surfaceLow }}>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: 800, color: designPalette.primary, mb: 1.5 }}
+            >
+              <Stack direction="row" spacing={1} alignItems="center">
+                <WarningAmberRoundedIcon sx={{ color: designPalette.error }} />
+                Low Stock Products
+              </Stack>
+            </Typography>
+            <CardStack>
+              {lowStockProducts.map((product) => (
+                <LowStockItem key={product.id} elevation={0}>
+                  <Stack
+                    direction="row"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Box>
+                      <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                        {product.name}
+                      </Typography>
+                      <Typography
+                        variant="caption"
+                        sx={{ color: designPalette.muted }}
+                      >
+                        SKU: {product.sku}
+                      </Typography>
+                    </Box>
+                    <Box sx={{ textAlign: "right" }}>
+                      <Typography
+                        variant="body2"
+                        sx={{ fontWeight: 700, color: designPalette.error }}
+                      >
+                        {product.stockQuantity} left
+                      </Typography>
+                      <Button
+                        size="small"
+                        sx={{ fontWeight: 800, color: designPalette.primary }}
+                      >
+                        Restock
+                      </Button>
+                    </Box>
+                  </Stack>
+                </LowStockItem>
+              ))}
+            </CardStack>
+          </SectionCard>
+
+          <SectionCard>
+            <Typography
+              variant="h6"
+              sx={{ fontWeight: 800, color: designPalette.primary, mb: 2 }}
+            >
+              Top Customers & Products
+            </Typography>
+            <Typography
+              variant="subtitle2"
+              sx={{ color: designPalette.muted, mb: 1 }}
+            >
               Top Customers
             </Typography>
-            <List disablePadding sx={{ mb: 2 }}>
+            <CardStack>
               {topCustomers.slice(0, 3).map((item) => (
-                <Paper
+                <Stack
                   key={item.customerId}
-                  variant="outlined"
-                  sx={{ p: 1.5, mb: 1, display: "flex", justifyContent: "space-between" }}
+                  direction="row"
+                  spacing={2}
+                  alignItems="center"
+                  sx={{
+                    p: 1.5,
+                    borderRadius: 10,
+                    bgcolor: designPalette.surfaceLow,
+                  }}
                 >
                   <Typography variant="body2">{item.name}</Typography>
                   <Typography variant="body2" sx={{ fontWeight: 700 }}>
                     <CurrencyText value={item.totalSales} />
                   </Typography>
-                </Paper>
+                </Stack>
               ))}
-            </List>
+            </CardStack>
 
-            <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1.5 }}>
+            <Divider sx={{ my: 2, borderColor: designPalette.outline }} />
+
+            <Typography
+              variant="subtitle2"
+              sx={{ color: designPalette.muted, mb: 1 }}
+            >
               Top Products
             </Typography>
-            <List disablePadding>
+            <CardStack>
               {topProducts.slice(0, 3).map((item) => (
-                <Paper
+                <Stack
                   key={item.productId}
-                  variant="outlined"
-                  sx={{ p: 1.5, mb: 1, display: "flex", justifyContent: "space-between" }}
+                  direction="row"
+                  spacing={2}
+                  alignItems="center"
+                  sx={{
+                    p: 1.25,
+                    borderRadius: 10,
+                    bgcolor: designPalette.surfaceLow,
+                  }}
                 >
-                  <Typography variant="body2">{item.name}</Typography>
-                  <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                  <Avatar
+                    sx={{
+                      bgcolor: designPalette.surface,
+                      color: designPalette.secondary,
+                    }}
+                  >
+                    {getInitials(item.name)}
+                  </Avatar>
+                  <Box sx={{ flex: 1 }}>
+                    <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                      {item.name}
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{ color: designPalette.muted }}
+                    >
+                      Revenue leader
+                    </Typography>
+                  </Box>
+                  <Typography
+                    variant="body2"
+                    sx={{ fontWeight: 800, color: designPalette.primary }}
+                  >
                     <CurrencyText value={item.revenue} />
                   </Typography>
-                </Paper>
+                </Stack>
               ))}
-            </List>
-          </Box>
-        </MetricPanel>
+            </CardStack>
+          </SectionCard>
+        </Stack>
       </Box>
-    </Stack>
+    </PageContainer>
   );
 }

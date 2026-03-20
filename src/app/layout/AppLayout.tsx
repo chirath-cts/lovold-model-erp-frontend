@@ -16,7 +16,7 @@ export function AppLayout() {
       <Box className={styles.mainArea}>
         <Topbar onMenuClick={() => setMobileOpen(true)} />
         <Toolbar sx={{ minHeight: "64px !important" }} />
-        <Box component="main" className={styles.content} sx={{ p: { xs: 2, md: 3, lg: 4 } }}>
+        <Box component="main" className={styles.content} sx={{ p: { xs: 1, md: 1, lg: 1 } }}>
           <Outlet />
         </Box>
       </Box>
