@@ -272,7 +272,7 @@ export function CreateOrderModal({
                   <Select {...field} label="Customer">
                     {customers.map((customer) => (
                       <MenuItem key={customer.id} value={customer.id}>
-                        {customer.companyName}
+                        {customer.name}
                       </MenuItem>
                     ))}
                   </Select>

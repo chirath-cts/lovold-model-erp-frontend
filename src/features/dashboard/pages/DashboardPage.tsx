@@ -229,7 +229,7 @@ export function DashboardPage() {
                   variant="outlined"
                   sx={{ p: 1.5, mb: 1, display: "flex", justifyContent: "space-between" }}
                 >
-                  <Typography variant="body2">{item.companyName}</Typography>
+                  <Typography variant="body2">{item.name}</Typography>
                   <Typography variant="body2" sx={{ fontWeight: 700 }}>
                     <CurrencyText value={item.totalSales} />
                   </Typography>

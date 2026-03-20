@@ -24,15 +24,11 @@ export interface Product {
 export interface Customer {
   id: string;
   customerCode: string;
-  companyName: string;
-  contactPerson: string;
-  country: string;
   name: string;
   email: string;
   phone: string;
   address: string;
   status: EntityStatus;
-  createdAt: string;
 }
 
 export type DiscountType = "percentage" | "fixed";

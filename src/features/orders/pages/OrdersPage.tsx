@@ -62,7 +62,7 @@ export function OrdersPage() {
     return <ErrorState message="Failed to load orders data." />;
   }
 
-  const customerLookup = new Map(customers.map((customer) => [customer.id, customer.companyName]));
+  const customerLookup = new Map(customers.map((customer) => [customer.id, customer.name]));
 
   const totals = {
     revenue: orders.reduce((sum, order) => sum + order.grandTotal, 0),

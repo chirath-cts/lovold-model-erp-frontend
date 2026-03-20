@@ -6,11 +6,11 @@ export function createCustomerRepository(db) {
       const orderClause = buildOrderClause(
         query,
         {
-          companyName: "name",
-          createdAt: "id",
           name: "name",
+          customerCode: "customer_code",
+          status: "status",
         },
-        "companyName",
+        "name",
         "ASC",
       );
 

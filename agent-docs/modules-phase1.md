@@ -91,9 +91,10 @@ Profit behavior:
 ### Customer Directory
 Implemented:
 - Customer code
-- Company
-- Contact
-- Country
+- Name
+- Email
+- Phone
+- Address
 - Status
 - Derived order count
 - Total sales
