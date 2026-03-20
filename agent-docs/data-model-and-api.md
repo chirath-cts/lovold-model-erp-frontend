@@ -22,10 +22,10 @@
 - Order line snapshots preserve historical pricing/cost integrity
 
 ## Entity Relationships (Phase 1)
-- `orders.customer_id` -> `customers.customer_code`
+- `orders.customer_id` -> `customers.id`
 - `order_product.order_id` -> `orders.id`; `order_product.product_id` -> `products.id`
 - `products.category_id` -> `categories.id`
-- `customer_product.customer_id` -> `customers.customer_code`; `customer_product.product_id` -> `products.id`
+- `customer_product.customer_id` -> `customers.id`; `customer_product.product_id` -> `products.id`
 - `users` stand alone (ops accounts)
 
 ## Field Highlights
@@ -33,7 +33,7 @@
 - `order_product` stores quantity, unit_price, line_discount_percent, discount_amount, tax_total, unit_cost_at_sale, profit_amount
 - `customer_product` composite on (customer_id, product_id); captures discount_percent, start_date, end_date, is_active for pricing validity
 - `products` include base_price, `unit`, and nullable `image_url`
-- `customers` use `customer_code` as primary key; referenced by orders and customer_product
+- `customers` expose `customerCode`, but `id` is the runtime foreign-key target referenced by orders and customer_product
 
 ## Frontend Compatibility Mapping
 - `/orderItems` <-> `order_product`
@@ -60,6 +60,9 @@ Product payload note:
 
 Order payload note:
 - `/orders` and `/orderItems` expose DB-aligned camelCase names such as `grandTotal`, `profitTotal`, `discountPercent`, `unitCostAtSale`, and `profitAmount`
+
+Customer pricing payload note:
+- `/customer-products` and `/discounts` return the same canonical agreement shape: `customerId`, `productId`, `discountPercent`, `startDate`, `endDate`, `isActive`, plus derived `status`
 
 ## Supported Query Behavior
 - Filtering: `status`, `customerId`, `categoryId`, `orderId`

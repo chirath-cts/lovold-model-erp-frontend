@@ -1,6 +1,6 @@
 export function createCustomerProductRepository(db) {
   return {
-    listDiscountRows(customerId) {
+    listCustomerProductRows(customerId) {
       const where = [];
       const params = [];
 
@@ -12,23 +12,25 @@ export function createCustomerProductRepository(db) {
       const whereClause = where.length ? ` WHERE ${where.join(" AND ")}` : "";
 
       return db.all(
-        `SELECT cp.customer_id, cp.product_id, cp.discount_percent, cp.start_date, cp.end_date, cp.is_active,
-                p.name AS product_name
-         FROM customer_product cp
-         LEFT JOIN products p ON p.id = cp.product_id${whereClause}`,
+        `SELECT cp.customer_id, cp.product_id, cp.discount_percent, cp.start_date, cp.end_date, cp.is_active
+         FROM customer_product cp${whereClause}`,
         ...params,
       );
     },
-    getDiscountByKeys(customerId, productId) {
+    listDiscountRows(customerId) {
+      return this.listCustomerProductRows(customerId);
+    },
+    getCustomerProductByKeys(customerId, productId) {
       return db.get(
-        `SELECT cp.customer_id, cp.product_id, cp.discount_percent, cp.start_date, cp.end_date, cp.is_active,
-                p.name AS product_name
+        `SELECT cp.customer_id, cp.product_id, cp.discount_percent, cp.start_date, cp.end_date, cp.is_active
          FROM customer_product cp
-         LEFT JOIN products p ON p.id = cp.product_id
          WHERE cp.customer_id = ? AND cp.product_id = ?`,
         customerId,
         productId,
       );
+    },
+    getDiscountByKeys(customerId, productId) {
+      return this.getCustomerProductByKeys(customerId, productId);
     },
     upsertCustomerProduct({ customerId, productId, discountPercent, startDate, endDate, isActive }) {
       return db.run(

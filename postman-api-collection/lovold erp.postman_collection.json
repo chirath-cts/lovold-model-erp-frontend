@@ -563,41 +563,41 @@
       ]
     },
     {
-      "name": "Inventory - Discounts Page",
+      "name": "Inventory - Customer Pricing Page",
       "item": [
         {
-          "name": "GET Discounts",
+          "name": "GET Customer Products",
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/discounts",
+              "raw": "{{baseUrl}}/customer-products",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "discounts"
+                "customer-products"
               ],
               "query": [
                 {
                   "key": "status",
                   "value": "active",
                   "disabled": true,
-                  "description": "Triggered when the status filter is set on the Discounts page."
+                  "description": "Triggered when the status filter is set on the Customer Pricing page."
                 },
                 {
                   "key": "customerId",
                   "value": "{{customerId}}",
                   "disabled": true,
-                  "description": "Supported by the frontend service, but not used by the current Discounts page."
+                  "description": "Supported by the frontend service, but not used by the current Customer Pricing page."
                 }
               ]
             },
-            "description": "Triggered when the discounts page loads and whenever the status filter changes."
+            "description": "Triggered when the customer pricing page loads and whenever the status filter changes."
           },
           "response": []
         },
         {
-          "name": "GET Customers - Discounts Page",
+          "name": "GET Customers - Customer Pricing Page",
           "request": {
             "method": "GET",
             "url": {
@@ -619,12 +619,12 @@
                 }
               ]
             },
-            "description": "Triggered when the discounts page loads to populate the customer selector."
+            "description": "Triggered when the customer pricing page loads to populate the customer selector."
           },
           "response": []
         },
         {
-          "name": "GET Products - Discounts Page",
+          "name": "GET Products - Customer Pricing Page",
           "request": {
             "method": "GET",
             "url": {
@@ -636,29 +636,12 @@
                 "products"
               ]
             },
-            "description": "Triggered when the discounts page loads to populate product scope options."
+            "description": "Triggered when the customer pricing page loads to populate product agreement options."
           },
           "response": []
         },
         {
-          "name": "GET Categories - Discounts Page",
-          "request": {
-            "method": "GET",
-            "url": {
-              "raw": "{{baseUrl}}/categories",
-              "host": [
-                "{{baseUrl}}"
-              ],
-              "path": [
-                "categories"
-              ]
-            },
-            "description": "Triggered when the discounts page loads to populate category scope options."
-          },
-          "response": []
-        },
-        {
-          "name": "POST Create Discount",
+          "name": "POST Create Customer Product",
           "request": {
             "method": "POST",
             "header": [
@@ -669,7 +652,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"id\": \"dsc-1234abcd\",\n  \"name\": \"Customer Launch Discount\",\n  \"customerId\": \"{{customerId}}\",\n  \"scopeType\": \"product\",\n  \"scopeId\": \"{{productId}}\",\n  \"discountType\": \"percentage\",\n  \"value\": 10,\n  \"currency\": \"NOK\",\n  \"startDate\": \"2026-03-19\",\n  \"endDate\": \"2026-04-19\",\n  \"status\": \"active\"\n}",
+              "raw": "{\n  \"customerId\": \"{{customerId}}\",\n  \"productId\": \"{{productId}}\",\n  \"discountPercent\": 10,\n  \"startDate\": \"2026-03-20\",\n  \"endDate\": \"2026-04-19\",\n  \"isActive\": true\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -677,15 +660,15 @@
               }
             },
             "url": {
-              "raw": "{{baseUrl}}/discounts",
+              "raw": "{{baseUrl}}/customer-products",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "discounts"
+                "customer-products"
               ]
             },
-            "description": "Triggered by the Create Discount dialog on submit."
+            "description": "Triggered by the Create Customer Pricing Agreement dialog on submit."
           },
           "response": []
         }
@@ -772,19 +755,19 @@
           "response": []
         },
         {
-          "name": "GET Discounts - Orders Page",
+          "name": "GET Customer Products - Orders Page",
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/discounts",
+              "raw": "{{baseUrl}}/customer-products",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "discounts"
+                "customer-products"
               ]
             },
-            "description": "Triggered when the orders page loads so the create-order modal can resolve matching discounts."
+            "description": "Triggered when the orders page loads so the create-order modal can resolve matching customer pricing agreements."
           },
           "response": []
         },

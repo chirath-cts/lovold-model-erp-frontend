@@ -7,7 +7,7 @@ import type {
   CreateOrderItemPayload,
   CreateOrderPayload,
   Customer,
-  Discount,
+  CustomerProduct,
   Order,
   OrderItem,
   OrderStatus,
@@ -19,7 +19,7 @@ interface CreateOrderWorkflowInput {
   values: CreateOrderFormValues;
   customers: Customer[];
   products: Product[];
-  discounts: Discount[];
+  customerProducts: CustomerProduct[];
   existingOrders: Order[];
 }
 
@@ -29,7 +29,7 @@ export const createOrderWorkflow = async ({
   values,
   customers,
   products,
-  discounts,
+  customerProducts,
   existingOrders,
 }: CreateOrderWorkflowInput) => {
   const customer = customers.find((item) => item.id === values.customerId);
@@ -46,16 +46,19 @@ export const createOrderWorkflow = async ({
     const product = productById.get(line.productId);
     if (!product) throw new Error("Selected product is missing.");
 
-    const matchedDiscount = discounts.find(
-      (discount) =>
-        discount.customerId === values.customerId &&
-        discount.status === "active" &&
-        ((discount.scopeType === "product" && discount.scopeId === product.id) ||
-          (discount.scopeType === "category" && discount.scopeId === product.categoryId)),
+    const matchedCustomerProduct = customerProducts.find(
+      (customerProduct) =>
+        customerProduct.customerId === values.customerId &&
+        customerProduct.productId === product.id &&
+        customerProduct.status === "active",
     );
 
-    const resolvedDiscountType = line.discountValue > 0 ? line.discountType : matchedDiscount?.discountType ?? "percentage";
-    const resolvedDiscountValue = line.discountValue > 0 ? line.discountValue : matchedDiscount?.value ?? 0;
+    const resolvedDiscountType =
+      line.discountValue > 0 ? line.discountType : "percentage";
+    const resolvedDiscountValue =
+      line.discountValue > 0
+        ? line.discountValue
+        : matchedCustomerProduct?.discountPercent ?? 0;
 
     const computed = computeLineTotals({
       unitPrice: product.basePrice,

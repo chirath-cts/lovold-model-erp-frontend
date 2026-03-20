@@ -35,22 +35,17 @@ export interface Customer {
   createdAt: string;
 }
 
-export type DiscountScopeType = "product" | "category";
 export type DiscountType = "percentage" | "fixed";
-export type DiscountStatus = "active" | "future" | "expired";
+export type CustomerProductStatus = "active" | "future" | "expired";
 
-export interface Discount {
-  id: string;
-  name: string;
+export interface CustomerProduct {
   customerId: string;
-  scopeType: DiscountScopeType;
-  scopeId: string;
-  discountType: DiscountType;
-  value: number;
-  currency: "NOK";
-  startDate: string;
-  endDate: string;
-  status: DiscountStatus;
+  productId: string;
+  discountPercent: number;
+  startDate: string | null;
+  endDate: string | null;
+  isActive: boolean;
+  status: CustomerProductStatus;
 }
 
 export type OrderStatus = "draft" | "confirmed" | "dispatched" | "delivered";
@@ -89,6 +84,8 @@ export interface OrderItem {
 
 export type CreateOrderPayload = Omit<Order, "itemCount">;
 export type UpdateOrderPayload = Partial<CreateOrderPayload>;
+export type CreateCustomerProductPayload = Omit<CustomerProduct, "status">;
+export type UpdateCustomerProductPayload = Partial<CreateCustomerProductPayload>;
 
 export type CreateOrderItemPayload = Omit<
   OrderItem,

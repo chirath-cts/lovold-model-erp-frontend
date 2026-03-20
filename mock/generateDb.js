@@ -103,17 +103,13 @@ const buildCompatibilityCollections = (canonical) => {
     };
   });
 
-  const discounts = customerProducts.map((customerProduct) => ({
-    id: `${customerProduct.customerId}__${customerProduct.productId}`,
-    name: `Discount ${Number(customerProduct.discountPercent ?? 0)}%`,
+  const runtimeCustomerProducts = customerProducts.map((customerProduct) => ({
     customerId: customerProduct.customerId,
-    scopeType: "product",
-    scopeId: customerProduct.productId,
-    discountType: "percentage",
-    value: Number(customerProduct.discountPercent ?? 0),
-    currency: "NOK",
+    productId: customerProduct.productId,
+    discountPercent: Number(customerProduct.discountPercent ?? 0),
     startDate: toIsoDateOnly(customerProduct.startDate),
     endDate: toIsoDateOnly(customerProduct.endDate),
+    isActive: Boolean(customerProduct.isActive),
     status: deriveDiscountStatus(customerProduct),
   }));
 
@@ -135,7 +131,9 @@ const buildCompatibilityCollections = (canonical) => {
     products: runtimeProducts,
     productCategories: categories,
     orderItems,
-    discounts,
+    customerProducts: runtimeCustomerProducts,
+    "customer-products": runtimeCustomerProducts,
+    discounts: runtimeCustomerProducts,
     warehouseProducts,
   };
 };
