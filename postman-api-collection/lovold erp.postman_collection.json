@@ -157,7 +157,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/customers?_sort=companyName&_order=asc",
+              "raw": "{{baseUrl}}/customers?_sort=name&_order=asc",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -167,7 +167,7 @@
               "query": [
                 {
                   "key": "_sort",
-                  "value": "companyName"
+                  "value": "name"
                 },
                 {
                   "key": "_order",
@@ -222,7 +222,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/customers?_sort=companyName&_order=asc",
+              "raw": "{{baseUrl}}/customers?_sort=name&_order=asc",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -232,7 +232,7 @@
               "query": [
                 {
                   "key": "_sort",
-                  "value": "companyName"
+                  "value": "name"
                 },
                 {
                   "key": "_order",
@@ -601,7 +601,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/customers?_sort=companyName&_order=asc",
+              "raw": "{{baseUrl}}/customers?_sort=name&_order=asc",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -611,7 +611,7 @@
               "query": [
                 {
                   "key": "_sort",
-                  "value": "companyName"
+                  "value": "name"
                 },
                 {
                   "key": "_order",
@@ -715,7 +715,7 @@
           "request": {
             "method": "GET",
             "url": {
-              "raw": "{{baseUrl}}/customers?_sort=companyName&_order=asc",
+              "raw": "{{baseUrl}}/customers?_sort=name&_order=asc",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -725,7 +725,7 @@
               "query": [
                 {
                   "key": "_sort",
-                  "value": "companyName"
+                  "value": "name"
                 },
                 {
                   "key": "_order",

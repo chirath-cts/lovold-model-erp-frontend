@@ -54,7 +54,7 @@ export function DiscountsPage() {
   const products = productsQuery.data ?? EMPTY_ARRAY;
 
   const customerLookup = useMemo(
-    () => new Map(customers.map((item) => [item.id, item.companyName])),
+    () => new Map(customers.map((item) => [item.id, item.name])),
     [customers],
   );
   const productLookup = useMemo(
@@ -204,7 +204,7 @@ export function DiscountsPage() {
               >
                 {customers.map((customer) => (
                   <MenuItem key={customer.id} value={customer.id}>
-                    {customer.companyName}
+                    {customer.name}
                   </MenuItem>
                 ))}
               </Select>

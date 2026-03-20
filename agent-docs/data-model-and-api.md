@@ -58,6 +58,9 @@ Canonical category endpoint:
 Product payload note:
 - `/products` exposes canonical camelCase fields including `basePrice`, `purchasePrice`, `stockQuantity`, `reorderLevel`, and optional `imageUrl` mapped from `products.image_url`
 
+Customer payload note:
+- `/customers` exposes canonical camelCase fields mapped from the customer table: `id`, `customerCode`, `name`, `email`, `phone`, `address`, and `status`
+
 Order payload note:
 - `/orders` and `/orderItems` expose DB-aligned camelCase names such as `grandTotal`, `profitTotal`, `discountPercent`, `unitCostAtSale`, and `profitAmount`
 

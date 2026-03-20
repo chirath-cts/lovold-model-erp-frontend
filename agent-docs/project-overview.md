@@ -204,7 +204,7 @@ Profit model:
 
 Implemented now:
 
-- Customer code/company/contact/country/status
+- Customer code/name/email/phone/address/status
 - Derived order count and total sales
 - Last order date
 
