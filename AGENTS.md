@@ -15,6 +15,9 @@
 - For larger tasks share a brief plan; after changes, state what changed/preserved and any risks.
 - Update docs when behavior/contracts change; ensure build and lint pass where touched.
 
+## Temporary Reminder
+- Customer pricing frontend cleanup is intentionally deferred for now. When explicitly asked, remove the temporary compatibility aliases in `src/services/endpoints/discountsService.ts`, `useDiscounts` in `src/services/hooks/useDomainQueries.ts`, and `queryKeys.discounts` in `src/shared/constants/queryKeys.ts`.
+
 ## Commands
 - Frontend + Express/SQLite: `npm run start:backend`
 - Frontend + JSON Server fallback: `npm run start`
@@ -32,3 +35,5 @@
 - Phase 1 scope only; entities/relations match ER diagram naming.
 - Public API aliases remain intact; compatibility mappings not broken.
 - Build and lint pass; docs updated if behavior/contracts change.
+
+@RTK.md

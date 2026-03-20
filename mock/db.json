@@ -43,7 +43,8 @@
       "discountPercent": 8,
       "startDate": "2026-02-01",
       "endDate": "2026-11-30",
-      "isActive": true
+      "isActive": true,
+      "status": "active"
     },
     {
       "customerId": "1e8b6a3f-9e51-4d6c-8a34-4a0d2c9c8b77",
@@ -51,7 +52,8 @@
       "discountPercent": 8,
       "startDate": "2026-02-01",
       "endDate": "2026-11-30",
-      "isActive": true
+      "isActive": true,
+      "status": "active"
     },
     {
       "customerId": "6c9d7b2f-0f6b-4c23-9a1a-8e4b9a2f1e33",
@@ -59,7 +61,8 @@
       "discountPercent": 10,
       "startDate": "2026-03-01",
       "endDate": "2026-07-31",
-      "isActive": true
+      "isActive": true,
+      "status": "active"
     },
     {
       "customerId": "73d291a4-56cb-4fd7-8f4a-120a4cbb1101",
@@ -67,7 +70,8 @@
       "discountPercent": 12,
       "startDate": "2026-01-15",
       "endDate": "2026-06-15",
-      "isActive": true
+      "isActive": true,
+      "status": "active"
     },
     {
       "customerId": "73d291a4-56cb-4fd7-8f4a-120a4cbb1101",
@@ -75,7 +79,8 @@
       "discountPercent": 12,
       "startDate": "2026-01-15",
       "endDate": "2026-06-15",
-      "isActive": true
+      "isActive": true,
+      "status": "active"
     },
     {
       "customerId": "84e3a2b5-67dc-40e8-9a5b-231b5dcc2202",
@@ -83,7 +88,8 @@
       "discountPercent": 11,
       "startDate": "2025-11-01",
       "endDate": "2026-01-31",
-      "isActive": false
+      "isActive": false,
+      "status": "expired"
     },
     {
       "customerId": "84e3a2b5-67dc-40e8-9a5b-231b5dcc2202",
@@ -91,7 +97,8 @@
       "discountPercent": 3.0702,
       "startDate": "2026-01-20",
       "endDate": "2026-04-30",
-      "isActive": true
+      "isActive": true,
+      "status": "active"
     },
     {
       "customerId": "95f4b3c6-78ed-41f9-ab6c-342c6edd3303",
@@ -99,7 +106,8 @@
       "discountPercent": 7,
       "startDate": "2026-02-10",
       "endDate": "2026-12-01",
-      "isActive": true
+      "isActive": true,
+      "status": "active"
     },
     {
       "customerId": "95f4b3c6-78ed-41f9-ab6c-342c6edd3303",
@@ -107,7 +115,8 @@
       "discountPercent": 3.876,
       "startDate": "2026-03-10",
       "endDate": "2026-08-31",
-      "isActive": true
+      "isActive": true,
+      "status": "active"
     },
     {
       "customerId": "9a2c2f1a-4a5f-4fcb-9f3b-3e7a1c1b8d01",
@@ -115,7 +124,8 @@
       "discountPercent": 6,
       "startDate": "2026-01-01",
       "endDate": "2026-12-31",
-      "isActive": true
+      "isActive": true,
+      "status": "active"
     },
     {
       "customerId": "9a2c2f1a-4a5f-4fcb-9f3b-3e7a1c1b8d01",
@@ -123,7 +133,8 @@
       "discountPercent": 4,
       "startDate": "2026-03-01",
       "endDate": "2026-06-30",
-      "isActive": true
+      "isActive": true,
+      "status": "active"
     },
     {
       "customerId": "a665c4d7-89fe-420a-bc7d-453d7fee4404",
@@ -131,7 +142,8 @@
       "discountPercent": 5,
       "startDate": "2026-01-01",
       "endDate": "2026-12-31",
-      "isActive": true
+      "isActive": true,
+      "status": "active"
     },
     {
       "customerId": "b3d4e51c-0a22-4c78-98c6-2b9c1f0e7d45",
@@ -139,7 +151,8 @@
       "discountPercent": 5.8824,
       "startDate": "2025-01-01",
       "endDate": "2025-12-31",
-      "isActive": false
+      "isActive": false,
+      "status": "expired"
     },
     {
       "customerId": "b7a6d5e8-90af-431b-cd8e-564e8a0f5505",
@@ -147,7 +160,8 @@
       "discountPercent": 7.0093,
       "startDate": "2026-02-01",
       "endDate": "2026-10-31",
-      "isActive": true
+      "isActive": true,
+      "status": "active"
     },
     {
       "customerId": "f0c6d8a2-93d5-4c17-b71b-9e0d7f1a2a11",
@@ -155,7 +169,8 @@
       "discountPercent": 9,
       "startDate": "2026-10-01",
       "endDate": "2026-12-31",
-      "isActive": false
+      "isActive": false,
+      "status": "expired"
     },
     {
       "customerId": "f0c6d8a2-93d5-4c17-b71b-9e0d7f1a2a11",
@@ -163,7 +178,8 @@
       "discountPercent": 2.8571,
       "startDate": "2026-01-10",
       "endDate": "2026-09-30",
-      "isActive": true
+      "isActive": true,
+      "status": "active"
     }
   ],
   "customers": [
@@ -3196,213 +3212,295 @@
       "profitAmount": 9800
     }
   ],
-  "discounts": [
+  "customer-products": [
     {
-      "id": "1e8b6a3f-9e51-4d6c-8a34-4a0d2c9c8b77__5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
-      "name": "Discount 8%",
       "customerId": "1e8b6a3f-9e51-4d6c-8a34-4a0d2c9c8b77",
-      "scopeType": "product",
-      "scopeId": "5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
-      "discountType": "percentage",
-      "value": 8,
-      "currency": "NOK",
+      "productId": "5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
+      "discountPercent": 8,
       "startDate": "2026-02-01",
       "endDate": "2026-11-30",
+      "isActive": true,
       "status": "active"
     },
     {
-      "id": "1e8b6a3f-9e51-4d6c-8a34-4a0d2c9c8b77__beaf9a6b-2c75-4d46-bf8d-ab6e5c7d6066",
-      "name": "Discount 8%",
       "customerId": "1e8b6a3f-9e51-4d6c-8a34-4a0d2c9c8b77",
-      "scopeType": "product",
-      "scopeId": "beaf9a6b-2c75-4d46-bf8d-ab6e5c7d6066",
-      "discountType": "percentage",
-      "value": 8,
-      "currency": "NOK",
+      "productId": "beaf9a6b-2c75-4d46-bf8d-ab6e5c7d6066",
+      "discountPercent": 8,
       "startDate": "2026-02-01",
       "endDate": "2026-11-30",
+      "isActive": true,
       "status": "active"
     },
     {
-      "id": "6c9d7b2f-0f6b-4c23-9a1a-8e4b9a2f1e33__4d1a7c94-9f6e-4e66-c045-5b9d0f4a3c44",
-      "name": "Discount 10%",
       "customerId": "6c9d7b2f-0f6b-4c23-9a1a-8e4b9a2f1e33",
-      "scopeType": "product",
-      "scopeId": "4d1a7c94-9f6e-4e66-c045-5b9d0f4a3c44",
-      "discountType": "percentage",
-      "value": 10,
-      "currency": "NOK",
+      "productId": "4d1a7c94-9f6e-4e66-c045-5b9d0f4a3c44",
+      "discountPercent": 10,
       "startDate": "2026-03-01",
       "endDate": "2026-07-31",
+      "isActive": true,
       "status": "active"
     },
     {
-      "id": "73d291a4-56cb-4fd7-8f4a-120a4cbb1101__6f4e9ab1-3c67-49c1-95b9-0b7a8f6d1011",
-      "name": "Discount 12%",
       "customerId": "73d291a4-56cb-4fd7-8f4a-120a4cbb1101",
-      "scopeType": "product",
-      "scopeId": "6f4e9ab1-3c67-49c1-95b9-0b7a8f6d1011",
-      "discountType": "percentage",
-      "value": 12,
-      "currency": "NOK",
+      "productId": "6f4e9ab1-3c67-49c1-95b9-0b7a8f6d1011",
+      "discountPercent": 12,
       "startDate": "2026-01-15",
       "endDate": "2026-06-15",
+      "isActive": true,
       "status": "active"
     },
     {
-      "id": "73d291a4-56cb-4fd7-8f4a-120a4cbb1101__7a6b5c2d-8e31-4f02-9b4f-6d2a1c3e2022",
-      "name": "Discount 12%",
       "customerId": "73d291a4-56cb-4fd7-8f4a-120a4cbb1101",
-      "scopeType": "product",
-      "scopeId": "7a6b5c2d-8e31-4f02-9b4f-6d2a1c3e2022",
-      "discountType": "percentage",
-      "value": 12,
-      "currency": "NOK",
+      "productId": "7a6b5c2d-8e31-4f02-9b4f-6d2a1c3e2022",
+      "discountPercent": 12,
       "startDate": "2026-01-15",
       "endDate": "2026-06-15",
+      "isActive": true,
       "status": "active"
     },
     {
-      "id": "84e3a2b5-67dc-40e8-9a5b-231b5dcc2202__6f4e9ab1-3c67-49c1-95b9-0b7a8f6d1011",
-      "name": "Discount 11%",
       "customerId": "84e3a2b5-67dc-40e8-9a5b-231b5dcc2202",
-      "scopeType": "product",
-      "scopeId": "6f4e9ab1-3c67-49c1-95b9-0b7a8f6d1011",
-      "discountType": "percentage",
-      "value": 11,
-      "currency": "NOK",
+      "productId": "6f4e9ab1-3c67-49c1-95b9-0b7a8f6d1011",
+      "discountPercent": 11,
       "startDate": "2025-11-01",
       "endDate": "2026-01-31",
+      "isActive": false,
       "status": "expired"
     },
     {
-      "id": "84e3a2b5-67dc-40e8-9a5b-231b5dcc2202__8b7c6d3e-9f42-4a13-8c5a-7e3b2d4f3033",
-      "name": "Discount 3.0702%",
       "customerId": "84e3a2b5-67dc-40e8-9a5b-231b5dcc2202",
-      "scopeType": "product",
-      "scopeId": "8b7c6d3e-9f42-4a13-8c5a-7e3b2d4f3033",
-      "discountType": "percentage",
-      "value": 3.0702,
-      "currency": "NOK",
+      "productId": "8b7c6d3e-9f42-4a13-8c5a-7e3b2d4f3033",
+      "discountPercent": 3.0702,
       "startDate": "2026-01-20",
       "endDate": "2026-04-30",
+      "isActive": true,
       "status": "active"
     },
     {
-      "id": "95f4b3c6-78ed-41f9-ab6c-342c6edd3303__8b7c6d3e-9f42-4a13-8c5a-7e3b2d4f3033",
-      "name": "Discount 7%",
       "customerId": "95f4b3c6-78ed-41f9-ab6c-342c6edd3303",
-      "scopeType": "product",
-      "scopeId": "8b7c6d3e-9f42-4a13-8c5a-7e3b2d4f3033",
-      "discountType": "percentage",
-      "value": 7,
-      "currency": "NOK",
+      "productId": "8b7c6d3e-9f42-4a13-8c5a-7e3b2d4f3033",
+      "discountPercent": 7,
       "startDate": "2026-02-10",
       "endDate": "2026-12-01",
+      "isActive": true,
       "status": "active"
     },
     {
-      "id": "95f4b3c6-78ed-41f9-ab6c-342c6edd3303__9c8d7e4f-0a53-4b24-9d6b-8f4c3e5a4044",
-      "name": "Discount 3.876%",
       "customerId": "95f4b3c6-78ed-41f9-ab6c-342c6edd3303",
-      "scopeType": "product",
-      "scopeId": "9c8d7e4f-0a53-4b24-9d6b-8f4c3e5a4044",
-      "discountType": "percentage",
-      "value": 3.876,
-      "currency": "NOK",
+      "productId": "9c8d7e4f-0a53-4b24-9d6b-8f4c3e5a4044",
+      "discountPercent": 3.876,
       "startDate": "2026-03-10",
       "endDate": "2026-08-31",
+      "isActive": true,
       "status": "active"
     },
     {
-      "id": "9a2c2f1a-4a5f-4fcb-9f3b-3e7a1c1b8d01__1a7c4f61-9c4d-4b32-bd51-2a5e7c1f0a11",
-      "name": "Discount 6%",
       "customerId": "9a2c2f1a-4a5f-4fcb-9f3b-3e7a1c1b8d01",
-      "scopeType": "product",
-      "scopeId": "1a7c4f61-9c4d-4b32-bd51-2a5e7c1f0a11",
-      "discountType": "percentage",
-      "value": 6,
-      "currency": "NOK",
+      "productId": "1a7c4f61-9c4d-4b32-bd51-2a5e7c1f0a11",
+      "discountPercent": 6,
       "startDate": "2026-01-01",
       "endDate": "2026-12-31",
+      "isActive": true,
       "status": "active"
     },
     {
-      "id": "9a2c2f1a-4a5f-4fcb-9f3b-3e7a1c1b8d01__5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
-      "name": "Discount 4%",
       "customerId": "9a2c2f1a-4a5f-4fcb-9f3b-3e7a1c1b8d01",
-      "scopeType": "product",
-      "scopeId": "5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
-      "discountType": "percentage",
-      "value": 4,
-      "currency": "NOK",
+      "productId": "5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
+      "discountPercent": 4,
       "startDate": "2026-03-01",
       "endDate": "2026-06-30",
+      "isActive": true,
       "status": "active"
     },
     {
-      "id": "a665c4d7-89fe-420a-bc7d-453d7fee4404__ad9e8f5a-1b64-4c35-ae7c-9a5d4f6b5055",
-      "name": "Discount 5%",
       "customerId": "a665c4d7-89fe-420a-bc7d-453d7fee4404",
-      "scopeType": "product",
-      "scopeId": "ad9e8f5a-1b64-4c35-ae7c-9a5d4f6b5055",
-      "discountType": "percentage",
-      "value": 5,
-      "currency": "NOK",
+      "productId": "ad9e8f5a-1b64-4c35-ae7c-9a5d4f6b5055",
+      "discountPercent": 5,
       "startDate": "2026-01-01",
       "endDate": "2026-12-31",
+      "isActive": true,
       "status": "active"
     },
     {
-      "id": "b3d4e51c-0a22-4c78-98c6-2b9c1f0e7d45__beaf9a6b-2c75-4d46-bf8d-ab6e5c7d6066",
-      "name": "Discount 5.8824%",
       "customerId": "b3d4e51c-0a22-4c78-98c6-2b9c1f0e7d45",
-      "scopeType": "product",
-      "scopeId": "beaf9a6b-2c75-4d46-bf8d-ab6e5c7d6066",
-      "discountType": "percentage",
-      "value": 5.8824,
-      "currency": "NOK",
+      "productId": "beaf9a6b-2c75-4d46-bf8d-ab6e5c7d6066",
+      "discountPercent": 5.8824,
       "startDate": "2025-01-01",
       "endDate": "2025-12-31",
+      "isActive": false,
       "status": "expired"
     },
     {
-      "id": "b7a6d5e8-90af-431b-cd8e-564e8a0f5505__cfb0ab7c-3d86-4e57-c09e-bc7f6d8e7077",
-      "name": "Discount 7.0093%",
       "customerId": "b7a6d5e8-90af-431b-cd8e-564e8a0f5505",
-      "scopeType": "product",
-      "scopeId": "cfb0ab7c-3d86-4e57-c09e-bc7f6d8e7077",
-      "discountType": "percentage",
-      "value": 7.0093,
-      "currency": "NOK",
+      "productId": "cfb0ab7c-3d86-4e57-c09e-bc7f6d8e7077",
+      "discountPercent": 7.0093,
       "startDate": "2026-02-01",
       "endDate": "2026-10-31",
+      "isActive": true,
       "status": "active"
     },
     {
-      "id": "f0c6d8a2-93d5-4c17-b71b-9e0d7f1a2a11__1a7c4f61-9c4d-4b32-bd51-2a5e7c1f0a11",
-      "name": "Discount 9%",
       "customerId": "f0c6d8a2-93d5-4c17-b71b-9e0d7f1a2a11",
-      "scopeType": "product",
-      "scopeId": "1a7c4f61-9c4d-4b32-bd51-2a5e7c1f0a11",
-      "discountType": "percentage",
-      "value": 9,
-      "currency": "NOK",
+      "productId": "1a7c4f61-9c4d-4b32-bd51-2a5e7c1f0a11",
+      "discountPercent": 9,
       "startDate": "2026-10-01",
       "endDate": "2026-12-31",
+      "isActive": false,
       "status": "expired"
     },
     {
-      "id": "f0c6d8a2-93d5-4c17-b71b-9e0d7f1a2a11__2b8e5a72-7d4f-4c44-ae23-3f7b8d2e1a22",
-      "name": "Discount 2.8571%",
       "customerId": "f0c6d8a2-93d5-4c17-b71b-9e0d7f1a2a11",
-      "scopeType": "product",
-      "scopeId": "2b8e5a72-7d4f-4c44-ae23-3f7b8d2e1a22",
-      "discountType": "percentage",
-      "value": 2.8571,
-      "currency": "NOK",
+      "productId": "2b8e5a72-7d4f-4c44-ae23-3f7b8d2e1a22",
+      "discountPercent": 2.8571,
       "startDate": "2026-01-10",
       "endDate": "2026-09-30",
+      "isActive": true,
+      "status": "active"
+    }
+  ],
+  "discounts": [
+    {
+      "customerId": "1e8b6a3f-9e51-4d6c-8a34-4a0d2c9c8b77",
+      "productId": "5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
+      "discountPercent": 8,
+      "startDate": "2026-02-01",
+      "endDate": "2026-11-30",
+      "isActive": true,
+      "status": "active"
+    },
+    {
+      "customerId": "1e8b6a3f-9e51-4d6c-8a34-4a0d2c9c8b77",
+      "productId": "beaf9a6b-2c75-4d46-bf8d-ab6e5c7d6066",
+      "discountPercent": 8,
+      "startDate": "2026-02-01",
+      "endDate": "2026-11-30",
+      "isActive": true,
+      "status": "active"
+    },
+    {
+      "customerId": "6c9d7b2f-0f6b-4c23-9a1a-8e4b9a2f1e33",
+      "productId": "4d1a7c94-9f6e-4e66-c045-5b9d0f4a3c44",
+      "discountPercent": 10,
+      "startDate": "2026-03-01",
+      "endDate": "2026-07-31",
+      "isActive": true,
+      "status": "active"
+    },
+    {
+      "customerId": "73d291a4-56cb-4fd7-8f4a-120a4cbb1101",
+      "productId": "6f4e9ab1-3c67-49c1-95b9-0b7a8f6d1011",
+      "discountPercent": 12,
+      "startDate": "2026-01-15",
+      "endDate": "2026-06-15",
+      "isActive": true,
+      "status": "active"
+    },
+    {
+      "customerId": "73d291a4-56cb-4fd7-8f4a-120a4cbb1101",
+      "productId": "7a6b5c2d-8e31-4f02-9b4f-6d2a1c3e2022",
+      "discountPercent": 12,
+      "startDate": "2026-01-15",
+      "endDate": "2026-06-15",
+      "isActive": true,
+      "status": "active"
+    },
+    {
+      "customerId": "84e3a2b5-67dc-40e8-9a5b-231b5dcc2202",
+      "productId": "6f4e9ab1-3c67-49c1-95b9-0b7a8f6d1011",
+      "discountPercent": 11,
+      "startDate": "2025-11-01",
+      "endDate": "2026-01-31",
+      "isActive": false,
+      "status": "expired"
+    },
+    {
+      "customerId": "84e3a2b5-67dc-40e8-9a5b-231b5dcc2202",
+      "productId": "8b7c6d3e-9f42-4a13-8c5a-7e3b2d4f3033",
+      "discountPercent": 3.0702,
+      "startDate": "2026-01-20",
+      "endDate": "2026-04-30",
+      "isActive": true,
+      "status": "active"
+    },
+    {
+      "customerId": "95f4b3c6-78ed-41f9-ab6c-342c6edd3303",
+      "productId": "8b7c6d3e-9f42-4a13-8c5a-7e3b2d4f3033",
+      "discountPercent": 7,
+      "startDate": "2026-02-10",
+      "endDate": "2026-12-01",
+      "isActive": true,
+      "status": "active"
+    },
+    {
+      "customerId": "95f4b3c6-78ed-41f9-ab6c-342c6edd3303",
+      "productId": "9c8d7e4f-0a53-4b24-9d6b-8f4c3e5a4044",
+      "discountPercent": 3.876,
+      "startDate": "2026-03-10",
+      "endDate": "2026-08-31",
+      "isActive": true,
+      "status": "active"
+    },
+    {
+      "customerId": "9a2c2f1a-4a5f-4fcb-9f3b-3e7a1c1b8d01",
+      "productId": "1a7c4f61-9c4d-4b32-bd51-2a5e7c1f0a11",
+      "discountPercent": 6,
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "isActive": true,
+      "status": "active"
+    },
+    {
+      "customerId": "9a2c2f1a-4a5f-4fcb-9f3b-3e7a1c1b8d01",
+      "productId": "5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
+      "discountPercent": 4,
+      "startDate": "2026-03-01",
+      "endDate": "2026-06-30",
+      "isActive": true,
+      "status": "active"
+    },
+    {
+      "customerId": "a665c4d7-89fe-420a-bc7d-453d7fee4404",
+      "productId": "ad9e8f5a-1b64-4c35-ae7c-9a5d4f6b5055",
+      "discountPercent": 5,
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "isActive": true,
+      "status": "active"
+    },
+    {
+      "customerId": "b3d4e51c-0a22-4c78-98c6-2b9c1f0e7d45",
+      "productId": "beaf9a6b-2c75-4d46-bf8d-ab6e5c7d6066",
+      "discountPercent": 5.8824,
+      "startDate": "2025-01-01",
+      "endDate": "2025-12-31",
+      "isActive": false,
+      "status": "expired"
+    },
+    {
+      "customerId": "b7a6d5e8-90af-431b-cd8e-564e8a0f5505",
+      "productId": "cfb0ab7c-3d86-4e57-c09e-bc7f6d8e7077",
+      "discountPercent": 7.0093,
+      "startDate": "2026-02-01",
+      "endDate": "2026-10-31",
+      "isActive": true,
+      "status": "active"
+    },
+    {
+      "customerId": "f0c6d8a2-93d5-4c17-b71b-9e0d7f1a2a11",
+      "productId": "1a7c4f61-9c4d-4b32-bd51-2a5e7c1f0a11",
+      "discountPercent": 9,
+      "startDate": "2026-10-01",
+      "endDate": "2026-12-31",
+      "isActive": false,
+      "status": "expired"
+    },
+    {
+      "customerId": "f0c6d8a2-93d5-4c17-b71b-9e0d7f1a2a11",
+      "productId": "2b8e5a72-7d4f-4c44-ae23-3f7b8d2e1a22",
+      "discountPercent": 2.8571,
+      "startDate": "2026-01-10",
+      "endDate": "2026-09-30",
+      "isActive": true,
       "status": "active"
     }
   ],

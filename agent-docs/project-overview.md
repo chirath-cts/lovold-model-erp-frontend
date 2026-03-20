@@ -276,6 +276,16 @@ Supported query behavior (current):
 - Search: `q` (products)
 - Sorting: `_sort`, `_order` with allowlisted sortable columns
 
+Customer pricing API shape:
+
+- `customerId`
+- `productId`
+- `discountPercent`
+- `startDate`
+- `endDate`
+- `isActive`
+- Derived `status`
+
 ## Architecture and Run Modes
 
 ### Recommended Phase 1 run mode

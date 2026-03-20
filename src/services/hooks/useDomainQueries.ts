@@ -2,8 +2,11 @@ import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { categoriesService } from "@/services/endpoints/categoriesService";
+import {
+  customerProductsService,
+  type CustomerProductFilters,
+} from "@/services/endpoints/customerProductsService";
 import { customersService } from "@/services/endpoints/customersService";
-import { discountsService, type DiscountFilters } from "@/services/endpoints/discountsService";
 import { orderItemsService } from "@/services/endpoints/orderItemsService";
 import { ordersService, type OrderFilters } from "@/services/endpoints/ordersService";
 import { productsService, type ProductFilters } from "@/services/endpoints/productsService";
@@ -25,14 +28,16 @@ export const useProducts = (filters?: ProductFilters) => {
   });
 };
 
-export const useDiscounts = (filters?: DiscountFilters) => {
+export const useCustomerProducts = (filters?: CustomerProductFilters) => {
   const normalized = useMemo(() => filters ?? {}, [filters]);
 
   return useQuery({
-    queryKey: [...queryKeys.discounts, normalized],
-    queryFn: () => discountsService.getList(normalized),
+    queryKey: [...queryKeys.customerProducts, normalized],
+    queryFn: () => customerProductsService.getList(normalized),
   });
 };
+
+export const useDiscounts = useCustomerProducts;
 
 export const useOrders = (filters?: OrderFilters) => {
   const normalized = useMemo(() => filters ?? {}, [filters]);

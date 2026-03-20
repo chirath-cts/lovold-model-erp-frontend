@@ -1,16 +1,12 @@
 import { dateOnly, statusFromDates } from "../lib/dateUtils.js";
 import { numberValue } from "../lib/valueUtils.js";
 
-export const mapDiscount = (row) => ({
-  id: `${row.customer_id}__${row.product_id}`,
-  name: `${row.product_name ?? "Product"} ${numberValue(row.discount_percent, 0)}%`,
+export const mapCustomerProduct = (row) => ({
   customerId: row.customer_id,
-  scopeType: "product",
-  scopeId: row.product_id,
-  discountType: "percentage",
-  value: numberValue(row.discount_percent, 0),
-  currency: "NOK",
+  productId: row.product_id,
+  discountPercent: numberValue(row.discount_percent, 0),
   startDate: dateOnly(row.start_date),
   endDate: dateOnly(row.end_date),
+  isActive: Boolean(row.is_active),
   status: statusFromDates(row.start_date, row.end_date, !!row.is_active),
 });

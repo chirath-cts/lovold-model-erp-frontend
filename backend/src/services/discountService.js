@@ -1,151 +1,153 @@
 import { badRequestError, notFoundError } from "../lib/appError.js";
-import {
-  parseDiscountId,
-  resolveDiscountPercent,
-} from "../lib/discountUtils.js";
+import { parseDiscountId } from "../lib/discountUtils.js";
 import { sortArrayBy } from "../lib/sortUtils.js";
-import { numberValue } from "../lib/valueUtils.js";
-import { mapDiscount } from "../mappers/discountMapper.js";
+import { isNonNegativeNumber, numberValue } from "../lib/valueUtils.js";
+import { mapCustomerProduct } from "../mappers/discountMapper.js";
+
+const normalizeDateValue = (value) => {
+  if (value === undefined) return undefined;
+  if (value === null || value === "") return null;
+  return String(value);
+};
+
+const normalizeIsActive = (value, fallback = true) => {
+  if (value === undefined) return fallback ? 1 : 0;
+  if (typeof value === "boolean") return value ? 1 : 0;
+  if (typeof value === "number") return value ? 1 : 0;
+  if (typeof value === "string") {
+    return ["1", "true", "yes", "active"].includes(value.toLowerCase()) ? 1 : 0;
+  }
+  return fallback ? 1 : 0;
+};
 
 export function createDiscountService({
   customerProductRepository,
   customerRepository,
   productRepository,
 }) {
-  const resolveScopedProducts = async (scopeType, scopeId) => {
-    if (scopeType === "product") {
-      const product = await productRepository.getProductScopeById(scopeId);
-      if (!product) throw badRequestError("Invalid scopeId for product");
-      return [product];
+  const listCustomerProducts = async ({ customerId, status, query = {} } = {}) => {
+    const rows = await customerProductRepository.listCustomerProductRows(customerId);
+    let mapped = rows.map(mapCustomerProduct);
+
+    if (status) {
+      mapped = mapped.filter((item) => item.status === status);
     }
 
-    if (scopeType === "category") {
-      const productRows = await productRepository.listProductScopeByCategory(scopeId);
-      if (productRows.length === 0) {
-        throw badRequestError("No products found for category scopeId");
-      }
-      return productRows;
-    }
+    const sortableColumns = new Set([
+      "discountPercent",
+      "startDate",
+      "endDate",
+      "status",
+    ]);
+    const sortKey =
+      typeof query._sort === "string" && sortableColumns.has(query._sort)
+        ? query._sort
+        : "startDate";
+    const sortDir = typeof query._order === "string" ? query._order : "desc";
 
-    throw badRequestError("scopeType must be 'product' or 'category'");
+    return sortArrayBy(mapped, sortKey, sortDir);
   };
 
-  return {
-    async listDiscounts({ customerId, status, query }) {
-      const rows = await customerProductRepository.listDiscountRows(customerId);
-      let mapped = rows.map(mapDiscount);
+  const createCustomerProduct = async (payload = {}) => {
+    const { customerId, productId, startDate, endDate } = payload ?? {};
 
-      if (status) {
-        mapped = mapped.filter((item) => item.status === status);
-      }
+    if (!customerId || !productId || !isNonNegativeNumber(payload?.discountPercent)) {
+      throw badRequestError("customerId, productId and discountPercent are required");
+    }
 
-      const sortableColumns = new Set(["startDate", "endDate", "status", "name"]);
-      const sortKey =
-        typeof query._sort === "string" && sortableColumns.has(query._sort)
-          ? query._sort
-          : "startDate";
-      const sortDir = typeof query._order === "string" ? query._order : "desc";
+    const customer = await customerRepository.existsById(customerId);
+    if (!customer) throw badRequestError("Invalid customerId");
 
-      return sortArrayBy(mapped, sortKey, sortDir);
-    },
+    const product = await productRepository.getProductRecordById(productId);
+    if (!product) throw badRequestError("Invalid productId");
 
-    async createDiscount(payload) {
-      if (!payload?.customerId || !payload?.scopeType || !payload?.scopeId) {
-        throw badRequestError("customerId, scopeType and scopeId are required");
-      }
+    await customerProductRepository.upsertCustomerProduct({
+      customerId,
+      productId,
+      discountPercent: numberValue(payload.discountPercent, 0),
+      startDate: normalizeDateValue(startDate) ?? null,
+      endDate: normalizeDateValue(endDate) ?? null,
+      isActive: normalizeIsActive(payload.isActive, true),
+    });
 
-      const customer = await customerRepository.existsById(payload.customerId);
-      if (!customer) throw badRequestError("Invalid customerId");
+    const row = await customerProductRepository.getCustomerProductByKeys(
+      customerId,
+      productId,
+    );
+    return mapCustomerProduct(row);
+  };
 
-      const productRows = await resolveScopedProducts(payload.scopeType, payload.scopeId);
-      const isActive = payload.status === "expired" ? 0 : 1;
+  const updateCustomerProduct = async (id, payload = {}) => {
+    const currentKeys = parseDiscountId(id);
+    if (!currentKeys) throw badRequestError("Invalid customer product id");
 
-      for (const product of productRows) {
-        const discountPercent = resolveDiscountPercent(
-          payload.discountType,
-          payload.value,
-          numberValue(product.base_price, 0),
-        );
+    const current = await customerProductRepository.getCustomerProductByKeys(
+      currentKeys.customerId,
+      currentKeys.productId,
+    );
+    if (!current) throw notFoundError("Customer product not found");
 
-        await customerProductRepository.upsertCustomerProduct({
-          customerId: payload.customerId,
-          productId: product.id,
-          discountPercent,
-          startDate: payload.startDate ?? null,
-          endDate: payload.endDate ?? null,
-          isActive,
-        });
-      }
+    const customerId = payload?.customerId ?? current.customer_id;
+    const productId = payload?.productId ?? current.product_id;
+    const discountPercent =
+      payload?.discountPercent !== undefined
+        ? numberValue(payload.discountPercent, 0)
+        : numberValue(current.discount_percent, 0);
+    const startDate =
+      normalizeDateValue(payload?.startDate) !== undefined
+        ? normalizeDateValue(payload?.startDate)
+        : current.start_date;
+    const endDate =
+      normalizeDateValue(payload?.endDate) !== undefined
+        ? normalizeDateValue(payload?.endDate)
+        : current.end_date;
+    const isActive =
+      payload?.isActive !== undefined
+        ? normalizeIsActive(payload.isActive, true)
+        : normalizeIsActive(current.is_active, true);
 
-      const row = await customerProductRepository.getDiscountByKeys(
-        payload.customerId,
-        productRows[0].id,
-      );
-      return mapDiscount(row);
-    },
+    if (!customerId || !productId || !isNonNegativeNumber(discountPercent)) {
+      throw badRequestError("customerId, productId and discountPercent are required");
+    }
 
-    async updateDiscount(id, payload) {
-      const currentKeys = parseDiscountId(id);
-      if (!currentKeys) throw badRequestError("Invalid discount id");
+    const customer = await customerRepository.existsById(customerId);
+    if (!customer) throw badRequestError("Invalid customerId");
 
-      const current = await customerProductRepository.getDiscountByKeys(
+    const product = await productRepository.getProductRecordById(productId);
+    if (!product) throw badRequestError("Invalid productId");
+
+    await customerProductRepository.upsertCustomerProduct({
+      customerId,
+      productId,
+      discountPercent,
+      startDate: startDate ?? null,
+      endDate: endDate ?? null,
+      isActive,
+    });
+
+    if (
+      customerId !== currentKeys.customerId ||
+      productId !== currentKeys.productId
+    ) {
+      await customerProductRepository.deleteCustomerProduct(
         currentKeys.customerId,
         currentKeys.productId,
       );
-      if (!current) throw notFoundError("Discount not found");
+    }
 
-      const targetCustomerId = payload.customerId ?? current.customer_id;
-      const scopeType = payload.scopeType ?? "product";
-      const scopeId = payload.scopeId ?? current.product_id;
+    const row = await customerProductRepository.getCustomerProductByKeys(
+      customerId,
+      productId,
+    );
+    return mapCustomerProduct(row);
+  };
 
-      const customer = await customerRepository.existsById(targetCustomerId);
-      if (!customer) throw badRequestError("Invalid customerId");
-
-      const productRows = await resolveScopedProducts(scopeType, scopeId);
-      const nextStartDate = payload.startDate ?? current.start_date ?? null;
-      const nextEndDate = payload.endDate ?? current.end_date ?? null;
-      const nextIsActive = payload.status
-        ? payload.status === "expired"
-          ? 0
-          : 1
-        : current.is_active;
-
-      for (const product of productRows) {
-        const discountPercent =
-          payload.value !== undefined
-            ? resolveDiscountPercent(
-                payload.discountType ?? "percentage",
-                payload.value,
-                numberValue(product.base_price, 0),
-              )
-            : numberValue(current.discount_percent, 0);
-
-        await customerProductRepository.upsertCustomerProduct({
-          customerId: targetCustomerId,
-          productId: product.id,
-          discountPercent,
-          startDate: nextStartDate,
-          endDate: nextEndDate,
-          isActive: nextIsActive,
-        });
-      }
-
-      const targetKeys = new Set(
-        productRows.map((product) => `${targetCustomerId}__${product.id}`),
-      );
-
-      if (!targetKeys.has(id)) {
-        await customerProductRepository.deleteCustomerProduct(
-          currentKeys.customerId,
-          currentKeys.productId,
-        );
-      }
-
-      const row = await customerProductRepository.getDiscountByKeys(
-        targetCustomerId,
-        productRows[0].id,
-      );
-      return mapDiscount(row);
-    },
+  return {
+    listCustomerProducts,
+    createCustomerProduct,
+    updateCustomerProduct,
+    listDiscounts: listCustomerProducts,
+    createDiscount: createCustomerProduct,
+    updateDiscount: updateCustomerProduct,
   };
 }

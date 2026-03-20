@@ -19,7 +19,7 @@ const titleMap: Record<string, string> = {
   "/dashboard": "Dashboard",
   "/inventory/products": "Products",
   "/inventory/categories": "Categories",
-  "/inventory/discounts": "Discounts",
+  "/inventory/discounts": "Customer Pricing",
   "/sales/orders": "Orders",
   "/customers": "Customers",
 };
