@@ -1,10 +1,7 @@
-import { apiClient } from "@/services/http/apiClient";
-import type { User } from "@/shared/types/domain";
-
-const RESOURCE = "users";
+import { mockDb } from "@/services/mock/mockDb";
 
 export const usersService = {
   getList() {
-    return apiClient.getList<User>(RESOURCE);
+    return mockDb.listUsers();
   },
 };

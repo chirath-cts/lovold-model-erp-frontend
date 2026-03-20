@@ -1,20 +1,14 @@
-import { apiClient } from "@/services/http/apiClient";
-import type { CreateOrderItemPayload, OrderItem } from "@/shared/types/domain";
-
-const RESOURCE = "orderItems";
+import { mockDb } from "@/services/mock/mockDb";
+import type { CreateOrderItemPayload } from "@/shared/types/domain";
 
 export const orderItemsService = {
   getList(orderId?: string) {
-    return apiClient.getList<OrderItem>(RESOURCE, {
-      orderId,
-      _sort: "id",
-      _order: "asc",
-    });
+    return mockDb.listOrderItems(orderId);
   },
   create(payload: CreateOrderItemPayload) {
-    return apiClient.create<OrderItem, CreateOrderItemPayload>(RESOURCE, payload);
+    return mockDb.addOrderItem(payload);
   },
   remove(id: string) {
-    return apiClient.remove(RESOURCE, id);
+    return mockDb.removeOrderItem(id);
   },
 };

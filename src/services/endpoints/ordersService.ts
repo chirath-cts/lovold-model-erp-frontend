@@ -1,34 +1,19 @@
-import { apiClient } from "@/services/http/apiClient";
-import type {
-  CreateOrderPayload,
-  Order,
-  OrderStatus,
-  UpdateOrderPayload,
-} from "@/shared/types/domain";
+import { mockDb, type OrderFilters } from "@/services/mock/mockDb";
+import type { CreateOrderPayload, UpdateOrderPayload } from "@/shared/types/domain";
 
-const RESOURCE = "orders";
-
-export interface OrderFilters {
-  status?: OrderStatus | "";
-  customerId?: string;
-}
+export type { OrderFilters };
 
 export const ordersService = {
   getList(filters?: OrderFilters) {
-    return apiClient.getList<Order>(RESOURCE, {
-      status: filters?.status,
-      customerId: filters?.customerId,
-      _sort: "orderDate",
-      _order: "desc",
-    });
+    return mockDb.listOrders(filters);
   },
   create(payload: CreateOrderPayload) {
-    return apiClient.create<Order, CreateOrderPayload>(RESOURCE, payload);
+    return mockDb.addOrder(payload);
   },
   update(id: string, payload: UpdateOrderPayload) {
-    return apiClient.update<Order, UpdateOrderPayload>(RESOURCE, id, payload);
+    return mockDb.updateOrder(id, payload);
   },
   remove(id: string) {
-    return apiClient.remove(RESOURCE, id);
+    return mockDb.removeOrder(id);
   },
 };

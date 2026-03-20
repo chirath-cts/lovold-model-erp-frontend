@@ -1,7 +1,5 @@
-import { apiClient } from "@/services/http/apiClient";
+import { mockDb } from "@/services/mock/mockDb";
 import type { Product } from "@/shared/types/domain";
-
-const RESOURCE = "products";
 
 export interface ProductFilters {
   nameLike?: string;
@@ -39,20 +37,20 @@ export interface UpdateProductPayload {
 
 export const productsService = {
   getList(filters?: ProductFilters) {
-    return apiClient.getList<Product>(RESOURCE, {
-      q: filters?.nameLike,
-      categoryId: filters?.categoryId,
-    });
+    return mockDb.listProducts(filters);
   },
   create(payload: CreateProductPayload) {
-    return apiClient.create<Product, CreateProductPayload>(RESOURCE, payload);
+    const product: Product = {
+      ...payload,
+      description: payload.description ?? "",
+    };
+
+    return mockDb.addProduct(product);
   },
   update(id: string, payload: UpdateProductPayload) {
-    return apiClient.update<Product, UpdateProductPayload>(RESOURCE, id, payload);
+    return mockDb.updateProduct(id, payload);
   },
   updateStock(id: string, stockQuantity: number) {
-    return apiClient.update<Product, Pick<Product, "stockQuantity">>(RESOURCE, id, {
-      stockQuantity,
-    });
+    return mockDb.updateProductStock(id, stockQuantity);
   },
 };

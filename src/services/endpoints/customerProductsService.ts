@@ -1,11 +1,9 @@
-import { apiClient } from "@/services/http/apiClient";
 import type {
   CreateCustomerProductPayload,
   CustomerProduct,
   UpdateCustomerProductPayload,
 } from "@/shared/types/domain";
-
-const RESOURCE = "customer-products";
+import { mockDb } from "@/services/mock/mockDb";
 
 export interface CustomerProductFilters {
   customerId?: string;
@@ -14,22 +12,15 @@ export interface CustomerProductFilters {
 
 export const customerProductsService = {
   getList(filters?: CustomerProductFilters) {
-    return apiClient.getList<CustomerProduct>(RESOURCE, {
-      customerId: filters?.customerId,
-      status: filters?.status,
-    });
+    return mockDb.listCustomerProducts(filters);
   },
   create(payload: CreateCustomerProductPayload) {
-    return apiClient.create<CustomerProduct, CreateCustomerProductPayload>(
-      RESOURCE,
-      payload,
-    );
+    return mockDb.addCustomerProduct({
+      ...payload,
+      status: "active",
+    } satisfies CustomerProduct);
   },
   update(id: string, payload: UpdateCustomerProductPayload) {
-    return apiClient.update<CustomerProduct, UpdateCustomerProductPayload>(
-      RESOURCE,
-      id,
-      payload,
-    );
+    return mockDb.updateCustomerProduct(id, payload as Partial<CustomerProduct>);
   },
 };

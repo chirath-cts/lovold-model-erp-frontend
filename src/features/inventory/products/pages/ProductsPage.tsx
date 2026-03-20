@@ -59,7 +59,7 @@ import {
   type UpdateProductPayload,
 } from "@/services/endpoints/productsService";
 import { useCategories, useProducts } from "@/services/hooks/useDomainQueries";
-import { normalizeError } from "@/services/http/errors";
+import { normalizeError } from "@/services/errors";
 import { queryKeys } from "@/shared/constants/queryKeys";
 import type { Product } from "@/shared/types/domain";
 import { CurrencyText } from "@/shared/ui/CurrencyText";

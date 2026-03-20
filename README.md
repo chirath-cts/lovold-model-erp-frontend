@@ -1,5 +1,10 @@
 # React + TypeScript + Vite
 
+## Mock-only data mode
+- Backend dependencies have been removed; the app now reads and mutates data in memory from `mock/db.json`.
+- Start the frontend with `npm run dev` (no additional servers required).
+- If you want to refresh the seed data, run `npm run generate-mock` to rebuild `mock/db.json` from `mock/data` sources.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

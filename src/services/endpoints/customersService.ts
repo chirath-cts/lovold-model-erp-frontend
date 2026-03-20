@@ -1,16 +1,10 @@
-import { apiClient } from "@/services/http/apiClient";
-import type { Customer } from "@/shared/types/domain";
-
-const RESOURCE = "customers";
+import { mockDb } from "@/services/mock/mockDb";
 
 export const customersService = {
   getList() {
-    return apiClient.getList<Customer>(RESOURCE, {
-      _sort: "name",
-      _order: "asc",
-    });
+    return mockDb.listCustomers();
   },
   getById(id: string) {
-    return apiClient.getById<Customer>(RESOURCE, id);
+    return mockDb.getCustomerById(id);
   },
 };

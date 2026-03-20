@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 
 import { authService } from "@/services/endpoints/authService";
-import { ApiError } from "@/services/http/errors";
+import { ApiError } from "@/services/errors";
 import { getAuthSession, saveAuthSession } from "@/shared/lib/authSession";
 
 export function LoginPage() {
