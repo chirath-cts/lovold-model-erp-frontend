@@ -102,12 +102,16 @@ export function DiscountsPage() {
     return <LoadingState label="Loading customer pricing..." />;
   }
 
-  if (customerProductsQuery.error || customersQuery.error || productsQuery.error) {
+  if (
+    customerProductsQuery.error ||
+    customersQuery.error ||
+    productsQuery.error
+  ) {
     return <ErrorState message="Failed to load customer pricing." />;
   }
 
   return (
-    <Stack spacing={3}>
+    <Stack spacing={3} sx={{ px: { xs: 2, md: 3 } }}>
       <Box
         sx={{
           display: "flex",
@@ -173,8 +177,7 @@ export function DiscountsPage() {
           {
             key: "validity",
             header: "Validity",
-            render: (row) =>
-              `${row.startDate ?? "-"} to ${row.endDate ?? "-"}`,
+            render: (row) => `${row.startDate ?? "-"} to ${row.endDate ?? "-"}`,
           },
           {
             key: "status",
@@ -184,7 +187,12 @@ export function DiscountsPage() {
         ]}
       />
 
-      <Dialog open={openModal} onClose={() => setOpenModal(false)} fullWidth maxWidth="md">
+      <Dialog
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        fullWidth
+        maxWidth="md"
+      >
         <DialogTitle>Create Customer Pricing Agreement</DialogTitle>
         <DialogContent>
           <Box
@@ -192,7 +200,10 @@ export function DiscountsPage() {
               pt: 1,
               display: "grid",
               gap: 2,
-              gridTemplateColumns: { xs: "1fr", md: "repeat(2, minmax(0, 1fr))" },
+              gridTemplateColumns: {
+                xs: "1fr",
+                md: "repeat(2, minmax(0, 1fr))",
+              },
             }}
           >
             <FormControl size="small">
@@ -231,7 +242,9 @@ export function DiscountsPage() {
               type="number"
               inputProps={{ min: 0, step: "any" }}
               value={discountPercent}
-              onChange={(event) => setDiscountPercent(Number(event.target.value))}
+              onChange={(event) =>
+                setDiscountPercent(Number(event.target.value))
+              }
             />
 
             <FormControl size="small">
@@ -239,7 +252,9 @@ export function DiscountsPage() {
               <Select
                 value={isActive ? "active" : "inactive"}
                 label="Agreement State"
-                onChange={(event) => setIsActive(event.target.value === "active")}
+                onChange={(event) =>
+                  setIsActive(event.target.value === "active")
+                }
               >
                 <MenuItem value="active">Active</MenuItem>
                 <MenuItem value="inactive">Inactive</MenuItem>

@@ -187,7 +187,7 @@ export function CategoriesPage() {
       <Box
         sx={{ backgroundColor: palette.background, minHeight: "100%", py: 5 }}
       >
-        <Stack spacing={5} sx={{ maxWidth: 1200, mx: "auto" }}>
+        <Stack spacing={5} sx={{ mx: "auto", px: { xs: 2, md: 3 } }}>
           <Stack
             direction={{ xs: "column", md: "row" }}
             spacing={3}

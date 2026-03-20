@@ -62,17 +62,29 @@ export function OrdersPage() {
     return <ErrorState message="Failed to load orders data." />;
   }
 
-  const customerLookup = new Map(customers.map((customer) => [customer.id, customer.name]));
+  const customerLookup = new Map(
+    customers.map((customer) => [customer.id, customer.name]),
+  );
 
   const totals = {
     revenue: orders.reduce((sum, order) => sum + order.grandTotal, 0),
     profit: orders.reduce((sum, order) => sum + order.profitTotal, 0),
-    active: orders.filter((order) => order.status === "confirmed" || order.status === "dispatched").length,
+    active: orders.filter(
+      (order) => order.status === "confirmed" || order.status === "dispatched",
+    ).length,
   };
 
   return (
-    <Stack spacing={3}>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", gap: 2, flexWrap: "wrap" }}>
+    <Stack spacing={3} sx={{ px: { xs: 2, md: 3 } }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-end",
+          gap: 2,
+          flexWrap: "wrap",
+        }}
+      >
         <Box>
           <Typography variant="h1">Sales Orders</Typography>
           <Typography variant="body2" color="text.secondary">

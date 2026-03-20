@@ -425,10 +425,7 @@ export function ProductsPage() {
       <Box
         sx={{ backgroundColor: palette.background, minHeight: "100%", py: 4 }}
       >
-        <Stack
-          spacing={4}
-          sx={{ maxWidth: 1240, mx: "auto", px: { xs: 2, md: 3 } }}
-        >
+        <Stack spacing={4} sx={{ mx: "auto", px: { xs: 2, md: 3 } }}>
           {/* Filters & Actions */}
           <Stack
             direction={{ xs: "column", md: "row" }}
