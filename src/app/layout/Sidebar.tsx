@@ -134,19 +134,19 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                   transition: "background-color 120ms ease, color 120ms ease",
 
                   "&.Mui-selected": {
-                    bgcolor: palette.surfaceContainerHighest,
-                    color: palette.primary,
+                    bgcolor: palette.primary,
+                    color: palette.onPrimary,
                     fontWeight: 600,
                     "& .MuiListItemText-primary": { fontWeight: 600 },
                     "& .MuiSvgIcon-root": { fontWeight: 600 },
                   },
                   "&.Mui-selected:hover": {
-                    bgcolor: palette.surfaceContainerHighest,
-                    color: palette.primary,
+                    bgcolor: palette.primary,
+                    color: palette.onPrimary,
                   },
                   "&:hover": {
-                    bgcolor: palette.surfaceContainerHighest,
-                    color: palette.primary,
+                    bgcolor: palette.primary,
+                    color: palette.onPrimary,
                   },
                 }}
               >
@@ -205,19 +205,19 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                   transition: "background-color 120ms ease, color 120ms ease",
 
                   "&.Mui-selected": {
-                    bgcolor: palette.surfaceContainerHighest,
-                    color: palette.primary,
+                    bgcolor: palette.primary,
+                    color: palette.onPrimary,
                     fontWeight: 600,
                     "& .MuiListItemText-primary": { fontWeight: 600 },
                     "& .MuiSvgIcon-root": { fontWeight: 600 },
                   },
                   "&.Mui-selected:hover": {
-                    bgcolor: palette.surfaceContainerHighest,
-                    color: palette.primary,
+                    bgcolor: palette.primary,
+                    color: palette.onPrimary,
                   },
                   "&:hover": {
-                    bgcolor: palette.surfaceContainerHighest,
-                    color: palette.primary,
+                    bgcolor: palette.primary,
+                    color: palette.onPrimary,
                   },
                 }}
               >
@@ -289,19 +289,19 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                             "background-color 120ms ease, color 120ms ease",
 
                           "&.Mui-selected": {
-                            bgcolor: palette.surfaceContainerHighest,
-                            color: palette.primary,
+                            bgcolor: palette.primary,
+                            color: palette.onPrimary,
                             fontWeight: 600,
                             "& .MuiListItemText-primary": { fontWeight: 600 },
                             "& .MuiSvgIcon-root": { fontWeight: 600 },
                           },
                           "&.Mui-selected:hover": {
-                            bgcolor: palette.surfaceContainerHighest,
-                            color: palette.primary,
+                            bgcolor: palette.primary,
+                            color: palette.onPrimary,
                           },
                           "&:hover": {
-                            bgcolor: palette.surfaceContainerHighest,
-                            color: palette.primary,
+                            bgcolor: palette.primary,
+                            color: palette.onPrimary,
                           },
                         }}
                       >
