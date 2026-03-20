@@ -68,8 +68,7 @@ export function Topbar({ onMenuClick }: TopbarProps) {
       <Toolbar
         sx={{
           minHeight: "64px !important",
-          gap: "1.5rem",
-          px: { xs: 2, md: 3, lg: 4 },
+          gap: "1.5rem", 
         }}
       >
         <IconButton
