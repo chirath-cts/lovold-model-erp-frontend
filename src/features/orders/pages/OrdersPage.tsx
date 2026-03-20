@@ -60,8 +60,8 @@ export function OrdersPage() {
   const customerLookup = new Map(customers.map((customer) => [customer.id, customer.companyName]));
 
   const totals = {
-    revenue: orders.reduce((sum, order) => sum + order.totalAmount, 0),
-    profit: orders.reduce((sum, order) => sum + order.estimatedProfit, 0),
+    revenue: orders.reduce((sum, order) => sum + order.grandTotal, 0),
+    profit: orders.reduce((sum, order) => sum + order.profitTotal, 0),
     active: orders.filter((order) => order.status === "confirmed" || order.status === "dispatched").length,
   };
 
@@ -163,13 +163,13 @@ export function OrdersPage() {
             key: "amount",
             header: "Total",
             align: "right",
-            render: (row) => <CurrencyText value={row.totalAmount} />,
+            render: (row) => <CurrencyText value={row.grandTotal} />,
           },
           {
             key: "profit",
             header: "Profit",
             align: "right",
-            render: (row) => <CurrencyText value={row.estimatedProfit} />,
+            render: (row) => <CurrencyText value={row.profitTotal} />,
           },
           {
             key: "status",

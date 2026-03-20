@@ -62,7 +62,7 @@ const normalizeProducts = (rows) =>
         typeof (row.imageUrl ?? row.image_url) === "string"
           ? (row.imageUrl ?? row.image_url)
           : null,
-      basePrice: numeric(row.basePrice ?? row.base_price ?? row.unitPrice ?? row.unit_price, 0),
+      basePrice: numeric(row.basePrice ?? row.base_price, 0),
       unit: row.unit ?? null,
       status: row.status ?? "active",
     }));
@@ -71,8 +71,8 @@ const normalizeOrders = (rows) =>
   (rows ?? [])
     .filter((row) => row?.id && (row?.customerId ?? row?.customer_id))
     .map((row) => {
-      const grandTotal = numeric(row.grandTotal ?? row.grand_total ?? row.totalAmount ?? row.total_amount, 0);
-      const discountTotal = numeric(row.discountTotal ?? row.discount_total ?? row.totalDiscount ?? row.total_discount, 0);
+      const grandTotal = numeric(row.grandTotal ?? row.grand_total, 0);
+      const discountTotal = numeric(row.discountTotal ?? row.discount_total, 0);
 
       return {
         id: row.id,
@@ -83,8 +83,8 @@ const normalizeOrders = (rows) =>
         currency: row.currency ?? "NOK",
         subtotal: numeric(row.subtotal, grandTotal + discountTotal),
         discountTotal,
-        costTotal: numeric(row.costTotal ?? row.cost_total ?? row.totalCost ?? row.total_cost, 0),
-        profitTotal: numeric(row.profitTotal ?? row.profit_total ?? row.estimatedProfit ?? row.estimated_profit, 0),
+        costTotal: numeric(row.costTotal ?? row.cost_total, 0),
+        profitTotal: numeric(row.profitTotal ?? row.profit_total, 0),
         grandTotal,
       };
     });
@@ -98,13 +98,13 @@ const normalizeOrderProducts = (canonicalRows, compatibilityRows) => {
         productId: row.productId ?? row.product_id,
         orderId: row.orderId ?? row.order_id,
         quantity: numeric(row.quantity, 0),
-        unitPrice: numeric(row.unitPrice ?? row.unit_price ?? row.sellingPriceSnapshot ?? row.selling_price_snapshot, 0),
+        unitPrice: numeric(row.unitPrice ?? row.unit_price, 0),
         lineSubtotal: numeric(row.lineSubtotal ?? row.line_subtotal, 0),
         discountPercent: numeric(row.discountPercent ?? row.discount_percent, 0),
         discountAmount: numeric(row.discountAmount ?? row.discount_amount, 0),
         lineTotal: numeric(row.lineTotal ?? row.line_total, 0),
-        unitCostAtSale: numeric(row.unitCostAtSale ?? row.unit_cost_at_sale ?? row.fixedCostSnapshot ?? row.fixed_cost_snapshot, 0),
-        profitAmount: numeric(row.profitAmount ?? row.profit_amount ?? row.lineProfit ?? row.line_profit, 0),
+        unitCostAtSale: numeric(row.unitCostAtSale ?? row.unit_cost_at_sale, 0),
+        profitAmount: numeric(row.profitAmount ?? row.profit_amount, 0),
       }));
   }
 
@@ -113,25 +113,19 @@ const normalizeOrderProducts = (canonicalRows, compatibilityRows) => {
     .map((row) => {
       const lineSubtotal = numeric(row.lineSubtotal ?? row.line_subtotal, 0);
       const discountAmount = numeric(row.discountAmount ?? row.discount_amount, 0);
-      const discountPercent =
-        (row.discountType ?? row.discount_type) === "percentage"
-          ? numeric(row.discountValue ?? row.discount_value, 0)
-          : lineSubtotal > 0
-            ? (discountAmount / lineSubtotal) * 100
-            : 0;
 
       return {
         id: row.id,
         productId: row.productId ?? row.product_id,
         orderId: row.orderId ?? row.order_id,
         quantity: numeric(row.quantity, 0),
-        unitPrice: numeric(row.unitPrice ?? row.unit_price ?? row.sellingPriceSnapshot ?? row.selling_price_snapshot, 0),
+        unitPrice: numeric(row.unitPrice ?? row.unit_price, 0),
         lineSubtotal,
-        discountPercent: numeric(discountPercent, 0),
+        discountPercent: numeric(row.discountPercent ?? row.discount_percent, 0),
         discountAmount,
         lineTotal: numeric(row.lineTotal ?? row.line_total, 0),
-        unitCostAtSale: numeric(row.unitCostAtSale ?? row.unit_cost_at_sale ?? row.fixedCostSnapshot ?? row.fixed_cost_snapshot, 0),
-        profitAmount: numeric(row.profitAmount ?? row.profit_amount ?? row.lineProfit ?? row.line_profit, 0),
+        unitCostAtSale: numeric(row.unitCostAtSale ?? row.unit_cost_at_sale, 0),
+        profitAmount: numeric(row.profitAmount ?? row.profit_amount, 0),
       };
     });
 };

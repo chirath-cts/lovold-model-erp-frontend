@@ -3,7 +3,7 @@ import type { Customer, Order, OrderItem, Product } from "@/shared/types/domain"
 export interface DashboardMetrics {
   totalSales: number;
   totalOrders: number;
-  estimatedProfit: number;
+  profitTotal: number;
   lowStockCount: number;
   activeCustomers: number;
 }
@@ -25,9 +25,9 @@ export const getDashboardMetrics = (
   products: Product[],
   customers: Customer[],
 ): DashboardMetrics => ({
-  totalSales: orders.reduce((sum, order) => sum + order.totalAmount, 0),
+  totalSales: orders.reduce((sum, order) => sum + order.grandTotal, 0),
   totalOrders: orders.length,
-  estimatedProfit: orders.reduce((sum, order) => sum + order.estimatedProfit, 0),
+  profitTotal: orders.reduce((sum, order) => sum + order.profitTotal, 0),
   lowStockCount: products.filter((product) => product.stockQuantity <= product.reorderLevel).length,
   activeCustomers: customers.filter((customer) => customer.status === "active").length,
 });
@@ -37,7 +37,7 @@ export const getTopCustomers = (orders: Order[], customers: Customer[], limit = 
   const totals = new Map<string, number>();
 
   orders.forEach((order) => {
-    totals.set(order.customerId, (totals.get(order.customerId) ?? 0) + order.totalAmount);
+    totals.set(order.customerId, (totals.get(order.customerId) ?? 0) + order.grandTotal);
   });
 
   return [...totals.entries()]

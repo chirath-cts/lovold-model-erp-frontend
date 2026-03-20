@@ -1,5 +1,5 @@
 import { apiClient } from "@/services/http/apiClient";
-import type { OrderItem } from "@/shared/types/domain";
+import type { CreateOrderItemPayload, OrderItem } from "@/shared/types/domain";
 
 const RESOURCE = "orderItems";
 
@@ -11,8 +11,8 @@ export const orderItemsService = {
       _order: "asc",
     });
   },
-  create(payload: OrderItem) {
-    return apiClient.create<OrderItem, OrderItem>(RESOURCE, payload);
+  create(payload: CreateOrderItemPayload) {
+    return apiClient.create<OrderItem, CreateOrderItemPayload>(RESOURCE, payload);
   },
   remove(id: string) {
     return apiClient.remove(RESOURCE, id);
