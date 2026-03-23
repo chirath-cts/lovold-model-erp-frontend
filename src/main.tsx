@@ -6,6 +6,7 @@ import App from "./App.tsx";
 import theme from "./theme/theme.ts";
 import "styles/index.scss";
 
+
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <ThemeProvider theme={theme}>
