@@ -23,14 +23,22 @@ Avoid:
 
 ---
 
+## Workflow:
+- check existing services first
+- check existing mock data first
+- if missing, create suitable mock JSON in /mock/data
+- if needed, create a simple service in /services/endpoints
+- then implement the page in React + Vite + TypeScript + Tailwind CSS
+
+---
+
 ## Project Structure Rules
 
 ### Screens
-- Each screen is located in `/screens/<screen-name>/`
+- Each screen is located in `/agent-docs/example-ui-designs/<screen-name>/`
 - Always refer to:
   - `screen.png` → visual design
-  - `code.html` → layout reference
-  - Use /ai/ai-screen.md as the common screen implementation guide
+  - `code.html` → layout reference 
 
 ---
 

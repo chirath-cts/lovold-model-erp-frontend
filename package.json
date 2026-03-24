@@ -9,8 +9,7 @@
     "start": "npm run generate-mock && npm run dev",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "prompt:screen": "node ./generatePrompt.js"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

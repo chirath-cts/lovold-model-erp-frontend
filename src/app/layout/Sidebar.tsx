@@ -6,7 +6,6 @@ import WaterDropRoundedIcon from "@mui/icons-material/WaterDropRounded";
 import {
   Box,
   Collapse,
-  Divider,
   Drawer,
   List,
   ListItemButton,
