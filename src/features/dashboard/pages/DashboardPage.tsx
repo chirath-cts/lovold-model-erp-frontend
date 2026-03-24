@@ -1,29 +1,4 @@
-import type { ReactNode } from "react";
-import { LineChart } from "@mui/x-charts/LineChart";
-import {
-  Avatar,
-  Box,
-  Button,
-  Chip,
-  Divider,
-  IconButton,
-  LinearProgress,
-  Paper,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Typography,
-} from "@mui/material";
-import type { SxProps } from "@mui/material";
-import { styled } from "@mui/material/styles";
-import CalendarTodayRoundedIcon from "@mui/icons-material/CalendarTodayRounded";
-import VerifiedRoundedIcon from "@mui/icons-material/VerifiedRounded";
-import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
-import TrendingFlatRoundedIcon from "@mui/icons-material/TrendingFlatRounded";
+import { useMemo } from "react";
 
 import {
   useCustomers,
@@ -42,7 +17,7 @@ import {
   getTopProducts,
 } from "@/features/dashboard/models/dashboardSelectors";
 
-const designPalette = {
+const palette = {
   background: "#f4faff",
   surface: "#ffffff",
   surfaceLow: "#e8f6fe",
@@ -54,205 +29,10 @@ const designPalette = {
   tertiaryFixed: "#c7e7f9",
   secondary: "#1f6581",
   tertiary: "#183947",
-  outline: "rgba(192, 200, 205, 0.35)",
+  outline: "#c0c8cd",
   muted: "#70787d",
   error: "#ba1a1a",
 };
-
-const PageContainer = styled(Stack)(({ theme }) => ({
-  backgroundColor: designPalette.background,
-  minHeight: "100vh",
-  padding: theme.spacing(3),
-  gap: theme.spacing(3),
-}));
-
-const SectionCard = styled(Paper)(({ theme }) => ({
-  backgroundColor: designPalette.surface,
-  borderRadius: 16,
-  boxShadow: "0px 10px 30px rgba(0, 58, 77, 0.06)",
-  padding: theme.spacing(3),
-}));
-
-const KpiCardSurface = styled(SectionCard)(() => ({
-  display: "flex",
-  flexDirection: "column",
-  gap: 12,
-  height: "100%",
-}));
-
-const SectionHeader = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-  gap: theme.spacing(1.5),
-  marginBottom: theme.spacing(2),
-}));
-
-const RangeGroup = styled(Box)(() => ({
-  display: "flex",
-  alignItems: "center",
-  gap: 12,
-  padding: 4,
-  backgroundColor: designPalette.surfaceLow,
-  borderRadius: 12,
-}));
-
-const RangeButton = styled(Button)(() => ({
-  textTransform: "none",
-  fontWeight: 600,
-  fontSize: 14,
-  borderRadius: 8,
-  padding: "8px 16px",
-  minHeight: "auto",
-  boxShadow: "none",
-}));
-
-const IconFrame = styled(IconButton)(() => ({
-  padding: 8,
-  backgroundColor: "transparent",
-  color: designPalette.muted,
-  boxShadow: "none",
-  "&:hover": {
-    color: designPalette.primary,
-    backgroundColor: "transparent",
-  },
-}));
-
-const MutedLabel = styled(Typography)(() => ({
-  fontSize: 10,
-  fontWeight: 800,
-  letterSpacing: 1.4,
-  textTransform: "uppercase",
-  color: designPalette.muted,
-}));
-
-const Pill = styled(Chip)(() => ({
-  height: 22,
-  borderRadius: 8,
-  fontWeight: 700,
-  fontSize: 10,
-}));
-
-const DistributionBar = styled(LinearProgress)(() => ({
-  height: 8,
-  borderRadius: 999,
-  backgroundColor: "rgba(31, 101, 129, 0.14)",
-  "& .MuiLinearProgress-bar": {
-    borderRadius: 999,
-  },
-}));
-
-const CardStack = styled(Stack)(({ theme }) => ({
-  gap: theme.spacing(2),
-}));
-
-const LowStockItem = styled(Paper)(() => ({
-  padding: 12,
-  borderRadius: 10,
-  backgroundColor: designPalette.surface,
-}));
-
-const HeadCell = styled(TableCell)(() => ({
-  padding: "16px 24px",
-  fontSize: 10,
-  fontWeight: 800,
-  letterSpacing: 1.4,
-  textTransform: "uppercase",
-  color: designPalette.muted,
-  backgroundColor: designPalette.surfaceLow,
-  borderBottom: "1px solid rgba(192, 200, 205, 0.1)",
-}));
-
-const BodyCell = styled(TableCell)(() => ({
-  padding: "16px 24px",
-  borderBottom: "1px solid rgba(192, 200, 205, 0.1)",
-}));
-
-const RecentAvatar = styled(Avatar)(() => ({
-  width: 32,
-  height: 32,
-  fontSize: 10,
-  fontWeight: 700,
-}));
-
-const RecentOrdersCard = styled(SectionCard)(() => ({
-  boxShadow: "0px 4px 20px rgba(0, 58, 77, 0.03)",
-  overflow: "hidden",
-  padding: 0,
-}));
-
-const CardHeader = styled(Box)(() => ({
-  padding: "20px 24px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "space-between",
-}));
-
-const LinkButton = styled(Button)(() => ({
-  color: designPalette.primary,
-  fontWeight: 700,
-  textDecoration: "underline",
-  textUnderlineOffset: 4,
-  textTransform: "none",
-}));
-
-const KpiValue = styled(Typography)(() => ({
-  fontSize: 24,
-  fontWeight: 800,
-  lineHeight: 1.2,
-  color: designPalette.primary,
-  fontFamily: "'Manrope','Inter',sans-serif",
-}));
-
-const KpiHelper = styled(Typography)(() => ({
-  fontSize: 12,
-  fontWeight: "normal",
-  color: "#70787d",
-  fontFamily: "'Inter',sans-serif",
-  marginTop: 4,
-  display: "block",
-}));
-
-interface DashboardKpiCardProps {
-  label: string;
-  value: ReactNode;
-  badge?: { label: string; color: string; textColor?: string };
-  helper?: string;
-  cardSx?: SxProps;
-}
-
-function DashboardKpiCard({
-  label,
-  value,
-  badge,
-  helper,
-  cardSx,
-}: DashboardKpiCardProps) {
-  return (
-    <KpiCardSurface sx={cardSx}>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-        }}
-      >
-        <MutedLabel>{label}</MutedLabel>
-        {badge ? (
-          <Pill
-            size="small"
-            label={badge.label}
-            sx={{ bgcolor: badge.color, color: badge.textColor ?? "#ffffff" }}
-          />
-        ) : null}
-      </Box>
-      <Box sx={{ mt: 2 }}>
-        <KpiValue>{value}</KpiValue>
-        {helper ? <KpiHelper variant="caption">{helper}</KpiHelper> : null}
-      </Box>
-    </KpiCardSurface>
-  );
-}
 
 const getInitials = (text: string) =>
   text
@@ -265,20 +45,147 @@ const getInitials = (text: string) =>
 
 const statusColor = (status: string) => {
   const normalized = status.toLowerCase();
-  if (normalized === "delivered") return designPalette.primary;
-  if (normalized === "dispatched") return designPalette.secondary;
+  if (normalized === "delivered") return palette.primary;
+  if (normalized === "dispatched") return palette.secondary;
   if (normalized === "confirmed") return "#9eddfd";
   return "rgba(64, 72, 76, 0.45)";
 };
 
 const avatarSwatches = [
-  { bg: designPalette.primaryFixed, color: designPalette.primary },
-  { bg: designPalette.secondaryFixed, color: designPalette.secondary },
-  { bg: designPalette.tertiaryFixed, color: designPalette.tertiary },
+  { bg: palette.primaryFixed, color: palette.primary },
+  { bg: palette.secondaryFixed, color: palette.secondary },
+  { bg: palette.tertiaryFixed, color: palette.tertiary },
 ];
 
 const getAvatarStyle = (index: number) =>
   avatarSwatches[index % avatarSwatches.length];
+
+function BagIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M6 7h12l-1 12H7L6 7Z" />
+      <path d="M9 7a3 3 0 0 1 6 0" />
+    </svg>
+  );
+}
+
+function GroupIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <circle cx="9" cy="7" r="3" />
+      <circle cx="17" cy="7" r="3" />
+      <path d="M2 21a6 6 0 0 1 12 0" />
+      <path d="M12 21a6 6 0 0 1 12 0" />
+    </svg>
+  );
+}
+
+function TrendingIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M3 12h14" />
+      <path d="m13 6 6 6-6 6" />
+    </svg>
+  );
+}
+
+function VerifiedIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M9 12.75 11.25 15 15 9.75" />
+      <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+    </svg>
+  );
+}
+
+function WarningIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M12 9v4" />
+      <path d="M12 17h.01" />
+      <path d="m10.29 3.86-8.18 14A1.64 1.64 0 0 0 3.47 21h17.06a1.64 1.64 0 0 0 1.36-3.14l-8.18-14a1.64 1.64 0 0 0-2.82 0Z" />
+    </svg>
+  );
+}
+
+function buildTrendPaths(values: number[], width = 720, height = 220) {
+  if (!values.length) {
+    return { linePath: "", areaPath: "", markers: [] as { x: number; y: number }[] };
+  }
+  const padding = 16;
+  const max = Math.max(...values, 1);
+  const innerHeight = height - padding * 2;
+  const count = Math.max(values.length, 2);
+  const step = (width - padding * 2) / (count - 1);
+
+  const coords = values.map((value, index) => {
+    const x = padding + index * step;
+    const y = height - padding - (value / max) * innerHeight * 0.9;
+    return { x, y };
+  });
+
+  if (coords.length === 1) {
+    coords.push({ x: padding + step, y: coords[0].y });
+  }
+
+  const linePath = coords
+    .map((point, index) => `${index === 0 ? "M" : "L"}${point.x},${point.y}`)
+    .join(" ");
+
+  const areaPath = [
+    `M${padding},${height - padding}`,
+    linePath.replace(/^M/, "L"),
+    `L${padding + (coords.length - 1) * step},${height - padding}`,
+    "Z",
+  ].join(" ");
+
+  return { linePath, areaPath, markers: coords };
+}
 
 export function DashboardPage() {
   const ordersQuery = useOrders();
@@ -291,23 +198,17 @@ export function DashboardPage() {
   const customers = customersQuery.data ?? [];
   const orderItems = orderItemsQuery.data ?? [];
 
-  if (
+  const isLoading =
     ordersQuery.isLoading ||
     productsQuery.isLoading ||
     customersQuery.isLoading ||
-    orderItemsQuery.isLoading
-  ) {
-    return <LoadingState label="Loading dashboard..." />;
-  }
+    orderItemsQuery.isLoading;
 
-  if (
-    ordersQuery.error ||
-    productsQuery.error ||
-    customersQuery.error ||
-    orderItemsQuery.error
-  ) {
-    return <ErrorState message="Failed to load dashboard data." />;
-  }
+  const hasError =
+    Boolean(ordersQuery.error) ||
+    Boolean(productsQuery.error) ||
+    Boolean(customersQuery.error) ||
+    Boolean(orderItemsQuery.error);
 
   const metrics = getDashboardMetrics(orders, products, customers);
 
@@ -321,10 +222,11 @@ export function DashboardPage() {
       name: formatDate(order.orderDate),
       sales: order.grandTotal,
     }))
-    .slice(-10);
-  const salesTrendPoints = salesTrend.length
-    ? salesTrend
-    : [{ name: "No data", sales: 0 }];
+    .slice(-7);
+  const salesValues = salesTrend.length
+    ? salesTrend.map((point) => point.sales)
+    : [0];
+  const trendPaths = buildTrendPaths(salesValues);
 
   const statusMap = new Map<string, number>();
   orders.forEach((order) =>
@@ -354,14 +256,22 @@ export function DashboardPage() {
 
   const topCustomers = getTopCustomers(orders, customers);
   const topProducts = getTopProducts(orderItems, products);
-  const customerOrderCount = orders.reduce((map, order) => {
-    map.set(order.customerId, (map.get(order.customerId) ?? 0) + 1);
-    return map;
-  }, new Map<string, number>());
+  const customerLookup = useMemo(
+    () => new Map(customers.map((customer) => [customer.id, customer.name])),
+    [customers],
+  );
+  const customerOrderCounts = useMemo(() => {
+    const counts = new Map<string, number>();
+    orders.forEach((order) =>
+      counts.set(order.customerId, (counts.get(order.customerId) ?? 0) + 1),
+    );
+    return counts;
+  }, [orders]);
+
   const lowStockProducts = products
     .filter((product) => product.stockQuantity <= product.reorderLevel)
     .sort((a, b) => a.stockQuantity - b.stockQuantity)
-    .slice(0, 6);
+    .slice(0, 4);
 
   const recentOrders = orders
     .slice()
@@ -371,504 +281,376 @@ export function DashboardPage() {
     )
     .slice(0, 6);
 
-  const customerLookup = new Map(
-    customers.map((customer) => [customer.id, customer.name]),
-  );
+  if (isLoading) {
+    return <LoadingState label="Loading dashboard..." />;
+  }
+
+  if (hasError) {
+    return <ErrorState message="Failed to load dashboard data." />;
+  }
 
   return (
-    <PageContainer>
-      <Stack
-        direction={{ xs: "column", md: "row" }}
-        spacing={2}
-        justifyContent="space-between"
-        alignItems={{ xs: "flex-start", md: "center" }}
-      >
-        <Box>
-          <Typography
-            variant="h3"
-            sx={{ fontWeight: 800, color: designPalette.primary }}
-          >
+    <div className="min-h-screen bg-[#f4faff] p-4 text-[#111d23] sm:p-6 lg:p-8">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h1 className="text-3xl font-extrabold tracking-tight text-[#003a4d]">
             Enterprise Overview
-          </Typography>
-          <Typography variant="body2" sx={{ color: designPalette.muted }}>
+          </h1>
+          <p className="text-sm text-[#40484c]">
             Real-time performance metrics for aquaculture logistics.
-          </Typography>
-        </Box>
+          </p>
+        </div>
 
-        <RangeGroup>
-          <RangeButton
-            variant="contained"
-            disableElevation
-            sx={{
-              bgcolor: designPalette.surface,
-              color: designPalette.primary,
-              boxShadow: "0px 1px 3px rgba(0, 0, 0, 0.12)",
-            }}
-          >
+        <div className="flex items-center gap-3 rounded-lg bg-[#e8f6fe] p-1">
+          <button className="rounded-md bg-white px-4 py-2 text-sm font-semibold text-[#003a4d] shadow-sm">
             Today
-          </RangeButton>
-          <RangeButton
-            variant="text"
-            color="inherit"
-            sx={{
-              color: designPalette.muted,
-              "&:hover": { color: designPalette.primary },
-            }}
-          >
+          </button>
+          <button className="px-4 py-2 text-sm font-semibold text-[#40484c] transition-colors hover:text-[#003a4d]">
             Week
-          </RangeButton>
-          <RangeButton
-            variant="text"
-            color="inherit"
-            sx={{
-              color: designPalette.muted,
-              "&:hover": { color: designPalette.primary },
-            }}
-          >
+          </button>
+          <button className="px-4 py-2 text-sm font-semibold text-[#40484c] transition-colors hover:text-[#003a4d]">
             Month
-          </RangeButton>
-          <Divider
-            flexItem
-            orientation="vertical"
-            sx={{ opacity: 0.4, height: 16 }}
-          />
-          <IconFrame size="small">
-            <CalendarTodayRoundedIcon fontSize="small" />
-          </IconFrame>
-        </RangeGroup>
-      </Stack>
+          </button>
+          <span className="mx-1 h-4 w-px bg-[#c0c8cd]/50" />
+          <button className="flex h-10 w-10 items-center justify-center text-[#40484c]">
+            <svg
+              className="h-5 w-5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.6}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden
+            >
+              <rect x="3" y="4" width="18" height="18" rx="2" />
+              <line x1="8" x2="8" y1="2" y2="6" />
+              <line x1="16" x2="16" y1="2" y2="6" />
+              <line x1="3" x2="21" y1="10" y2="10" />
+            </svg>
+          </button>
+        </div>
+      </div>
 
-      <Box
-        sx={{
-          display: "grid",
-          gap: 2.5,
-          gridTemplateColumns: {
-            xs: "1fr",
-            sm: "repeat(2, minmax(0, 1fr))",
-            xl: "repeat(5, minmax(0, 1fr))",
-          },
-        }}
-      >
-        <DashboardKpiCard
-          label="Total Sales"
-          value={<CurrencyText value={metrics.totalSales} />}
-          badge={{
-            label: "+12%",
-            color: designPalette.primaryFixed,
-            textColor: designPalette.primaryContainer,
-          }}
-          helper="vs. last period"
-          cardSx={{
-            boxShadow: "0px 4px 20px rgba(0, 58, 77, 0.03)",
-            backgroundColor: designPalette.surface,
-          }}
-        />
-        <DashboardKpiCard
-          label="Total Orders"
-          value={metrics.totalOrders}
-          badge={{
-            label: "Ops",
-            color: designPalette.surfaceLow,
-            textColor: designPalette.primary,
-          }}
-          helper="All statuses"
-        />
-        <DashboardKpiCard
-          label="Estimated Profit"
-          value={<CurrencyText value={metrics.profitTotal} />}
-          badge={{
-            label: "Stable",
-            color: "#9eddfd",
-            textColor: designPalette.primary,
-          }}
-          helper="Aggregate profit"
-        />
-        <DashboardKpiCard
-          label="Low Stock"
-          value={metrics.lowStockCount}
-          badge={{
-            label: "Action",
-            color: "#ffdad6",
-            textColor: designPalette.error,
-          }}
-          helper="At/below reorder level"
-        />
-        <DashboardKpiCard
-          label="Active Customers"
-          value={metrics.activeCustomers}
-          badge={{
-            label: "CRM",
-            color: "#d7e5ed",
-            textColor: designPalette.primary,
-          }}
-          helper="Status: active"
-        />
-      </Box>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5 mt-4">
+        <div className="flex h-full flex-col justify-between rounded-xl bg-white p-6 shadow-[0_4px_20px_rgba(0,58,77,0.03)]">
+          <div className="flex items-start justify-between">
+            <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#70787d]">
+              Total Sales
+            </span>
+            <span className="rounded bg-[#bfe8ff] px-2 py-0.5 text-[10px] font-bold text-[#00526c]">
+              +12%
+            </span>
+          </div>
+          <div className="mt-4">
+            <p className="text-2xl font-extrabold text-[#111d23]">
+              <CurrencyText value={metrics.totalSales} />
+            </p>
+            <p className="mt-1 text-xs text-[#70787d]">vs. last period</p>
+          </div>
+        </div>
+        <div className="flex h-full flex-col justify-between rounded-xl bg-white p-6 shadow-[0_4px_20px_rgba(0,58,77,0.03)]">
+          <div className="flex items-start justify-between">
+            <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#70787d]">
+              Total Orders
+            </span>
+            <BagIcon className="h-5 w-5 text-[#1f6581]" />
+          </div>
+          <div className="mt-4">
+            <p className="text-2xl font-extrabold text-[#111d23]">
+              {metrics.totalOrders}
+            </p>
+            <p className="mt-1 text-xs text-[#70787d]">Confirmed orders</p>
+          </div>
+        </div>
+        <div className="flex h-full flex-col justify-between rounded-xl bg-white p-6 shadow-[0_4px_20px_rgba(0,58,77,0.03)]">
+          <div className="flex items-start justify-between">
+            <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#70787d]">
+              Est. Profit
+            </span>
+            <span className="rounded bg-[#9eddfd] px-2 py-0.5 text-[10px] font-bold text-[#003a4d]">
+              Safe
+            </span>
+          </div>
+          <div className="mt-4">
+            <p className="text-2xl font-extrabold text-[#111d23]">
+              <CurrencyText value={metrics.profitTotal} />
+            </p>
+            <p className="mt-1 text-xs text-[#70787d]">Margin: 25.7%</p>
+          </div>
+        </div>
+        <div className="flex h-full flex-col justify-between rounded-xl bg-white p-6 shadow-[0_4px_20px_rgba(0,58,77,0.03)]">
+          <div className="flex items-start justify-between">
+            <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#70787d]">
+              Low Stock
+            </span>
+            <span className="rounded bg-[#ffdad6] px-2 py-0.5 text-[10px] font-bold text-[#ba1a1a]">
+              Action
+            </span>
+          </div>
+          <div className="mt-4">
+            <p className="text-2xl font-extrabold text-[#ba1a1a]">
+              {metrics.lowStockCount}
+            </p>
+            <p className="mt-1 text-xs text-[#70787d]">SKUs near threshold</p>
+          </div>
+        </div>
+        <div className="flex h-full flex-col justify-between rounded-xl bg-white p-6 shadow-[0_4px_20px_rgba(0,58,77,0.03)]">
+          <div className="flex items-start justify-between">
+            <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#70787d]">
+              Active Customers
+            </span>
+            <GroupIcon className="h-5 w-5 text-[#003a4d]" />
+          </div>
+          <div className="mt-4">
+            <p className="text-2xl font-extrabold text-[#111d23]">
+              {metrics.activeCustomers}
+            </p>
+            <p className="mt-1 text-xs text-[#70787d]">Active this month</p>
+          </div>
+        </div>
+      </div>
 
-      <Box
-        sx={{
-          display: "grid",
-          gap: 3,
-          gridTemplateColumns: { xs: "1fr", xl: "repeat(3, minmax(0, 1fr))" },
-        }}
-      >
-        <SectionCard sx={{ gridColumn: { xs: "1", xl: "span 2" }, p: 4 }}>
-          <SectionHeader sx={{ mb: 3 }}>
-            <Box>
-              <Typography
-                variant="h6"
-                sx={{ fontWeight: 800, color: designPalette.primary }}
-              >
-                Sales Trend
-              </Typography>
-              <Typography variant="body2" sx={{ color: designPalette.muted }}>
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 mt-4">
+        <div className="rounded-xl bg-white p-6 lg:col-span-2">
+          <div className="mb-6 flex items-center justify-between">
+            <div>
+              <h4 className="text-lg font-bold text-[#003a4d]">Sales Trend</h4>
+              <p className="text-xs text-[#70787d]">
                 Revenue performance over time
-              </Typography>
-            </Box>
-            <Button
-              variant="text"
-              sx={{ color: designPalette.primary, fontWeight: 700 }}
-              endIcon={<TrendingFlatRoundedIcon fontSize="small" />}
-            >
-              View report
-            </Button>
-          </SectionHeader>
-          <Box sx={{ height: 280 }}>
-            <LineChart
-              height={260}
-              xAxis={[
-                {
-                  scaleType: "point",
-                  data: salesTrendPoints.map((item) => item.name),
-                  tickLabelStyle: {
-                    fontSize: 10,
-                    fill: designPalette.muted,
-                    fontWeight: 700,
-                  },
-                },
-              ]}
-              series={[
-                {
-                  data: salesTrendPoints.map((item) => item.sales),
-                  label: "Sales",
-                  color: designPalette.primary,
-                  area: true,
-                  showMark: true,
-                },
-              ]}
-              slotProps={{
-                area: { style: { fill: "rgba(255, 255, 255, 0.12)" } },
-              }}
-              margin={{ top: 16, right: 16, left: 20, bottom: 24 }}
-            />
-          </Box>
-        </SectionCard>
+              </p>
+            </div>
+            <button className="flex items-center gap-1 text-sm font-semibold text-[#003a4d]">
+              View Report
+              <TrendingIcon className="h-4 w-4" />
+            </button>
+          </div>
+          <div className="relative h-64 w-full">
+            <svg className="h-full w-full" viewBox="0 0 720 220">
+              <defs>
+                <linearGradient id="trendGradient" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0%" stopColor="#003a4d" stopOpacity="0.12" />
+                  <stop offset="100%" stopColor="#003a4d" stopOpacity="0" />
+                </linearGradient>
+              </defs>
+              {trendPaths.areaPath ? (
+                <>
+                  <path d={trendPaths.areaPath} fill="url(#trendGradient)" />
+                  <path
+                    d={trendPaths.linePath}
+                    fill="none"
+                    stroke="#003a4d"
+                    strokeWidth="3"
+                  />
+                  {trendPaths.markers.map((point, index) => (
+                    <circle
+                      key={index}
+                      cx={point.x}
+                      cy={point.y}
+                      r={4}
+                      fill="#003a4d"
+                    />
+                  ))}
+                </>
+              ) : null}
+            </svg>
+            <div className="absolute inset-x-0 bottom-0 flex justify-between px-2 text-[10px] font-bold text-[#70787d]">
+              {salesTrend.length ? (
+                salesTrend.map((item) => <span key={item.name}>{item.name}</span>)
+              ) : (
+                <span>No data</span>
+              )}
+            </div>
+          </div>
+        </div>
 
-        <SectionCard>
-          <Typography
-            variant="h6"
-            sx={{ fontWeight: 800, color: designPalette.primary, mb: 0.5 }}
-          >
-            Order Distribution
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{ color: designPalette.muted, mb: 2 }}
-          >
-            Current status breakdown
-          </Typography>
-          <CardStack>
+        <div className="rounded-xl bg-white p-6">
+          <h4 className="text-lg font-bold text-[#003a4d]">Order Distribution</h4>
+          <p className="mb-6 text-xs text-[#70787d]">Current status breakdown</p>
+          <div className="space-y-4">
             {orderStatusDistribution.map((item) => (
-              <Box key={item.status}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    mb: 0.5,
-                  }}
-                >
-                  <Typography
-                    variant="body2"
-                    sx={{ fontWeight: 700, color: designPalette.primary }}
-                  >
+              <div key={item.status}>
+                <div className="mb-2 flex items-center justify-between text-xs">
+                  <span className="font-semibold text-[#111d23]">
                     {item.status}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    sx={{ color: designPalette.muted }}
-                  >
-                    {item.count}
-                  </Typography>
-                </Box>
-                <DistributionBar
-                  variant="determinate"
-                  value={item.percent}
-                  sx={{
-                    "& .MuiLinearProgress-bar": { backgroundColor: item.color },
-                  }}
-                />
-              </Box>
+                  </span>
+                  <span className="text-[#70787d]">{item.count}</span>
+                </div>
+                <div className="h-2 w-full overflow-hidden rounded-full bg-[#e8f6fe]">
+                  <div
+                    className="h-full rounded-full"
+                    style={{
+                      width: `${item.percent}%`,
+                      backgroundColor: item.color,
+                    }}
+                  />
+                </div>
+              </div>
             ))}
-          </CardStack>
-          <Box
-            sx={{
-              mt: 3,
-              pt: 2,
-              borderTop: `1px solid ${designPalette.outline}`,
-            }}
-          >
-            <Stack direction="row" spacing={2} alignItems="center">
-              <Avatar
-                sx={{
-                  bgcolor: "rgba(31,101,129,0.12)",
-                  color: designPalette.secondary,
-                }}
-              >
-                <VerifiedRoundedIcon fontSize="small" />
-              </Avatar>
-              <Box>
-                <Typography
-                  variant="caption"
-                  sx={{ fontWeight: 700, color: designPalette.muted }}
-                >
-                  Fulfillment Rate
-                </Typography>
-                <Typography
-                  variant="h5"
-                  sx={{ fontWeight: 800, color: designPalette.primary }}
-                >
+          </div>
+          <div className="mt-8 border-t border-[#c0c8cd]/40 pt-4">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#9eddfd]/40 text-[#1f6581]">
+                <VerifiedIcon className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="text-xs font-bold text-[#70787d]">Fulfillment Rate</p>
+                <p className="text-lg font-bold text-[#003a4d]">
                   {fulfillmentRate.toFixed(1)}%
-                </Typography>
-              </Box>
-            </Stack>
-          </Box>
-        </SectionCard>
-      </Box>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <Box
-        sx={{
-          display: "grid",
-          gap: 3,
-          gridTemplateColumns: { xs: "1fr", xl: "repeat(3, minmax(0, 1fr))" },
-        }}
-      >
-        <RecentOrdersCard
-          sx={{ gridColumn: { xs: "1", xl: "span 2" }, height: "fit-content" }}
-        >
-          <CardHeader>
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: 800, color: designPalette.primary }}
-            >
-              Recent Orders
-            </Typography>
-            <LinkButton variant="text">See all orders</LinkButton>
-          </CardHeader>
-          <TableContainer component="div">
-            <Table size="medium">
-              <TableHead>
-                <TableRow>
-                  <HeadCell>ID</HeadCell>
-                  <HeadCell>Customer</HeadCell>
-                  <HeadCell>Date</HeadCell>
-                  <HeadCell>Amount</HeadCell>
-                  <HeadCell>Status</HeadCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
+      <div className="grid grid-cols-1 gap-6 xl:grid-cols-3 mt-4">
+        <div className="xl:col-span-2">
+          <div className="mb-4 flex items-center justify-between">
+            <h4 className="text-xl font-bold text-[#003a4d]">Recent Orders</h4>
+            <button className="text-sm font-semibold text-[#003a4d] underline underline-offset-4">
+              See All Orders
+            </button>
+          </div>
+          <div className="overflow-hidden rounded-xl bg-white shadow-[0_4px_20px_rgba(0,58,77,0.03)]">
+            <table className="w-full border-collapse text-left">
+              <thead className="bg-[#e8f6fe] text-[10px] font-bold uppercase tracking-[0.18em] text-[#70787d]">
+                <tr>
+                  <th className="px-6 py-4">ID</th>
+                  <th className="px-6 py-4">Customer</th>
+                  <th className="px-6 py-4">Date</th>
+                  <th className="px-6 py-4">Amount</th>
+                  <th className="px-6 py-4">Status</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[#c0c8cd]/20">
                 {recentOrders.map((order, index) => {
                   const avatarStyle = getAvatarStyle(index);
                   return (
-                    <TableRow
+                    <tr
                       key={order.id}
-                      hover
-                      sx={{
-                        cursor: "pointer",
-                        "&:hover": {
-                          backgroundColor: designPalette.surfaceHighest,
-                        },
-                      }}
+                      className="cursor-pointer transition-colors hover:bg-[#d7e5ed]"
                     >
-                      <BodyCell
-                        sx={{ fontWeight: 700, color: designPalette.primary }}
-                      >
+                      <td className="px-6 py-4 text-sm font-semibold text-[#003a4d]">
                         {order.orderNumber}
-                      </BodyCell>
-                      <BodyCell>
-                        <Stack
-                          direction="row"
-                          spacing={1.5}
-                          alignItems="center"
-                        >
-                          <RecentAvatar
-                            sx={{
-                              bgcolor: avatarStyle.bg,
+                      </td>
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div
+                            className="flex h-8 w-8 items-center justify-center rounded-full text-[10px] font-bold"
+                            style={{
+                              backgroundColor: avatarStyle.bg,
                               color: avatarStyle.color,
                             }}
                           >
-                            {getInitials(
-                              customerLookup.get(order.customerId) ?? "NA",
-                            )}
-                          </RecentAvatar>
-                          <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                            {customerLookup.get(order.customerId) ??
-                              "Unknown customer"}
-                          </Typography>
-                        </Stack>
-                      </BodyCell>
-                      <BodyCell sx={{ color: designPalette.muted }}>
+                            {getInitials(customerLookup.get(order.customerId) ?? "NA")}
+                          </div>
+                          <span className="text-sm font-medium">
+                            {customerLookup.get(order.customerId) ?? "Unknown customer"}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 text-sm text-[#70787d]">
                         {formatDate(order.orderDate)}
-                      </BodyCell>
-                      <BodyCell sx={{ fontWeight: 700 }}>
+                      </td>
+                      <td className="px-6 py-4 text-sm font-bold">
                         <CurrencyText value={order.grandTotal} />
-                      </BodyCell>
-                      <BodyCell>
+                      </td>
+                      <td className="px-6 py-4">
                         <StatusBadge value={order.status} />
-                      </BodyCell>
-                    </TableRow>
+                      </td>
+                    </tr>
                   );
                 })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </RecentOrdersCard>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-        <Stack spacing={3}>
-          <SectionCard sx={{ backgroundColor: designPalette.surfaceLow }}>
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: 800, color: designPalette.primary, mb: 1.5 }}
-            >
-              <Stack direction="row" spacing={1} alignItems="center">
-                <WarningAmberRoundedIcon sx={{ color: designPalette.error }} />
-                Low Stock Products
-              </Stack>
-            </Typography>
-            <CardStack>
+        <div className="space-y-6">
+          <div className="rounded-xl bg-[#e8f6fe] p-6">
+            <h4 className="mb-4 flex items-center gap-2 text-lg font-bold text-[#003a4d]">
+              <WarningIcon className="h-5 w-5 text-[#ba1a1a]" />
+              Low Stock Products
+            </h4>
+            <div className="space-y-3">
               {lowStockProducts.map((product) => (
-                <LowStockItem key={product.id} elevation={0}>
-                  <Stack
-                    direction="row"
-                    justifyContent="space-between"
-                    alignItems="center"
-                  >
-                    <Box>
-                      <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                        {product.name}
-                      </Typography>
-                      <Typography
-                        variant="caption"
-                        sx={{ color: designPalette.muted }}
-                      >
-                        SKU: {product.sku}
-                      </Typography>
-                    </Box>
-                    <Box sx={{ textAlign: "right" }}>
-                      <Typography
-                        variant="body2"
-                        sx={{ fontWeight: 700, color: designPalette.error }}
-                      >
-                        {product.stockQuantity} left
-                      </Typography>
-                      <Button
-                        size="small"
-                        sx={{ fontWeight: 800, color: designPalette.primary }}
-                      >
-                        Restock
-                      </Button>
-                    </Box>
-                  </Stack>
-                </LowStockItem>
+                <div
+                  key={product.id}
+                  className="flex items-center justify-between rounded-lg bg-white p-3"
+                >
+                  <div>
+                    <p className="text-sm font-bold text-[#111d23]">
+                      {product.name}
+                    </p>
+                    <p className="text-[10px] text-[#70787d]">SKU: {product.sku}</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-sm font-bold text-[#ba1a1a]">
+                      {product.stockQuantity} Left
+                    </p>
+                    <button className="text-[10px] font-bold uppercase tracking-wide text-[#003a4d]">
+                      Restock
+                    </button>
+                  </div>
+                </div>
               ))}
-            </CardStack>
-          </SectionCard>
+            </div>
+          </div>
 
-          <SectionCard>
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: 800, color: designPalette.primary, mb: 2 }}
-            >
-              Top Customers & Products
-            </Typography>
-            <Typography
-              variant="subtitle2"
-              sx={{ color: designPalette.muted, mb: 1 }}
-            >
-              Top Customers
-            </Typography>
-            <CardStack>
+          <div className="rounded-xl border border-[#c0c8cd]/20 bg-white p-6 shadow-sm">
+            <h4 className="mb-4 text-lg font-bold text-[#003a4d]">Top Customers</h4>
+            <div className="space-y-4">
               {topCustomers.slice(0, 3).map((item) => (
-                <Stack
-                  key={item.customerId}
-                  direction="row"
-                  spacing={2}
-                  alignItems="center"
-                  sx={{
-                    p: 1.5,
-                    borderRadius: 10,
-                    bgcolor: designPalette.surfaceLow,
-                  }}
-                >
-                  <Typography variant="body2">{item.name}</Typography>
-                  <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                <div key={item.customerId} className="flex items-center gap-4">
+                  <div className="h-10 w-10 overflow-hidden rounded-full bg-[#d7e5ed]">
+                    <img
+                      src={`https://lh3.googleusercontent.com/aida-public/AB6AXuAJr-81-ct22niioNCe6txV6VDlzBYT0B5-4L_1P6H88kI6ROpyY9tzPmbMMV_2Vwl2bfmOq5Dfejp1-7JAtDgy2eysTanY2SzXrgWlY6EK6gdbsAWB1fuz7BRnRH-xtoDVvXjNZho14nxqGMYSoTAV88hPLBwCczpfd0hQMJuOoUcFFdZozZB52qRmswkqktvAt3VgKEvuPb4hpSYQ-8TuNhrK7fAbH7CDo65X2p2OYY6W22vo0gWBOZADGl4ltFZIOjg4i9gFMQM`}
+                      alt={item.name}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-bold text-[#111d23]">{item.name}</p>
+                    <p className="text-[10px] text-[#70787d]">
+                      {(customerOrderCounts.get(item.customerId) ?? 0).toLocaleString()} orders this month
+                    </p>
+                  </div>
+                  <p className="text-sm font-bold text-[#003a4d]">
                     <CurrencyText value={item.totalSales} />
-                  </Typography>
-                </Stack>
+                  </p>
+                </div>
               ))}
-            </CardStack>
+            </div>
+            <button className="mt-6 w-full rounded-lg bg-[#e8f6fe] py-3 text-sm font-bold text-[#003a4d] transition-colors hover:bg-[#d7e5ed]">
+              Customer Insight Portal
+            </button>
+          </div>
 
-            <Divider sx={{ my: 2, borderColor: designPalette.outline }} />
-
-            <Typography
-              variant="subtitle2"
-              sx={{ color: designPalette.muted, mb: 1 }}
-            >
-              Top Products
-            </Typography>
-            <CardStack>
+          <div className="rounded-xl bg-white p-6 shadow-sm">
+            <h4 className="mb-4 text-lg font-bold text-[#003a4d]">Top Products</h4>
+            <div className="space-y-3">
               {topProducts.slice(0, 3).map((item) => (
-                <Stack
+                <div
                   key={item.productId}
-                  direction="row"
-                  spacing={2}
-                  alignItems="center"
-                  sx={{
-                    p: 1.25,
-                    borderRadius: 10,
-                    bgcolor: designPalette.surfaceLow,
-                  }}
+                  className="flex items-center gap-3 rounded-lg bg-[#e8f6fe] p-3"
                 >
-                  <Avatar
-                    sx={{
-                      bgcolor: designPalette.surface,
-                      color: designPalette.secondary,
-                    }}
-                  >
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1f6581]">
                     {getInitials(item.name)}
-                  </Avatar>
-                  <Box sx={{ flex: 1 }}>
-                    <Typography variant="body2" sx={{ fontWeight: 700 }}>
-                      {item.name}
-                    </Typography>
-                    <Typography
-                      variant="caption"
-                      sx={{ color: designPalette.muted }}
-                    >
-                      Revenue leader
-                    </Typography>
-                  </Box>
-                  <Typography
-                    variant="body2"
-                    sx={{ fontWeight: 800, color: designPalette.primary }}
-                  >
+                  </div>
+                  <div className="flex-1">
+                    <p className="text-sm font-bold text-[#111d23]">{item.name}</p>
+                    <p className="text-[10px] text-[#70787d]">Revenue leader</p>
+                  </div>
+                  <p className="text-sm font-bold text-[#003a4d]">
                     <CurrencyText value={item.revenue} />
-                  </Typography>
-                </Stack>
+                  </p>
+                </div>
               ))}
-            </CardStack>
-          </SectionCard>
-        </Stack>
-      </Box>
-    </PageContainer>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
