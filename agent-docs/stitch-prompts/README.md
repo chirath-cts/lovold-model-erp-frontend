@@ -12,15 +12,16 @@ Recommended order:
 2. `00a-lovold-domain-context.md`
 3. `01-project-seed-brief.md`
 4. `02-design-system-and-app-shell.md`
-5. `03-products-and-components.md`
-6. `04-categories.md`
-7. `05-customer-pricing.md`
-8. `06-orders-workspace-list-detail.md`
-9. `07-order-creation-eta-production.md`
-10. `08-inbound-tracker-supplier-pos.md`
-11. `09-customers.md`
-12. `10-dashboard.md`
-13. `11-flow-polish-and-unification.md`
+5. `02a-login-screen.md`
+6. `03-products-and-components.md`
+7. `04-categories.md`
+8. `05-customer-pricing.md`
+9. `06-orders-workspace-list-detail.md`
+10. `07-order-creation-eta-production.md`
+11. `08-inbound-tracker-supplier-pos.md`
+12. `09-customers.md`
+13. `10-dashboard.md`
+14. `11-flow-polish-and-unification.md`
 
 ## Best Workflow
 
@@ -29,6 +30,7 @@ Recommended order:
 - Paste Prompt 00a next to anchor the project in Lovold's aquaculture domain.
 - Paste Prompt 01 after that to establish the product concept.
 - Paste Prompt 02 after that to lock the shared shell, navigation, and reusable UI language.
+- Paste Prompt 02a next if you want Stitch to design the login screen in the same visual language.
 - Then continue section by section.
 - After each section, review the results before moving to the next prompt.
 - Keep asking Stitch to preserve the same visual language, spacing system, status treatment, and component patterns.

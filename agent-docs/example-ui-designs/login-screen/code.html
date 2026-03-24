@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lovold ERP | Internal Operations Access</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Google Fonts: Inter for Typography -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-fixed": "#cfe6f2",
+              "primary": "#004260",
+              "secondary-container": "#cfe6f2",
+              "on-secondary-container": "#526772",
+              "on-tertiary-fixed": "#111d23",
+              "on-tertiary-container": "#bfccd4",
+              "tertiary-fixed": "#d7e4ec",
+              "on-tertiary-fixed-variant": "#3c494f",
+              "on-surface": "#191c1e",
+              "error-container": "#ffdad6",
+              "surface-container": "#eceef1",
+              "inverse-on-surface": "#eff1f4",
+              "surface-container-low": "#f2f4f7",
+              "surface-container-highest": "#e0e3e6",
+              "inverse-surface": "#2d3133",
+              "primary-container": "#005b82",
+              "surface-dim": "#d8dadd",
+              "outline": "#70787f",
+              "on-secondary-fixed": "#071e27",
+              "on-background": "#191c1e",
+              "surface-tint": "#17648c",
+              "surface-variant": "#e0e3e6",
+              "on-tertiary": "#ffffff",
+              "on-secondary-fixed-variant": "#354a53",
+              "on-primary": "#ffffff",
+              "on-error-container": "#93000a",
+              "background": "#f7f9fc",
+              "primary-fixed": "#c8e6ff",
+              "on-primary-container": "#91d2fe",
+              "primary-fixed-dim": "#8ecefa",
+              "tertiary-fixed-dim": "#bbc8d0",
+              "secondary-fixed-dim": "#b4cad6",
+              "surface-container-high": "#e6e8eb",
+              "on-primary-fixed": "#001e2e",
+              "on-primary-fixed-variant": "#004c6d",
+              "inverse-primary": "#8ecefa",
+              "error": "#ba1a1a",
+              "on-secondary": "#ffffff",
+              "surface-container-lowest": "#ffffff",
+              "on-error": "#ffffff",
+              "tertiary-container": "#4b575e",
+              "surface-bright": "#f7f9fc",
+              "outline-variant": "#c0c7cf",
+              "surface": "#f7f9fc",
+              "tertiary": "#344046",
+              "on-surface-variant": "#40484e",
+              "secondary": "#4c616c"
+            },
+            fontFamily: {
+              "headline": ["Inter", "sans-serif"],
+              "body": ["Inter", "sans-serif"],
+              "label": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        /* Custom scrollbar for data-dense looks */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #004260;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body antialiased min-h-screen flex flex-col">
+<!-- Main Content Area: Split Screen Layout -->
+<main class="flex-grow flex flex-col md:flex-row h-screen overflow-hidden">
+<!-- Left Side: Industrial Visual Backdrop (60% Width) -->
+<section class="hidden md:block md:w-3/5 relative bg-primary overflow-hidden">
+<img class="absolute inset-0 w-full h-full object-cover opacity-60 mix-blend-multiply transition-transform duration-1000" data-alt="Modern Norwegian aquaculture feed barge in deep blue North Sea waters with industrial precision equipment and overcast dramatic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4LXG0oT-4QjhcUExpMXtqRQjXrajGLc-neNWKMG0hScp20p3QLTGrXHlxRxGiwVRo0jQ9632twrVIw_qNZXBiZkJH8oDGigA1-lWNhOp7jb4wb4dtzX51FYKeJ27lSYwQT04tKx8fCUOHg_vUzaU7wHzmQnp6lUduiIpdpOZXmGhufj90rX3qSdPUymqftMzY3GzkleT5NRRB12Z76WFjbL-OgZmgVJ7yXF1uZ7gmYls8kqh6K2MONf64BZBwLvfsKIVpfu2anP8"/>
+<!-- Technical Overlay -->
+<div class="absolute inset-0 bg-gradient-to-tr from-primary via-transparent to-transparent opacity-90"></div>
+<!-- Informational Anchor -->
+<div class="absolute bottom-16 left-16 max-w-lg z-10">
+<div class="mb-6 flex items-center space-x-2">
+<span class="w-8 h-[2px] bg-primary-container"></span>
+<span class="text-primary-container font-semibold tracking-widest text-[10px] uppercase">Operational Excellence</span>
+</div>
+<h2 class="text-4xl lg:text-5xl font-black text-white leading-[1.1] mb-4 tracking-tight">
+                    Subsurface <br/> Precision ERP
+                </h2>
+<p class="text-primary-container font-medium text-lg max-w-md opacity-90 leading-relaxed">
+                    Synchronized control systems for high-stakes aquaculture engineering environments.
+                </p>
+<!-- System Status Snapshot (Industrial Detail) -->
+<div class="mt-12 flex gap-8">
+<div class="flex flex-col">
+<span class="text-[10px] text-primary-container uppercase font-bold tracking-tighter mb-1">Network Status</span>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-white font-mono text-sm">EN_SECURE_LINK_ON</span>
+</div>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] text-primary-container uppercase font-bold tracking-tighter mb-1">Node Activity</span>
+<span class="text-white font-mono text-sm">4.2 TB/s SENS_DTA</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Side: Secure Login Form (40% Width) -->
+<section class="w-full md:w-2/5 flex flex-col bg-surface overflow-y-auto">
+<!-- Branding Header (Mobile & Desktop) -->
+<div class="p-8 md:p-12 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary flex items-center justify-center rounded-sm">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">precision_manufacturing</span>
+</div>
+<div class="flex flex-col">
+<span class="text-primary text-xl font-black leading-none tracking-tighter">LOVOLD</span>
+<span class="text-on-surface-variant text-[10px] font-bold tracking-[0.2em] leading-none mt-1">INDUSTRIAL FORGE</span>
+</div>
+</div>
+</div>
+<div class="flex-grow flex flex-col justify-center px-8 md:px-16 lg:px-24 py-12">
+<!-- Headline Group -->
+<div class="mb-10">
+<h1 class="text-on-surface text-2xl font-extrabold tracking-tight mb-2">Internal Operations Access</h1>
+<p class="text-on-surface-variant text-sm font-medium">Secure Internal Access Required. Authenticate to proceed to the command console.</p>
+</div>
+<!-- Login Form -->
+<form class="space-y-6">
+<!-- Username/Email Field -->
+<div class="group">
+<label class="block text-[11px] font-bold text-on-surface-variant uppercase tracking-widest mb-2 px-1" for="id_input">Email or Employee ID</label>
+<div class="relative">
+<input class="w-full bg-surface-container-high border-none rounded-sm px-4 py-3.5 text-on-surface font-medium placeholder:text-outline/50 focus:ring-0 focus:outline-none transition-all duration-200" id="id_input" placeholder="e.g. operational_admin" type="text"/>
+<div class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-focus-within:w-full"></div>
+</div>
+</div>
+<!-- Password Field -->
+<div class="group">
+<div class="flex justify-between items-center mb-2 px-1">
+<label class="block text-[11px] font-bold text-on-surface-variant uppercase tracking-widest" for="password_input">Password</label>
+<a class="text-[11px] font-bold text-primary hover:text-primary-container transition-colors duration-200" href="#">FORGOT PASSWORD?</a>
+</div>
+<div class="relative">
+<input class="w-full bg-surface-container-high border-none rounded-sm px-4 py-3.5 text-on-surface font-medium placeholder:text-outline/50 focus:ring-0 focus:outline-none transition-all duration-200" id="password_input" placeholder="••••••••" type="password"/>
+<div class="absolute bottom-0 left-0 w-0 h-[2px] bg-primary transition-all duration-300 group-focus-within:w-full"></div>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-on-surface" type="button">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- Options Row -->
+<div class="flex items-center">
+<label class="flex items-center cursor-pointer group">
+<input class="w-4 h-4 rounded-sm border-outline-variant bg-surface-container-high text-primary focus:ring-primary focus:ring-offset-0 transition-all" type="checkbox"/>
+<span class="ml-3 text-sm font-medium text-on-surface-variant group-hover:text-on-surface transition-colors">Remember session for 12 hours</span>
+</label>
+</div>
+<!-- Action Button -->
+<div class="pt-4">
+<button class="w-full bg-gradient-to-r from-primary to-primary-container text-white py-4 rounded-sm font-bold tracking-widest uppercase text-xs shadow-lg shadow-primary/10 hover:shadow-primary/20 hover:opacity-95 active:scale-[0.98] transition-all" type="submit">
+                            Sign In to System
+                        </button>
+</div>
+</form>
+<!-- Security Footer Note -->
+<div class="mt-12 p-4 bg-surface-container-low rounded-sm flex items-start gap-3">
+<span class="material-symbols-outlined text-primary text-sm mt-0.5">verified_user</span>
+<p class="text-[11px] leading-relaxed text-on-surface-variant">
+                        This system is monitored for security purposes. Unauthorized access attempts are logged and reported to the Lovold Security Operations Center (LSOC). Use of this software implies consent to the <a class="underline font-bold text-on-surface" href="#">Digital Security Policy</a>.
+                    </p>
+</div>
+</div>
+<!-- Footer Section Mapping from JSON -->
+<footer class="bg-[#f7f9fc] dark:bg-[#191c1e] border-t border-[#191c1e]/5 mt-auto">
+<div class="flex flex-col md:flex-row justify-between items-center py-8 px-12 w-full max-w-screen-2xl mx-auto">
+<div class="mb-4 md:mb-0">
+<span class="text-lg font-black text-[#004260] dark:text-[#f7f9fc]">Lovold Solution.</span>
+<p class="font-inter text-[12px] tracking-tight antialiased text-[#40484e] dark:text-[#f7f9fc]/60 mt-1">© 2024 Lovold Solution. Subsurface Precision ERP. All rights reserved.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="font-inter text-[12px] tracking-tight antialiased text-[#40484e] dark:text-[#f7f9fc]/60 hover:text-[#005b82] dark:hover:text-[#f7f9fc] transition-colors duration-200 cursor-pointer active:opacity-70" href="#">System Status</a>
+<a class="font-inter text-[12px] tracking-tight antialiased text-[#40484e] dark:text-[#f7f9fc]/60 hover:text-[#005b82] dark:hover:text-[#f7f9fc] transition-colors duration-200 cursor-pointer active:opacity-70" href="#">Terms of Use</a>
+<a class="font-inter text-[12px] tracking-tight antialiased text-[#40484e] dark:text-[#f7f9fc]/60 hover:text-[#005b82] dark:hover:text-[#f7f9fc] transition-colors duration-200 cursor-pointer active:opacity-70" href="#">Security Policy</a>
+<a class="font-inter text-[12px] tracking-tight antialiased text-[#40484e] dark:text-[#f7f9fc]/60 hover:text-[#005b82] dark:hover:text-[#f7f9fc] transition-colors duration-200 cursor-pointer active:opacity-70" href="#">Technical Support</a>
+</div>
+</div>
+</footer>
+</section>
+</main>
+</body></html>
