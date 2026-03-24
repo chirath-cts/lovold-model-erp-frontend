@@ -1,25 +1,6 @@
 import type { FormEvent } from "react";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import ArrowForwardRoundedIcon from "@mui/icons-material/ArrowForwardRounded";
-import LockRoundedIcon from "@mui/icons-material/LockRounded";
-import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
-import WavesRoundedIcon from "@mui/icons-material/WavesRounded";
-import {
-  Alert,
-  Box,
-  Button,
-  Checkbox,
-  CircularProgress,
-  FormControlLabel,
-  Grid,
-  InputAdornment,
-  Link,
-  Paper,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
 
 import { authService } from "@/services/endpoints/authService";
 import { ApiError } from "@/services/errors";
@@ -67,357 +48,314 @@ export function LoginPage() {
     }
   };
 
+  const inputBaseClasses =
+    "w-full rounded-xl bg-white/90 ring-1 ring-[#c1c7cc] focus:ring-2 focus:ring-[#003a4d] px-4 py-3 text-sm font-medium text-[#0f1d24] placeholder:text-[#7b8a93] outline-none transition shadow-[0_8px_20px_rgba(0,58,77,0.06)]";
+
   return (
-    <Box
-      sx={{
-        position: "relative",
-        minHeight: "100vh",
-        bgcolor: "background.default",
-        display: "flex",
-        alignItems: { xs: "flex-start", md: "center" },
-        justifyContent: "center",
-        px: { xs: 2.5, md: 6 },
-        py: { xs: 5, md: 8 },
-        overflow: "hidden",
-      }}
-    >
-      {/* Background accents */}
-      <Box
-        sx={{
-          position: "absolute",
-          inset: 0,
-          pointerEvents: "none",
-        }}
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "-18%",
-            right: "-8%",
-            width: { xs: "72%", md: "44%" },
-            height: "64%",
-            bgcolor: "primary.light",
-            opacity: 0.35,
-            filter: "blur(130px)",
-          }}
-        />
-        <Box
-          sx={{
-            position: "absolute",
-            bottom: "-22%",
-            left: "-6%",
-            width: { xs: "78%", md: "52%" },
-            height: "72%",
-            bgcolor: "divider",
-            opacity: 0.32,
-            filter: "blur(160px)",
-          }}
-        />
-      </Box>
-
-      <Grid
-        container
-        spacing={{ xs: 5, md: 10 }}
-        alignItems="center"
-        sx={{ position: "relative", zIndex: 1, maxWidth: 1200, width: "100%" }}
-      >
-        <Grid
-          size={{ xs: 12, lg: 6 }}
-          sx={{ display: { xs: "none", lg: "flex" }, pr: { lg: 6 } }}
-        >
-          <Stack spacing={4}>
-            <Stack direction="row" spacing={2} alignItems="center">
-              <Box
-                sx={{
-                  width: 56,
-                  height: 56,
-                  borderRadius: 2,
-                  bgcolor: "primary.light",
-                  color: "primary.contrastText",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  boxShadow: "0 10px 30px rgba(0,58,77,0.16)",
-                }}
-              >
-                <WavesRoundedIcon fontSize="medium" />
-              </Box>
-              <Typography variant="h4" sx={{ fontWeight: 800, color: "primary.main" }}>
-                PengVinERP
-              </Typography>
-            </Stack>
-
-            <Box>
-              <Typography
-                variant="h1"
-                sx={{
-                  fontSize: { lg: "3rem", xl: "3.4rem" },
-                  lineHeight: 1.05,
-                  color: "primary.main",
-                  fontWeight: 800,
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                Sustainable
-                <br />
-                <Box component="span" sx={{ color: "secondary.main" }}>
-                  Aquaculture
-                </Box>
-                <br />
-                Intelligence.
-              </Typography>
-            </Box>
-
-            <Typography
-              variant="body1"
-              color="text.secondary"
-              sx={{ maxWidth: 460, fontSize: "1.05rem" }}
-            >
-              Enterprise resource planning engineered for the precision demands of modern fish
-              farming and aquatic logistics.
-            </Typography>
-
-            <Paper
-              variant="outlined"
-              sx={{
-                bgcolor: "background.paper",
-                px: 3,
-                py: 2.5,
-                borderLeft: (theme) => `4px solid ${theme.palette.primary.main}`,
-                boxShadow: "0 10px 22px rgba(0,28,38,0.06)",
-              }}
-            >
-              <Typography
-                variant="overline"
-                color="text.secondary"
-                sx={{ letterSpacing: "0.18em" }}
-              >
-                Infrastructure Status
-              </Typography>
-              <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mt: 1 }}>
-                <Box
-                  sx={{
-                    width: 10,
-                    height: 10,
-                    borderRadius: "50%",
-                    bgcolor: "secondary.main",
-                    boxShadow: "0 0 0 6px rgba(31,101,129,0.14)",
-                  }}
-                />
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                  All Atlantic systems operational
-                </Typography>
-              </Stack>
-            </Paper>
-          </Stack>
-        </Grid>
-
-        <Grid
-          size={{ xs: 12, lg: 6 }}
-          sx={{ display: "flex", justifyContent: { xs: "center", lg: "flex-end" } }}
-        >
-          <Paper
-            elevation={0}
-            sx={{
-              width: "450px",
-              maxWidth: { xs: 520, sm: 480, lg: 460 },
-              p: { xs: 3, sm: 4, md: 5 },
-              borderRadius: 3,
-              border: (theme) => `1px solid ${theme.palette.divider}`,
-              boxShadow: "0 14px 36px rgba(0,28,38,0.12)",
-              bgcolor: "background.paper",
+    <div className="min-h-screen bg-[#f4faff] text-[#0f1d24]">
+      <main className="min-h-screen flex flex-col md:flex-row">
+        <section className="relative hidden md:flex md:w-7/12 overflow-hidden bg-gradient-to-br from-[#003a4d] to-[#00526c] text-white">
+          <div
+            className="absolute inset-0 opacity-10 pointer-events-none"
+            style={{
+              backgroundImage:
+                "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAP1nqBGd2djHqTotypbpjQCGR_JkJNcErftcdCFJFuCI4KJgReE2ST0SShu9Zu1_SmCCEm0tADWn9RolYTY46n0aHolGGUH4L74yQw1lxxhHxPA7x8INeoh9j9Pp00pPVQIpohkCuSulmFLhqil6u0cb0dI52ZrlaoQEzClsAkAw_U8x1SaDBnMD-YN2CoMcgsgmZPniJF2mFm96Sfg-mMledxC4ltcojcxji28p7sqLkE4Ewp5CbFKygyDU48eZoF28WFFxr9674')",
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
-          >
-            <Stack spacing={3}>
-              <Box sx={{ display: { xs: "flex", lg: "none" }, justifyContent: "center" }}>
-                <Typography variant="h4" sx={{ fontWeight: 800, color: "primary.main" }}>
-                  PengVinERP
-                </Typography>
-              </Box>
+          />
 
-              <Box>
-                <Typography
-                  variant="h2"
-                  sx={{ fontSize: { xs: "1.4rem", sm: "1.6rem" }, fontWeight: 800, mb: 0.5 }}
+          <div className="relative z-10 flex flex-col justify-between w-full h-full p-12 xl:p-16 gap-10">
+            <div className="flex items-center gap-3">
+              <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/20 backdrop-blur-sm">
+                <svg
+                  aria-hidden
+                  viewBox="0 0 24 24"
+                  className="h-8 w-8 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={1.6}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
-                  Enterprise Portal
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Secure access to aquaculture analytics.
-                </Typography>
-              </Box>
+                  <path d="M12 2v7" />
+                  <circle cx="12" cy="9" r="2" />
+                  <path d="M12 13v8" />
+                  <path d="M5 12a7 7 0 0 0 14 0" />
+                  <path d="M5 12h3" />
+                  <path d="M16 12h3" />
+                </svg>
+              </span>
+              <div>
+                <p className="text-sm text-white/70 tracking-[0.2em] font-semibold uppercase">Lovold</p>
+                <p className="font-extrabold text-3xl leading-tight tracking-tight">
+                  ERP Platform
+                </p>
+              </div>
+            </div>
+
+            <div className="max-w-2xl space-y-6">
+              <p className="font-bold text-5xl leading-[1.05] tracking-tight">
+                Operational Architect for Global Aquaculture
+              </p>
+              <p className="text-lg text-[#bfe9ff] max-w-xl font-medium">
+                Empowering aquaculture operations with order promise and fulfillment control.
+              </p>
+              <div className="grid grid-cols-2 gap-6 max-w-xl">
+                <div className="bg-white/5 backdrop-blur-md p-5 rounded-xl border border-white/10">
+                  <p className="font-mono text-[#c0e8ff] text-[11px] mb-2 tracking-wide">LATENCY_SYNC</p>
+                  <p className="font-extrabold text-3xl">99.98%</p>
+                  <p className="text-white/70 text-sm">Fulfillment Accuracy</p>
+                </div>
+                <div className="bg-white/5 backdrop-blur-md p-5 rounded-xl border border-white/10">
+                  <p className="font-mono text-[#c0e8ff] text-[11px] mb-2 tracking-wide">SYSTEM_STATUS</p>
+                  <p className="font-extrabold text-3xl">OPTIMAL</p>
+                  <p className="text-white/70 text-sm">Real-time Logistics</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-4 text-white/50 text-[11px] font-mono tracking-[0.24em] uppercase">
+              <span>v2.4.0</span>
+              <span className="w-8 h-px bg-white/20" />
+              <span>ISO 27001 Certified</span>
+            </div>
+          </div>
+
+          <div className="absolute bottom-0 right-0 w-full h-1/2 pointer-events-none opacity-20">
+            <img
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAP1nqBGd2djHqTotypbpjQCGR_JkJNcErftcdCFJFuCI4KJgReE2ST0SShu9Zu1_SmCCEm0tADWn9RolYTY46n0aHolGGUH4L74yQw1lxxhHxPA7x8INeoh9j9Pp00pPVQIpohkCuSulmFLhqil6u0cb0dI52ZrlaoQEzClsAkAw_U8x1SaDBnMD-YN2CoMcgsgmZPniJF2mFm96Sfg-mMledxC4ltcojcxji28p7sqLkE4Ewp5CbFKygyDU48eZoF28WFFxr9674"
+              alt="Industrial ropes and marine equipment"
+              className="w-full h-full object-cover mix-blend-overlay"
+              loading="lazy"
+            />
+          </div>
+        </section>
+
+        <section className="flex-1 flex items-center justify-center bg-[#f4faff] p-6 sm:p-10">
+          <div className="w-full max-w-md">
+            <div className="md:hidden flex flex-col items-center mb-10">
+              <div className="w-16 h-16 bg-[#003a4d] flex items-center justify-center rounded-2xl text-white shadow-lg">
+                <svg
+                  aria-hidden
+                  viewBox="0 0 24 24"
+                  className="h-8 w-8"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={1.6}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M12 2v7" />
+                  <circle cx="12" cy="9" r="2" />
+                  <path d="M12 13v8" />
+                  <path d="M5 12a7 7 0 0 0 14 0" />
+              <path d="M5 12h3" />
+              <path d="M16 12h3" />
+                </svg>
+              </div>
+              <p className="font-extrabold text-2xl text-[#002330] tracking-tight">
+                Lovold ERP
+              </p>
+              <p className="text-[#41484c] text-sm font-medium mt-1">Operational Architect</p>
+            </div>
+
+            <div className="bg-white/80 backdrop-blur-sm border border-[#d6e5ee] shadow-[0_18px_50px_rgba(0,44,64,0.12)] rounded-2xl p-6 sm:p-8">
+              <header className="mb-8">
+                <p className="font-bold text-3xl text-[#0f1d24] tracking-tight">
+                  System Access
+                </p>
+                <p className="text-[#41484c] text-sm mt-1">
+                  Enter your credentials to manage operations.
+                </p>
+              </header>
 
               {error && (
-                <Alert severity="error" sx={{ borderRadius: 2 }}>
+                <div className="mb-6 rounded-xl border border-[#ffdad6] bg-[#fff2ef] px-4 py-3 text-sm font-medium text-[#93000a]">
                   {error}
-                </Alert>
+                </div>
               )}
 
-              <Box component="form" onSubmit={handleSubmit} noValidate>
-                <Stack spacing={2.5}>
-                  <TextField
-                    name="username"
-                    label="Username"
-                    type="text"
-                    placeholder="Enter username"
-                    fullWidth
-                    required
-                    value={form.username}
-                    onChange={(event) => {
-                      setForm((prev) => ({ ...prev, username: event.target.value }));
-                      if (error) setError(null);
-                    }}
-                    autoComplete="username"
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <PersonRoundedIcon color="action" fontSize="small" />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-
-                  <Stack spacing={0.5}>
-                    <Stack direction="row" justifyContent="space-between" alignItems="flex-end">
-                      <Typography
-                        variant="caption"
-                        sx={{ textTransform: "uppercase", letterSpacing: "0.14em", fontWeight: 700 }}
+              <form className="space-y-6" onSubmit={handleSubmit} noValidate>
+                <div className="space-y-2">
+                  <label
+                    className="block text-[11px] font-semibold uppercase tracking-[0.18em] text-[#41484c]"
+                    htmlFor="username"
+                  >
+                    Username or Enterprise Email
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#71787c]">
+                      <svg
+                        aria-hidden
+                        viewBox="0 0 24 24"
+                        className="h-5 w-5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={1.7}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
                       >
-                        Security Key
-                      </Typography>
-                      <Link
-                        href="#"
-                        underline="hover"
-                        sx={{ fontSize: 12, fontWeight: 700, color: "secondary.main" }}
-                      >
-                        Forgot password?
-                      </Link>
-                    </Stack>
-                    <TextField
-                      name="password"
-                      label="Password"
-                      type="password"
-                      placeholder="********"
-                      fullWidth
+                        <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Z" />
+                        <path d="M21 21a7 7 0 0 0-14 0" />
+                      </svg>
+                    </span>
+                    <input
+                      id="username"
+                      name="username"
+                      type="text"
+                      autoComplete="username"
                       required
+                      placeholder="e.g. j.coordinator@lovold.com"
+                      className={`${inputBaseClasses} pl-10`}
+                      value={form.username}
+                      onChange={(event) => {
+                        setForm((prev) => ({ ...prev, username: event.target.value }));
+                        if (error) setError(null);
+                      }}
+                    />
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <label
+                      className="block text-[11px] font-semibold uppercase tracking-[0.18em] text-[#41484c]"
+                      htmlFor="password"
+                    >
+                      Access Key
+                    </label>
+                    <a className="text-xs font-semibold text-[#1f6581] hover:text-[#003a4d] transition-colors" href="#">
+                      Forgot Password?
+                    </a>
+                  </div>
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#71787c]">
+                      <svg
+                        aria-hidden
+                        viewBox="0 0 24 24"
+                        className="h-5 w-5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={1.7}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <rect x="6" y="10" width="12" height="10" rx="2" />
+                        <path d="M8 10V7a4 4 0 1 1 8 0v3" />
+                      </svg>
+                    </span>
+                    <input
+                      id="password"
+                      name="password"
+                      type="password"
+                      autoComplete="current-password"
+                      required
+                      placeholder="••••••••••"
+                      className={`${inputBaseClasses} pl-10 pr-12`}
                       value={form.password}
                       onChange={(event) => {
                         setForm((prev) => ({ ...prev, password: event.target.value }));
                         if (error) setError(null);
                       }}
-                      autoComplete="current-password"
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <LockRoundedIcon color="action" fontSize="small" />
-                          </InputAdornment>
-                        ),
-                      }}
                     />
-                  </Stack>
+                  </div>
+                </div>
 
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        name="remember"
-                        color="primary"
-                        size="small"
-                        checked={form.remember}
-                        onChange={(event) => setForm((prev) => ({ ...prev, remember: event.target.checked }))}
-                      />
+                <label className="flex items-center gap-3 text-sm text-[#41484c] cursor-pointer select-none">
+                  <input
+                    type="checkbox"
+                    name="remember"
+                    checked={form.remember}
+                    onChange={(event) =>
+                      setForm((prev) => ({ ...prev, remember: event.target.checked }))
                     }
-                    label={
-                      <Typography variant="body2" color="text.secondary">
-                        Remember this terminal
-                      </Typography>
-                    }
+                    className="h-4 w-4 rounded border-[#c1c7cc] text-[#003a4d] focus:ring-[#003a4d]"
                   />
+                  <span className="font-medium">Maintain active session for 12 hours</span>
+                </label>
 
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    fullWidth
-                    disabled={submitting}
-                    sx={{
-                      py: 1.4,
-                      borderRadius: 2,
-                      fontWeight: 800,
-                      backgroundImage: (theme) =>
-                        `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.primary.light} 100%)`,
-                      color: "#ffffff",
-                      boxShadow: "0 16px 38px rgba(0,58,77,0.18)",
-                      "&:hover": {
-                        boxShadow: "0 18px 42px rgba(0,58,77,0.26)",
-                        backgroundImage: (theme) =>
-                          `linear-gradient(135deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
-                      },
-                      "&:active": { transform: "translateY(1px)" },
-                    }}
-                    endIcon={
-                      submitting ? <CircularProgress size={18} color="inherit" /> : <ArrowForwardRoundedIcon />
-                    }
-                  >
-                    {submitting ? "Signing In" : "Sign In"}
-                  </Button>
-                </Stack>
-              </Box>
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#003a4d] to-[#00526c] text-white py-4 px-5 font-bold text-base shadow-[0_18px_40px_rgba(0,58,77,0.22)] transition-all hover:brightness-110 active:translate-y-[1px] disabled:opacity-70 disabled:cursor-not-allowed"
+                >
+                  {submitting ? (
+                    <>
+                      <svg
+                        className="h-5 w-5 animate-spin"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <circle className="opacity-30" cx="12" cy="12" r="9" />
+                        <path d="M21 12a9 9 0 0 1-9 9" />
+                      </svg>
+                      <span>Signing In</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>Authenticate Access</span>
+                      <svg
+                        aria-hidden
+                        viewBox="0 0 24 24"
+                        className="h-5 w-5 transition-transform"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={1.8}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <path d="M5 12h14" />
+                        <path d="M13 6l6 6-6 6" />
+                      </svg>
+                    </>
+                  )}
+                </button>
+              </form>
 
-              <Box
-                sx={{
-                  pt: 3,
-                  mt: 1,
-                  borderTop: (theme) => `1px solid ${theme.palette.divider}`,
-                  textAlign: "center",
-                }}
-              >
-                <Typography variant="caption" color="text.secondary">
-                  Authorized users only. Access is monitored.
-                </Typography>
-                <Stack direction="row" spacing={3} justifyContent="center" sx={{ mt: 1.5 }}>
-                  {["Support", "Security", "Privacy"].map((item) => (
-                    <Link
-                      key={item}
-                      href="#"
-                      underline="hover"
-                      sx={{
-                        fontSize: 11,
-                        letterSpacing: "0.12em",
-                        textTransform: "uppercase",
-                        fontWeight: 800,
-                        color: "text.secondary",
-                        "&:hover": { color: "primary.main" },
-                      }}
+              <footer className="mt-10 pt-7 border-t border-[#d6e5ee]">
+                <div className="flex items-center gap-4">
+                  <div className="p-2 bg-[#9bf7a4] rounded-md text-[#002108] inline-flex">
+                    <svg
+                      aria-hidden
+                      viewBox="0 0 24 24"
+                      className="h-5 w-5"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={1.7}
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                     >
-                      {item}
-                    </Link>
-                  ))}
-                </Stack>
-              </Box>
-            </Stack>
-          </Paper>
-        </Grid>
-      </Grid>
+                      <path d="m9 12 2 2 4-4" />
+                      <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-[#0f1d24]">Secure Enterprise Protocol</p>
+                    <p className="text-[10px] text-[#41484c] font-mono tracking-tight uppercase">
+                      AES-256 Encrypted Connection
+                    </p>
+                  </div>
+                </div>
 
-      {/* Wave accent */}
-      <Box
-        component="svg"
-        viewBox="0 0 1440 320"
-        aria-hidden
-        sx={{
-          position: "fixed",
-          bottom: -70,
-          left: 0,
-          width: "100%",
-          height: 280,
-          opacity: 0.18,
-          pointerEvents: "none",
-        }}
-      >
-        <path
-          fill="#003a4d"
-          d="M0,192L48,197.3C96,203,192,213,288,192C384,171,480,117,576,122.7C672,128,768,192,864,208C960,224,1056,192,1152,181.3C1248,171,1344,181,1392,186.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-        />
-      </Box>
-    </Box>
+                <div className="mt-8 flex items-center justify-between text-[10px] text-[#71787c] font-mono uppercase tracking-[0.18em]">
+                  <span>© 2024 Lovold Logistics</span>
+                  <div className="flex gap-4">
+                    <a className="hover:text-[#003a4d] transition-colors" href="#">
+                      Privacy
+                    </a>
+                    <a className="hover:text-[#003a4d] transition-colors" href="#">
+                      Terms
+                    </a>
+                  </div>
+                </div>
+              </footer>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
   );
 }

@@ -4,7 +4,9 @@ import { CssBaseline, ThemeProvider } from "@mui/material";
 
 import App from "./App.tsx";
 import theme from "./theme/theme.ts";
+import "./styles/tailwind.css";
 import "styles/index.scss";
+
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
