@@ -1,4 +1,3 @@
-import { Typography } from "@mui/material";
 import styles from "./EnvironmentLabel.module.scss";
 
 const label = import.meta.env.VITE_ENV_LABEL;
@@ -8,7 +7,7 @@ export default function EnvironmentLabel() {
 
   return (
     <div className={styles.envLabel}>
-      <Typography variant="caption">{label}</Typography>
+      <p>{label}</p>
     </div>
   );
 }
