@@ -92,20 +92,20 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <div className="flex h-full flex-col bg-[#e8f6fe] text-[#111d23]">
       <div className="flex items-center gap-3 px-6 py-6">
-        <div className="grid h-10 w-10 place-items-center rounded-lg bg-[#003a4d] text-white">
+        <div className="flex h-10 w-10 items-center justify-center rounded bg-[#003a4d] text-white">
           <WaterDropIcon className="h-5 w-5" />
         </div>
         <div>
           <div className="text-lg font-bold leading-none text-[#003a4d]">
             PengVinERP
           </div>
-          <div className="text-[10px] font-medium tracking-[0.05em] text-[#8a8a8a]">
+          <div className="text-[10px] font-medium tracking-wider text-[#70787f]">
             Enterprise Portal
           </div>
         </div>
       </div>
 
-      <nav className="flex-1 space-y-1 px-4 pb-6" aria-label="Primary">
+      <nav className="mt-4 flex-1 space-y-1 px-4 pb-6" aria-label="Primary">
         {sidebarNavStructure.map((item) => {
           if (item.type === "link") {
             const Icon = item.icon;
@@ -119,8 +119,8 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                 className={cn(
                   "flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-semibold leading-tight transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003a4d]",
                   isActive
-                    ? "bg-[#003a4d] text-white shadow-sm"
-                    : "text-[#40484c] hover:bg-[#003a4d] hover:text-white",
+                    ? "bg-[#d7e5ed] text-[#003a4d]"
+                    : "text-[#40484c] hover:bg-[#d7e5ed] hover:text-[#003a4d]",
                 )}
               >
                 <span className="flex h-5 w-5 items-center justify-center text-current">
@@ -145,8 +145,8 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                 className={cn(
                   "flex w-full items-center gap-3 rounded-lg px-4 py-3 text-left text-sm font-semibold leading-tight transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003a4d]",
                   groupIsActive || isOpen
-                    ? "bg-[#003a4d] text-white shadow-sm"
-                    : "text-[#40484c] hover:bg-[#003a4d] hover:text-white",
+                    ? "bg-[#d7e5ed] text-[#003a4d]"
+                    : "text-[#40484c] hover:bg-[#d7e5ed] hover:text-[#003a4d]",
                 )}
                 aria-expanded={isOpen}
                 aria-controls={`${item.id}-group`}
@@ -184,8 +184,8 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
                         className={cn(
                           "ml-2 flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-semibold leading-tight transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#003a4d]",
                           isChildActive
-                            ? "bg-[#003a4d] text-white shadow-sm"
-                            : "text-[#40484c] hover:bg-[#003a4d] hover:text-white",
+                            ? "bg-[#d7e5ed] text-[#003a4d]"
+                            : "text-[#40484c] hover:bg-[#d7e5ed] hover:text-[#003a4d]",
                         )}
                       >
                         <span className="flex h-4 w-4 items-center justify-center text-current">
