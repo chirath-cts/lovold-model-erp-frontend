@@ -1,45 +1,61 @@
-import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import NotificationsNoneRoundedIcon from "@mui/icons-material/NotificationsNoneRounded";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import {
-  AppBar,
-  Badge,
-  Box,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Toolbar,
-  Typography,
-} from "@mui/material";
 import { useLocation } from "react-router-dom";
 
 import { UserProfileMenu } from "@/app/layout/UserProfileMenu";
 
-const palette = {
-  surface: "#f4faff",
-  surfaceContainerLow: "#e8f6fe",
-  outlineVariant: "#c0c8cd",
-  primary: "#003a4d",
-  onSurface: "#111d23",
-  onSurfaceVariant: "#40484c",
-  error: "#ba1a1a",
-} as const;
+function MenuIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <line x1="3" x2="21" y1="6" y2="6" />
+      <line x1="3" x2="21" y1="12" y2="12" />
+      <line x1="3" x2="21" y1="18" y2="18" />
+    </svg>
+  );
+}
 
-const fonts = {
-  body: "'Inter', sans-serif",
-  headline: "'Manrope', 'Inter', sans-serif",
-} as const;
+function SearchIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <circle cx="11" cy="11" r="8" />
+      <line x1="21" x2="16.65" y1="21" y2="16.65" />
+    </svg>
+  );
+}
 
-const drawerWidth = 256;
-
-const titleMap: Record<string, string> = {
-  "/dashboard": "Dashboard",
-  "/inventory/products": "Products",
-  "/inventory/categories": "Categories",
-  "/inventory/discounts": "Customer Pricing",
-  "/sales/orders": "Orders",
-  "/customers": "Customers",
-};
+function BellIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+      <path d="M10.3 21a1.7 1.7 0 0 0 3.4 0" />
+    </svg>
+  );
+}
 
 interface TopbarProps {
   onMenuClick: () => void;
@@ -48,132 +64,57 @@ interface TopbarProps {
 export function Topbar({ onMenuClick }: TopbarProps) {
   const location = useLocation();
 
+  const titleMap: Record<string, string> = {
+    "/dashboard": "Dashboard",
+    "/inventory/products": "Products",
+    "/inventory/categories": "Categories",
+    "/inventory/discounts": "Customer Pricing",
+    "/sales/orders": "Orders",
+    "/customers": "Customers",
+  };
+
   const title = location.pathname.startsWith("/customers/")
     ? "Customer Profile"
-    : (titleMap[location.pathname] ?? "PengVinERP");
+    : titleMap[location.pathname] ?? "PengVinERP";
 
   return (
-    <AppBar
-      position="fixed"
-      color="inherit"
-      elevation={0}
-      sx={{
-        width: { lg: `calc(100% - ${drawerWidth}px)` },
-        ml: { lg: `${drawerWidth}px` },
-        bgcolor: palette.surface,
-        color: palette.onSurface,
-        // borderBottom: `1px solid ${palette.outlineVariant}33`,
-      }}
-    >
-      <Toolbar
-        sx={{
-          minHeight: "64px !important",
-          gap: "1.5rem", 
-        }}
-      >
-        <IconButton
-          color="inherit"
-          edge="start"
+    <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between bg-[#f7f9fc] px-4 shadow-sm md:px-6 lg:px-8">
+      <div className="flex flex-1 items-center gap-4 md:gap-6">
+        <button
+          type="button"
           onClick={onMenuClick}
-          sx={{ display: { lg: "none" } }}
-          aria-label="open navigation"
+          className="flex h-10 w-10 items-center justify-center rounded-full text-[#40484e] transition-colors hover:bg-[#e8f6fe] lg:hidden"
+          aria-label="Open navigation"
         >
-          <MenuRoundedIcon />
-        </IconButton>
+          <MenuIcon className="h-6 w-6" />
+        </button>
 
-        <Typography
-          variant="h6"
-          sx={{
-            fontWeight: 700,
-            fontFamily: fonts.headline,
-            color: palette.onSurface,
-            fontSize: 20,
-          }}
-        >
-          {title}
-        </Typography>
+        <h2 className="text-lg font-bold text-[#111d23] md:text-xl">{title}</h2>
 
-        <Box
-          sx={{
-            display: { xs: "none", md: "block" },
-            flexGrow: 1,
-            maxWidth: 420,
-          }}
-        >
-          <TextField
-            fullWidth
-            size="small"
+        <div className="relative hidden w-full max-w-md md:block">
+          <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#70787f]">
+            <SearchIcon className="h-5 w-5" />
+          </span>
+          <input
+            type="text"
             placeholder="Search insights..."
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position="start">
-                  <SearchRoundedIcon
-                    fontSize="small"
-                    sx={{ color: palette.onSurfaceVariant }}
-                  />
-                </InputAdornment>
-              ),
-              sx: {
-                bgcolor: palette.surfaceContainerLow,
-                borderRadius: 999,
-                height: 40,
-                fontSize: 14,
-                "& fieldset": { border: "none" },
-              },
-            }}
-            inputProps={{
-              sx: {
-                "::placeholder": { color: `${palette.onSurfaceVariant}99` },
-              },
-            }}
+            className="w-full rounded-full bg-[#e8f6fe] py-2 pl-10 pr-4 text-sm text-[#111d23] placeholder:text-[#70787f] outline-none transition focus:ring-2 focus:ring-[#003a4d]"
           />
-        </Box>
+        </div>
+      </div>
 
-        <Box
-          sx={{
-            ml: "auto",
-            display: "flex",
-            alignItems: "center",
-            gap: { xs: 1, md: 1.5, lg: 2 },
-          }}
+      <div className="ml-4 flex items-center gap-3 md:gap-4">
+        <button
+          type="button"
+          className="relative flex h-10 w-10 items-center justify-center rounded-full text-[#40484e] transition-colors hover:bg-[#e8f6fe]"
+          aria-label="Notifications"
         >
-          <IconButton
-            aria-label="notifications"
-            sx={{
-              width: 40,
-              height: 40,
-              color: palette.onSurfaceVariant,
-              "&:hover": { bgcolor: palette.surfaceContainerLow },
-            }}
-          >
-            <Badge
-              variant="dot"
-              color="error"
-              sx={{
-                "& .MuiBadge-dot": {
-                  width: 8,
-                  height: 8,
-                  minWidth: 8,
-                  bgcolor: palette.error,
-                },
-              }}
-            >
-              <NotificationsNoneRoundedIcon />
-            </Badge>
-          </IconButton>
+          <BellIcon className="h-5 w-5" />
+          <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[#ba1a1a]" />
+        </button>
 
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: 1.5,
-              borderLeft: `1px solid ${palette.outlineVariant}55`,
-            }}
-          >
-            <UserProfileMenu />
-          </Box>
-        </Box>
-      </Toolbar>
-    </AppBar>
+        <UserProfileMenu />
+      </div>
+    </header>
   );
 }

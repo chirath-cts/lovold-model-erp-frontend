@@ -1,33 +1,36 @@
-import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
-import {
-  Avatar,
-  Box,
-  ButtonBase,
-  Divider,
-  Menu,
-  MenuItem,
-  Typography,
-} from "@mui/material";
-import { alpha } from "@mui/material/styles";
-import type { MouseEvent } from "react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useAuthSession } from "@/shared/hooks/useAuthSession";
 import { clearAuthSession } from "@/shared/lib/authSession";
 
-const avatarSize = 32;
+function LogoutIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.6}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+      <polyline points="16 17 21 12 16 7" />
+      <line x1="21" x2="9" y1="12" y2="12" />
+    </svg>
+  );
+}
 
 export function UserProfileMenu() {
   const session = useAuthSession();
   const navigate = useNavigate();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const [open, setOpen] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const displayName = useMemo(() => {
-    const name = [session?.firstName, session?.lastName]
-      .filter(Boolean)
-      .join(" ")
-      .trim();
+    const name = [session?.firstName, session?.lastName].filter(Boolean).join(" ").trim();
     if (name) return name;
     if (session?.username) return session.username;
     if (session?.email) return session.email;
@@ -39,10 +42,7 @@ export function UserProfileMenu() {
 
   const initials = useMemo(() => {
     const source =
-      [session?.firstName, session?.lastName]
-        .filter(Boolean)
-        .join(" ")
-        .trim() ||
+      [session?.firstName, session?.lastName].filter(Boolean).join(" ").trim() ||
       session?.username ||
       session?.email ||
       "U";
@@ -57,131 +57,67 @@ export function UserProfileMenu() {
   }, [session]);
 
   const avatarSrc =
-    (session as { avatarUrl?: string; avatar?: string; image?: string } | null)
-      ?.avatarUrl ??
-    (session as { avatarUrl?: string; avatar?: string; image?: string } | null)
-      ?.avatar ??
-    (session as { avatarUrl?: string; avatar?: string; image?: string } | null)
-      ?.image;
+    (session as { avatarUrl?: string; avatar?: string; image?: string } | null)?.avatarUrl ??
+    (session as { avatarUrl?: string; avatar?: string; image?: string } | null)?.avatar ??
+    (session as { avatarUrl?: string; avatar?: string; image?: string } | null)?.image;
 
-  const open = Boolean(anchorEl);
-
-  const handleOpen = (event: MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => setAnchorEl(null);
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleLogout = () => {
-    handleClose();
     clearAuthSession();
     navigate("/login", { replace: true });
+    setOpen(false);
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        pl: { xs: 1, md: 1 },
-        // borderLeft: (theme) => `1px solid ${alpha(theme.palette.divider, 0.9)}`,
-      }}
-    >
-      <ButtonBase
-        onClick={handleOpen}
+    <div className="relative flex items-center gap-3 border-l border-[#c0c7cf]/40 pl-3 md:pl-4" ref={containerRef}>
+      <button
+        type="button"
+        onClick={() => setOpen((prev) => !prev)}
+        className="flex items-center gap-3 text-left"
         aria-haspopup="menu"
-        aria-expanded={open ? "true" : undefined}
-        aria-controls={open ? "user-menu" : undefined}
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          gap: 1.25,
-          px: 0.75,
-          py: 0.75,
-          transition: (theme) =>
-            theme.transitions.create(["background-color", "box-shadow"], {
-              duration: theme.transitions.duration.shorter,
-            }),
-        }}
+        aria-expanded={open}
       >
-        <Avatar
-          sx={{
-            width: avatarSize,
-            height: avatarSize,
-            bgcolor: "primary.main",
-            color: "primary.contrastText",
-            fontWeight: 600,
-            fontSize: 12,
-          }}
-          src={avatarSrc}
-          alt={displayName}
-        >
-          {initials}
-        </Avatar>
+        <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-[#003a4d] text-sm font-semibold text-white">
+          {avatarSrc ? (
+            <img src={avatarSrc} alt={displayName} className="h-full w-full object-cover" />
+          ) : (
+            initials
+          )}
+        </div>
+        <div className="hidden leading-tight lg:block">
+          <p className="text-sm font-semibold text-[#111d23] truncate">{displayName}</p>
+          <p className="text-xs text-[#70787f] capitalize truncate">{roleLabel}</p>
+        </div>
+      </button>
 
-        <Box
-          sx={{
-            display: { xs: "none", lg: "block" },
-            textAlign: "left",
-            lineHeight: 1.2,
-          }}
+      {open && (
+        <div
+          role="menu"
+          className="absolute right-0 top-full mt-2 w-56 rounded-lg border border-[#d7e5ed] bg-white shadow-[0_12px_30px_rgba(0,58,77,0.15)]"
         >
-          <Typography
-            variant="body2"
-            sx={{ fontWeight: 700, color: "text.primary" }}
-            noWrap
+          <div className="border-b border-[#d7e5ed] px-4 py-3">
+            <p className="text-sm font-semibold text-[#111d23] truncate">{displayName}</p>
+            <p className="text-xs text-[#40484e] truncate">{email}</p>
+          </div>
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="flex w-full items-center gap-2 px-4 py-3 text-sm font-semibold text-[#111d23] transition-colors hover:bg-[#e8f6fe]"
           >
-            {displayName}
-          </Typography>
-          <Typography
-            variant="caption"
-            color="text.secondary"
-            sx={{ textTransform: "capitalize", display: "block" }}
-            noWrap
-          >
-            {roleLabel}
-          </Typography>
-        </Box>
-      </ButtonBase>
-
-      <Menu
-        id="user-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-        transformOrigin={{ vertical: "top", horizontal: "right" }}
-        PaperProps={{
-          elevation: 0,
-          sx: {
-            mt: 1,
-            minWidth: 240,
-            borderRadius: 2,
-            border: (theme) => `1px solid ${theme.palette.divider}`,
-            boxShadow: "0 14px 36px rgba(0, 58, 77, 0.18)",
-          },
-        }}
-      >
-        <Box sx={{ px: 2, py: 1.5, maxWidth: 280 }}>
-          <Typography
-            variant="subtitle2"
-            sx={{ fontWeight: 800, lineHeight: 1.2 }}
-            noWrap
-          >
-            {displayName}
-          </Typography>
-          <Typography variant="body2" color="text.secondary" noWrap>
-            {email}
-          </Typography>
-        </Box>
-        <Divider />
-        <MenuItem onClick={handleLogout} sx={{ py: 1.25, gap: 1.25 }}>
-          <LogoutRoundedIcon fontSize="small" />
-          <Typography variant="body2" sx={{ fontWeight: 700 }}>
-            Logout
-          </Typography>
-        </MenuItem>
-      </Menu>
-    </Box>
+            <LogoutIcon className="h-4 w-4" />
+            <span>Logout</span>
+          </button>
+        </div>
+      )}
+    </div>
   );
 }

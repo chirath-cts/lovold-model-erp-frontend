@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Outlet } from "react-router-dom";
-import { Box, Toolbar } from "@mui/material";
 
 import { Sidebar } from "@/app/layout/Sidebar";
 import { Topbar } from "@/app/layout/Topbar";
@@ -11,15 +10,14 @@ export function AppLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
-    <Box className={styles.shell} sx={{ display: "flex" }}>
+    <div className={`${styles.shell} flex min-h-screen`}>
       <Sidebar mobileOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
-      <Box className={styles.mainArea}>
+      <div className={`${styles.mainArea} flex min-w-0 flex-1 flex-col`}>
         <Topbar onMenuClick={() => setMobileOpen(true)} />
-        <Toolbar sx={{ minHeight: "64px !important" }} />
-        <Box component="main" className={styles.content} sx={{ p: { xs: 1, md: 1, lg: 1 } }}>
+        <main className={`${styles.content} flex-1 p-1 md:p-1 lg:p-1`}>
           <Outlet />
-        </Box>
-      </Box>
-    </Box>
+        </main>
+      </div>
+    </div>
   );
 }
