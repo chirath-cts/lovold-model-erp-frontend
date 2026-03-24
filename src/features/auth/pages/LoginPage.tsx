@@ -6,6 +6,78 @@ import { authService } from "@/services/endpoints/authService";
 import { ApiError } from "@/services/errors";
 import { getAuthSession, saveAuthSession } from "@/shared/lib/authSession";
 
+function GearIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.6}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <circle cx="12" cy="12" r="3" />
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z" />
+    </svg>
+  );
+}
+
+function UserIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.6}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 20c1.6-2.5 4.2-4 8-4s6.4 1.5 8 4" />
+    </svg>
+  );
+}
+
+function LockIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.6}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <rect x="6" y="10" width="12" height="10" rx="2" />
+      <path d="M8 10V7a4 4 0 1 1 8 0v3" />
+    </svg>
+  );
+}
+
+function ShieldCheckIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.6}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M12 22s8-3 8-10V5l-8-3-8 3v7c0 7 8 10 8 10Z" />
+      <path d="m9 12 2 2 4-4" />
+    </svg>
+  );
+}
+
 export function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -14,6 +86,7 @@ export function LoginPage() {
   const [form, setForm] = useState({ username: "", password: "", remember: true });
   const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     const session = getAuthSession();
@@ -49,220 +122,191 @@ export function LoginPage() {
   };
 
   const inputBaseClasses =
-    "w-full rounded-xl bg-white/90 ring-1 ring-[#c1c7cc] focus:ring-2 focus:ring-[#003a4d] px-4 py-3 text-sm font-medium text-[#0f1d24] placeholder:text-[#7b8a93] outline-none transition shadow-[0_8px_20px_rgba(0,58,77,0.06)]";
+    "w-full bg-[#e6e8eb] border-none rounded-sm px-4 py-3.5 text-[#191c1e] text-sm font-medium placeholder:text-[#70787f] focus:ring-0 focus:outline-none transition-all duration-200";
 
   return (
-    <div className="min-h-screen bg-[#f4faff] text-[#0f1d24]">
-      <main className="min-h-screen flex flex-col md:flex-row">
-        <section className="relative hidden md:flex md:w-7/12 overflow-hidden bg-gradient-to-br from-[#003a4d] to-[#00526c] text-white">
-          <div
-            className="absolute inset-0 opacity-10 pointer-events-none"
-            style={{
-              backgroundImage:
-                "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAP1nqBGd2djHqTotypbpjQCGR_JkJNcErftcdCFJFuCI4KJgReE2ST0SShu9Zu1_SmCCEm0tADWn9RolYTY46n0aHolGGUH4L74yQw1lxxhHxPA7x8INeoh9j9Pp00pPVQIpohkCuSulmFLhqil6u0cb0dI52ZrlaoQEzClsAkAw_U8x1SaDBnMD-YN2CoMcgsgmZPniJF2mFm96Sfg-mMledxC4ltcojcxji28p7sqLkE4Ewp5CbFKygyDU48eZoF28WFFxr9674')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
+    <div className="h-screen min-h-[100dvh] bg-[#f7f9fc] text-[#191c1e]">
+      <main className="flex h-full flex-col overflow-hidden md:flex-row">
+        <section className="relative hidden h-full overflow-hidden bg-[#004260] md:block md:w-3/5">
+          <img
+            className="absolute inset-0 h-full w-full object-cover opacity-60 mix-blend-multiply transition-transform duration-1000"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4LXG0oT-4QjhcUExpMXtqRQjXrajGLc-neNWKMG0hScp20p3QLTGrXHlxRxGiwVRo0jQ9632twrVIw_qNZXBiZkJH8oDGigA1-lWNhOp7jb4wb4dtzX51FYKeJ27lSYwQT04tKx8fCUOHg_vUzaU7wHzmQnp6lUduiIpdpOZXmGhufj90rX3qSdPUymqftMzY3GzkleT5NRRB12Z76WFjbL-OgZmgVJ7yXF1uZ7gmYls8kqh6K2MONf64BZBwLvfsKIVpfu2anP8"
+            alt="Aquaculture operations backdrop"
+            loading="lazy"
           />
+          <div className="absolute inset-0 bg-gradient-to-tr from-[#004260] via-transparent to-transparent opacity-90" />
 
-          <div className="relative z-10 flex flex-col justify-between w-full h-full p-12 xl:p-16 gap-10">
-            <div className="flex items-center gap-3">
-              <span className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/10 ring-1 ring-white/20 backdrop-blur-sm">
-                <svg
-                  aria-hidden
-                  viewBox="0 0 24 24"
-                  className="h-8 w-8 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.6}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M12 2v7" />
-                  <circle cx="12" cy="9" r="2" />
-                  <path d="M12 13v8" />
-                  <path d="M5 12a7 7 0 0 0 14 0" />
-                  <path d="M5 12h3" />
-                  <path d="M16 12h3" />
-                </svg>
+          <div className="absolute bottom-16 left-16 z-10 max-w-lg text-white">
+            <div className="mb-6 flex items-center space-x-2">
+              <span className="h-[2px] w-8 bg-[#005b82]" />
+              <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#b4cad6]">
+                Operational Excellence
               </span>
-              <div>
-                <p className="text-sm text-white/70 tracking-[0.2em] font-semibold uppercase">Lovold</p>
-                <p className="font-extrabold text-3xl leading-tight tracking-tight">
-                  ERP Platform
-                </p>
-              </div>
             </div>
-
-            <div className="max-w-2xl space-y-6">
-              <p className="font-bold text-5xl leading-[1.05] tracking-tight">
-                Operational Architect for Global Aquaculture
-              </p>
-              <p className="text-lg text-[#bfe9ff] max-w-xl font-medium">
-                Empowering aquaculture operations with order promise and fulfillment control.
-              </p>
-              <div className="grid grid-cols-2 gap-6 max-w-xl">
-                <div className="bg-white/5 backdrop-blur-md p-5 rounded-xl border border-white/10">
-                  <p className="font-mono text-[#c0e8ff] text-[11px] mb-2 tracking-wide">LATENCY_SYNC</p>
-                  <p className="font-extrabold text-3xl">99.98%</p>
-                  <p className="text-white/70 text-sm">Fulfillment Accuracy</p>
-                </div>
-                <div className="bg-white/5 backdrop-blur-md p-5 rounded-xl border border-white/10">
-                  <p className="font-mono text-[#c0e8ff] text-[11px] mb-2 tracking-wide">SYSTEM_STATUS</p>
-                  <p className="font-extrabold text-3xl">OPTIMAL</p>
-                  <p className="text-white/70 text-sm">Real-time Logistics</p>
+            <h2 className="mb-4 text-4xl font-black leading-[1.1] tracking-tight lg:text-5xl">
+              Subsurface
+              <br />
+              Precision ERP
+            </h2>
+            <p className="max-w-md text-lg font-medium leading-relaxed text-[#cfe6f2] opacity-90">
+              Synchronized control systems for high-stakes aquaculture engineering environments.
+            </p>
+            <div className="mt-12 flex gap-8 text-sm font-mono">
+              <div className="flex flex-col">
+                <span className="mb-1 text-[10px] font-bold uppercase tracking-tight text-[#b4cad6]">
+                  Network Status
+                </span>
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                  <span>EN_SECURE_LINK_ON</span>
                 </div>
               </div>
+              <div className="flex flex-col">
+                <span className="mb-1 text-[10px] font-bold uppercase tracking-tight text-[#b4cad6]">
+                  Node Activity
+                </span>
+                <span>4.2 TB/s SENS_DTA</span>
+              </div>
             </div>
-
-            <div className="flex items-center gap-4 text-white/50 text-[11px] font-mono tracking-[0.24em] uppercase">
-              <span>v2.4.0</span>
-              <span className="w-8 h-px bg-white/20" />
-              <span>ISO 27001 Certified</span>
-            </div>
-          </div>
-
-          <div className="absolute bottom-0 right-0 w-full h-1/2 pointer-events-none opacity-20">
-            <img
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuAP1nqBGd2djHqTotypbpjQCGR_JkJNcErftcdCFJFuCI4KJgReE2ST0SShu9Zu1_SmCCEm0tADWn9RolYTY46n0aHolGGUH4L74yQw1lxxhHxPA7x8INeoh9j9Pp00pPVQIpohkCuSulmFLhqil6u0cb0dI52ZrlaoQEzClsAkAw_U8x1SaDBnMD-YN2CoMcgsgmZPniJF2mFm96Sfg-mMledxC4ltcojcxji28p7sqLkE4Ewp5CbFKygyDU48eZoF28WFFxr9674"
-              alt="Industrial ropes and marine equipment"
-              className="w-full h-full object-cover mix-blend-overlay"
-              loading="lazy"
-            />
           </div>
         </section>
 
-        <section className="flex-1 flex items-center justify-center bg-[#f4faff] p-6 sm:p-10">
-          <div className="w-full max-w-md">
-            <div className="md:hidden flex flex-col items-center mb-10">
-              <div className="w-16 h-16 bg-[#003a4d] flex items-center justify-center rounded-2xl text-white shadow-lg">
-                <svg
-                  aria-hidden
-                  viewBox="0 0 24 24"
-                  className="h-8 w-8"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth={1.6}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M12 2v7" />
-                  <circle cx="12" cy="9" r="2" />
-                  <path d="M12 13v8" />
-                  <path d="M5 12a7 7 0 0 0 14 0" />
-              <path d="M5 12h3" />
-              <path d="M16 12h3" />
-                </svg>
+        <section className="flex h-full w-full flex-col overflow-y-auto bg-[#f7f9fc] md:w-2/5">
+          <div className="flex items-center justify-between p-6 md:p-10 lg:p-12">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-[#004260] text-white">
+                <GearIcon className="h-5 w-5" />
               </div>
-              <p className="font-extrabold text-2xl text-[#002330] tracking-tight">
-                Lovold ERP
+              <div className="flex flex-col">
+                <span className="text-xl font-black leading-none tracking-tight text-[#004260]">LOVOLD</span>
+                <span className="mt-1 text-[10px] font-bold uppercase tracking-[0.2em] text-[#40484e]">
+                  Industrial Forge
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-grow flex-col justify-center px-6 py-8 md:px-14 lg:px-20">
+            <div className="mb-10">
+              <h1 className="mb-2 text-2xl font-extrabold tracking-tight text-[#191c1e]">
+                Internal Operations Access
+              </h1>
+              <p className="text-sm font-medium text-[#40484e]">
+                Secure internal access required. Authenticate to proceed to the command console.
               </p>
-              <p className="text-[#41484c] text-sm font-medium mt-1">Operational Architect</p>
             </div>
 
-            <div className="bg-white/80 backdrop-blur-sm border border-[#d6e5ee] shadow-[0_18px_50px_rgba(0,44,64,0.12)] rounded-2xl p-6 sm:p-8">
-              <header className="mb-8">
-                <p className="font-bold text-3xl text-[#0f1d24] tracking-tight">
-                  System Access
-                </p>
-                <p className="text-[#41484c] text-sm mt-1">
-                  Enter your credentials to manage operations.
-                </p>
-              </header>
+            {error && (
+              <div className="mb-6 rounded-sm border border-[#ffdad6] bg-[#fff2ef] px-4 py-3 text-sm font-medium text-[#93000a]">
+                {error}
+              </div>
+            )}
 
-              {error && (
-                <div className="mb-6 rounded-xl border border-[#ffdad6] bg-[#fff2ef] px-4 py-3 text-sm font-medium text-[#93000a]">
-                  {error}
+            <form className="space-y-6" onSubmit={handleSubmit} noValidate>
+              <div className="group">
+                <label
+                  className="mb-2 block px-1 text-[11px] font-bold uppercase tracking-[0.2em] text-[#40484e]"
+                  htmlFor="username"
+                >
+                  Email or Employee ID
+                </label>
+                <div className="relative group">
+                  <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#40484e]">
+                    <UserIcon className="h-5 w-5" />
+                  </span>
+                  <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    autoComplete="username"
+                    required
+                    placeholder="e.g. operational_admin"
+                    className={`${inputBaseClasses} pl-10`}
+                    value={form.username}
+                    onChange={(event) => {
+                      setForm((prev) => ({ ...prev, username: event.target.value }));
+                      if (error) setError(null);
+                    }}
+                  />
+                  <span className="pointer-events-none absolute bottom-0 left-0 h-[2px] w-0 bg-[#004260] transition-all duration-300 group-focus-within:w-full" />
                 </div>
-              )}
+              </div>
 
-              <form className="space-y-6" onSubmit={handleSubmit} noValidate>
-                <div className="space-y-2">
+              <div className="group">
+                <div className="mb-2 flex items-center justify-between px-1">
                   <label
-                    className="block text-[11px] font-semibold uppercase tracking-[0.18em] text-[#41484c]"
-                    htmlFor="username"
+                    className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#40484e]"
+                    htmlFor="password"
                   >
-                    Username or Enterprise Email
+                    Password
                   </label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#71787c]">
+                  <a
+                    className="text-[11px] font-bold text-[#004260] transition-colors hover:text-[#005b82]"
+                    href="#"
+                  >
+                    Forgot Password?
+                  </a>
+                </div>
+                <div className="relative group">
+                  <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[#40484e]">
+                    <LockIcon className="h-5 w-5" />
+                  </span>
+                  <input
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="current-password"
+                    required
+                    placeholder="********"
+                    className={`${inputBaseClasses} pl-10 pr-12`}
+                    value={form.password}
+                    onChange={(event) => {
+                      setForm((prev) => ({ ...prev, password: event.target.value }));
+                      if (error) setError(null);
+                    }}
+                  />
+                  <span className="pointer-events-none absolute bottom-0 left-0 h-[2px] w-0 bg-[#004260] transition-all duration-300 group-focus-within:w-full" />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[#40484e] transition-colors hover:text-[#191c1e]"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                  >
+                    {showPassword ? (
                       <svg
-                        aria-hidden
-                        viewBox="0 0 24 24"
                         className="h-5 w-5"
+                        viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth={1.7}
+                        strokeWidth={1.6}
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       >
-                        <path d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5Z" />
-                        <path d="M21 21a7 7 0 0 0-14 0" />
+                        <path d="M3 3l18 18" />
+                        <path d="M10.477 10.485A3 3 0 0 0 13.5 13.5" />
+                        <path d="M9.88 5.082A8.96 8.96 0 0 1 12 5c5 0 9 4.5 9 7s-4 7-9 7c-1.45 0-2.82-.28-4.06-.79" />
+                        <path d="M6.12 6.117C4.083 7.276 2.5 9.132 2.5 12c0 2.5 3.5 7 9.5 7 1.22 0 2.38-.19 3.46-.54" />
                       </svg>
-                    </span>
-                    <input
-                      id="username"
-                      name="username"
-                      type="text"
-                      autoComplete="username"
-                      required
-                      placeholder="e.g. j.coordinator@lovold.com"
-                      className={`${inputBaseClasses} pl-10`}
-                      value={form.username}
-                      onChange={(event) => {
-                        setForm((prev) => ({ ...prev, username: event.target.value }));
-                        if (error) setError(null);
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <label
-                      className="block text-[11px] font-semibold uppercase tracking-[0.18em] text-[#41484c]"
-                      htmlFor="password"
-                    >
-                      Access Key
-                    </label>
-                    <a className="text-xs font-semibold text-[#1f6581] hover:text-[#003a4d] transition-colors" href="#">
-                      Forgot Password?
-                    </a>
-                  </div>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#71787c]">
+                    ) : (
                       <svg
-                        aria-hidden
-                        viewBox="0 0 24 24"
                         className="h-5 w-5"
+                        viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth={1.7}
+                        strokeWidth={1.6}
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       >
-                        <rect x="6" y="10" width="12" height="10" rx="2" />
-                        <path d="M8 10V7a4 4 0 1 1 8 0v3" />
+                        <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                        <circle cx="12" cy="12" r="3" />
                       </svg>
-                    </span>
-                    <input
-                      id="password"
-                      name="password"
-                      type="password"
-                      autoComplete="current-password"
-                      required
-                      placeholder="••••••••••"
-                      className={`${inputBaseClasses} pl-10 pr-12`}
-                      value={form.password}
-                      onChange={(event) => {
-                        setForm((prev) => ({ ...prev, password: event.target.value }));
-                        if (error) setError(null);
-                      }}
-                    />
-                  </div>
+                    )}
+                  </button>
                 </div>
+              </div>
 
-                <label className="flex items-center gap-3 text-sm text-[#41484c] cursor-pointer select-none">
+              <div className="flex items-center">
+                <label className="group flex cursor-pointer items-center">
                   <input
                     type="checkbox"
                     name="remember"
@@ -270,20 +314,24 @@ export function LoginPage() {
                     onChange={(event) =>
                       setForm((prev) => ({ ...prev, remember: event.target.checked }))
                     }
-                    className="h-4 w-4 rounded border-[#c1c7cc] text-[#003a4d] focus:ring-[#003a4d]"
+                    className="h-4 w-4 rounded-sm border-[#c0c7cf] bg-[#e6e8eb] text-[#004260] transition-all focus:ring-[#004260] focus:ring-offset-0"
                   />
-                  <span className="font-medium">Maintain active session for 12 hours</span>
+                  <span className="ml-3 text-sm font-medium text-[#40484e] transition-colors group-hover:text-[#191c1e]">
+                    Remember session for 12 hours
+                  </span>
                 </label>
+              </div>
 
+              <div className="pt-4">
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl bg-gradient-to-br from-[#003a4d] to-[#00526c] text-white py-4 px-5 font-bold text-base shadow-[0_18px_40px_rgba(0,58,77,0.22)] transition-all hover:brightness-110 active:translate-y-[1px] disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="flex w-full items-center justify-center rounded-sm bg-gradient-to-r from-[#004260] to-[#005b82] py-4 text-xs font-bold uppercase tracking-[0.2em] text-white shadow-lg shadow-[#004260]/10 transition-all hover:opacity-95 hover:shadow-[#004260]/20 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {submitting ? (
-                    <>
+                    <span className="flex items-center gap-2">
                       <svg
-                        className="h-5 w-5 animate-spin"
+                        className="h-4 w-4 animate-spin"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
@@ -292,68 +340,52 @@ export function LoginPage() {
                         <circle className="opacity-30" cx="12" cy="12" r="9" />
                         <path d="M21 12a9 9 0 0 1-9 9" />
                       </svg>
-                      <span>Signing In</span>
-                    </>
+                      <span className="tracking-[0.14em]">Signing In</span>
+                    </span>
                   ) : (
-                    <>
-                      <span>Authenticate Access</span>
-                      <svg
-                        aria-hidden
-                        viewBox="0 0 24 24"
-                        className="h-5 w-5 transition-transform"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth={1.8}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path d="M5 12h14" />
-                        <path d="M13 6l6 6-6 6" />
-                      </svg>
-                    </>
+                    <span className="tracking-[0.2em]">Sign In to System</span>
                   )}
                 </button>
-              </form>
+              </div>
+            </form>
 
-              <footer className="mt-10 pt-7 border-t border-[#d6e5ee]">
-                <div className="flex items-center gap-4">
-                  <div className="p-2 bg-[#9bf7a4] rounded-md text-[#002108] inline-flex">
-                    <svg
-                      aria-hidden
-                      viewBox="0 0 24 24"
-                      className="h-5 w-5"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={1.7}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="m9 12 2 2 4-4" />
-                      <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold text-[#0f1d24]">Secure Enterprise Protocol</p>
-                    <p className="text-[10px] text-[#41484c] font-mono tracking-tight uppercase">
-                      AES-256 Encrypted Connection
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-8 flex items-center justify-between text-[10px] text-[#71787c] font-mono uppercase tracking-[0.18em]">
-                  <span>© 2024 Lovold Logistics</span>
-                  <div className="flex gap-4">
-                    <a className="hover:text-[#003a4d] transition-colors" href="#">
-                      Privacy
-                    </a>
-                    <a className="hover:text-[#003a4d] transition-colors" href="#">
-                      Terms
-                    </a>
-                  </div>
-                </div>
-              </footer>
+            <div className="mt-12 flex items-start gap-3 rounded-sm bg-[#f2f4f7] p-4">
+              <ShieldCheckIcon className="mt-0.5 h-5 w-5 text-[#004260]" />
+              <p className="text-[11px] leading-relaxed text-[#40484e]">
+                This system is monitored for security purposes. Unauthorized access attempts are logged and reported
+                to the Lovold Security Operations Center (LSOC). Use of this software implies consent to the{" "}
+                <a className="font-bold text-[#191c1e] underline" href="#">
+                  Digital Security Policy
+                </a>
+                .
+              </p>
             </div>
           </div>
+
+          <footer className="mt-auto border-t border-[#191c1e]/5 bg-[#f7f9fc]">
+            <div className="mx-auto flex w-full max-w-screen-2xl flex-col items-center justify-between gap-4 px-8 py-8 md:flex-row md:px-12">
+              <div className="text-center md:text-left">
+                <span className="text-lg font-black text-[#004260]">Lovold Solution.</span>
+                <p className="mt-1 text-[12px] tracking-tight text-[#40484e]">
+                  (c) 2024 Lovold Solution. Subsurface Precision ERP. All rights reserved.
+                </p>
+              </div>
+              <div className="flex flex-wrap justify-center gap-6 text-[12px] tracking-tight text-[#40484e]">
+                <a className="transition-colors hover:text-[#005b82]" href="#">
+                  System Status
+                </a>
+                <a className="transition-colors hover:text-[#005b82]" href="#">
+                  Terms of Use
+                </a>
+                <a className="transition-colors hover:text-[#005b82]" href="#">
+                  Security Policy
+                </a>
+                <a className="transition-colors hover:text-[#005b82]" href="#">
+                  Technical Support
+                </a>
+              </div>
+            </div>
+          </footer>
         </section>
       </main>
     </div>
