@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Subsurface Precision ERP - ETA Planning</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-container": "#bfccd4",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#b4cad6",
+                        "surface-container-high": "#e6e8eb",
+                        "surface-container": "#eceef1",
+                        "on-tertiary-fixed": "#111d23",
+                        "secondary-fixed": "#cfe6f2",
+                        "on-primary-fixed-variant": "#004c6d",
+                        "on-secondary-fixed": "#071e27",
+                        "surface-bright": "#f7f9fc",
+                        "outline": "#70787f",
+                        "on-primary-fixed": "#001e2e",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary": "#ffffff",
+                        "background": "#f7f9fc",
+                        "primary-fixed": "#c8e6ff",
+                        "secondary-container": "#cfe6f2",
+                        "secondary": "#4c616c",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d8dadd",
+                        "surface-container-highest": "#e0e3e6",
+                        "surface-tint": "#17648c",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#8ecefa",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f2f4f7",
+                        "tertiary-container": "#4b575e",
+                        "tertiary": "#344046",
+                        "primary-container": "#005b82",
+                        "inverse-on-surface": "#eff1f4",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#bbc8d0",
+                        "surface-variant": "#e0e3e6",
+                        "on-error-container": "#93000a",
+                        "on-background": "#191c1e",
+                        "on-surface": "#191c1e",
+                        "surface": "#f7f9fc",
+                        "on-surface-variant": "#40484e",
+                        "on-secondary-fixed-variant": "#354a53",
+                        "outline-variant": "#c0c7cf",
+                        "inverse-primary": "#8ecefa",
+                        "on-primary-container": "#91d2fe",
+                        "on-tertiary-fixed-variant": "#3c494f",
+                        "tertiary-fixed": "#d7e4ec",
+                        "primary": "#004260",
+                        "on-secondary-container": "#526772"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .tonal-architecture-no-lines {
+            border: none !important;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-surface antialiased">
+<!-- Top Navigation Shell -->
+<header class="w-full border-b border-gray-200/15 sticky top-0 z-50 bg-[#f7f9fc] flex justify-between items-center px-6 py-3 font-['Inter'] antialiased tracking-tight">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-[#004260] tracking-tighter uppercase">Subsurface Precision ERP</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-[#40484e] hover:text-[#191c1e] transition-colors" href="#">Dashboard</a>
+<a class="text-[#40484e] hover:text-[#191c1e] transition-colors" href="#">Inventory</a>
+<a class="text-[#004260] font-semibold border-b-2 border-[#004260] pb-1" href="#">Orders</a>
+<a class="text-[#40484e] hover:text-[#191c1e] transition-colors" href="#">Production</a>
+<a class="text-[#40484e] hover:text-[#191c1e] transition-colors" href="#">Logistics</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex gap-2">
+<button class="p-2 hover:bg-[#f1f5f9] rounded-full transition-all duration-150 active:scale-[0.98]">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 hover:bg-[#f1f5f9] rounded-full transition-all duration-150 active:scale-[0.98]">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="settings">settings</span>
+</button>
+</div>
+<div class="h-8 w-px bg-outline-variant/30 mx-2"></div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-1.5 text-sm font-medium text-primary hover:bg-[#f1f5f9] rounded transition-all">Save as Draft</button>
+<button class="px-4 py-1.5 text-sm font-bold text-white bg-gradient-to-r from-[#004260] to-[#005b82] rounded shadow-sm hover:opacity-90 transition-all active:scale-[0.98]">Confirm Order</button>
+<img alt="User profile avatar" class="w-8 h-8 rounded-full border border-outline-variant/20" data-alt="Professional portrait of a male engineer in a clean industrial environment with soft focus lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD_7pbNPMu8M2yGvYM_2yBPVnoRfvLmn6__6QdwiM2HSuIlv29m1UTFV3uP4FJissTBGBDxHgfETRmVxxXd5y8Xns20THsL2Mq04jZrmONqGXyX--5rElPnnTlqzaqGOkdZwMjxnGkuk0ImfEuSGgg7ecuo3I1a9KDrZjnO0Q1IRAfsiFnilN_LNKr9-lrvivTSK6pQf_5zgVDfmy_4q--p20lxyP4fdxjbucOE3B9zOgn4sBXPZdacDEfkYsqkQnrzDR-QaXcs4Kg"/>
+</div>
+</div>
+</header>
+<div class="flex min-h-[calc(100vh-64px)]">
+<!-- Sidebar Shell -->
+<aside class="h-[calc(100vh-64px)] w-64 border-r border-gray-200/10 bg-[#f0f4f8] flex flex-col fixed left-0 top-16 z-40">
+<div class="p-6">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 bg-primary-container flex items-center justify-center rounded">
+<span class="material-symbols-outlined text-white" data-icon="precision_manufacturing">precision_manufacturing</span>
+</div>
+<div>
+<h2 class="font-mono font-bold text-[#004260] leading-none">Order #8821</h2>
+<p class="text-[10px] uppercase tracking-wider text-on-surface-variant font-bold mt-1">Industrial ERP</p>
+</div>
+</div>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-[#40484e] hover:bg-[#e2e8f0] rounded-sm transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="info">info</span>
+<span class="text-sm font-medium">Order Setup</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#40484e] hover:bg-[#e2e8f0] rounded-sm transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="list_alt">list_alt</span>
+<span class="text-sm font-medium">Line Items</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-[#004260] text-white rounded-sm font-medium transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="text-sm">Production Steps</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#40484e] hover:bg-[#e2e8f0] rounded-sm transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="schedule">schedule</span>
+<span class="text-sm font-medium">ETA Planning</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#40484e] hover:bg-[#e2e8f0] rounded-sm transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="fact_check">fact_check</span>
+<span class="text-sm font-medium">Review</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#40484e] hover:bg-[#e2e8f0] rounded-sm transition-all duration-200" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="history">history</span>
+<span class="text-sm font-medium">Logs</span>
+</a>
+</nav>
+<div class="mt-8">
+<button class="w-full flex items-center justify-center gap-2 py-2 border border-outline-variant/30 text-primary text-sm font-bold rounded hover:bg-[#e2e8f0] transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                        New Workflow
+                    </button>
+</div>
+</div>
+<div class="mt-auto p-6 border-t border-gray-200/10">
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-[#40484e] hover:bg-[#e2e8f0] rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span>
+<span class="text-sm font-medium">Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#40484e] hover:bg-[#e2e8f0] rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="description">description</span>
+<span class="text-sm font-medium">Documentation</span>
+</a>
+</nav>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 ml-64 p-8 overflow-y-auto bg-surface">
+<!-- Page Header -->
+<div class="mb-8">
+<div class="flex items-center gap-2 text-on-surface-variant text-sm mb-2">
+<span>Order #8821</span>
+<span class="material-symbols-outlined text-[16px]" data-icon="chevron_right">chevron_right</span>
+<span class="font-medium text-primary">Step 3: Production &amp; ETA Planning</span>
+</div>
+<h1 class="text-2xl font-extrabold text-[#004260] tracking-tight">Workflow Configuration</h1>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Left Column: Production Steps -->
+<div class="col-span-8 space-y-8">
+<!-- Production Steps Table Section -->
+<section class="bg-surface-container-low rounded-lg p-6">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-lg font-bold text-on-surface">Production Steps</h3>
+<button class="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-primary rounded shadow-sm hover:opacity-90 transition-all">
+<span class="material-symbols-outlined text-[16px]" data-icon="add">add</span>
+                                Add Custom Step
+                            </button>
+</div>
+<div class="overflow-hidden bg-surface-container-lowest rounded shadow-sm border border-outline-variant/10">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high">
+<th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-widest text-on-surface-variant">Step Name</th>
+<th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-widest text-on-surface-variant">Work Center</th>
+<th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-widest text-on-surface-variant text-right">Cost</th>
+<th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-widest text-on-surface-variant text-right">Time</th>
+<th class="px-4 py-3 text-[11px] font-extrabold uppercase tracking-widest text-on-surface-variant"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-4 py-4 text-sm font-semibold text-on-surface">Panel Assembly</td>
+<td class="px-4 py-4 text-sm text-on-surface-variant">Panel Assembly</td>
+<td class="px-4 py-4 text-sm font-mono text-right">$250.00</td>
+<td class="px-4 py-4 text-sm font-mono text-right">4h</td>
+<td class="px-4 py-4 text-right">
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-4 py-4 text-sm font-semibold text-on-surface">Sensor Calibration</td>
+<td class="px-4 py-4 text-sm text-on-surface-variant">Sensor Calibration</td>
+<td class="px-4 py-4 text-sm font-mono text-right">$120.00</td>
+<td class="px-4 py-4 text-sm font-mono text-right">2h</td>
+<td class="px-4 py-4 text-right">
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[20px]" data-icon="delete">delete</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Fixed Business Items -->
+<section class="grid grid-cols-2 gap-6">
+<div class="bg-surface-container-high/50 border-l-4 border-primary p-5 rounded-r-lg relative overflow-hidden group">
+<div class="flex justify-between items-start mb-2">
+<h4 class="text-xs font-extrabold uppercase tracking-widest text-on-surface-variant">System Default Step</h4>
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="lock" data-weight="fill">lock</span>
+</div>
+<h3 class="text-lg font-bold text-on-surface mb-1">Quality Check</h3>
+<div class="flex items-center gap-4 text-sm font-mono text-on-surface-variant">
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span> 24h</span>
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]" data-icon="verified">verified</span> Mandatory</span>
+</div>
+</div>
+<div class="bg-surface-container-high/50 border-l-4 border-primary p-5 rounded-r-lg relative overflow-hidden group">
+<div class="flex justify-between items-start mb-2">
+<h4 class="text-xs font-extrabold uppercase tracking-widest text-on-surface-variant">System Default Step</h4>
+<span class="material-symbols-outlined text-primary text-[20px]" data-icon="lock" data-weight="fill">lock</span>
+</div>
+<h3 class="text-lg font-bold text-on-surface mb-1">Packaging</h3>
+<div class="flex items-center gap-4 text-sm font-mono text-on-surface-variant">
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]" data-icon="schedule">schedule</span> 8h</span>
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-[16px]" data-icon="package_2">package_2</span> Standard</span>
+</div>
+</div>
+</section>
+<!-- Industrial Background Visual -->
+<div class="relative h-48 rounded-xl overflow-hidden bg-surface-container-highest">
+<img alt="Industrial manufacturing equipment" class="w-full h-full object-cover opacity-30 grayscale" data-alt="Modern high-tech industrial assembly line with blue lighting and precision robotic arms in a clean factory environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9zAp7g93YUEkItRiaZy67Ux4SuQ2ps8QF0zh0nITtOZmlzTERd_aZI-V_XLoQaMi-QNz4l5YbtSNIXdrQbMzZcZ-hsLb2Dys39u5whq7frolONMd2q3K-zF730yzqYk0YxqJpUTr-uW5OXbJlpWDxz40gPPHE0dqcU0DHcjFAPhHWh-XXkidbTT9JUXpGbXu9dT14B4HOz3qwjpEL_p2MLP_RLmSmZeSzGjqs9Ou6vMZLtPD1UZWkOH3G1qPZ-nyYghoeOoXOiDA"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent"></div>
+<div class="absolute bottom-4 left-6">
+<p class="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant">Operational Context</p>
+<h4 class="text-sm font-bold text-[#004260]">Line 4 Capability: 110% Efficiency</h4>
+</div>
+</div>
+</div>
+<!-- Right Column: ETA Calculator -->
+<div class="col-span-4">
+<div class="sticky top-24 space-y-6">
+<!-- Main ETA Card -->
+<div class="bg-surface-container-lowest border border-outline-variant/10 rounded-lg shadow-xl overflow-hidden">
+<div class="bg-[#004260] p-4 text-white">
+<h3 class="font-bold flex items-center gap-2">
+<span class="material-symbols-outlined" data-icon="calculate">calculate</span>
+                                    ETA Calculator
+                                </h3>
+</div>
+<div class="p-6 space-y-6">
+<div class="space-y-4">
+<div class="flex justify-between items-center pb-3 border-b border-outline-variant/10">
+<span class="text-sm text-on-surface-variant">Material Availability</span>
+<span class="text-sm font-mono font-bold">Oct 22, 2024</span>
+</div>
+<div class="flex justify-between items-center pb-3 border-b border-outline-variant/10">
+<span class="text-sm text-on-surface-variant">Production Completion</span>
+<span class="text-sm font-mono font-bold">Oct 24, 2024</span>
+</div>
+<div class="flex justify-between items-center pb-3 border-b border-outline-variant/10">
+<span class="text-sm text-on-surface-variant">Delivery Lead Time</span>
+<span class="text-sm font-mono font-bold">3 Days</span>
+</div>
+</div>
+<div class="p-4 bg-surface-container rounded border border-outline-variant/20">
+<label class="block text-xs font-extrabold uppercase tracking-widest text-on-surface-variant mb-2">Promised ETA (Commitment)</label>
+<div class="relative">
+<input class="w-full bg-surface-container-high border-none border-b-2 border-transparent focus:border-primary focus:ring-0 text-sm font-bold p-2.5 rounded transition-all" type="date" value="2024-10-21"/>
+</div>
+</div>
+<!-- Conflict Alert -->
+<div class="flex gap-3 p-4 bg-error-container text-on-error-container rounded-lg border border-error/20">
+<span class="material-symbols-outlined shrink-0" data-icon="warning" data-weight="fill">warning</span>
+<div>
+<p class="text-xs font-bold leading-tight">DELIVERY CONFLICT</p>
+<p class="text-xs mt-1 opacity-90">Promised ETA (Oct 21) is earlier than Calculated Delivery (Oct 27). Immediate attention required for logistics override.</p>
+</div>
+</div>
+<button class="w-full py-3 bg-primary text-white font-bold rounded shadow-lg hover:shadow-xl hover:opacity-95 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+                                    Validate &amp; Continue
+                                    <span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Technical Summary Chipset -->
+<div class="bg-surface-container-low p-4 rounded-lg">
+<h4 class="text-[10px] font-extrabold uppercase tracking-widest text-on-surface-variant mb-3">Resource Impact</h4>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-surface-container-highest rounded-full font-mono text-[10px] text-on-surface border border-outline-variant/20">SKU: PROD-88-21</span>
+<span class="px-2 py-1 bg-surface-container-highest rounded-full font-mono text-[10px] text-on-surface border border-outline-variant/20">UTIL: 92%</span>
+<span class="px-2 py-1 bg-surface-container-highest rounded-full font-mono text-[10px] text-on-surface border border-outline-variant/20">SHIFT: B-ALPHA</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Navigation Shell -->
+<footer class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-highest px-6 py-3 flex justify-around items-center z-50 border-t border-outline-variant/10 shadow-lg">
+<div class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span class="text-[10px] font-medium">Dash</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-[#004260] font-bold">
+<span class="material-symbols-outlined" data-icon="shopping_cart" data-weight="fill">shopping_cart</span>
+<span class="text-[10px]">Orders</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="text-[10px] font-medium">Prod</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span class="text-[10px] font-medium">Inv</span>
+</div>
+</footer>
+</body></html>

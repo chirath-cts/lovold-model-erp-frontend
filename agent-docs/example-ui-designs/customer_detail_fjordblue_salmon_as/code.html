@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Detail - FjordBlue Salmon AS | Lovold ERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .technical-mono {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+        /* Custom scrollbar for data-heavy sections */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c0c7cf;
+            border-radius: 10px;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-fixed": "#071e27",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#354a53",
+                        "surface-tint": "#17648c",
+                        "tertiary-fixed-dim": "#bbc8d0",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#eff1f4",
+                        "on-surface": "#191c1e",
+                        "secondary-container": "#cfe6f2",
+                        "surface-bright": "#f7f9fc",
+                        "tertiary-fixed": "#d7e4ec",
+                        "surface-variant": "#e0e3e6",
+                        "secondary-fixed": "#cfe6f2",
+                        "on-surface-variant": "#40484e",
+                        "surface-container-high": "#e6e8eb",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#001e2e",
+                        "on-primary-container": "#91d2fe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#bfccd4",
+                        "on-tertiary-fixed": "#111d23",
+                        "secondary-fixed-dim": "#b4cad6",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d8dadd",
+                        "background": "#f7f9fc",
+                        "surface": "#f7f9fc",
+                        "inverse-surface": "#2d3133",
+                        "tertiary": "#344046",
+                        "on-background": "#191c1e",
+                        "primary-container": "#005b82",
+                        "on-secondary-container": "#526772",
+                        "tertiary-container": "#4b575e",
+                        "on-error": "#ffffff",
+                        "secondary": "#4c616c",
+                        "on-primary": "#ffffff",
+                        "primary": "#004260",
+                        "surface-container": "#eceef1",
+                        "outline": "#70787f",
+                        "primary-fixed-dim": "#8ecefa",
+                        "primary-fixed": "#c8e6ff",
+                        "on-tertiary-fixed-variant": "#3c494f",
+                        "on-primary-fixed-variant": "#004c6d",
+                        "inverse-primary": "#8ecefa",
+                        "surface-container-highest": "#e0e3e6",
+                        "outline-variant": "#c0c7cf",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f2f4f7"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- Side Navigation Bar -->
+<nav class="h-screen w-64 fixed left-0 top-0 z-40 flex flex-col border-r border-opacity-10 bg-slate-200 dark:bg-slate-950 font-inter text-sm font-medium">
+<div class="p-6">
+<h1 class="font-black tracking-tighter text-[#004260] dark:text-white text-2xl uppercase">Lovold</h1>
+<p class="text-[10px] tracking-[0.2em] text-on-surface-variant opacity-70 uppercase mt-1">Precision ERP</p>
+</div>
+<div class="flex-grow px-4 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 mb-1 text-slate-600 dark:text-slate-400 hover:text-[#004260] hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mb-1 bg-white dark:bg-slate-800 text-[#004260] dark:text-white rounded-sm shadow-sm transition-all duration-150" href="#">
+<span class="material-symbols-outlined">group</span>
+<span>Customers</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mb-1 text-slate-600 dark:text-slate-400 hover:text-[#004260] hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mb-1 text-slate-600 dark:text-slate-400 hover:text-[#004260] hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span>Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mb-1 text-slate-600 dark:text-slate-400 hover:text-[#004260] hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">engineering</span>
+<span>Engineering</span>
+</a>
+</div>
+<div class="p-4 mt-auto border-t border-slate-300 dark:border-slate-800">
+<a class="flex items-center gap-3 px-4 py-3 mb-1 text-slate-600 dark:text-slate-400 hover:text-[#004260] hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">contact_support</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mb-1 text-slate-600 dark:text-slate-400 hover:text-[#004260] hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</nav>
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-64 right-0 z-50 bg-slate-50 dark:bg-slate-900 font-inter antialiased tracking-tight bg-slate-100 dark:bg-slate-800 border-b border-opacity-15 flex justify-between items-center px-6 py-2">
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="bg-surface-container-low border-none rounded-sm pl-10 pr-4 py-1.5 text-sm w-80 focus:ring-1 focus:ring-primary transition-all" placeholder="Search orders, clients, parts..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex gap-2">
+<button class="p-2 rounded-sm hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 rounded-sm hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-2 rounded-sm hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors text-slate-600 dark:text-slate-400">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+<div class="h-8 w-8 bg-primary-container rounded-full overflow-hidden border border-primary/20">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="professional portrait of an industrial logistics manager with a clean background and soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBLK8oofYnHErG7DEY2kVYoepntH_2RmG-Nia0yYbFAZSsGHrWEssQq-RxnC7twDaDzh120t0xq16s-tJNqrpj_FmoPnG1qGLtLd0Kv_yw4SoES5qwuEE0UxP7BDrW7c6j3i_6sQ7Zz55xQhf-CEMXfpBA8PKx0BVvB82HbXdLYpRYA2HqJNGFBf6XoAPvPpzpYYkv3ks_2n9gcA3g2zoBcyUGWVvXJHCKr3sFVBtWIwJpdTdLzg8I4Usmpm7SwMAL53FeuYHuBRs"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-16 p-8 min-h-screen">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+<div class="space-y-1">
+<div class="flex items-center gap-3">
+<h2 class="text-3xl font-extrabold tracking-tight text-primary">FjordBlue Salmon AS</h2>
+<span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-widest bg-emerald-100 text-emerald-800 border border-emerald-200">Active</span>
+</div>
+<div class="flex items-center gap-4 text-on-surface-variant text-sm">
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">location_on</span> Tromsø, Norway</span>
+<span class="flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">inventory</span> Key Account: Aquaculture Hub</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<button class="px-4 py-2 border border-outline-variant text-sm font-semibold hover:bg-surface-container-low transition-colors rounded-sm">
+                    Generate Report
+                </button>
+<button class="px-5 py-2 bg-gradient-to-r from-[#004260] to-[#005b82] text-white text-sm font-bold shadow-sm hover:opacity-90 active:scale-[0.98] transition-all rounded-sm flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">add_shopping_cart</span>
+                    New Order
+                </button>
+</div>
+</div>
+<!-- Metrics Bento Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<div class="bg-surface-container-low p-5 rounded-sm border-l-4 border-primary">
+<p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider mb-2">Total Orders</p>
+<h3 class="text-2xl font-black text-primary">142</h3>
+<div class="mt-2 text-[11px] text-emerald-600 font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span> +12% YoY
+                </div>
+</div>
+<div class="bg-surface-container-low p-5 rounded-sm">
+<p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider mb-2">Lifetime Revenue</p>
+<h3 class="text-2xl font-black text-on-surface">€ 1.28M</h3>
+<p class="mt-2 text-[11px] text-on-surface-variant italic">Last transaction 4d ago</p>
+</div>
+<div class="bg-surface-container-low p-5 rounded-sm">
+<p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider mb-2">Avg. Order Value</p>
+<h3 class="text-2xl font-black text-on-surface">€ 9,014</h3>
+<div class="mt-2 text-[11px] text-primary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">info</span> Median: € 8,450
+                </div>
+</div>
+<div class="bg-surface-container-low p-5 rounded-sm">
+<p class="text-[11px] font-bold text-on-surface-variant uppercase tracking-wider mb-2">Est. Profit Margin</p>
+<h3 class="text-2xl font-black text-primary">22.4%</h3>
+<div class="mt-2 w-full bg-surface-container-highest h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 72%"></div>
+</div>
+</div>
+</div>
+<!-- Asymmetric Detail Panels -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
+<!-- Business Identity Panel -->
+<div class="lg:col-span-4 bg-surface-container-lowest border border-outline-variant/10 rounded-sm overflow-hidden flex flex-col">
+<div class="bg-surface-container-high px-5 py-3 border-b border-outline-variant/20">
+<h4 class="text-xs font-bold uppercase tracking-widest text-on-surface">Business Identity</h4>
+</div>
+<div class="p-6 space-y-6">
+<div>
+<label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Customer Code</label>
+<p class="technical-mono text-sm mt-1 font-bold text-primary">NOR-FJORD-8821</p>
+</div>
+<div>
+<label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Primary Contact</label>
+<div class="flex items-center gap-3 mt-2">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary font-bold text-sm">EK</div>
+<div>
+<p class="text-sm font-bold">Erik Knudsen</p>
+<p class="text-xs text-on-surface-variant">Procurement Director</p>
+</div>
+</div>
+</div>
+<div>
+<label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Registered Address</label>
+<p class="text-sm mt-1 leading-relaxed">Sjøgate 12, Pier 4<br/>9008 Tromsø<br/>Norway</p>
+</div>
+<div class="pt-4 border-t border-outline-variant/10">
+<label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Billing Terms</label>
+<p class="text-sm mt-1">Net 30 - Corporate Credit</p>
+</div>
+</div>
+<div class="mt-auto p-4 bg-surface-container-low">
+<button class="w-full text-xs font-bold text-primary hover:underline flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">edit</span> EDIT PROFILE
+                    </button>
+</div>
+</div>
+<!-- High-Frequency Components Panel -->
+<div class="lg:col-span-8 bg-surface-container-lowest border border-outline-variant/10 rounded-sm overflow-hidden">
+<div class="bg-surface-container-high px-5 py-3 border-b border-outline-variant/20 flex justify-between items-center">
+<h4 class="text-xs font-bold uppercase tracking-widest text-on-surface">High-Frequency Components</h4>
+<span class="text-[10px] font-medium text-on-surface-variant bg-surface-container px-2 py-0.5 rounded-full">Last 12 Months</span>
+</div>
+<div class="p-0 overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-6 py-3 text-[10px] font-bold text-on-surface-variant uppercase">Component Name</th>
+<th class="px-6 py-3 text-[10px] font-bold text-on-surface-variant uppercase">SKU</th>
+<th class="px-6 py-3 text-[10px] font-bold text-on-surface-variant uppercase text-right">Frequency</th>
+<th class="px-6 py-3 text-[10px] font-bold text-on-surface-variant uppercase text-right">Unit Price</th>
+<th class="px-4 py-3"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-surface-container flex items-center justify-center rounded-sm">
+<span class="material-symbols-outlined text-primary text-sm">settings_input_component</span>
+</div>
+<span class="text-sm font-bold">Feed Blower Unit v4</span>
+</div>
+</td>
+<td class="px-6 py-4 technical-mono text-xs text-on-surface-variant">FB-440-XL</td>
+<td class="px-6 py-4 text-sm font-medium text-right">18 Units</td>
+<td class="px-6 py-4 text-sm font-medium text-right">€ 4,200</td>
+<td class="px-4 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">add_circle</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-surface-container flex items-center justify-center rounded-sm">
+<span class="material-symbols-outlined text-primary text-sm">sensors</span>
+</div>
+<span class="text-sm font-bold">Oxygen Sensor Kit</span>
+</div>
+</td>
+<td class="px-6 py-4 technical-mono text-xs text-on-surface-variant">OSK-MARINE-7</td>
+<td class="px-6 py-4 text-sm font-medium text-right">142 Units</td>
+<td class="px-6 py-4 text-sm font-medium text-right">€ 285</td>
+<td class="px-4 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">add_circle</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-surface-container flex items-center justify-center rounded-sm">
+<span class="material-symbols-outlined text-primary text-sm">plumbing</span>
+</div>
+<span class="text-sm font-bold">Hydraulic Connector 15mm</span>
+</div>
+</td>
+<td class="px-6 py-4 technical-mono text-xs text-on-surface-variant">HY-CON-15M</td>
+<td class="px-6 py-4 text-sm font-medium text-right">850 Units</td>
+<td class="px-6 py-4 text-sm font-medium text-right">€ 14.20</td>
+<td class="px-4 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">add_circle</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-surface-container flex items-center justify-center rounded-sm">
+<span class="material-symbols-outlined text-primary text-sm">emergency</span>
+</div>
+<span class="text-sm font-bold">Filter Mesh Stainless</span>
+</div>
+</td>
+<td class="px-6 py-4 technical-mono text-xs text-on-surface-variant">MSH-SS-300</td>
+<td class="px-6 py-4 text-sm font-medium text-right">24 Units</td>
+<td class="px-6 py-4 text-sm font-medium text-right">€ 890</td>
+<td class="px-4 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant opacity-0 group-hover:opacity-100 transition-opacity">add_circle</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Order History Section -->
+<div class="bg-surface-container-lowest border border-outline-variant/10 rounded-sm overflow-hidden">
+<div class="bg-surface-container-high px-5 py-4 border-b border-outline-variant/20 flex justify-between items-center">
+<h4 class="text-xs font-bold uppercase tracking-widest text-on-surface">Order History</h4>
+<div class="flex gap-2">
+<button class="text-[10px] font-bold px-3 py-1 bg-white border border-outline-variant/30 rounded-full">All Orders</button>
+<button class="text-[10px] font-bold px-3 py-1 hover:bg-white/50 transition-colors">Pending</button>
+<button class="text-[10px] font-bold px-3 py-1 hover:bg-white/50 transition-colors">Delivered</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low/30">
+<th class="px-6 py-3 text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Order ID</th>
+<th class="px-6 py-3 text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Order Date</th>
+<th class="px-6 py-3 text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Items</th>
+<th class="px-6 py-3 text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter text-right">Total Value</th>
+<th class="px-6 py-3 text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Status</th>
+<th class="px-6 py-3"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<span class="technical-mono text-sm font-bold text-primary underline underline-offset-4 cursor-pointer">#ORD-99021</span>
+</td>
+<td class="px-6 py-4 text-sm">Oct 24, 2023</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">12 x Blower, 45 x Sensors...</td>
+<td class="px-6 py-4 text-sm font-bold text-right">€ 54,204.00</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-sky-100 text-sky-800 border border-sky-200 uppercase tracking-widest">In Transit</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<span class="technical-mono text-sm font-bold text-primary underline underline-offset-4 cursor-pointer">#ORD-98844</span>
+</td>
+<td class="px-6 py-4 text-sm">Oct 12, 2023</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">800 x Mesh Panel</td>
+<td class="px-6 py-4 text-sm font-bold text-right">€ 12,850.00</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 uppercase tracking-widest">Delivered</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<span class="technical-mono text-sm font-bold text-primary underline underline-offset-4 cursor-pointer">#ORD-98701</span>
+</td>
+<td class="px-6 py-4 text-sm">Sep 28, 2023</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">Maintenance Kit (Premium)</td>
+<td class="px-6 py-4 text-sm font-bold text-right">€ 4,110.00</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 uppercase tracking-widest">Delivered</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">more_vert</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<span class="technical-mono text-sm font-bold text-primary underline underline-offset-4 cursor-pointer">#ORD-98555</span>
+</td>
+<td class="px-6 py-4 text-sm">Sep 15, 2023</td>
+<td class="px-6 py-4 text-sm text-on-surface-variant">2 x Excavation Augers</td>
+<td class="px-6 py-4 text-sm font-bold text-right">€ 118,500.00</td>
+<td class="px-6 py-4">
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200 uppercase tracking-widest">Delivered</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-3 bg-surface-container-low flex justify-between items-center">
+<p class="text-[10px] text-on-surface-variant">Showing 4 of 142 total orders</p>
+<div class="flex gap-4">
+<button class="text-[10px] font-bold text-primary flex items-center gap-1">VIEW ALL ORDERS <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Branding Anchor (Industrial Feel) -->
+<div class="fixed bottom-6 right-6 z-[60]">
+<div class="bg-primary text-white p-3 shadow-lg rounded-sm border border-white/10 flex items-center gap-3">
+<div class="flex flex-col">
+<span class="text-[8px] font-bold tracking-[0.3em] uppercase opacity-60">System Core</span>
+<span class="text-[10px] font-black tracking-widest uppercase">LOVOLD v2.4.1</span>
+</div>
+<div class="h-6 w-px bg-white/20 mx-1"></div>
+<span class="material-symbols-outlined text-sm text-sky-300">verified_user</span>
+</div>
+</div>
+</body></html>

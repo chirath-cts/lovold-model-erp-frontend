@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PO-2024-082 | Subsurface Precision ERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-fixed-variant": "#354a53",
+                        "on-secondary-fixed": "#071e27",
+                        "on-error-container": "#93000a",
+                        "error": "#ba1a1a",
+                        "surface-tint": "#17648c",
+                        "tertiary-fixed-dim": "#bbc8d0",
+                        "inverse-on-surface": "#eff1f4",
+                        "secondary-container": "#cfe6f2",
+                        "surface-bright": "#f7f9fc",
+                        "on-surface": "#191c1e",
+                        "secondary-fixed": "#cfe6f2",
+                        "on-surface-variant": "#40484e",
+                        "tertiary-fixed": "#d7e4ec",
+                        "surface-variant": "#e0e3e6",
+                        "on-primary-fixed": "#001e2e",
+                        "surface-container-high": "#e6e8eb",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#bfccd4",
+                        "on-primary-container": "#91d2fe",
+                        "secondary-fixed-dim": "#b4cad6",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d8dadd",
+                        "on-tertiary-fixed": "#111d23",
+                        "tertiary": "#344046",
+                        "on-background": "#191c1e",
+                        "background": "#f7f9fc",
+                        "surface": "#f7f9fc",
+                        "inverse-surface": "#2d3133",
+                        "primary-container": "#005b82",
+                        "on-secondary-container": "#526772",
+                        "secondary": "#4c616c",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#4b575e",
+                        "on-error": "#ffffff",
+                        "primary": "#004260",
+                        "outline": "#70787f",
+                        "surface-container": "#eceef1",
+                        "on-primary-fixed-variant": "#004c6d",
+                        "inverse-primary": "#8ecefa",
+                        "surface-container-highest": "#e0e3e6",
+                        "outline-variant": "#c0c7cf",
+                        "primary-fixed-dim": "#8ecefa",
+                        "primary-fixed": "#c8e6ff",
+                        "on-tertiary-fixed-variant": "#3c494f",
+                        "surface-container-low": "#f2f4f7",
+                        "error-container": "#ffdad6"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["JetBrains Mono"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .mono-text { font-family: 'JetBrains Mono', monospace; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- SideNavBar (Shared Component) -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r-0 bg-slate-100 dark:bg-slate-900 flex flex-col overflow-y-auto z-50">
+<div class="p-6">
+<h1 class="font-bold text-sky-900 dark:text-sky-100 tracking-tighter text-xl">Subsurface Precision</h1>
+<p class="text-xs text-slate-500 uppercase tracking-widest mt-1">Aquaculture ERP</p>
+</div>
+<nav class="flex-1 space-y-1 px-2">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors font-inter antialiased tracking-tight text-sm" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-slate-800 text-sky-800 dark:text-sky-300 font-semibold border-r-4 border-sky-800 font-inter antialiased tracking-tight text-sm" href="#">
+<span class="material-symbols-outlined">inventory_2</span> Inventory
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors font-inter antialiased tracking-tight text-sm" href="#">
+<span class="material-symbols-outlined">event_upcoming</span> Planning
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors font-inter antialiased tracking-tight text-sm" href="#">
+<span class="material-symbols-outlined">payments</span> Sales
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors font-inter antialiased tracking-tight text-sm" href="#">
+<span class="material-symbols-outlined">local_shipping</span> Logistics
+            </a>
+</nav>
+<div class="mt-auto border-t border-slate-200 dark:border-slate-800 p-2 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors font-inter antialiased tracking-tight text-sm" href="#">
+<span class="material-symbols-outlined">settings</span> Settings
+            </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors font-inter antialiased tracking-tight text-sm" href="#">
+<span class="material-symbols-outlined">help_outline</span> Support
+            </a>
+</div>
+</aside>
+<!-- TopNavBar (Shared Component) -->
+<header class="fixed top-0 right-0 left-64 h-16 z-40 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50 flex items-center justify-between px-8 shadow-sm dark:shadow-none">
+<div class="flex items-center bg-surface-container-high px-4 py-1.5 rounded-lg w-96">
+<span class="material-symbols-outlined text-on-surface-variant text-lg mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm w-full" placeholder="Search purchase orders..." type="text"/>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 border-r border-outline-variant/30 pr-6">
+<button class="text-slate-500 hover:text-sky-700 transition-all relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full border border-white"></span>
+</button>
+<button class="text-slate-500 hover:text-sky-700 transition-all">
+<span class="material-symbols-outlined">history</span>
+</button>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-primary font-semibold text-sm hover:underline">Support</button>
+<button class="bg-primary text-white px-4 py-2 rounded-sm text-sm font-bold flex items-center gap-2 transition-opacity active:opacity-90">
+<span class="material-symbols-outlined text-sm">add</span> New Order
+                </button>
+<img alt="User Profile" class="w-8 h-8 rounded-full bg-slate-200" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7mGm3LItZ4VIExED4YVOVQ-AZfwMTJAY2O74vXB4D95lx7UfVykJofEAFpi99zZYd_hUDEpz5IC2yXW8BU3LHyZ-MJio_V0XMj_OoM0X5SitnNsSR-fZf7twmgq_QBeALizbYoI8-qg7zdNqo-AS83E6sLK8nHxj4ObZDWYWS0WwWIr8haF7fRaqpYh5en7kLZt5ekQ_InvD4sNExu_lqFfHFAoABaZHYYjZk9aYdOZwfYpGoP17xFenZj1_PCfWdCS2-qvj8EAA"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-16 min-h-screen">
+<div class="p-8 space-y-8">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div class="space-y-1">
+<div class="flex items-center gap-3">
+<span class="text-xs font-mono uppercase tracking-widest text-on-surface-variant bg-surface-container-high px-2 py-0.5 rounded">Order #PO-2024-082</span>
+<div class="flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-primary/10 text-primary text-xs font-bold border border-primary/20">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+                            Partially Received
+                        </div>
+</div>
+<h2 class="text-3xl font-extrabold tracking-tight text-on-surface">Precision Marine Inbound</h2>
+</div>
+<div class="flex gap-2">
+<button class="px-5 py-2.5 bg-white border-2 border-outline-variant/20 text-on-surface font-semibold text-sm hover:bg-surface-container-low transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">edit</span> Edit PO
+                    </button>
+<button class="px-5 py-2.5 bg-primary text-white font-bold text-sm rounded-sm hover:opacity-95 transition-opacity flex items-center gap-2 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">check_circle</span> Mark as Received
+                    </button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Supplier Info Card -->
+<div class="col-span-12 lg:col-span-4 bg-surface-container-low p-6 rounded-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-5">
+<span class="material-symbols-outlined text-8xl">factory</span>
+</div>
+<h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-4">Supplier Entity</h3>
+<div class="flex items-start gap-4">
+<div class="w-12 h-12 bg-primary/5 rounded-lg flex items-center justify-center border border-primary/10">
+<span class="material-symbols-outlined text-primary text-3xl">water_drop</span>
+</div>
+<div>
+<p class="text-xl font-bold text-on-surface">AquaFlow Valves AS</p>
+<p class="text-sm text-on-surface-variant">Industriveien 12, 0668 Oslo, NO</p>
+<div class="mt-4 flex flex-col gap-2">
+<span class="flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-sm text-primary">person</span> Morten Jensen (Sales Eng.)</span>
+<span class="flex items-center gap-2 text-sm"><span class="material-symbols-outlined text-sm text-primary">mail</span> orders@aquaflow.no</span>
+</div>
+</div>
+</div>
+</div>
+<!-- PO Summary Card -->
+<div class="col-span-12 lg:col-span-8 bg-surface-container-low p-6 rounded-lg grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="space-y-1">
+<h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-3">Financial Total</h3>
+<p class="text-3xl font-mono font-medium text-on-surface">€142,500.00</p>
+<p class="text-xs text-on-surface-variant">Net 30 terms applied</p>
+</div>
+<div class="space-y-1">
+<h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-3">Arrival ETA</h3>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<p class="text-xl font-bold text-on-surface">Oct 14, 2024</p>
+</div>
+<p class="text-xs text-on-surface-variant">Estimated delivery at Bergen Hub</p>
+</div>
+<div class="space-y-1">
+<h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-3">Shipping Method</h3>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">directions_boat</span>
+<p class="text-xl font-bold text-on-surface">Marine Freight</p>
+</div>
+<p class="text-xs text-on-surface-variant">Vessel: MS Northstar VII</p>
+</div>
+</div>
+<!-- Main Items Table -->
+<div class="col-span-12 lg:col-span-9 bg-surface-container-lowest border border-outline-variant/10 rounded-lg overflow-hidden">
+<div class="p-6 flex justify-between items-center border-b border-outline-variant/10">
+<h3 class="font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">list_alt</span>
+                            Inbound Line Items
+                        </h3>
+<span class="text-xs font-medium text-on-surface-variant bg-surface-container px-2 py-1 rounded">3 Items Listed</span>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high/50 text-xs font-bold text-on-surface-variant uppercase tracking-wider">
+<th class="px-6 py-4">Product Detail</th>
+<th class="px-6 py-4">SKU</th>
+<th class="px-6 py-4 text-center">Ordered</th>
+<th class="px-6 py-4 text-center">Received</th>
+<th class="px-6 py-4 text-center">Remaining</th>
+<th class="px-6 py-4">Item ETA</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-5">
+<div class="font-bold text-on-surface">Marine-Grade Butterfly Valve v2</div>
+<div class="text-xs text-on-surface-variant">316 Stainless Steel, 4-inch DN100</div>
+</td>
+<td class="px-6 py-5 font-mono text-sm">VLV-316-DN100</td>
+<td class="px-6 py-5 text-center font-mono">40</td>
+<td class="px-6 py-5 text-center font-mono text-primary font-bold">40</td>
+<td class="px-6 py-5 text-center">
+<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-800">COMPLETE</span>
+</td>
+<td class="px-6 py-5 text-sm text-on-surface-variant">Delivered Sep 28</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-5">
+<div class="font-bold text-on-surface">High-Flow Oxygenation Blower</div>
+<div class="text-xs text-on-surface-variant">Variable Speed 7.5kW Industrial</div>
+</td>
+<td class="px-6 py-5 font-mono text-sm">BLW-VFD-750</td>
+<td class="px-6 py-5 text-center font-mono">12</td>
+<td class="px-6 py-5 text-center font-mono text-primary font-bold">4</td>
+<td class="px-6 py-5 text-center font-mono text-error font-bold">8</td>
+<td class="px-6 py-5 text-sm">
+<div class="flex items-center gap-1.5 text-orange-600 font-medium">
+<span class="material-symbols-outlined text-sm">warning</span> Oct 14
+                                        </div>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-5">
+<div class="font-bold text-on-surface">Salinity Multi-Probe Sensor</div>
+<div class="text-xs text-on-surface-variant">Titanium Housing, 50m Depth</div>
+</td>
+<td class="px-6 py-5 font-mono text-sm">SNS-SAL-TIT50</td>
+<td class="px-6 py-5 text-center font-mono">25</td>
+<td class="px-6 py-5 text-center font-mono text-primary font-bold">0</td>
+<td class="px-6 py-5 text-center font-mono font-bold">25</td>
+<td class="px-6 py-5 text-sm">
+<div class="flex items-center gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-sm">schedule</span> Oct 20
+                                        </div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Operational Context Panel -->
+<div class="col-span-12 lg:col-span-3 space-y-6">
+<div class="bg-surface-container-highest p-6 rounded-lg border border-outline-variant/30">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-error">priority_high</span>
+<h3 class="font-bold text-on-surface text-sm uppercase tracking-wider">Fulfillment Risk</h3>
+</div>
+<p class="text-xs text-on-surface-variant mb-4 font-medium leading-relaxed">The following customer orders depend on items from this PO and are currently at risk of delay.</p>
+<div class="space-y-4">
+<!-- Linked Order 1 -->
+<div class="bg-white/40 p-3 border-l-4 border-error rounded-r-md">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-mono font-bold text-primary">#ORD-99021</span>
+<span class="text-[10px] font-bold text-error uppercase">Critical</span>
+</div>
+<p class="text-sm font-bold text-on-surface mb-1">Mowi ASA - Alta Hub</p>
+<div class="flex items-center gap-2 text-[10px] text-on-surface-variant">
+<span class="material-symbols-outlined text-xs">inventory</span> 8x Oxygen Blowers
+                                </div>
+</div>
+<!-- Linked Order 2 -->
+<div class="bg-white/40 p-3 border-l-4 border-orange-400 rounded-r-md">
+<div class="flex justify-between items-start mb-2">
+<span class="text-xs font-mono font-bold text-primary">#ORD-99115</span>
+<span class="text-[10px] font-bold text-orange-600 uppercase">Warning</span>
+</div>
+<p class="text-sm font-bold text-on-surface mb-1">Lerøy Seafood Group</p>
+<div class="flex items-center gap-2 text-[10px] text-on-surface-variant">
+<span class="material-symbols-outlined text-xs">inventory</span> 10x Salinity Probes
+                                </div>
+</div>
+</div>
+<button class="w-full mt-6 py-2 text-xs font-bold text-primary border border-primary/20 hover:bg-primary/5 transition-colors rounded">
+                            View Dependency Map
+                        </button>
+</div>
+<!-- Warehouse Destination -->
+<div class="bg-surface-container-low p-6 rounded-lg">
+<h3 class="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-4">Receiving Hub</h3>
+<div class="aspect-video w-full rounded-md overflow-hidden grayscale contrast-125 brightness-90 mb-4 border border-outline-variant/30">
+<img class="w-full h-full object-cover" data-alt="Modern industrial warehouse interior with massive metal shelving units, polished concrete floor, and bright overhead LED lighting for aquaculture component storage" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLh7EWk6XVjcq_4c5qKG58otpWPzrTwLP3Jc2aVn7L0mfRPGYBJL8SYqnZnuN2hB_Pf0WE-woFsyMLO50_7arqgWNmDTg7GPQPvKs5LgRgRAAdAQ9-Rscq4QmkX1bJkNxBWI1Q8V39y_niFhqDGbrbkd-Dea8ObLE6lkIS37Q1HJ9_fAi_1CAtbKdIWyM_ialfrw75d0IJlv_jZ8pfQDg8ltgmwAwkCsLQYTqRCvtV6FEHX8e_ZqBKAe68Y-GxZNVHnSEiLjm5ZvM"/>
+</div>
+<div class="space-y-1">
+<p class="text-sm font-bold">Bergen Operations Center</p>
+<p class="text-xs text-on-surface-variant">Slot: 42-B (Industrial Parts)</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Background Decoration (Glassmorphic Glow) -->
+<div class="fixed top-0 right-0 -z-10 w-1/3 h-1/2 bg-primary-container/5 blur-[120px] rounded-full pointer-events-none"></div>
+</body></html>

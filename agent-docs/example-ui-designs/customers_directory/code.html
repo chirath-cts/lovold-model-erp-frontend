@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lovold ERP - Customers Directory</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-secondary-fixed": "#071e27",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#354a53",
+                        "surface-tint": "#17648c",
+                        "tertiary-fixed-dim": "#bbc8d0",
+                        "error": "#ba1a1a",
+                        "inverse-on-surface": "#eff1f4",
+                        "on-surface": "#191c1e",
+                        "secondary-container": "#cfe6f2",
+                        "surface-bright": "#f7f9fc",
+                        "tertiary-fixed": "#d7e4ec",
+                        "surface-variant": "#e0e3e6",
+                        "secondary-fixed": "#cfe6f2",
+                        "on-surface-variant": "#40484e",
+                        "surface-container-high": "#e6e8eb",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#001e2e",
+                        "on-primary-container": "#91d2fe",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#bfccd4",
+                        "on-tertiary-fixed": "#111d23",
+                        "secondary-fixed-dim": "#b4cad6",
+                        "on-secondary": "#ffffff",
+                        "surface-dim": "#d8dadd",
+                        "background": "#f7f9fc",
+                        "surface": "#f7f9fc",
+                        "inverse-surface": "#2d3133",
+                        "tertiary": "#344046",
+                        "on-background": "#191c1e",
+                        "primary-container": "#005b82",
+                        "on-secondary-container": "#526772",
+                        "tertiary-container": "#4b575e",
+                        "on-error": "#ffffff",
+                        "secondary": "#4c616c",
+                        "on-primary": "#ffffff",
+                        "primary": "#004260",
+                        "surface-container": "#eceef1",
+                        "outline": "#70787f",
+                        "primary-fixed-dim": "#8ecefa",
+                        "primary-fixed": "#c8e6ff",
+                        "on-tertiary-fixed-variant": "#3c494f",
+                        "on-primary-fixed-variant": "#004c6d",
+                        "inverse-primary": "#8ecefa",
+                        "surface-container-highest": "#e0e3e6",
+                        "outline-variant": "#c0c7cf",
+                        "error-container": "#ffdad6",
+                        "surface-container-low": "#f2f4f7"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["JetBrains Mono"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .mono-technical { font-family: 'JetBrains Mono', monospace; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #c0c7cf; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #70787f; }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface overflow-hidden">
+<!-- SideNavBar (Persistent Anchor) -->
+<aside class="h-screen w-64 fixed left-0 top-0 z-40 flex flex-col bg-slate-200 dark:bg-slate-950 border-r border-opacity-10 font-inter text-sm font-medium">
+<div class="p-6 flex items-center gap-3">
+<div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">anchor</span>
+</div>
+<div>
+<h1 class="font-black tracking-tighter text-[#004260] dark:text-white text-xl">Lovold</h1>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant opacity-70">Precision ERP</p>
+</div>
+</div>
+<nav class="flex-1 px-3 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 mb-1 text-slate-600 dark:text-slate-400 hover:text-[#004260] hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mb-1 bg-white dark:bg-slate-800 text-[#004260] dark:text-white rounded-sm shadow-sm transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="group">group</span>
+<span>Customers</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mb-1 text-slate-600 dark:text-slate-400 hover:text-[#004260] hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mb-1 text-slate-600 dark:text-slate-400 hover:text-[#004260] hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+<span>Orders</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mb-1 text-slate-600 dark:text-slate-400 hover:text-[#004260] hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="engineering">engineering</span>
+<span>Engineering</span>
+</a>
+</nav>
+<div class="p-3 border-t border-slate-300 dark:border-slate-800">
+<a class="flex items-center gap-3 px-4 py-3 mb-1 text-slate-600 dark:text-slate-400 hover:text-[#004260] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 mb-1 text-slate-600 dark:text-slate-400 hover:text-[#004260] transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 flex-1 flex flex-col h-screen">
+<!-- TopAppBar -->
+<header class="bg-slate-50 dark:bg-slate-900 border-b border-opacity-15 flex justify-between items-center w-full px-6 py-2 sticky top-0 z-50 font-inter antialiased tracking-tight">
+<div class="flex items-center gap-6 flex-1">
+<span class="text-lg font-bold text-[#004260] dark:text-[#005b82]">Lovold ERP</span>
+<div class="relative w-full max-w-xl">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant text-sm">search</span>
+<input class="w-full bg-surface-container-high border-none rounded-sm pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary-container transition-all outline-none placeholder:text-outline" placeholder="Search customer ID, name, or region..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2 ml-4">
+<button class="p-2 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors cursor-pointer active:opacity-80 rounded-full">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors cursor-pointer active:opacity-80 rounded-full">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400" data-icon="settings">settings</span>
+</button>
+<button class="p-2 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors cursor-pointer active:opacity-80 rounded-full">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400" data-icon="help">help</span>
+</button>
+<div class="h-8 w-px bg-outline-variant mx-2 opacity-30"></div>
+<div class="flex items-center gap-3 pl-2">
+<img class="w-8 h-8 rounded-full border border-outline-variant object-cover" data-alt="professional portrait of a male maritime engineer in a blue shirt with a neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDughfVuLUtbHNQS9t9NjN42JsFz4KZWHpA1LCBDMmlhBeqRJtxqTdrbJKNFrBoZ1lgdI2VhtlzSy1lLwlDaULmKstEgj1Gd5B2Qle_GGlfgEeLSPSeoGwoNsvErhbHc1wgvfRRfSurHmEZph3GDGuavQtTYTTk1xBTV2g-Sxral2lLt52RBo__EkLpMeObZwj_sQPInr4mz--OdlZ9naGuX7o6BiyJ8c8UFMFrNZk3Od-dSLqz14SgPultMXcI8XI1Q0pEb0D_po4"/>
+<div class="hidden lg:block">
+<p class="text-xs font-bold text-primary">Erik Solberg</p>
+<p class="text-[10px] text-on-surface-variant">Fleet Manager</p>
+</div>
+</div>
+</div>
+</header>
+<!-- Content Canvas -->
+<div class="flex-1 overflow-y-auto p-6 space-y-6">
+<!-- Page Header & Filters -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="text-2xl font-black text-on-surface tracking-tight">Customer Directory</h2>
+<p class="text-on-surface-variant text-sm mt-1">Global aquaculture client base and operational accounts.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex flex-col">
+<label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1">Region</label>
+<select class="bg-surface-container-high border-none rounded-sm text-xs py-2 pl-3 pr-8 focus:ring-1 focus:ring-primary appearance-none cursor-pointer">
+<option>All Regions</option>
+<option>Nordland, NO</option>
+<option>Vestland, NO</option>
+<option>Los Lagos, CL</option>
+<option>British Columbia, CA</option>
+<option>Highlands, UK</option>
+</select>
+</div>
+<div class="flex flex-col">
+<label class="text-[10px] font-bold text-on-surface-variant uppercase tracking-wider mb-1">Status</label>
+<select class="bg-surface-container-high border-none rounded-sm text-xs py-2 pl-3 pr-8 focus:ring-1 focus:ring-primary appearance-none cursor-pointer">
+<option>Active Status</option>
+<option>Pending Approval</option>
+<option>Inactive</option>
+<option>On Hold</option>
+</select>
+</div>
+<button class="bg-primary hover:bg-primary-container text-white px-4 py-2 rounded-sm text-sm font-semibold flex items-center gap-2 mt-auto transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                        New Customer
+                    </button>
+</div>
+</div>
+<!-- Tonal Summary Cards (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-low p-5 rounded-lg border-l-4 border-primary">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant text-xs font-bold uppercase tracking-widest">Total Customers</span>
+<span class="material-symbols-outlined text-primary opacity-40" data-icon="groups">groups</span>
+</div>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="text-3xl font-black text-on-surface">2,492</span>
+<span class="text-[10px] font-bold text-emerald-600 bg-emerald-100 px-1 rounded">+3.2%</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-5 rounded-lg border-l-4 border-secondary">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant text-xs font-bold uppercase tracking-widest">Active Projects</span>
+<span class="material-symbols-outlined text-secondary opacity-40" data-icon="precision_manufacturing">precision_manufacturing</span>
+</div>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="text-3xl font-black text-on-surface">48</span>
+<span class="text-[10px] font-bold text-on-surface-variant bg-surface-container-highest px-1 rounded">GLOBAL</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-5 rounded-lg border-l-4 border-tertiary">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant text-xs font-bold uppercase tracking-widest">Total Revenue (YTD)</span>
+<span class="material-symbols-outlined text-tertiary opacity-40" data-icon="payments">payments</span>
+</div>
+<div class="mt-2 flex items-baseline gap-2">
+<span class="text-3xl font-black text-on-surface">14.2M</span>
+<span class="text-sm font-mono text-on-surface-variant">NOK</span>
+</div>
+</div>
+</div>
+<!-- Industrial Data Table -->
+<div class="bg-surface-container-lowest rounded-sm overflow-hidden border border-outline-variant border-opacity-10 shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high">
+<th class="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Cust ID</th>
+<th class="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Customer Name</th>
+<th class="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Region</th>
+<th class="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest text-right">Orders</th>
+<th class="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest text-right">Revenue (NOK)</th>
+<th class="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest">Last Order</th>
+<th class="px-6 py-4 text-[10px] font-black text-on-surface-variant uppercase tracking-widest text-center">Status</th>
+<th class="px-6 py-4 w-10"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant divide-opacity-10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group cursor-pointer">
+<td class="px-6 py-4 mono-technical text-xs font-medium text-primary">CUST-NO-4921</td>
+<td class="px-6 py-4">
+<div class="font-bold text-sm">FjordBlue Salmon AS</div>
+<p class="text-[10px] text-on-surface-variant">Smolt Production</p>
+</td>
+<td class="px-6 py-4 text-xs font-medium">Nordland, NO</td>
+<td class="px-6 py-4 text-xs text-right mono-technical">142</td>
+<td class="px-6 py-4 text-xs text-right mono-technical font-semibold">3,240,500</td>
+<td class="px-6 py-4 text-xs mono-technical">2023-10-24</td>
+<td class="px-6 py-4 text-center">
+<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">Active</span>
+</td>
+<td class="px-6 py-4">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-on-surface transition-colors">more_vert</span>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group cursor-pointer">
+<td class="px-6 py-4 mono-technical text-xs font-medium text-primary">CUST-CL-8820</td>
+<td class="px-6 py-4">
+<div class="font-bold text-sm">Australis Mar Chile</div>
+<p class="text-[10px] text-on-surface-variant">Net Pen Engineering</p>
+</td>
+<td class="px-6 py-4 text-xs font-medium">Los Lagos, CL</td>
+<td class="px-6 py-4 text-xs text-right mono-technical">89</td>
+<td class="px-6 py-4 text-xs text-right mono-technical font-semibold">2,110,800</td>
+<td class="px-6 py-4 text-xs mono-technical">2023-10-28</td>
+<td class="px-6 py-4 text-center">
+<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">Active</span>
+</td>
+<td class="px-6 py-4">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-on-surface transition-colors">more_vert</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group cursor-pointer">
+<td class="px-6 py-4 mono-technical text-xs font-medium text-primary">CUST-UK-1102</td>
+<td class="px-6 py-4">
+<div class="font-bold text-sm">Hebridean Kelp &amp; Fish</div>
+<p class="text-[10px] text-on-surface-variant">Sustainable Farming</p>
+</td>
+<td class="px-6 py-4 text-xs font-medium">Highlands, UK</td>
+<td class="px-6 py-4 text-xs text-right mono-technical">24</td>
+<td class="px-6 py-4 text-xs text-right mono-technical font-semibold">645,000</td>
+<td class="px-6 py-4 text-xs mono-technical">2023-10-15</td>
+<td class="px-6 py-4 text-center">
+<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-secondary-container text-secondary border border-secondary/20">Pending</span>
+</td>
+<td class="px-6 py-4">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-on-surface transition-colors">more_vert</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group cursor-pointer">
+<td class="px-6 py-4 mono-technical text-xs font-medium text-primary">CUST-CA-5593</td>
+<td class="px-6 py-4">
+<div class="font-bold text-sm">Pacific Rim Aquaculture</div>
+<p class="text-[10px] text-on-surface-variant">Deep Water Systems</p>
+</td>
+<td class="px-6 py-4 text-xs font-medium">British Columbia, CA</td>
+<td class="px-6 py-4 text-xs text-right mono-technical">112</td>
+<td class="px-6 py-4 text-xs text-right mono-technical font-semibold">4,120,400</td>
+<td class="px-6 py-4 text-xs mono-technical">2023-11-01</td>
+<td class="px-6 py-4 text-center">
+<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">Active</span>
+</td>
+<td class="px-6 py-4">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-on-surface transition-colors">more_vert</span>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low transition-colors group cursor-pointer">
+<td class="px-6 py-4 mono-technical text-xs font-medium text-primary">CUST-NO-0032</td>
+<td class="px-6 py-4">
+<div class="font-bold text-sm">SalMar ASA</div>
+<p class="text-[10px] text-on-surface-variant">Strategic Account</p>
+</td>
+<td class="px-6 py-4 text-xs font-medium">Vestland, NO</td>
+<td class="px-6 py-4 text-xs text-right mono-technical">342</td>
+<td class="px-6 py-4 text-xs text-right mono-technical font-semibold">12,500,000</td>
+<td class="px-6 py-4 text-xs mono-technical">2023-11-03</td>
+<td class="px-6 py-4 text-center">
+<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20">Active</span>
+</td>
+<td class="px-6 py-4">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-on-surface transition-colors">more_vert</span>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-container-low transition-colors group cursor-pointer">
+<td class="px-6 py-4 mono-technical text-xs font-medium text-primary">CUST-NO-1284</td>
+<td class="px-6 py-4">
+<div class="font-bold text-sm">Nordic Seaweed Solutions</div>
+<p class="text-[10px] text-on-surface-variant">R&amp;D Partner</p>
+</td>
+<td class="px-6 py-4 text-xs font-medium">Troms, NO</td>
+<td class="px-6 py-4 text-xs text-right mono-technical">12</td>
+<td class="px-6 py-4 text-xs text-right mono-technical font-semibold">185,200</td>
+<td class="px-6 py-4 text-xs mono-technical">2023-09-12</td>
+<td class="px-6 py-4 text-center">
+<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant border border-outline-variant">Inactive</span>
+</td>
+<td class="px-6 py-4">
+<span class="material-symbols-outlined text-outline-variant group-hover:text-on-surface transition-colors">more_vert</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination Footer -->
+<div class="bg-surface-container-high px-6 py-3 flex items-center justify-between border-t border-outline-variant border-opacity-10">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-widest">Showing 1 to 6 of 2,492 customers</span>
+<div class="flex items-center gap-1">
+<button class="p-1 hover:bg-surface-container-highest transition-colors rounded">
+<span class="material-symbols-outlined text-sm">chevron_left</span>
+</button>
+<button class="px-2 py-1 text-[10px] font-black bg-primary text-white rounded-sm">1</button>
+<button class="px-2 py-1 text-[10px] font-black hover:bg-surface-container-highest transition-colors rounded-sm">2</button>
+<button class="px-2 py-1 text-[10px] font-black hover:bg-surface-container-highest transition-colors rounded-sm">3</button>
+<span class="text-[10px] font-black px-1">...</span>
+<button class="px-2 py-1 text-[10px] font-black hover:bg-surface-container-highest transition-colors rounded-sm">416</button>
+<button class="p-1 hover:bg-surface-container-highest transition-colors rounded">
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Contextual Insights Card -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+<div class="bg-primary/5 p-6 rounded-lg border border-primary/10 flex gap-6 items-center">
+<div class="h-24 w-24 bg-primary-container/20 rounded-full flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</div>
+<div>
+<h3 class="font-bold text-primary mb-1">Market Concentration</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">Nordic regions currently represent 62% of your total order volume. Consider increasing outreach to the Chilean market to diversify risk.</p>
+<a class="inline-flex items-center gap-1 text-xs font-bold text-primary mt-3 hover:underline" href="#">View Regional Reports <span class="material-symbols-outlined text-xs">arrow_forward</span></a>
+</div>
+</div>
+<div class="bg-secondary-container/20 p-6 rounded-lg border border-secondary/10 flex gap-6 items-center">
+<div class="h-24 w-24 bg-secondary-container/40 rounded-full flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-secondary text-4xl" style="font-variation-settings: 'FILL' 1;">notifications_active</span>
+</div>
+<div>
+<h3 class="font-bold text-secondary mb-1">Renewal Alerts</h3>
+<p class="text-sm text-on-surface-variant leading-relaxed">4 key accounts have service agreements expiring in the next 30 days. Action required for SalMar ASA and Pacific Rim.</p>
+<a class="inline-flex items-center gap-1 text-xs font-bold text-secondary mt-3 hover:underline" href="#">Manage Renewals <span class="material-symbols-outlined text-xs">arrow_forward</span></a>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Contextual FAB (Only for specific primary tasks) -->
+<!-- Suppressed on Directory page to prioritize filter-and-table interaction as per shell mandates -->
+</body></html>

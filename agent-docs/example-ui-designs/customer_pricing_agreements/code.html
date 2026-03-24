@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Pricing | Lovold ERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .mono-technical {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-container": "#4b575e",
+              "tertiary-fixed": "#d7e4ec",
+              "on-error": "#ffffff",
+              "tertiary-fixed-dim": "#bbc8d0",
+              "on-tertiary-fixed": "#111d23",
+              "surface-container-high": "#e6e8eb",
+              "secondary-fixed-dim": "#b4cad6",
+              "primary-fixed": "#c8e6ff",
+              "primary-fixed-dim": "#8ecefa",
+              "primary": "#004260",
+              "on-tertiary": "#ffffff",
+              "on-surface": "#191c1e",
+              "surface-dim": "#d8dadd",
+              "on-secondary-fixed": "#071e27",
+              "secondary-fixed": "#cfe6f2",
+              "on-surface-variant": "#40484e",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-highest": "#e0e3e6",
+              "secondary": "#4c616c",
+              "on-secondary": "#ffffff",
+              "on-error-container": "#93000a",
+              "secondary-container": "#cfe6f2",
+              "surface-container-low": "#f2f4f7",
+              "background": "#f7f9fc",
+              "surface-bright": "#f7f9fc",
+              "on-primary-fixed": "#001e2e",
+              "surface-tint": "#17648c",
+              "outline-variant": "#c0c7cf",
+              "surface-variant": "#e0e3e6",
+              "surface": "#f7f9fc",
+              "on-tertiary-container": "#bfccd4",
+              "on-background": "#191c1e",
+              "on-secondary-fixed-variant": "#354a53",
+              "error-container": "#ffdad6",
+              "primary-container": "#005b82",
+              "error": "#ba1a1a",
+              "on-primary-fixed-variant": "#004c6d",
+              "outline": "#70787f",
+              "on-primary": "#ffffff",
+              "inverse-surface": "#2d3133",
+              "inverse-on-surface": "#eff1f4",
+              "tertiary": "#344046",
+              "on-tertiary-fixed-variant": "#3c494f",
+              "on-secondary-container": "#526772",
+              "on-primary-container": "#91d2fe",
+              "inverse-primary": "#8ecefa",
+              "surface-container": "#eceef1"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background font-body text-on-surface">
+<!-- SideNavBar Anchor -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-slate-200/50 dark:border-slate-800/50 bg-slate-100 dark:bg-slate-950 flex flex-col py-4 z-50">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded-sm flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-sm">precision_manufacturing</span>
+</div>
+<div>
+<h1 class="text-lg font-bold text-sky-950 dark:text-white tracking-tighter">Lovold ERP</h1>
+<p class="text-[10px] uppercase tracking-[0.2em] text-slate-500 font-bold">Industrial Forge</p>
+</div>
+</div>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="dashboard">dashboard</span>
+<span class="text-xs font-medium uppercase tracking-wider">Dashboard</span>
+</a>
+<!-- Sales is active for Pricing -->
+<a class="flex items-center gap-3 px-3 py-2.5 bg-white dark:bg-slate-800 text-sky-900 dark:text-sky-200 shadow-sm border-r-4 border-sky-700 transition-all duration-200 ease-in-out" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="payments">payments</span>
+<span class="text-xs font-medium uppercase tracking-wider">Sales</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="inventory_2">inventory_2</span>
+<span class="text-xs font-medium uppercase tracking-wider">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span class="text-xs font-medium uppercase tracking-wider">Planning</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all duration-200 ease-in-out group" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="local_shipping">local_shipping</span>
+<span class="text-xs font-medium uppercase tracking-wider">Logistics</span>
+</a>
+</nav>
+<div class="px-3 py-4 border-t border-slate-200/50 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 transition-all" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="settings">settings</span>
+<span class="text-xs font-medium uppercase tracking-wider">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 transition-all" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="contact_support">contact_support</span>
+<span class="text-xs font-medium uppercase tracking-wider">Support</span>
+</a>
+</div>
+</aside>
+<!-- TopNavBar Anchor -->
+<header class="ml-64 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50 sticky top-0 z-40 h-16 flex justify-between items-center px-6">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-sm pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/20" placeholder="Global system search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-sm transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-sm transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="h-8 w-[1px] bg-slate-200 mx-2"></div>
+<div class="flex items-center gap-3">
+<div class="text-right">
+<p class="text-xs font-bold text-sky-950 leading-none">Erik Solbakken</p>
+<p class="text-[10px] text-slate-500 font-medium">Ops Manager</p>
+</div>
+<img alt="User profile" class="w-10 h-10 rounded-sm object-cover border-2 border-white shadow-sm" data-alt="close-up portrait of professional man in industrial uniform looking confident with natural office lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYlepzPhIIv959pCCbV9lwExpeGlpEiNmabCHjalnROVFfaBR9yEd_9YLNM8btNk_8vfckJ1NokXKxWUpHG8r311JzwEzmHnOdMY08VOV63y5JjC8_ffdNcWzzq3iyjt6ITqmDUYVkHf23tz7HIE_bqY5icIQR49eJkbpsJzOJ9QxwKG7jFYV7Td-q01wowulfMCmmT69CcQTaQDPH9RFhiKzH25woC-U7TXP35CF2Vxg7R24DDc9F4W1HB0II0lnxOVVtu80ldh0"/>
+</div>
+</div>
+</header>
+<main class="ml-64 p-8 min-h-[calc(100vh-64px)]">
+<!-- Page Header Area -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+<div>
+<nav class="flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest text-slate-400 mb-2">
+<a class="hover:text-primary transition-colors" href="#">Sales</a>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+<span class="text-primary">Customer Pricing</span>
+</nav>
+<h2 class="text-3xl font-black text-sky-950 tracking-tight">Customer Pricing</h2>
+<p class="text-on-surface-variant text-sm mt-1 max-w-xl">Manage individual service-level agreements and specialized pricing tiers for aquaculture product distribution.</p>
+</div>
+<button class="bg-gradient-to-r from-primary to-primary-container text-white px-6 py-2.5 rounded-sm font-bold text-sm shadow-sm hover:opacity-90 transition-opacity flex items-center gap-2 uppercase tracking-wide">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+                Create Agreement
+            </button>
+</div>
+<!-- Summary Cards - Bento Style -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="bg-surface-container-lowest p-6 rounded-sm border-b-2 border-sky-700 shadow-sm relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500 mb-1">Active Agreements</p>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-black text-sky-950">1,248</span>
+<span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">+12%</span>
+</div>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-8xl text-slate-100 group-hover:text-slate-200/50 transition-colors pointer-events-none">contract</span>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-sm border-b-2 border-amber-500 shadow-sm relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500 mb-1">Upcoming Expirations</p>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-black text-sky-950">42</span>
+<span class="text-xs font-bold text-slate-400">Next 30 days</span>
+</div>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-8xl text-slate-100 group-hover:text-slate-200/50 transition-colors pointer-events-none">history_toggle_off</span>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-sm border-b-2 border-primary shadow-sm relative overflow-hidden group">
+<div class="relative z-10">
+<p class="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-500 mb-1">Total Customer Accounts</p>
+<div class="flex items-baseline gap-2">
+<span class="text-4xl font-black text-sky-950">856</span>
+</div>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-8xl text-slate-100 group-hover:text-slate-200/50 transition-colors pointer-events-none">groups</span>
+</div>
+</div>
+<!-- Filter Bar -->
+<div class="bg-surface-container-low p-4 mb-1 flex flex-wrap items-center justify-between gap-4">
+<div class="flex flex-wrap items-center gap-3">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">filter_list</span>
+<input class="bg-white border border-slate-200 text-xs rounded-sm pl-9 pr-4 py-2 w-64 focus:ring-1 focus:ring-primary outline-none" placeholder="Search customer or product..." type="text"/>
+</div>
+<select class="bg-white border border-slate-200 text-xs rounded-sm px-4 py-2 focus:ring-1 focus:ring-primary outline-none text-slate-600 font-medium">
+<option>All Statuses</option>
+<option>Active</option>
+<option>Future</option>
+<option>Expired</option>
+</select>
+<select class="bg-white border border-slate-200 text-xs rounded-sm px-4 py-2 focus:ring-1 focus:ring-primary outline-none text-slate-600 font-medium">
+<option>Discount Type</option>
+<option>Percentage</option>
+<option>Fixed Rate</option>
+</select>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">print</span>
+</button>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="bg-surface-container-lowest overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high border-b border-slate-200">
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Customer Entity</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Base Product SKU</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant text-right">Discount</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Start Date</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">End Date</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Status</th>
+<th class="px-6 py-4 text-[10px] font-black uppercase tracking-widest text-on-surface-variant text-center">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-sky-950">FjordBlue Salmon AS</span>
+<span class="text-[10px] font-medium text-slate-400 mono-technical">CUST-NO-4921</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-on-surface">Feed Blower Unit v4</span>
+<span class="text-[10px] font-medium text-slate-400 mono-technical">SKU: BLW-200-PRO</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="mono-technical font-bold text-sm text-sky-900">8.5%</span>
+</td>
+<td class="px-6 py-4">
+<span class="mono-technical text-xs text-slate-600">2024-01-01</span>
+</td>
+<td class="px-6 py-4">
+<span class="mono-technical text-xs text-slate-600">2024-12-31</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-sm text-[10px] font-bold uppercase tracking-wider bg-emerald-100/50 text-emerald-700">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2"></span>
+                                Active
+                            </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-sky-950">NorthSea Aquaculture</span>
+<span class="text-[10px] font-medium text-slate-400 mono-technical">CUST-DK-1108</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-on-surface">Dosing Valve Assembly</span>
+<span class="text-[10px] font-medium text-slate-400 mono-technical">SKU: VLV-IND-32</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="mono-technical font-bold text-sm text-sky-900">12.0%</span>
+</td>
+<td class="px-6 py-4">
+<span class="mono-technical text-xs text-slate-600">2024-06-01</span>
+</td>
+<td class="px-6 py-4">
+<span class="mono-technical text-xs text-slate-600">2025-05-31</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-sm text-[10px] font-bold uppercase tracking-wider bg-amber-100/50 text-amber-700">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2"></span>
+                                Future
+                            </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-sky-950">Arctic Reef Solutions</span>
+<span class="text-[10px] font-medium text-slate-400 mono-technical">CUST-IS-9922</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-on-surface">Submersible Sensor Array</span>
+<span class="text-[10px] font-medium text-slate-400 mono-technical">SKU: SNR-SUB-G1</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="mono-technical font-bold text-sm text-sky-900">5.0%</span>
+</td>
+<td class="px-6 py-4">
+<span class="mono-technical text-xs text-slate-600">2023-01-01</span>
+</td>
+<td class="px-6 py-4">
+<span class="mono-technical text-xs text-slate-600 text-error font-medium">2023-12-31</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-sm text-[10px] font-bold uppercase tracking-wider bg-error-container/20 text-error">
+<span class="w-1.5 h-1.5 rounded-full bg-error mr-2"></span>
+                                Expired
+                            </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-sky-950">Bergen Marine Group</span>
+<span class="text-[10px] font-medium text-slate-400 mono-technical">CUST-NO-0034</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-on-surface">Hydraulic Winch Engine</span>
+<span class="text-[10px] font-medium text-slate-400 mono-technical">SKU: ENG-WNC-400</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="mono-technical font-bold text-sm text-sky-900">15.5%</span>
+</td>
+<td class="px-6 py-4">
+<span class="mono-technical text-xs text-slate-600">2024-03-15</span>
+</td>
+<td class="px-6 py-4">
+<span class="mono-technical text-xs text-slate-600">2025-03-14</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-sm text-[10px] font-bold uppercase tracking-wider bg-emerald-100/50 text-emerald-700">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-2"></span>
+                                Active
+                            </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-bold text-sky-950">Oslo Fjord Fisheries</span>
+<span class="text-[10px] font-medium text-slate-400 mono-technical">CUST-NO-2281</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm text-on-surface">Cage Anchoring Mesh</span>
+<span class="text-[10px] font-medium text-slate-400 mono-technical">SKU: MSH-ST-80</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<span class="mono-technical font-bold text-sm text-sky-900">4.0%</span>
+</td>
+<td class="px-6 py-4">
+<span class="mono-technical text-xs text-slate-600">2024-05-01</span>
+</td>
+<td class="px-6 py-4">
+<span class="mono-technical text-xs text-slate-600">2025-04-30</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-1 rounded-sm text-[10px] font-bold uppercase tracking-wider bg-amber-100/50 text-amber-700">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2"></span>
+                                Future
+                            </span>
+</td>
+<td class="px-6 py-4 text-center">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="flex items-center justify-between py-4 mt-1 bg-surface-container-low px-6">
+<p class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Showing 1 to 5 of 1,248 agreements</p>
+<div class="flex gap-2">
+<button class="p-1 border border-slate-200 bg-white hover:bg-slate-50 disabled:opacity-50 transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<button class="px-3 py-1 bg-primary text-white text-[10px] font-black">1</button>
+<button class="px-3 py-1 bg-white border border-slate-200 text-[10px] font-black hover:bg-slate-50 transition-colors">2</button>
+<button class="px-3 py-1 bg-white border border-slate-200 text-[10px] font-black hover:bg-slate-50 transition-colors">3</button>
+<button class="p-1 border border-slate-200 bg-white hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</main>
+<!-- Contextual FAB - suppressed because this is a table/management view where 'Create' is already in the header -->
+</body></html>

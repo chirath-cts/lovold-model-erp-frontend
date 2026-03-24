@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Subsurface Precision ERP - Line Items</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-container": "#bfccd4",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#b4cad6",
+                        "surface-container-high": "#e6e8eb",
+                        "surface-container": "#eceef1",
+                        "on-tertiary-fixed": "#111d23",
+                        "secondary-fixed": "#cfe6f2",
+                        "on-primary-fixed-variant": "#004c6d",
+                        "on-secondary-fixed": "#071e27",
+                        "surface-bright": "#f7f9fc",
+                        "outline": "#70787f",
+                        "on-primary-fixed": "#001e2e",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary": "#ffffff",
+                        "background": "#f7f9fc",
+                        "primary-fixed": "#c8e6ff",
+                        "secondary-container": "#cfe6f2",
+                        "secondary": "#4c616c",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d8dadd",
+                        "surface-container-highest": "#e0e3e6",
+                        "surface-tint": "#17648c",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#8ecefa",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f2f4f7",
+                        "tertiary-container": "#4b575e",
+                        "tertiary": "#344046",
+                        "primary-container": "#005b82",
+                        "inverse-on-surface": "#eff1f4",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#bbc8d0",
+                        "surface-variant": "#e0e3e6",
+                        "on-error-container": "#93000a",
+                        "on-background": "#191c1e",
+                        "on-surface": "#191c1e",
+                        "surface": "#f7f9fc",
+                        "on-surface-variant": "#40484e",
+                        "on-secondary-fixed-variant": "#354a53",
+                        "outline-variant": "#c0c7cf",
+                        "inverse-primary": "#8ecefa",
+                        "on-primary-container": "#91d2fe",
+                        "on-tertiary-fixed-variant": "#3c494f",
+                        "tertiary-fixed": "#d7e4ec",
+                        "primary": "#004260",
+                        "on-secondary-container": "#526772"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["JetBrains Mono"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .tonal-architecture-no-lines {
+            border: none !important;
+        }
+        .glass-panel {
+            background: rgba(247, 249, 252, 0.8);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- TopNavBar (Shared Component) -->
+<header class="w-full border-b border-gray-200/15 sticky top-0 z-50 bg-[#f7f9fc] font-['Inter'] antialiased tracking-tight">
+<div class="flex justify-between items-center w-full px-6 py-3">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-[#004260] tracking-tighter uppercase">Subsurface Precision ERP</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-[#40484e] hover:text-[#191c1e] transition-colors" href="#">Dashboard</a>
+<a class="text-[#40484e] hover:text-[#191c1e] transition-colors" href="#">Inventory</a>
+<a class="text-[#004260] font-semibold border-b-2 border-[#004260] pb-1" href="#">Orders</a>
+<a class="text-[#40484e] hover:text-[#191c1e] transition-colors" href="#">Production</a>
+<a class="text-[#40484e] hover:text-[#191c1e] transition-colors" href="#">Logistics</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<button class="px-4 py-2 text-sm font-medium text-[#40484e] hover:bg-[#f1f5f9] transition-all rounded-sm">Save as Draft</button>
+<button class="px-4 py-2 text-sm font-medium bg-[#004260] text-white hover:opacity-90 transition-all rounded-sm active:scale-[0.98]">Confirm Order</button>
+</div>
+<div class="flex items-center gap-3 ml-4 border-l border-outline-variant/30 pl-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-[#f1f5f9] p-1 rounded-full">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-[#f1f5f9] p-1 rounded-full">settings</span>
+<div class="w-8 h-8 rounded-full bg-surface-container-highest overflow-hidden">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="Professional user profile headshot in a bright corporate office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1a5ZnjnoYQvcaupoElVfUqCs8_9HP6qAFsvf8KK4NujgJPIt3OaLoWKtUdRrZ0eJ85ghl0iM1aBYu-_VNR75zYq0NDx2M8uG0p7GlVCm36n9HyxcmUrI7GCk8XT_Uuem6aF4jmmvsFp0mSsd9K2GxowivhSLqTs_HoPwZT5sDWPcu9ajosJPtfRKVtzfQ5G-j9HcJFWtVC_gkgnQZn3HAcoKcdrot3hmuPCtIbQpOH7nPQdKEzDm_8A6gfsX7gtNIbFQSbggTeE8"/>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="flex min-h-[calc(100vh-60px)]">
+<!-- SideNavBar (Shared Component) -->
+<aside class="h-[calc(100vh-60px)] w-64 border-r border-gray-200/10 bg-[#f0f4f8] flex flex-col sticky top-[60px]">
+<div class="p-6 border-b border-outline-variant/10">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 bg-primary-container rounded-sm flex items-center justify-center text-on-primary-container font-bold">L</div>
+<div>
+<h2 class="font-mono font-bold text-[#004260] text-sm">Order #8821</h2>
+<p class="text-[10px] uppercase tracking-widest text-on-surface-variant font-semibold">Industrial ERP</p>
+</div>
+</div>
+<button class="w-full py-2 bg-[#004260] text-white text-xs font-bold rounded-sm hover:opacity-90 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span> New Workflow
+                </button>
+</div>
+<nav class="flex-1 px-3 py-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-sm text-[#40484e] hover:bg-gray-200/50 rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-lg">info</span> Order Setup
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm bg-[#004260] text-white font-medium rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-lg">list_alt</span> Line Items
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm text-[#40484e] hover:bg-gray-200/50 rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-lg">precision_manufacturing</span> Production Steps
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm text-[#40484e] hover:bg-gray-200/50 rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-lg">schedule</span> ETA Planning
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm text-[#40484e] hover:bg-gray-200/50 rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-lg">fact_check</span> Review
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-sm text-[#40484e] hover:bg-gray-200/50 rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-lg">history</span> Logs
+                </a>
+</nav>
+<div class="p-3 border-t border-outline-variant/10">
+<a class="flex items-center gap-3 px-3 py-2 text-xs text-[#40484e] hover:bg-gray-200/50 rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-sm">help</span> Support
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-xs text-[#40484e] hover:bg-gray-200/50 rounded-sm transition-all" href="#">
+<span class="material-symbols-outlined text-sm">description</span> Documentation
+                </a>
+</div>
+</aside>
+<!-- Main Workspace -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Left Column: Line Item Entry -->
+<section class="flex-1 p-8 overflow-y-auto bg-surface-container-low">
+<div class="max-w-5xl mx-auto space-y-8">
+<div class="flex justify-between items-end">
+<div>
+<h1 class="text-2xl font-bold text-on-surface tracking-tight">Line-Item Entry</h1>
+<p class="text-on-surface-variant text-sm mt-1">Configure individual products and assembly bundles for this order.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-5 py-2.5 bg-surface-container-lowest border border-outline-variant/30 text-[#004260] text-sm font-bold rounded-sm hover:bg-white shadow-sm transition-all active:scale-95">
+<span class="material-symbols-outlined text-lg">inventory_2</span>
+                                Add Product
+                            </button>
+<button class="flex items-center gap-2 px-5 py-2.5 bg-primary-container text-white text-sm font-bold rounded-sm hover:opacity-95 shadow-md transition-all active:scale-95">
+<span class="material-symbols-outlined text-lg">account_tree</span>
+                                Add Component Bundle
+                            </button>
+</div>
+</div>
+<!-- Line Item Table -->
+<div class="bg-surface-container-lowest rounded-sm shadow-sm overflow-hidden">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high border-b border-outline-variant/10">
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant">Line Details</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant text-right">Unit Price</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant text-center">Qty</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant text-right">Total</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-widest text-on-surface-variant"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/5">
+<!-- Row 1: Product -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-start gap-3">
+<div class="p-2 bg-secondary-container/30 rounded-sm text-secondary">
+<span class="material-symbols-outlined">settings_input_component</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Oxygen Sensor Kit</p>
+<p class="font-mono text-[11px] text-on-surface-variant">SKU: OS-KIT-4</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex flex-col items-end">
+<span class="font-mono text-sm">$1,240.00</span>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="text-[10px] text-on-surface-variant font-medium">Override</span>
+<div class="w-6 h-3.5 bg-outline-variant rounded-full relative cursor-pointer">
+<div class="absolute left-0.5 top-0.5 w-2.5 h-2.5 bg-white rounded-full"></div>
+</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-center">
+<input class="w-16 bg-surface-container-high border-none rounded-sm text-center font-mono text-sm focus:ring-2 focus:ring-primary" type="number" value="12"/>
+</td>
+<td class="px-6 py-5 text-right font-mono font-bold text-on-surface">
+                                        $14,880.00
+                                    </td>
+<td class="px-6 py-5 text-right">
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: Component Bundle (Expanded) -->
+<tr class="bg-surface-container-low/50">
+<td class="px-6 py-5">
+<div class="flex items-start gap-3">
+<div class="p-2 bg-primary-container/10 rounded-sm text-primary">
+<span class="material-symbols-outlined">account_tree</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<p class="font-bold text-on-surface">Retrofit Monitoring Bundle</p>
+<span class="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded-full uppercase">Bundle</span>
+</div>
+<p class="font-mono text-[11px] text-on-surface-variant">SKU: RMB-001</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex flex-col items-end">
+<span class="font-mono text-sm text-orange-600 font-bold">$4,850.00</span>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="text-[10px] text-orange-600 font-bold">MANUAL OVERRIDE</span>
+<div class="w-6 h-3.5 bg-orange-600 rounded-full relative cursor-pointer">
+<div class="absolute right-0.5 top-0.5 w-2.5 h-2.5 bg-white rounded-full"></div>
+</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5 text-center">
+<input class="w-16 bg-surface-container-high border-none rounded-sm text-center font-mono text-sm focus:ring-2 focus:ring-primary" type="number" value="2"/>
+</td>
+<td class="px-6 py-5 text-right font-mono font-bold text-on-surface">
+                                        $9,700.00
+                                    </td>
+<td class="px-6 py-5 text-right">
+<button class="text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</td>
+</tr>
+<!-- Bill of Materials (BOM) Sub-rows -->
+<tr class="bg-surface-container-low/30 border-l-4 border-primary">
+<td class="px-6 py-4" colspan="5">
+<div class="pl-12 space-y-3">
+<h4 class="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant mb-2">Bill of Materials</h4>
+<div class="grid grid-cols-3 gap-4">
+<div class="flex items-center gap-2 bg-white/50 p-2 rounded-sm border border-outline-variant/10">
+<span class="font-mono text-xs font-bold text-primary">4x</span>
+<span class="text-xs text-on-surface-variant">Oxygen Sensors (Gen 2)</span>
+</div>
+<div class="flex items-center gap-2 bg-white/50 p-2 rounded-sm border border-outline-variant/10">
+<span class="font-mono text-xs font-bold text-primary">2x</span>
+<span class="text-xs text-on-surface-variant">Temperature Nodes</span>
+</div>
+<div class="flex items-center gap-2 bg-white/50 p-2 rounded-sm border border-outline-variant/10">
+<span class="font-mono text-xs font-bold text-primary">1x</span>
+<span class="text-xs text-on-surface-variant">Control Cabinet (IP67)</span>
+</div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Searchable Catalog Modal Placeholder (Inline for visualization) -->
+<div class="glass-panel rounded-sm border-2 border-dashed border-outline-variant/50 p-12 text-center">
+<div class="max-w-md mx-auto">
+<span class="material-symbols-outlined text-4xl text-outline-variant mb-4">search_insights</span>
+<h3 class="text-lg font-bold text-on-surface">Search Product Catalog</h3>
+<p class="text-on-surface-variant text-sm mb-6">Type a SKU or product name to quickly add items to this order.</p>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-3 bg-surface border-none shadow-inner rounded-sm focus:ring-2 focus:ring-primary placeholder:text-outline-variant/70" placeholder="e.g. 'Pressure Valve' or 'PV-100'..." type="text"/>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column: Order Summary Sidebar -->
+<section class="w-96 bg-surface-container-highest flex flex-col border-l border-outline-variant/15 p-8">
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-6">Order Summary</h3>
+<div class="space-y-6 flex-1">
+<div class="bg-surface-container-lowest p-5 rounded-sm shadow-sm space-y-4">
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Subtotal (2 Lines)</span>
+<span class="font-mono font-medium">$24,580.00</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Logistics Factor</span>
+<span class="font-mono font-medium">$450.00</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-on-surface-variant">Applied Discounts</span>
+<span class="font-mono font-medium text-error">-$250.00</span>
+</div>
+<div class="pt-4 border-t border-outline-variant/10 flex justify-between items-end">
+<span class="text-xs font-bold uppercase text-on-surface-variant">Total Value</span>
+<span class="text-2xl font-bold text-primary font-mono">$24,780.00</span>
+</div>
+</div>
+<div class="space-y-3">
+<h4 class="text-[10px] font-bold uppercase text-on-surface-variant tracking-widest">Pricing Alerts</h4>
+<div class="p-3 bg-orange-50 border border-orange-200 rounded-sm flex gap-3">
+<span class="material-symbols-outlined text-orange-600 text-sm">warning</span>
+<p class="text-[11px] text-orange-800 leading-tight">
+<span class="font-bold">Manual Pricing Detected:</span> Line 2 price deviates from system standard (+$350.00). Requires director approval on Step 5.
+                            </p>
+</div>
+</div>
+<div class="pt-6 space-y-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-sm overflow-hidden bg-surface-variant">
+<img class="w-full h-full object-cover" data-alt="Industrial technician wearing a hard hat and high-visibility vest in a manufacturing facility" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBynYCK9jBnbXSWMtA4jOPtcgtXQa5JvBPQnFR_fkJIMocA9dtWlP34v15zcgVY23Cb5pg_qop1rFoWgo4sXN0UdD_rMwm4mDrrEWL-IAea6bbr8vlRLx2cSNASoeWwd0xBuVqbErJz6dldAZbZCKePNcyVT1HAO6ph2fJJVLlMbGt2A3R4Ml_t-lTBFNF8N_x2nihiFHR-0uMdlRHgl3EbON7LEvhu_Hh0Z4G9DIQldSbDBZ29dIR2ZV00Sey3RQlDjbxNkhvAc9o"/>
+</div>
+<div>
+<p class="text-xs font-bold">Assigned Engineer</p>
+<p class="text-[11px] text-on-surface-variant">Erik Solbakken (Oslo Hub)</p>
+</div>
+</div>
+<div class="p-4 bg-surface-container-low rounded-sm border border-outline-variant/10">
+<div class="flex justify-between mb-2">
+<span class="text-[10px] font-bold uppercase text-on-surface-variant">Stock Readiness</span>
+<span class="text-[10px] font-bold text-primary">85% Available</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[85%]"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pt-8 border-t border-outline-variant/15 flex flex-col gap-3">
+<button class="w-full py-3 bg-[#004260] text-white font-bold rounded-sm shadow-md hover:bg-[#00304a] transition-all">
+                        Continue to Production Steps
+                    </button>
+<button class="w-full py-3 bg-transparent text-[#004260] font-bold text-sm hover:underline">
+                        Back to Order Setup
+                    </button>
+</div>
+</section>
+</main>
+</div>
+</body></html>

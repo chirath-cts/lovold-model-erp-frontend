@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lovold ERP - Orders Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "tertiary": "#344046",
+            "secondary-container": "#cfe6f2",
+            "on-secondary": "#ffffff",
+            "surface": "#f7f9fc",
+            "primary-fixed-dim": "#8ecefa",
+            "on-primary-container": "#91d2fe",
+            "inverse-primary": "#8ecefa",
+            "outline": "#70787f",
+            "secondary": "#4c616c",
+            "on-surface-variant": "#40484e",
+            "on-primary": "#ffffff",
+            "outline-variant": "#c0c7cf",
+            "surface-container-highest": "#e0e3e6",
+            "secondary-fixed-dim": "#b4cad6",
+            "surface-container-lowest": "#ffffff",
+            "on-primary-fixed": "#001e2e",
+            "inverse-on-surface": "#eff1f4",
+            "error-container": "#ffdad6",
+            "on-secondary-container": "#526772",
+            "error": "#ba1a1a",
+            "secondary-fixed": "#cfe6f2",
+            "surface-container-low": "#f2f4f7",
+            "on-error": "#ffffff",
+            "tertiary-fixed-dim": "#bbc8d0",
+            "on-secondary-fixed-variant": "#354a53",
+            "surface-dim": "#d8dadd",
+            "on-error-container": "#93000a",
+            "primary-fixed": "#c8e6ff",
+            "on-background": "#191c1e",
+            "surface-variant": "#e0e3e6",
+            "on-tertiary-fixed": "#111d23",
+            "on-tertiary-fixed-variant": "#3c494f",
+            "primary": "#004260",
+            "background": "#f7f9fc",
+            "tertiary-container": "#4b575e",
+            "surface-tint": "#17648c",
+            "surface-bright": "#f7f9fc",
+            "on-tertiary-container": "#bfccd4",
+            "on-tertiary": "#ffffff",
+            "primary-container": "#005b82",
+            "on-surface": "#191c1e",
+            "on-primary-fixed-variant": "#004c6d",
+            "surface-container-high": "#e6e8eb",
+            "inverse-surface": "#2d3133",
+            "on-secondary-fixed": "#071e27",
+            "tertiary-fixed": "#d7e4ec",
+            "surface-container": "#eceef1"
+          },
+          fontFamily: {
+            "headline": ["Inter"],
+            "body": ["Inter"],
+            "label": ["Inter"],
+            "mono": ["monospace"]
+          },
+          borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+    }
+    .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #c0c7cf; border-radius: 10px; }
+    .industrial-shadow { box-shadow: 0 4px 24px -4px rgba(25, 28, 30, 0.06); }
+  </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased flex overflow-hidden h-screen">
+<!-- SideNavBar -->
+<aside class="hidden md:flex flex-col h-full py-4 px-3 gap-y-2 bg-slate-100 dark:bg-slate-950 w-64 border-r-0 fixed left-0 top-0 z-50">
+<div class="flex items-center gap-3 px-3 mb-6">
+<div class="w-8 h-8 bg-primary flex items-center justify-center rounded-sm">
+<span class="material-symbols-outlined text-white text-lg" data-icon="factory">factory</span>
+</div>
+<div>
+<h1 class="font-black uppercase tracking-tighter text-[#004260] dark:text-white leading-tight">Lovold ERP</h1>
+<p class="text-[10px] text-slate-500 font-medium tracking-widest uppercase">Industrial Navigator</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-[#004260] dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all active:translate-x-1 font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-[#004260] dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all active:translate-x-1 font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="inventory_2">inventory_2</span>
+<span>Inventory</span>
+</a>
+<!-- Active Tab: Orders -->
+<a class="flex items-center gap-3 px-3 py-2 bg-white dark:bg-[#004260] text-[#004260] dark:text-white font-bold shadow-sm rounded-sm transition-all active:translate-x-1 font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="shopping_cart">shopping_cart</span>
+<span>Orders</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-[#004260] dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all active:translate-x-1 font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="factory">factory</span>
+<span>Production</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-[#004260] dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all active:translate-x-1 font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="local_shipping">local_shipping</span>
+<span>Logistics</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-[#004260] dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all active:translate-x-1 font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="analytics">analytics</span>
+<span>Reports</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-[#004260] dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="support_agent">support_agent</span>
+<span>Support</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-500 dark:text-slate-400 hover:text-[#004260] dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-all font-['Inter'] text-sm tracking-wide" href="#">
+<span class="material-symbols-outlined text-xl" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col min-w-0 md:ml-64 overflow-hidden h-screen">
+<!-- TopNavBar -->
+<header class="flex justify-between items-center w-full px-6 h-16 bg-slate-50 dark:bg-slate-900 border-b-0 sticky top-0 z-40">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full bg-slate-200/50 dark:bg-slate-800/50 border-none rounded-sm py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20 placeholder:text-slate-500" placeholder="Search orders, customers, or SKUs..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2 ml-4">
+<button class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors duration-150 rounded-sm active:scale-95">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors duration-150 rounded-sm active:scale-95">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<button class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors duration-150 rounded-sm active:scale-95">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+<div class="h-8 w-[1px] bg-slate-200 dark:bg-slate-800 mx-2"></div>
+<div class="flex items-center gap-3">
+<span class="text-sm font-semibold text-[#004260] dark:text-[#005b82]">Subsurface Precision</span>
+<img alt="User profile" class="w-8 h-8 rounded-full border border-slate-200 dark:border-slate-800 object-cover" data-alt="professional corporate headshot of a male operations manager in a minimalist studio setting with neutral colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC3yOnKox33CvmfwjlWk841BwuCI1wezeQxuSqX30plycqMTPJ8mOBL8o88zoczBzGZNrekQaBHimGQFZsIw3kRzuifKE3VBsloqHThHkHlSD2WXbNWhfFScmIJ9qprkzmOdg7qWjrAUdnnRfenYnOOGHFXS34Mi9HdEFBPowchgNwoSfJ-Lj7sQUrijluzx3MZKxGQiQkxq9KgbmVpED0iHafs_kTJQTdMyG8NmZoRo3ZyzZz9dr6cmmWWhF_fN-xNwzL-xFBmp3Y"/>
+</div>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-6">
+<!-- Page Header & Metrics Bento -->
+<section class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+<div class="lg:col-span-1 flex flex-col justify-between p-4 bg-surface-container-low rounded-sm">
+<div>
+<h2 class="text-on-surface-variant font-bold text-lg tracking-tight">Active Orders</h2>
+<p class="text-xs text-slate-500 mt-1">Real-time procurement tracking</p>
+</div>
+<button class="mt-4 bg-gradient-to-r from-primary to-primary-container text-white py-2 px-4 rounded-sm text-sm font-semibold flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+<span class="material-symbols-outlined text-sm">add</span>
+            Create New Order
+          </button>
+</div>
+<!-- Metric: Total Orders Value -->
+<div class="p-4 bg-surface-container-lowest industrial-shadow rounded-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Total Orders Value</span>
+<span class="material-symbols-outlined text-primary/40" data-icon="payments">payments</span>
+</div>
+<div class="mt-4">
+<span class="text-2xl font-black text-primary font-mono">1.21M</span>
+<span class="text-xs font-bold text-slate-400 ml-1">NOK</span>
+</div>
+<div class="mt-2 flex items-center gap-1 text-[10px] text-emerald-600 font-bold">
+<span class="material-symbols-outlined text-xs">trending_up</span>
+            14% vs Last Month
+          </div>
+</div>
+<!-- Metric: Avg. Fulfillment Lead Time -->
+<div class="p-4 bg-surface-container-lowest industrial-shadow rounded-sm flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Avg. Lead Time</span>
+<span class="material-symbols-outlined text-primary/40" data-icon="timer">timer</span>
+</div>
+<div class="mt-4">
+<span class="text-2xl font-black text-primary font-mono">14.2</span>
+<span class="text-xs font-bold text-slate-400 ml-1">Days</span>
+</div>
+<div class="mt-2 flex items-center gap-1 text-[10px] text-slate-500 font-bold">
+<span class="material-symbols-outlined text-xs">info</span>
+            Optimal target: 12 Days
+          </div>
+</div>
+<!-- Metric: ETA Risks -->
+<div class="p-4 bg-surface-container-lowest industrial-shadow rounded-sm border-l-4 border-error/40 flex flex-col justify-between">
+<div class="flex items-start justify-between">
+<span class="text-[10px] font-bold uppercase tracking-widest text-slate-500">ETA Risks</span>
+<span class="material-symbols-outlined text-error/60" data-icon="warning">warning</span>
+</div>
+<div class="mt-4">
+<span class="text-2xl font-black text-error font-mono">3</span>
+<span class="text-xs font-bold text-slate-400 ml-1">Orders</span>
+</div>
+<div class="mt-2 flex items-center gap-1 text-[10px] text-error font-bold">
+            Critical attention required
+          </div>
+</div>
+</section>
+<!-- Filters & Advanced Search Bar -->
+<section class="bg-surface-container-low p-3 rounded-sm flex flex-wrap items-center gap-3">
+<div class="flex items-center gap-2 bg-white px-3 py-1.5 rounded-sm border-b-2 border-transparent focus-within:border-primary transition-all shadow-sm">
+<span class="text-[10px] font-bold uppercase text-slate-400">Status:</span>
+<select class="border-none text-xs font-bold text-primary bg-transparent p-0 focus:ring-0 cursor-pointer">
+<option>All Statuses</option>
+<option>Confirmed</option>
+<option>In Production</option>
+<option>Reserved</option>
+<option>Dispatched</option>
+</select>
+</div>
+<div class="flex items-center gap-2 bg-white px-3 py-1.5 rounded-sm border-b-2 border-transparent focus-within:border-primary transition-all shadow-sm">
+<span class="text-[10px] font-bold uppercase text-slate-400">Customer:</span>
+<select class="border-none text-xs font-bold text-primary bg-transparent p-0 focus:ring-0 cursor-pointer">
+<option>All Customers</option>
+<option>FjordBlue Salmon</option>
+<option>NorthSea Aquaculture</option>
+</select>
+</div>
+<div class="flex items-center gap-2 bg-white px-3 py-1.5 rounded-sm border-b-2 border-transparent focus-within:border-primary transition-all shadow-sm">
+<span class="text-[10px] font-bold uppercase text-slate-400">Promised ETA:</span>
+<input class="border-none text-xs font-bold text-primary bg-transparent p-0 focus:ring-0 cursor-pointer" type="date"/>
+</div>
+<div class="ml-auto flex items-center gap-2">
+<button class="p-2 text-slate-600 hover:bg-slate-200 rounded-sm transition-colors">
+<span class="material-symbols-outlined text-lg">filter_list</span>
+</button>
+<button class="p-2 text-slate-600 hover:bg-slate-200 rounded-sm transition-colors">
+<span class="material-symbols-outlined text-lg">download</span>
+</button>
+</div>
+</section>
+<!-- Data Table -->
+<section class="bg-surface-container-lowest rounded-sm overflow-hidden industrial-shadow">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-high sticky top-0 z-10">
+<tr>
+<th class="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Order #</th>
+<th class="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Customer</th>
+<th class="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Order Date</th>
+<th class="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Status</th>
+<th class="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-on-surface-variant text-right">Total Value (NOK)</th>
+<th class="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-on-surface-variant text-right">Est. Profit</th>
+<th class="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">Promised ETA</th>
+<th class="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-on-surface-variant">ETA Status</th>
+<th class="px-4 py-3"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-4 py-4 text-xs font-mono font-bold text-primary">#4592</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-blue-500"></div>
+<span class="text-sm font-semibold text-on-surface">FjordBlue Salmon</span>
+</div>
+</td>
+<td class="px-4 py-4 text-xs text-slate-500">2026-03-12</td>
+<td class="px-4 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-primary/10 text-primary uppercase">Confirmed</span>
+</td>
+<td class="px-4 py-4 text-xs font-mono font-bold text-right">250,000.00</td>
+<td class="px-4 py-4 text-xs font-mono text-emerald-600 text-right font-semibold">42,500.00</td>
+<td class="px-4 py-4 text-xs text-slate-600">2026-04-15</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-emerald-500">check_circle</span>
+<span class="text-[10px] font-bold text-emerald-600 uppercase">On Track</span>
+</div>
+</td>
+<td class="px-4 py-4 text-right">
+<button class="opacity-0 group-hover:opacity-100 p-1 hover:bg-slate-200 rounded-sm transition-all">
+<span class="material-symbols-outlined text-slate-500 text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-4 py-4 text-xs font-mono font-bold text-primary">#4591</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-orange-500"></div>
+<span class="text-sm font-semibold text-on-surface">NorthSea Aquaculture</span>
+</div>
+</td>
+<td class="px-4 py-4 text-xs text-slate-500">2026-03-10</td>
+<td class="px-4 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-600 uppercase">In Production</span>
+</td>
+<td class="px-4 py-4 text-xs font-mono font-bold text-right">840,000.00</td>
+<td class="px-4 py-4 text-xs font-mono text-emerald-600 text-right font-semibold">112,000.00</td>
+<td class="px-4 py-4 text-xs text-slate-600 font-bold text-error">2026-04-10</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-error">schedule</span>
+<span class="text-[10px] font-bold text-error uppercase">Delayed</span>
+</div>
+</td>
+<td class="px-4 py-4 text-right">
+<button class="opacity-0 group-hover:opacity-100 p-1 hover:bg-slate-200 rounded-sm transition-all">
+<span class="material-symbols-outlined text-slate-500 text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-4 py-4 text-xs font-mono font-bold text-primary">#4590</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-cyan-500"></div>
+<span class="text-sm font-semibold text-on-surface">Arctic Crest Farming</span>
+</div>
+</td>
+<td class="px-4 py-4 text-xs text-slate-500">2026-03-08</td>
+<td class="px-4 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-slate-200 text-slate-600 uppercase">Reserved</span>
+</td>
+<td class="px-4 py-4 text-xs font-mono font-bold text-right">120,000.00</td>
+<td class="px-4 py-4 text-xs font-mono text-emerald-600 text-right font-semibold">18,400.00</td>
+<td class="px-4 py-4 text-xs text-slate-600">2026-05-01</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-amber-500">warning_amber</span>
+<span class="text-[10px] font-bold text-amber-600 uppercase">Risk</span>
+</div>
+</td>
+<td class="px-4 py-4 text-right">
+<button class="opacity-0 group-hover:opacity-100 p-1 hover:bg-slate-200 rounded-sm transition-all">
+<span class="material-symbols-outlined text-slate-500 text-lg">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Placeholder Rows for density demonstration -->
+<tr class="hover:bg-surface-container-low transition-colors group opacity-50">
+<td class="px-4 py-4 text-xs font-mono font-bold text-primary">#4589</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-slate-300"></div>
+<span class="text-sm font-semibold text-on-surface">Oceanic Systems</span>
+</div>
+</td>
+<td class="px-4 py-4 text-xs text-slate-500">2026-03-05</td>
+<td class="px-4 py-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 uppercase">Ready</span>
+</td>
+<td class="px-4 py-4 text-xs font-mono font-bold text-right">54,000.00</td>
+<td class="px-4 py-4 text-xs font-mono text-emerald-600 text-right font-semibold">9,200.00</td>
+<td class="px-4 py-4 text-xs text-slate-600">2026-03-25</td>
+<td class="px-4 py-4">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-emerald-500">check_circle</span>
+<span class="text-[10px] font-bold text-emerald-600 uppercase">On Track</span>
+</div>
+</td>
+<td class="px-4 py-4 text-right"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-4 py-3 bg-surface-container-low flex items-center justify-between border-t border-slate-200/50">
+<span class="text-[10px] font-bold text-slate-500 uppercase">Showing 1-15 of 240 active orders</span>
+<div class="flex items-center gap-1">
+<button class="p-1 hover:bg-white rounded-sm disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+</button>
+<div class="flex items-center gap-1 mx-2">
+<span class="w-6 h-6 flex items-center justify-center bg-primary text-white text-[10px] font-bold rounded-sm">1</span>
+<span class="w-6 h-6 flex items-center justify-center hover:bg-white text-[10px] font-bold text-slate-500 rounded-sm cursor-pointer">2</span>
+<span class="w-6 h-6 flex items-center justify-center hover:bg-white text-[10px] font-bold text-slate-500 rounded-sm cursor-pointer">3</span>
+</div>
+<button class="p-1 hover:bg-white rounded-sm">
+<span class="material-symbols-outlined text-lg">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Bottom Visualization (Secondary Context) -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-surface-container-low p-4 rounded-sm flex items-center gap-6">
+<div class="flex-1">
+<h3 class="text-xs font-black uppercase tracking-widest text-on-surface-variant mb-2">Order Distribution</h3>
+<div class="flex h-4 w-full rounded-full overflow-hidden bg-slate-200">
+<div class="h-full bg-primary" style="width: 45%;"></div>
+<div class="h-full bg-amber-500" style="width: 25%;"></div>
+<div class="h-full bg-emerald-500" style="width: 20%;"></div>
+<div class="h-full bg-slate-400" style="width: 10%;"></div>
+</div>
+<div class="mt-3 flex flex-wrap gap-4">
+<div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-primary"></div><span class="text-[10px] font-bold text-slate-600">Production (45%)</span></div>
+<div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-amber-500"></div><span class="text-[10px] font-bold text-slate-600">Reserved (25%)</span></div>
+<div class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><span class="text-[10px] font-bold text-slate-600">Ready (20%)</span></div>
+</div>
+</div>
+</div>
+<div class="bg-primary/5 p-4 rounded-sm border border-primary/10 flex items-center justify-between">
+<div>
+<h3 class="text-xs font-black uppercase tracking-widest text-primary mb-1">Operational Highlight</h3>
+<p class="text-sm text-on-surface leading-relaxed">System predicted a +12% increase in NorthSea order volume for Q2 based on current production cycles.</p>
+</div>
+<span class="material-symbols-outlined text-primary text-3xl opacity-20" data-icon="insights">insights</span>
+</div>
+</section>
+</div>
+</main>
+<!-- Mobile Navigation Placeholder -->
+<nav class="md:hidden fixed bottom-0 w-full h-16 bg-white border-t border-slate-200 flex items-center justify-around z-50">
+<span class="material-symbols-outlined text-slate-400">dashboard</span>
+<span class="material-symbols-outlined text-primary font-bold">shopping_cart</span>
+<span class="material-symbols-outlined text-slate-400">factory</span>
+<span class="material-symbols-outlined text-slate-400">person</span>
+</nav>
+</body></html>

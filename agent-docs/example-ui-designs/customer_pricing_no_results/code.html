@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Customer Pricing - Lovold ERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .technical-font {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "tertiary-container": "#4b575e",
+              "tertiary-fixed": "#d7e4ec",
+              "on-error": "#ffffff",
+              "tertiary-fixed-dim": "#bbc8d0",
+              "on-tertiary-fixed": "#111d23",
+              "surface-container-high": "#e6e8eb",
+              "secondary-fixed-dim": "#b4cad6",
+              "primary-fixed": "#c8e6ff",
+              "primary-fixed-dim": "#8ecefa",
+              "primary": "#004260",
+              "on-tertiary": "#ffffff",
+              "on-surface": "#191c1e",
+              "surface-dim": "#d8dadd",
+              "on-secondary-fixed": "#071e27",
+              "secondary-fixed": "#cfe6f2",
+              "on-surface-variant": "#40484e",
+              "surface-container-lowest": "#ffffff",
+              "surface-container-highest": "#e0e3e6",
+              "secondary": "#4c616c",
+              "on-secondary": "#ffffff",
+              "on-error-container": "#93000a",
+              "secondary-container": "#cfe6f2",
+              "surface-container-low": "#f2f4f7",
+              "background": "#f7f9fc",
+              "surface-bright": "#f7f9fc",
+              "on-primary-fixed": "#001e2e",
+              "surface-tint": "#17648c",
+              "outline-variant": "#c0c7cf",
+              "surface-variant": "#e0e3e6",
+              "surface": "#f7f9fc",
+              "on-tertiary-container": "#bfccd4",
+              "on-background": "#191c1e",
+              "on-secondary-fixed-variant": "#354a53",
+              "error-container": "#ffdad6",
+              "primary-container": "#005b82",
+              "error": "#ba1a1a",
+              "on-primary-fixed-variant": "#004c6d",
+              "outline": "#70787f",
+              "on-primary": "#ffffff",
+              "inverse-surface": "#2d3133",
+              "inverse-on-surface": "#eff1f4",
+              "tertiary": "#344046",
+              "on-tertiary-fixed-variant": "#3c494f",
+              "on-secondary-container": "#526772",
+              "on-primary-container": "#91d2fe",
+              "inverse-primary": "#8ecefa",
+              "surface-container": "#eceef1"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container">
+<!-- Sidebar Navigation -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r border-outline-variant/15 tonal-architecture bg-slate-100 flex flex-col py-4 z-40">
+<div class="px-6 mb-8">
+<h1 class="text-lg font-bold text-sky-950 tracking-tighter">Lovold ERP</h1>
+<p class="text-[10px] uppercase tracking-widest text-slate-500 font-bold">Industrial Forge</p>
+</div>
+<nav class="flex-1 space-y-1 px-3">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-200/50 transition-all duration-200 ease-in-out font-inter text-xs font-medium uppercase tracking-wider rounded" href="#">
+<span class="material-symbols-outlined text-sky-900" data-icon="dashboard">dashboard</span>
+                Dashboard
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-200/50 transition-all duration-200 ease-in-out font-inter text-xs font-medium uppercase tracking-wider rounded" href="#">
+<span class="material-symbols-outlined text-sky-900" data-icon="inventory_2">inventory_2</span>
+                Inventory
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-200/50 transition-all duration-200 ease-in-out font-inter text-xs font-medium uppercase tracking-wider rounded" href="#">
+<span class="material-symbols-outlined text-sky-900" data-icon="precision_manufacturing">precision_manufacturing</span>
+                Planning
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 bg-white text-sky-900 shadow-sm border-r-4 border-sky-700 transition-all duration-200 ease-in-out font-inter text-xs font-medium uppercase tracking-wider" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+                Sales
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-200/50 transition-all duration-200 ease-in-out font-inter text-xs font-medium uppercase tracking-wider rounded" href="#">
+<span class="material-symbols-outlined text-sky-900" data-icon="local_shipping">local_shipping</span>
+                Logistics
+            </a>
+</nav>
+<div class="mt-auto px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-200/50 transition-all duration-200 ease-in-out font-inter text-xs font-medium uppercase tracking-wider rounded" href="#">
+<span class="material-symbols-outlined text-sky-900" data-icon="settings">settings</span>
+                Settings
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-200/50 transition-all duration-200 ease-in-out font-inter text-xs font-medium uppercase tracking-wider rounded" href="#">
+<span class="material-symbols-outlined text-sky-900" data-icon="contact_support">contact_support</span>
+                Support
+            </a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- Top Navigation Bar -->
+<header class="bg-slate-50/80 backdrop-blur-md border-b border-slate-200/50 sticky top-0 z-50 flex justify-between items-center w-full px-6 h-16 font-inter antialiased text-sm">
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="absolute inset-y-0 left-3 flex items-center text-slate-400 group-focus-within:text-sky-700">
+<span class="material-symbols-outlined text-sm" data-icon="search">search</span>
+</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-high border-none rounded-sm focus:ring-2 focus:ring-primary w-64 transition-all" placeholder="Search agreements..." type="text" value="Arctic Giant"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 mr-4">
+<button class="p-2 text-slate-500 hover:bg-slate-100 rounded transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border border-white"></span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-100 rounded transition-colors">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+</button>
+</div>
+<button class="bg-gradient-to-r from-primary to-primary-container text-white px-4 py-2 rounded-sm font-semibold text-sm hover:opacity-90 active:opacity-80 transition-all shadow-sm">
+                    Create Agreement
+                </button>
+<div class="h-8 w-8 rounded-full bg-slate-200 border border-slate-300 overflow-hidden ml-2">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="professional male portrait with neutral background and sharp corporate lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAN7pGFfr1Wn5DjIgc-_6l2uIYZjm3s733SxxxGZQ2zIFllNLaJtRBDNh38yRIPT1VACiHf-Xr36vSpcR27kF0w9rzT0D3NVnBkvIJDYwixeiqITRtJ3o01rmXQGTYfZWv7zx_6p9iQhFwPf_uMogIUsFAYtT8sQID-pCUdZMwTyDMN0Y7fBwoLlypmI0zqtVnEvTMCPvqDSW3q7HHH568gpfPq4KLMh1w76mjgmDnOT9M7vk5htVg0WJaVyYiCz-nPZDP4AvzkAf4"/>
+</div>
+</div>
+</header>
+<!-- Page Header & Filter Bar -->
+<section class="p-8">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+<div>
+<nav class="flex items-center gap-2 text-xs text-on-surface-variant mb-2">
+<span>Sales</span>
+<span class="material-symbols-outlined text-[12px]" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary font-semibold">Customer Pricing</span>
+</nav>
+<h2 class="text-3xl font-black text-sky-950 tracking-tight">Customer Pricing</h2>
+<p class="text-on-surface-variant text-sm mt-1">Manage industrial contract pricing and volume-based agreements.</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center bg-surface-container-low rounded-sm p-1">
+<button class="px-4 py-1.5 text-xs font-bold text-sky-900 bg-white shadow-sm rounded-sm">ACTIVE</button>
+<button class="px-4 py-1.5 text-xs font-bold text-slate-500 hover:text-sky-900 transition-colors">DRAFT</button>
+<button class="px-4 py-1.5 text-xs font-bold text-slate-500 hover:text-sky-900 transition-colors">EXPIRED</button>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 border border-outline-variant/30 text-xs font-bold uppercase tracking-wider text-slate-600 hover:bg-slate-100 transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="filter_list">filter_list</span>
+                        Filters
+                    </button>
+</div>
+</div>
+<!-- Active Search State / Filter Chips -->
+<div class="flex flex-wrap items-center gap-2 mb-8">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-widest mr-2">Active Filters:</span>
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container-highest rounded-full text-xs font-medium text-sky-900">
+                    Search: "Arctic Giant"
+                    <button class="hover:text-error transition-colors"><span class="material-symbols-outlined text-[14px] leading-none align-middle" data-icon="close">close</span></button>
+</div>
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-surface-container-highest rounded-full text-xs font-medium text-sky-900">
+                    Status: Active
+                    <button class="hover:text-error transition-colors"><span class="material-symbols-outlined text-[14px] leading-none align-middle" data-icon="close">close</span></button>
+</div>
+<button class="text-xs font-bold text-primary hover:underline ml-2">Clear All</button>
+</div>
+<!-- Empty Results Canvas -->
+<div class="bg-surface-container-low min-h-[500px] flex flex-col items-center justify-center border-2 border-dashed border-outline-variant/30 rounded-xl relative overflow-hidden">
+<!-- Abstract Subsurface Pattern Background -->
+<div class="absolute inset-0 opacity-[0.03] pointer-events-none">
+<svg height="100%" width="100%" xmlns="http://www.w3.org/2000/svg">
+<defs>
+<pattern height="40" id="grid" patternunits="userSpaceOnUse" width="40">
+<path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="1"></path>
+</pattern>
+</defs>
+<rect fill="url(#grid)" height="100%" width="100%"></rect>
+</svg>
+</div>
+<!-- Empty State Content -->
+<div class="relative z-10 flex flex-col items-center text-center max-w-md px-6">
+<div class="w-20 h-20 bg-surface-container-highest rounded-full flex items-center justify-center mb-6 shadow-sm border border-outline-variant/10">
+<span class="material-symbols-outlined text-4xl text-outline" data-icon="manage_search">manage_search</span>
+</div>
+<h3 class="text-xl font-bold text-on-surface mb-3 tracking-tight">No Matching Results</h3>
+<p class="text-on-surface-variant text-sm leading-relaxed mb-8">
+                        No pricing agreements match your current filters. Try adjusting your search term or status filters.
+                    </p>
+<div class="flex flex-col sm:flex-row items-center gap-3 w-full">
+<button class="w-full sm:w-auto flex-1 bg-surface-container-highest text-primary px-6 py-2.5 rounded-sm font-bold text-xs uppercase tracking-widest hover:bg-surface-variant transition-all border border-outline-variant/20">
+                            Clear All Filters
+                        </button>
+<button class="w-full sm:w-auto flex-1 bg-transparent text-on-surface-variant px-6 py-2.5 rounded-sm font-bold text-xs uppercase tracking-widest hover:text-on-surface transition-all">
+                            View Documentation
+                        </button>
+</div>
+</div>
+<!-- Technical Footer Decoration -->
+<div class="absolute bottom-6 left-6 flex items-center gap-8 opacity-40">
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-tighter text-slate-500 font-bold">Query Status</span>
+<span class="technical-font text-[12px] text-sky-900 font-bold">0x00_EMPTY_SET</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] uppercase tracking-tighter text-slate-500 font-bold">Index Load</span>
+<span class="technical-font text-[12px] text-sky-900 font-bold">100% SUCCESS</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Contextual Activity Sidebar (Condensed Layout) -->
+<div class="mt-auto border-t border-outline-variant/15 p-6 bg-surface-container-low">
+<h4 class="text-[10px] uppercase tracking-widest text-slate-500 font-black mb-4 flex items-center gap-2">
+<span class="w-1.5 h-1.5 bg-primary rounded-full"></span>
+                Recent Pricing Activity
+            </h4>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="flex items-start gap-4 p-4 bg-surface-container-lowest rounded-sm shadow-sm">
+<span class="material-symbols-outlined text-sky-700 bg-sky-50 p-2 rounded" data-icon="history">history</span>
+<div>
+<p class="text-xs font-bold text-on-surface">Standard Steel #402</p>
+<p class="text-[10px] text-on-surface-variant">Price updated by J. Holm • 2h ago</p>
+</div>
+</div>
+<div class="flex items-start gap-4 p-4 bg-surface-container-lowest rounded-sm shadow-sm">
+<span class="material-symbols-outlined text-emerald-700 bg-emerald-50 p-2 rounded" data-icon="verified">verified</span>
+<div>
+<p class="text-xs font-bold text-on-surface">Ocean Turbine T-90</p>
+<p class="text-[10px] text-on-surface-variant">Bulk agreement approved • 5h ago</p>
+</div>
+</div>
+<div class="flex items-start gap-4 p-4 bg-surface-container-lowest rounded-sm shadow-sm">
+<span class="material-symbols-outlined text-amber-700 bg-amber-50 p-2 rounded" data-icon="warning">warning</span>
+<div>
+<p class="text-xs font-bold text-on-surface">Nordic Supply Co.</p>
+<p class="text-[10px] text-on-surface-variant">Agreement expiring in 3 days</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

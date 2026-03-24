@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Setup - Subsurface Precision ERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-tertiary-container": "#bfccd4",
+              "error-container": "#ffdad6",
+              "secondary-fixed-dim": "#b4cad6",
+              "surface-container-high": "#e6e8eb",
+              "surface-container": "#eceef1",
+              "on-tertiary-fixed": "#111d23",
+              "secondary-fixed": "#cfe6f2",
+              "on-primary-fixed-variant": "#004c6d",
+              "on-secondary-fixed": "#071e27",
+              "surface-bright": "#f7f9fc",
+              "outline": "#70787f",
+              "on-primary-fixed": "#001e2e",
+              "inverse-surface": "#2d3133",
+              "on-secondary": "#ffffff",
+              "background": "#f7f9fc",
+              "primary-fixed": "#c8e6ff",
+              "secondary-container": "#cfe6f2",
+              "secondary": "#4c616c",
+              "on-primary": "#ffffff",
+              "error": "#ba1a1a",
+              "surface-dim": "#d8dadd",
+              "surface-container-highest": "#e0e3e6",
+              "surface-tint": "#17648c",
+              "on-error": "#ffffff",
+              "primary-fixed-dim": "#8ecefa",
+              "on-tertiary": "#ffffff",
+              "surface-container-low": "#f2f4f7",
+              "tertiary-container": "#4b575e",
+              "tertiary": "#344046",
+              "primary-container": "#005b82",
+              "inverse-on-surface": "#eff1f4",
+              "surface-container-lowest": "#ffffff",
+              "tertiary-fixed-dim": "#bbc8d0",
+              "surface-variant": "#e0e3e6",
+              "on-error-container": "#93000a",
+              "on-background": "#191c1e",
+              "on-surface": "#191c1e",
+              "surface": "#f7f9fc",
+              "on-surface-variant": "#40484e",
+              "on-secondary-fixed-variant": "#354a53",
+              "outline-variant": "#c0c7cf",
+              "inverse-primary": "#8ecefa",
+              "on-primary-container": "#91d2fe",
+              "on-tertiary-fixed-variant": "#3c494f",
+              "tertiary-fixed": "#d7e4ec",
+              "primary": "#004260",
+              "on-secondary-container": "#526772"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .tonal-architecture-no-lines {
+        border: none !important;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #c0c7cf;
+        border-radius: 10px;
+      }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- TopNavBar Shell -->
+<header class="w-full border-b border-gray-200/15 dark:border-gray-800/15 sticky top-0 z-50 bg-[#f7f9fc] dark:bg-[#121416] flex justify-between items-center px-6 py-3 font-['Inter'] antialiased tracking-tight tonal-architecture-no-lines">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-[#004260] dark:text-[#005b82] tracking-tighter uppercase">Subsurface Precision ERP</span>
+<nav class="hidden md:flex gap-6 items-center">
+<a class="text-[#40484e] dark:text-[#9ca3af] hover:text-[#191c1e] dark:hover:text-white transition-colors" href="#">Dashboard</a>
+<a class="text-[#40484e] dark:text-[#9ca3af] hover:text-[#191c1e] dark:hover:text-white transition-colors" href="#">Inventory</a>
+<a class="text-[#004260] dark:text-[#005b82] font-semibold border-b-2 border-[#004260] pb-1" href="#">Orders</a>
+<a class="text-[#40484e] dark:text-[#9ca3af] hover:text-[#191c1e] dark:hover:text-white transition-colors" href="#">Production</a>
+<a class="text-[#40484e] dark:text-[#9ca3af] hover:text-[#191c1e] dark:hover:text-white transition-colors" href="#">Logistics</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-[#f1f5f9] dark:hover:bg-[#1e293b] rounded-full transition-all duration-150 active:scale-[0.98]">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-[#f1f5f9] dark:hover:bg-[#1e293b] rounded-full transition-all duration-150 active:scale-[0.98]">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</div>
+<div class="h-8 w-8 rounded-full overflow-hidden bg-surface-container">
+<img alt="User profile avatar" data-alt="Professional headshot of an industrial project manager in a clean office environment with soft focus engineering plans in background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgOCP7uXQTS4B_V6gj-fLKC6GkMFsxJGLWTSNOWRRu9C8zw5y4FJm96mSjmJebNptw9OOTvz4_Upa0cH5VYGoWUzFuy0eyyz1F6vIgzqoWnCOG36e62C__sqg47Mkl3Ggm8xAwKhEt5iXN8e_52fXvv_G8gE-VnybXHX5tZThajN_nQZbSUZ5IVAC5cbNQiIkWkq3D-b4M3imA4Dh6nSwWGnDDBr4jVQLqXL4B8XK_eY7zDMCaxHnLj6mat-mcRMZY4F3FPQkaE0Y"/>
+</div>
+<div class="flex gap-2">
+<button class="px-4 py-1.5 text-sm font-medium text-[#004260] border border-outline-variant/20 rounded hover:bg-[#f1f5f9] transition-all">Save as Draft</button>
+<button class="px-4 py-1.5 text-sm font-medium text-white bg-gradient-to-r from-[#004260] to-[#005b82] rounded shadow-sm hover:opacity-90 transition-all">Confirm Order</button>
+</div>
+</div>
+</header>
+<div class="flex">
+<!-- SideNavBar Shell -->
+<aside class="h-screen w-64 bg-[#f0f4f8] dark:bg-[#191c1e] border-r border-gray-200/10 dark:border-gray-800/10 flex flex-col fixed left-0 top-0 pt-16 z-40 transition-all duration-200 ease-out">
+<div class="px-6 py-4 flex flex-col gap-1">
+<div class="flex items-center gap-3 mb-6">
+<div class="w-10 h-10 bg-primary-container/20 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-[#004260]" data-icon="anchor">anchor</span>
+</div>
+<div>
+<h2 class="font-mono font-bold text-[#004260] dark:text-[#005b82] text-sm">Order #8821</h2>
+<p class="text-[10px] text-on-surface-variant uppercase tracking-wider">Workflow: Industrial ERP</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1">
+<button class="flex items-center gap-3 px-3 py-2 bg-[#004260] text-white rounded-sm font-medium text-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="info">info</span>
+<span>Order Setup</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2 text-[#40484e] dark:text-[#9ca3af] hover:bg-gray-200/50 dark:hover:bg-gray-800/50 text-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="list_alt">list_alt</span>
+<span>Line Items</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2 text-[#40484e] dark:text-[#9ca3af] hover:bg-gray-200/50 dark:hover:bg-gray-800/50 text-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span>Production Steps</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2 text-[#40484e] dark:text-[#9ca3af] hover:bg-gray-200/50 dark:hover:bg-gray-800/50 text-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="schedule">schedule</span>
+<span>ETA Planning</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2 text-[#40484e] dark:text-[#9ca3af] hover:bg-gray-200/50 dark:hover:bg-gray-800/50 text-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="fact_check">fact_check</span>
+<span>Review</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2 text-[#40484e] dark:text-[#9ca3af] hover:bg-gray-200/50 dark:hover:bg-gray-800/50 text-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="history">history</span>
+<span>Logs</span>
+</button>
+</nav>
+<div class="mt-8">
+<button class="w-full flex items-center justify-center gap-2 py-2 px-4 border border-[#004260] text-[#004260] font-medium rounded text-xs hover:bg-[#004260]/5 transition-colors">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+<span>New Workflow</span>
+</button>
+</div>
+</div>
+<div class="mt-auto px-6 pb-6 flex flex-col gap-1">
+<button class="flex items-center gap-3 px-3 py-2 text-[#40484e] dark:text-[#9ca3af] hover:bg-gray-200/50 dark:hover:bg-gray-800/50 text-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="help">help</span>
+<span>Support</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2 text-[#40484e] dark:text-[#9ca3af] hover:bg-gray-200/50 dark:hover:bg-gray-800/50 text-sm">
+<span class="material-symbols-outlined text-[20px]" data-icon="description">description</span>
+<span>Documentation</span>
+</button>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 flex-1 p-8 bg-surface">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-xs font-medium text-on-surface-variant mb-6 uppercase tracking-wider">
+<a class="hover:text-primary transition-colors" href="#">Orders</a>
+<span class="material-symbols-outlined text-[14px]" data-icon="chevron_right">chevron_right</span>
+<span class="text-primary">Create New Order</span>
+</nav>
+<!-- Order Header Card -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<!-- Header Info -->
+<section class="md:col-span-12 lg:col-span-12 mb-2">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+<div>
+<h1 class="text-4xl font-extrabold text-on-surface tracking-tight leading-none mb-2">New Order Setup</h1>
+<div class="flex items-center gap-4 text-sm">
+<span class="bg-surface-container-highest px-3 py-1 rounded-sm font-mono text-[#004260] font-bold">Ref ID: #8821</span>
+<span class="text-on-surface-variant flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px]" data-icon="calendar_today">calendar_today</span>
+                                    October 24, 2023
+                                </span>
+</div>
+</div>
+<div class="w-full md:w-72">
+<label class="block text-[11px] font-bold text-on-surface-variant uppercase mb-1 ml-1">Sales Representative</label>
+<div class="relative">
+<input class="w-full bg-surface-container-high border-none rounded-sm px-4 py-2.5 text-sm font-medium focus:ring-0 focus:border-b-2 focus:border-primary transition-all" type="text" value="Sondre Kristiansen"/>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant text-[20px]" data-icon="badge">badge</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Step 1 Layout: Bento Grid Style -->
+<!-- Customer Selection Section -->
+<div class="md:col-span-12 lg:col-span-7 flex flex-col gap-6">
+<div class="bg-surface-container-low rounded-lg p-6 flex flex-col gap-6 shadow-sm">
+<header class="flex items-center justify-between">
+<h3 class="text-lg font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="person_search">person_search</span>
+                                Customer Selection
+                            </h3>
+<span class="text-[10px] font-bold bg-primary text-white px-2 py-0.5 rounded-full uppercase tracking-tighter">Required</span>
+</header>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]" data-icon="search">search</span>
+</div>
+<input class="w-full pl-10 pr-4 py-3 bg-surface-container-lowest border-none rounded-md shadow-sm text-sm focus:ring-2 focus:ring-primary/20 transition-all placeholder:italic" placeholder="Search Customer (e.g. FjordBlue Salmon...)" type="text"/>
+</div>
+<!-- Selected Customer Detail Matrix -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-surface-container-lowest p-4 rounded-md border border-outline-variant/10">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase mb-2">Primary Entity</p>
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-primary/10 rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-primary" data-icon="corporate_fare">corporate_fare</span>
+</div>
+<div>
+<h4 class="font-bold text-on-surface">FjordBlue Salmon AS</h4>
+<p class="text-xs text-on-surface-variant">VAT: NO 982 312 441</p>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-md border border-outline-variant/10">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase mb-2">Billing Address</p>
+<p class="text-sm text-on-surface leading-tight">Sjøgata 14, P.O. Box 442<br/>8006 Bodø, Norway</p>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-md border border-outline-variant/10">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase mb-2">Payment Terms</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-[20px]" data-icon="payments">payments</span>
+<span class="text-sm font-semibold text-on-surface">Net 30 Days</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-4 rounded-md border border-outline-variant/10">
+<p class="text-[10px] font-bold text-on-surface-variant uppercase mb-2">Credit Status</p>
+<div class="flex items-center gap-3">
+<div class="flex-1 bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-emerald-600 h-full w-[85%]"></div>
+</div>
+<span class="text-xs font-bold text-emerald-700">Healthy</span>
+</div>
+<p class="text-[10px] mt-1 text-on-surface-variant">Limit: 1,500,000 NOK • Used: 215,000 NOK</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Project Info Section -->
+<div class="md:col-span-12 lg:col-span-5">
+<div class="bg-surface-container-lowest border border-outline-variant/15 rounded-lg p-6 shadow-sm h-full flex flex-col gap-6">
+<header>
+<h3 class="text-lg font-bold text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="architecture">architecture</span>
+                                Project Context
+                            </h3>
+<p class="text-xs text-on-surface-variant mt-1">Define the scope and destination for this deployment.</p>
+</header>
+<div class="space-y-4">
+<div>
+<label class="block text-[11px] font-bold text-on-surface-variant uppercase mb-1 ml-1">Project Name</label>
+<input class="w-full bg-surface-container-low border-none rounded-sm px-4 py-3 text-sm focus:ring-0 focus:border-b-2 focus:border-primary transition-all" placeholder="e.g. Retrofit Phase 2: Bodø Hub" type="text"/>
+</div>
+<div>
+<label class="block text-[11px] font-bold text-on-surface-variant uppercase mb-1 ml-1">Shipping Address</label>
+<textarea class="w-full bg-surface-container-low border-none rounded-sm px-4 py-3 text-sm focus:ring-0 focus:border-b-2 focus:border-primary transition-all resize-none" placeholder="Enter full delivery details including site contact..." rows="3"></textarea>
+</div>
+<div class="pt-4 mt-auto border-t border-outline-variant/10">
+<div class="bg-surface-container-high rounded-md p-4 flex gap-4 items-start">
+<span class="material-symbols-outlined text-primary-container" data-icon="lightbulb">lightbulb</span>
+<div>
+<p class="text-xs font-bold text-on-surface">Logistics Note</p>
+<p class="text-[11px] text-on-surface-variant leading-relaxed">Shipping to North Sea installations requires specialized crane clearance documentation.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Action Bar -->
+<div class="md:col-span-12 flex justify-end gap-4 mt-4 mb-12">
+<button class="px-8 py-3 text-sm font-bold text-on-surface-variant hover:text-on-surface transition-all">Cancel Process</button>
+<button class="px-8 py-3 text-sm font-bold text-white bg-gradient-to-r from-[#004260] to-[#005b82] rounded shadow-lg hover:shadow-primary/20 flex items-center gap-2 transition-all active:scale-[0.98]">
+                        Next: Configure Line Items
+                        <span class="material-symbols-outlined text-[20px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+</body></html>

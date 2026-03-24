@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Create Component | Lovold ERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "secondary-fixed": "#cfe6f2",
+                        "inverse-primary": "#8ecefa",
+                        "on-primary-container": "#91d2fe",
+                        "surface-container": "#eceef1",
+                        "surface": "#f7f9fc",
+                        "primary": "#004260",
+                        "on-secondary-fixed": "#071e27",
+                        "outline": "#70787f",
+                        "tertiary-container": "#4b575e",
+                        "surface-bright": "#f7f9fc",
+                        "inverse-on-surface": "#eff1f4",
+                        "on-tertiary": "#ffffff",
+                        "background": "#f7f9fc",
+                        "surface-tint": "#17648c",
+                        "secondary-fixed-dim": "#b4cad6",
+                        "on-surface": "#191c1e",
+                        "tertiary-fixed": "#d7e4ec",
+                        "on-primary-fixed": "#001e2e",
+                        "on-background": "#191c1e",
+                        "on-surface-variant": "#40484e",
+                        "surface-container-high": "#e6e8eb",
+                        "secondary": "#4c616c",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-container": "#bfccd4",
+                        "surface-container-low": "#f2f4f7",
+                        "surface-container-highest": "#e0e3e6",
+                        "inverse-surface": "#2d3133",
+                        "error": "#ba1a1a",
+                        "primary-container": "#005b82",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-secondary-container": "#526772",
+                        "secondary-container": "#cfe6f2",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#bbc8d0",
+                        "on-tertiary-fixed": "#111d23",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e0e3e6",
+                        "on-primary-fixed-variant": "#004c6d",
+                        "tertiary": "#344046",
+                        "primary-fixed-dim": "#8ecefa",
+                        "outline-variant": "#c0c7cf",
+                        "on-error-container": "#93000a",
+                        "surface-dim": "#d8dadd",
+                        "primary-fixed": "#c8e6ff",
+                        "on-tertiary-fixed-variant": "#3c494f",
+                        "on-secondary-fixed-variant": "#354a53"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"]
+                    },
+                    borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .mono-text {
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-6 bg-slate-50 dark:bg-slate-900 border-b border-slate-200/50 dark:border-slate-800/50 h-[56px] font-['Inter'] font-medium text-sm antialiased">
+<div class="flex items-center gap-8">
+<span class="text-lg font-bold tracking-tight text-[#004260] dark:text-[#f7f9fc]">Lovold ERP</span>
+<div class="hidden md:flex gap-6 items-center h-full">
+<a class="text-slate-500 dark:text-slate-400 hover:text-[#004260] transition-colors" href="#">Dashboard</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-[#004260] transition-colors" href="#">Inventory</a>
+<a class="text-[#004260] dark:text-[#f7f9fc] font-semibold border-b-2 border-[#004260] h-[56px] flex items-center" href="#">Catalog</a>
+<a class="text-slate-500 dark:text-slate-400 hover:text-[#004260] transition-colors" href="#">Stock Levels</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors text-slate-500">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors text-slate-500">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-slate-200 overflow-hidden">
+<img alt="User avatar" data-alt="Professional portrait of an industrial operations manager in a clean office environment with soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDR07EsNnFxZE3vAsJEBZFVrRh9ZxsgIWunx-0icG2CbdCyLeRZbSy1-bCVpbKHY1dmBjEVs7Ti21-FjN9OwV3vWtVElwCiTNJOQLJmfRAB-WWw66wzdgOj_dCBcAHZTterjW77kGLXVS5yKMiSF8lCU8eKf1NvDek5s1SYSQ7ROi6l_fbyH0QKHgppB8GLsCR2bing9pdbADFGoKUJSODGgOJzhcCtHo0RVTImNYUcgA4dhLwy3piz74qzqn7uTI3ml2uyp6l2DTE"/>
+</div>
+</div>
+</nav>
+<!-- Side Navigation -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-slate-100 dark:bg-slate-950 border-r bg-slate-200 dark:bg-slate-800 flex flex-col py-4 z-40 hidden lg:flex pt-[72px] shadow-sm">
+<div class="px-6 mb-8">
+<h2 class="font-black uppercase tracking-tighter text-[#004260] dark:text-[#f7f9fc] text-xs">Industrial Navigator</h2>
+</div>
+<div class="flex-1 space-y-1 px-3">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 rounded transition-transform duration-200 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-white dark:bg-slate-900 text-[#004260] dark:text-[#f7f9fc] border-l-4 border-[#004260] font-bold" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 rounded transition-transform duration-200 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">event_note</span>
+<span>Planning</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 rounded transition-transform duration-200 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">shopping_cart</span>
+<span>Sales</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 rounded transition-transform duration-200 hover:translate-x-1" href="#">
+<span class="material-symbols-outlined">local_shipping</span>
+<span>Logistics</span>
+</a>
+</div>
+<div class="px-3 space-y-1 mt-auto border-t border-slate-200 dark:border-slate-800 pt-4">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 rounded" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 rounded" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span>Help &amp; Documentation</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="lg:ml-64 pt-[56px] min-h-screen flex flex-col">
+<div class="p-8 max-w-6xl mx-auto w-full flex-1">
+<!-- Page Header -->
+<header class="mb-8 flex justify-between items-end">
+<div>
+<nav class="flex text-xs text-on-surface-variant gap-2 mb-2">
+<span>Catalog</span>
+<span>/</span>
+<span>Components</span>
+<span>/</span>
+<span class="text-primary font-medium">Create New</span>
+</nav>
+<h1 class="text-3xl font-bold tracking-tight text-on-surface">Composition Editor</h1>
+</div>
+<div class="flex gap-3">
+<button class="px-4 py-2 text-sm font-medium text-primary hover:bg-surface-container transition-colors">Discard Draft</button>
+<button class="px-6 py-2 bg-gradient-to-r from-primary to-primary-container text-white text-sm font-bold rounded shadow-sm hover:opacity-90 transition-opacity">Save Component</button>
+</div>
+</header>
+<!-- Grid Layout -->
+<div class="grid grid-cols-12 gap-6">
+<!-- Left Column: Core Identity -->
+<section class="col-span-12 lg:col-span-4 space-y-6">
+<div class="bg-surface-container-low p-6 rounded shadow-sm">
+<h3 class="text-sm font-bold text-on-surface-variant uppercase tracking-wider mb-6">Identity &amp; Classification</h3>
+<div class="space-y-4">
+<div>
+<label class="block text-xs font-semibold text-on-surface-variant mb-1.5">Component Name</label>
+<input class="w-full bg-surface-container-high border-none border-b-2 border-transparent focus:border-primary focus:ring-0 text-sm py-2.5 px-3 transition-all" placeholder="e.g. Anchor Bolt Assembly HD" type="text" value="Subsea Mooring Connector v4"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-on-surface-variant mb-1.5">SKU / Technical ID</label>
+<input class="w-full bg-surface-container-high border-none border-b-2 border-transparent focus:border-primary focus:ring-0 text-sm mono-text py-2.5 px-3 uppercase" placeholder="SKU-0000" type="text" value="LVD-SMC-4022"/>
+</div>
+<div>
+<label class="block text-xs font-semibold text-on-surface-variant mb-1.5">Product Category</label>
+<select class="w-full bg-surface-container-high border-none border-b-2 border-transparent focus:border-primary focus:ring-0 text-sm py-2.5 px-3 appearance-none">
+<option>Structural Marine Components</option>
+<option>Mooring Systems</option>
+<option>Hydraulic Fittings</option>
+<option>Custom Engineering</option>
+</select>
+</div>
+<div class="pt-4">
+<label class="block text-xs font-semibold text-on-surface-variant mb-3">Material Status</label>
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-container text-on-secondary-container">
+                                        Engineering Phase
+                                    </span>
+<span class="text-xs text-on-surface-variant">Last updated: 2h ago</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Cost Summary Card -->
+<div class="bg-primary text-white p-6 rounded shadow-sm relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="text-xs font-bold opacity-70 uppercase tracking-wider mb-6">Financial Summary</h3>
+<div class="space-y-4">
+<div class="flex justify-between items-end border-b border-white/10 pb-3">
+<span class="text-sm opacity-80">Material Base Cost</span>
+<span class="text-lg font-mono tracking-tight">€ 4,210.50</span>
+</div>
+<div class="flex justify-between items-end border-b border-white/10 pb-3">
+<span class="text-sm opacity-80">Production Overhead</span>
+<div class="flex items-center gap-2">
+<span class="text-xs opacity-50">+</span>
+<input class="bg-transparent border-none text-right font-mono p-0 w-24 text-lg focus:ring-0" type="text" value="850.00"/>
+</div>
+</div>
+<div class="pt-4">
+<span class="text-xs opacity-70 block mb-1">Derived Total Price</span>
+<div class="text-4xl font-black tracking-tighter">€ 5,060.50</div>
+</div>
+</div>
+</div>
+<!-- Background Pattern -->
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined text-[120px]" style="font-variation-settings: 'FILL' 1;">account_balance_wallet</span>
+</div>
+</div>
+</section>
+<!-- Right Column: Composition Editor -->
+<section class="col-span-12 lg:col-span-8">
+<div class="bg-surface-container-low rounded shadow-sm flex flex-col h-full min-h-[600px]">
+<!-- Toolbar -->
+<div class="p-6 border-b border-outline-variant/15 flex justify-between items-center bg-surface-container-low sticky top-[56px] z-20">
+<div>
+<h3 class="text-sm font-bold text-on-surface-variant uppercase tracking-wider">Bill of Materials (BOM)</h3>
+<p class="text-xs text-on-surface-variant mt-1">Define sub-components and raw materials.</p>
+</div>
+<button class="flex items-center gap-2 bg-surface-container-highest hover:bg-surface-container-high text-primary px-4 py-2 text-sm font-semibold transition-colors">
+<span class="material-symbols-outlined text-sm">add</span>
+                                Add Product
+                            </button>
+</div>
+<!-- BOM Table -->
+<div class="flex-1 overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-high sticky top-[116px] z-10">
+<tr>
+<th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Product / Material</th>
+<th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest">Part ID</th>
+<th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right">Unit Cost</th>
+<th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest w-32">Qty/Unit</th>
+<th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right">Subtotal</th>
+<th class="px-6 py-4 text-xs font-bold text-on-surface-variant uppercase tracking-widest text-right"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-highest transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-variant flex items-center justify-center rounded">
+<span class="material-symbols-outlined text-on-surface-variant">precision_manufacturing</span>
+</div>
+<div>
+<div class="text-sm font-semibold text-on-surface">Forged Steel Shackle</div>
+<div class="text-xs text-on-surface-variant">Grade 80 / 12mm</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-xs text-on-surface-variant">RAW-STL-442</td>
+<td class="px-6 py-4 text-right font-mono text-sm text-on-surface">€ 145.00</td>
+<td class="px-6 py-4">
+<input class="w-full bg-surface-container-lowest border-none text-sm px-2 py-1.5 focus:ring-1 focus:ring-primary text-center font-mono" type="number" value="4"/>
+</td>
+<td class="px-6 py-4 text-right font-mono text-sm font-bold text-on-surface">€ 580.00</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-error opacity-0 group-hover:opacity-100 transition-all p-1">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-highest transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-variant flex items-center justify-center rounded">
+<span class="material-symbols-outlined text-on-surface-variant">link</span>
+</div>
+<div>
+<div class="text-sm font-semibold text-on-surface">Heavy Duty Chain Link</div>
+<div class="text-xs text-on-surface-variant">Galvanized Finish</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-xs text-on-surface-variant">CH-HD-99</td>
+<td class="px-6 py-4 text-right font-mono text-sm text-on-surface">€ 34.25</td>
+<td class="px-6 py-4">
+<input class="w-full bg-surface-container-lowest border-none text-sm px-2 py-1.5 focus:ring-1 focus:ring-primary text-center font-mono" type="number" value="100"/>
+</td>
+<td class="px-6 py-4 text-right font-mono text-sm font-bold text-on-surface">€ 3,425.00</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-error opacity-0 group-hover:opacity-100 transition-all p-1">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-highest transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-surface-variant flex items-center justify-center rounded">
+<span class="material-symbols-outlined text-on-surface-variant">settings_suggest</span>
+</div>
+<div>
+<div class="text-sm font-semibold text-on-surface">Sealing Gasket Set</div>
+<div class="text-xs text-on-surface-variant">Nitrile Rubber High-Pressure</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 font-mono text-xs text-on-surface-variant">GKT-NHP-01</td>
+<td class="px-6 py-4 text-right font-mono text-sm text-on-surface">€ 102.75</td>
+<td class="px-6 py-4">
+<input class="w-full bg-surface-container-lowest border-none text-sm px-2 py-1.5 focus:ring-1 focus:ring-primary text-center font-mono" type="number" value="2"/>
+</td>
+<td class="px-6 py-4 text-right font-mono text-sm font-bold text-on-surface">€ 205.50</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-error opacity-0 group-hover:opacity-100 transition-all p-1">
+<span class="material-symbols-outlined text-lg">delete</span>
+</button>
+</td>
+</tr>
+<!-- Empty State Row / Add Product Prompt -->
+<tr class="bg-surface-container-low">
+<td class="px-6 py-8" colspan="6">
+<div class="border-2 border-dashed border-outline-variant/30 rounded-lg p-6 flex flex-col items-center justify-center text-on-surface-variant hover:border-primary/30 transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-3xl mb-2 group-hover:scale-110 transition-transform">add_circle</span>
+<span class="text-sm font-medium">Click to add another material or sub-component</span>
+<span class="text-xs mt-1">Search via name or SKU from global inventory</span>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Form Footer -->
+<div class="p-6 bg-surface-container-high border-t border-outline-variant/15 flex justify-end items-center gap-4">
+<span class="text-xs text-on-surface-variant mr-auto italic flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">info</span>
+                                All changes are auto-saved to workspace drafts.
+                            </span>
+<button class="px-6 py-2.5 text-sm font-semibold text-on-surface-variant hover:text-on-surface transition-colors">Cancel</button>
+<button class="px-10 py-2.5 bg-primary text-white text-sm font-bold rounded shadow-md hover:shadow-lg active:scale-95 duration-100 ease-in-out transition-all">Save Component</button>
+</div>
+</div>
+</section>
+</div>
+<!-- Supporting Information / Specifications -->
+<section class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-surface-container-low p-6 rounded shadow-sm border-l-4 border-primary/20">
+<h4 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">description</span> Technical Specifications
+                    </h4>
+<textarea class="w-full bg-surface-container-lowest border-none text-sm p-4 min-h-[120px] focus:ring-1 focus:ring-primary" placeholder="Enter engineering notes, torque requirements, or structural assembly instructions here..."></textarea>
+</div>
+<div class="bg-surface-container-low p-6 rounded shadow-sm border-l-4 border-secondary/20">
+<h4 class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">attachment</span> Technical Diagrams &amp; Documentation
+                    </h4>
+<div class="grid grid-cols-3 gap-3">
+<div class="aspect-square bg-surface-container-high rounded relative group cursor-pointer overflow-hidden">
+<img alt="Technical drawing" class="w-full h-full object-cover opacity-60 group-hover:scale-110 transition-transform" data-alt="Technical blueprint of a marine mooring connector showing precise measurements and engineering schematics on a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJ1zK_-ib7mdZmmvMcgv8qE-_AiM2BD6oOp34VFWZw7X19-nSRET1tJHBltSDoJR4DRLg5seeTddrMtM5sifNN9PmXYmEhy1Dntu96794jQKJvgZ_TxGQD_YW5X30dIF4qFeImkvlvaEtmvu3yKjL1kNCQZ9yJjw6Zmi7vU2x4M7PHlDvkG_rsa03uVdPA3j3xHeeuam5o9cHnqhMQ6-oMlZIEqHzY-xZGp7Ci_l0a6MSsXHdLOT2h1xhE1HfedQ4aH_OO2qPHJM8"/>
+<div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-primary/20">
+<span class="material-symbols-outlined text-white">zoom_in</span>
+</div>
+</div>
+<div class="aspect-square bg-surface-container-high rounded relative group cursor-pointer overflow-hidden border-2 border-dashed border-outline-variant/50 flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined">upload_file</span>
+<span class="text-[10px] font-bold mt-1 uppercase">Upload CAD</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- System Footer -->
+<footer class="mt-auto py-4 px-8 border-t border-outline-variant/10 text-[10px] text-on-surface-variant/50 flex justify-between items-center bg-surface-container-low">
+<div class="flex gap-4">
+<span>SYSTEM STATUS: OPERATIONAL</span>
+<span>DB: BODØ_HUB_PROD</span>
+</div>
+<div class="font-mono">LOVOLD ERP v2.4.0-STABLE</div>
+</footer>
+</main>
+</body></html>

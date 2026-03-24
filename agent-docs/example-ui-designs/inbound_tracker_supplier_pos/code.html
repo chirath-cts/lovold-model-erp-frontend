@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Inbound Tracker | Subsurface Precision</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-fixed-variant": "#354a53",
+              "on-secondary-fixed": "#071e27",
+              "on-error-container": "#93000a",
+              "error": "#ba1a1a",
+              "surface-tint": "#17648c",
+              "tertiary-fixed-dim": "#bbc8d0",
+              "inverse-on-surface": "#eff1f4",
+              "secondary-container": "#cfe6f2",
+              "surface-bright": "#f7f9fc",
+              "on-surface": "#191c1e",
+              "secondary-fixed": "#cfe6f2",
+              "on-surface-variant": "#40484e",
+              "tertiary-fixed": "#d7e4ec",
+              "surface-variant": "#e0e3e6",
+              "on-primary-fixed": "#001e2e",
+              "surface-container-high": "#e6e8eb",
+              "on-tertiary": "#ffffff",
+              "surface-container-lowest": "#ffffff",
+              "on-tertiary-container": "#bfccd4",
+              "on-primary-container": "#91d2fe",
+              "secondary-fixed-dim": "#b4cad6",
+              "on-secondary": "#ffffff",
+              "surface-dim": "#d8dadd",
+              "on-tertiary-fixed": "#111d23",
+              "tertiary": "#344046",
+              "on-background": "#191c1e",
+              "background": "#f7f9fc",
+              "surface": "#f7f9fc",
+              "inverse-surface": "#2d3133",
+              "primary-container": "#005b82",
+              "on-secondary-container": "#526772",
+              "secondary": "#4c616c",
+              "on-primary": "#ffffff",
+              "tertiary-container": "#4b575e",
+              "on-error": "#ffffff",
+              "primary": "#004260",
+              "outline": "#70787f",
+              "surface-container": "#eceef1",
+              "on-primary-fixed-variant": "#004c6d",
+              "inverse-primary": "#8ecefa",
+              "surface-container-highest": "#e0e3e6",
+              "outline-variant": "#c0c7cf",
+              "primary-fixed-dim": "#8ecefa",
+              "primary-fixed": "#c8e6ff",
+              "on-tertiary-fixed-variant": "#3c494f",
+              "surface-container-low": "#f2f4f7",
+              "error-container": "#ffdad6"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"],
+              "mono": ["JetBrains Mono"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased">
+<!-- SideNavBar (Shared Component) -->
+<aside class="h-screen w-64 fixed left-0 top-0 border-r-0 bg-slate-100 dark:bg-slate-900 font-inter antialiased tracking-tight text-sm flex flex-col h-full overflow-y-auto">
+<div class="p-6 flex flex-col gap-1">
+<h1 class="font-bold text-sky-900 dark:text-sky-100 tracking-tighter text-lg">Subsurface Precision</h1>
+<p class="text-xs text-slate-500 font-medium uppercase tracking-widest">Aquaculture ERP</p>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-slate-800 text-sky-800 dark:text-sky-300 font-semibold border-r-4 border-sky-800" href="#">
+<span class="material-symbols-outlined" data-icon="inventory_2">inventory_2</span>
+<span>Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="event_upcoming">event_upcoming</span>
+<span>Planning</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span>Sales</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="local_shipping">local_shipping</span>
+<span>Logistics</span>
+</a>
+</nav>
+<div class="mt-auto p-3 border-t border-slate-200 dark:border-slate-800">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+<span>Support</span>
+</a>
+</div>
+</aside>
+<!-- TopAppBar (Shared Component) -->
+<header class="fixed top-0 right-0 left-64 h-16 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50 flex items-center justify-between px-8 w-full shadow-sm">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full bg-slate-100 border-none rounded-md py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-sky-500/20 transition-all outline-none" placeholder="Search Inbound Tracker..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:text-sky-800 transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="p-2 text-slate-500 hover:text-sky-800 transition-colors">
+<span class="material-symbols-outlined" data-icon="history">history</span>
+</button>
+<div class="h-6 w-px bg-slate-200 mx-2"></div>
+<button class="text-sky-800 font-medium hover:text-sky-700 transition-all text-sm">Support</button>
+<button class="bg-primary text-white px-4 py-2 rounded-sm text-sm font-semibold hover:opacity-90 transition-opacity">New Order</button>
+<img class="w-8 h-8 rounded-full border border-slate-200" data-alt="close-up portrait of a professional supply chain engineer with a neutral expression in a bright modern office" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMrq2g2HlitZt6UKVbqduiXS0eLxm2RpcPSXFimOHOYSSjqWrKW6tidm-lv7Zbq4ndR_njZub2b4ufSTlFN-U56Bw-bHg5clKNyWMMaXTHWF4XJV7r_Ar1058MoiQBY00Q36oWtLe_hLl7L_AcXWbISrgN8pC-ktrKnvM5vwurunbXqu-zhI7wVpHK0nczZp9EujfQe__BYrgUsS4mSgmCVyUySOEZI_MDr8UonLx4twE94bXOJIvp3sXwktbREtjhs62mgj7PKPM"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="ml-64 pt-16 min-h-screen p-8 bg-surface space-y-8">
+<!-- Page Header Section -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<nav class="flex text-xs text-on-surface-variant font-medium mb-2 space-x-2">
+<span>ERP</span>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span>Inventory</span>
+<span class="material-symbols-outlined text-[10px]">chevron_right</span>
+<span class="text-primary">Inbound Tracker</span>
+</nav>
+<h2 class="text-3xl font-extrabold text-on-surface tracking-tight">Inbound Tracker</h2>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 border border-outline-variant px-4 py-2.5 rounded-sm text-sm font-semibold text-on-surface hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-lg">download</span>
+                    Export Manifest
+                </button>
+<button class="flex items-center gap-2 bg-gradient-to-r from-primary to-primary-container text-white px-6 py-2.5 rounded-sm text-sm font-bold shadow-sm hover:opacity-95 transition-all">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+                    Create Purchase Order
+                </button>
+</div>
+</section>
+<!-- Summary Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-sm border-l-4 border-primary flex flex-col justify-between min-h-[140px]">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant text-xs font-bold uppercase tracking-wider">Pending Shipments</span>
+<span class="material-symbols-outlined text-primary">pending_actions</span>
+</div>
+<div>
+<div class="text-4xl font-extrabold text-on-surface tracking-tighter">14</div>
+<div class="text-xs text-primary font-medium mt-1">4 expected in next 24 hours</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-sm border-l-4 border-error flex flex-col justify-between min-h-[140px]">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant text-xs font-bold uppercase tracking-wider">Overdue Deliveries</span>
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">warning</span>
+</div>
+<div>
+<div class="text-4xl font-extrabold text-error tracking-tighter">03</div>
+<div class="text-xs text-on-error-container font-medium mt-1">Estimated impact: 12 production hours</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-sm border-l-4 border-secondary flex flex-col justify-between min-h-[140px]">
+<div class="flex justify-between items-start">
+<span class="text-on-surface-variant text-xs font-bold uppercase tracking-wider">Missing Material Risk</span>
+<span class="material-symbols-outlined text-secondary">assignment_late</span>
+</div>
+<div>
+<div class="text-4xl font-extrabold text-on-surface tracking-tighter">07</div>
+<div class="text-xs text-secondary font-medium mt-1">Linked to active Customer Orders</div>
+</div>
+</div>
+</section>
+<!-- Filter Console -->
+<section class="bg-surface-container-low p-4 flex flex-wrap items-center gap-4 rounded-sm border border-outline-variant/10">
+<div class="flex-1 min-w-[200px] relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+<input class="w-full bg-surface-container-highest border-none py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20 rounded-sm" placeholder="Filter by PO, SKU, or Supplier..." type="text"/>
+</div>
+<div class="flex items-center gap-2">
+<label class="text-xs font-bold text-on-surface-variant uppercase">Supplier</label>
+<select class="bg-surface-container-highest border-none text-sm py-2 px-3 pr-8 rounded-sm focus:ring-2 focus:ring-primary/20">
+<option>All Suppliers</option>
+<option>AquaFlow Valves</option>
+<option>Nordic Blowers</option>
+<option>Deepsea Sensors Ltd</option>
+</select>
+</div>
+<div class="flex items-center gap-2">
+<label class="text-xs font-bold text-on-surface-variant uppercase">Status</label>
+<select class="bg-surface-container-highest border-none text-sm py-2 px-3 pr-8 rounded-sm focus:ring-2 focus:ring-primary/20">
+<option>All Statuses</option>
+<option>Draft</option>
+<option>Ordered</option>
+<option>Partially Received</option>
+<option>Received</option>
+</select>
+</div>
+<button class="flex items-center gap-2 text-primary font-bold text-xs uppercase px-4 py-2 hover:bg-primary/5 rounded-sm">
+<span class="material-symbols-outlined text-sm">filter_list</span>
+                More Filters
+            </button>
+</section>
+<!-- Industrial Data Table -->
+<section class="bg-surface-container-lowest overflow-hidden border border-outline-variant/15">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-high text-on-surface-variant text-[11px] font-bold uppercase tracking-widest border-b border-outline-variant/20">
+<th class="px-6 py-4">PO Number</th>
+<th class="px-6 py-4">Supplier</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4">Arrival ETA</th>
+<th class="px-6 py-4">Progress</th>
+<th class="px-6 py-4">Risk Level</th>
+<th class="px-6 py-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Row 1: Delayed/Critical -->
+<tr class="hover:bg-surface-container-low transition-colors group bg-error/5">
+<td class="px-6 py-4">
+<span class="mono text-sm font-bold text-on-surface">PO-2024-082</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-on-surface">AquaFlow Valves</td>
+<td class="px-6 py-4">
+<span class="bg-primary/10 text-primary px-2.5 py-1 text-[10px] font-extrabold uppercase rounded-full">Ordered</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-error font-bold text-sm">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">schedule</span>
+                                    Delayed (2 days)
+                                </div>
+</td>
+<td class="px-6 py-4">
+<div class="w-full max-w-[120px]">
+<div class="flex justify-between text-[10px] font-bold text-on-surface-variant mb-1">
+<span>4/10 units</span>
+<span>40%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 40%"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 bg-error text-white px-2 py-0.5 text-[10px] font-bold rounded-sm">
+                                    CRITICAL IMPACT
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2: On Track -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<span class="mono text-sm font-bold text-on-surface">PO-2024-095</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-on-surface">Nordic Blowers</td>
+<td class="px-6 py-4">
+<span class="bg-secondary/15 text-secondary px-2.5 py-1 text-[10px] font-extrabold uppercase rounded-full">Partially Received</span>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm font-medium text-on-surface">In 3 days</div>
+<div class="text-[10px] text-on-surface-variant">Nov 24, 2024</div>
+</td>
+<td class="px-6 py-4">
+<div class="w-full max-w-[120px]">
+<div class="flex justify-between text-[10px] font-bold text-on-surface-variant mb-1">
+<span>8/10 units</span>
+<span>80%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 80%"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">Normal</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3: Upcoming -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<span class="mono text-sm font-bold text-on-surface">PO-2024-112</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-on-surface">Deepsea Sensors Ltd</td>
+<td class="px-6 py-4">
+<span class="bg-outline-variant/30 text-on-surface-variant px-2.5 py-1 text-[10px] font-extrabold uppercase rounded-full">Draft</span>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm font-medium text-on-surface">Not Dispatched</div>
+</td>
+<td class="px-6 py-4">
+<div class="w-full max-w-[120px]">
+<div class="flex justify-between text-[10px] font-bold text-on-surface-variant mb-1">
+<span>0/5 units</span>
+<span>0%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 0%"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase tracking-tighter">None</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4: High Density Data -->
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4">
+<span class="mono text-sm font-bold text-on-surface">PO-2024-077</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-on-surface">Marine Bio-Systems</td>
+<td class="px-6 py-4">
+<span class="bg-primary/10 text-primary px-2.5 py-1 text-[10px] font-extrabold uppercase rounded-full">Ordered</span>
+</td>
+<td class="px-6 py-4">
+<div class="text-sm font-medium text-on-surface">Tomorrow</div>
+<div class="text-[10px] text-on-surface-variant">Nov 22, 2024</div>
+</td>
+<td class="px-6 py-4">
+<div class="w-full max-w-[120px]">
+<div class="flex justify-between text-[10px] font-bold text-on-surface-variant mb-1">
+<span>0/25 units</span>
+<span>0%</span>
+</div>
+<div class="h-1.5 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 0%"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 bg-on-secondary-container/10 text-on-secondary-container px-2 py-0.5 text-[10px] font-bold rounded-sm">
+                                    MONITORING
+                                </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="bg-surface-container-low px-6 py-3 flex items-center justify-between border-t border-outline-variant/20">
+<span class="text-xs text-on-surface-variant font-medium">Showing 1 to 4 of 38 orders</span>
+<div class="flex gap-2">
+<button class="p-1 hover:bg-surface-container-high rounded transition-colors disabled:opacity-30" disabled="">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="px-2 py-1 text-xs font-bold bg-primary text-white rounded-sm">1</button>
+<button class="px-2 py-1 text-xs font-bold text-on-surface hover:bg-surface-container-high rounded-sm">2</button>
+<button class="px-2 py-1 text-xs font-bold text-on-surface hover:bg-surface-container-high rounded-sm">3</button>
+<button class="p-1 hover:bg-surface-container-high rounded transition-colors">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Contextual Insight Overlay (Industrial Pattern) -->
+<section class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+<div class="lg:col-span-3 bg-surface-container-low p-6 rounded-sm flex flex-col md:flex-row items-center gap-6">
+<div class="relative w-full md:w-1/3 aspect-video bg-surface-container-highest rounded overflow-hidden">
+<img class="w-full h-full object-cover mix-blend-multiply opacity-80" data-alt="high-angle wide shot of a massive modern automated warehouse logistics hub with blue industrial racks and robotic arms under cool white light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfFfvpkUOgJNBUT9pkmkXlP3CuuwB4sMjSDyVCf8pMhuK0xqjnge9dHrFgBHDTEfMedyNG4ZRmzMFKEv1xrx-hAFcSjIW22d3XK5ZMzh8BINinG9LipmU3ptetBMzOrraJtGKrolvX23tl4wRix0nCaSrJGpZYkI7Dw43VUvYi_BSJ-ZuibGPfdKuJkEH2SQqSaw9vI9HXaMPhmco3xtu7LODpDrnZpr7r93H3xFR4Qf6ZEaiNyt6duwVAWDs3hk70rc6pz6Bqc2g"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/40 to-transparent"></div>
+<div class="absolute bottom-3 left-3 flex items-center gap-2">
+<span class="w-2 h-2 bg-green-500 rounded-full"></span>
+<span class="text-[10px] text-white font-bold uppercase">Main Terminal Active</span>
+</div>
+</div>
+<div class="flex-1 space-y-3">
+<h4 class="text-lg font-bold text-on-surface tracking-tight">Supply Chain Health: Optimal</h4>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                        Inbound volume is tracking 12% above quarterly baseline. No major logistical bottlenecks detected at Port of Bergen. 
+                        <span class="text-error font-bold">Action required:</span> Validate sensor calibration kits with Deepsea Sensors to avoid PO-2024-112 stagnation.
+                    </p>
+<div class="flex gap-4">
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Avg. Lead Time</span>
+<span class="mono text-lg font-extrabold text-primary">4.2 Days</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[10px] font-bold text-on-surface-variant uppercase">Supplier Reliability</span>
+<span class="mono text-lg font-extrabold text-primary">96.8%</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-primary text-white p-6 rounded-sm flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-3xl mb-4" style="font-variation-settings: 'FILL' 1;">insights</span>
+<h4 class="font-bold text-sm tracking-tight uppercase">Operational Tip</h4>
+</div>
+<p class="text-xs text-primary-fixed leading-relaxed mt-2 italic">
+                    "Orders containing 'Marine Valves' are seeing increased inspection times. Suggest placing future POs 48h earlier than standard window."
+                </p>
+<button class="mt-4 w-full border border-primary-container py-2 text-[11px] font-bold uppercase tracking-widest hover:bg-white hover:text-primary transition-all">
+                    View Logistics Report
+                </button>
+</div>
+</section>
+</main>
+</body></html>

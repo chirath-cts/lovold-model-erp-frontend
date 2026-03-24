@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Configure Custom Component - Subsurface Precision ERP</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "on-tertiary-container": "#bfccd4",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#b4cad6",
+                        "surface-container-high": "#e6e8eb",
+                        "surface-container": "#eceef1",
+                        "on-tertiary-fixed": "#111d23",
+                        "secondary-fixed": "#cfe6f2",
+                        "on-primary-fixed-variant": "#004c6d",
+                        "on-secondary-fixed": "#071e27",
+                        "surface-bright": "#f7f9fc",
+                        "outline": "#70787f",
+                        "on-primary-fixed": "#001e2e",
+                        "inverse-surface": "#2d3133",
+                        "on-secondary": "#ffffff",
+                        "background": "#f7f9fc",
+                        "primary-fixed": "#c8e6ff",
+                        "secondary-container": "#cfe6f2",
+                        "secondary": "#4c616c",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#d8dadd",
+                        "surface-container-highest": "#e0e3e6",
+                        "surface-tint": "#17648c",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#8ecefa",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-low": "#f2f4f7",
+                        "tertiary-container": "#4b575e",
+                        "tertiary": "#344046",
+                        "primary-container": "#005b82",
+                        "inverse-on-surface": "#eff1f4",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-fixed-dim": "#bbc8d0",
+                        "surface-variant": "#e0e3e6",
+                        "on-error-container": "#93000a",
+                        "on-background": "#191c1e",
+                        "on-surface": "#191c1e",
+                        "surface": "#f7f9fc",
+                        "on-surface-variant": "#40484e",
+                        "on-secondary-fixed-variant": "#354a53",
+                        "outline-variant": "#c0c7cf",
+                        "inverse-primary": "#8ecefa",
+                        "on-primary-container": "#91d2fe",
+                        "on-tertiary-fixed-variant": "#3c494f",
+                        "tertiary-fixed": "#d7e4ec",
+                        "primary": "#004260",
+                        "on-secondary-container": "#526772"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"],
+                        "mono": ["JetBrains Mono"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .tonal-architecture-no-lines {
+            border: none !important;
+        }
+    </style>
+</head>
+<body class="bg-background font-body text-on-background antialiased overflow-hidden">
+<!-- Top Navigation Anchor -->
+<header class="w-full border-b border-gray-200/15 dark:border-gray-800/15 sticky top-0 z-50 bg-[#f7f9fc] dark:bg-[#121416] font-['Inter'] antialiased tracking-tight flex justify-between items-center w-full px-6 py-3">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold text-[#004260] dark:text-[#005b82] tracking-tighter uppercase">Subsurface Precision ERP</span>
+<nav class="hidden md:flex gap-6">
+<a class="text-[#40484e] dark:text-[#9ca3af] hover:text-[#191c1e] dark:hover:text-white transition-colors" href="#">Dashboard</a>
+<a class="text-[#40484e] dark:text-[#9ca3af] hover:text-[#191c1e] dark:hover:text-white transition-colors" href="#">Inventory</a>
+<a class="text-[#004260] dark:text-[#005b82] font-semibold border-b-2 border-[#004260] pb-1" href="#">Orders</a>
+<a class="text-[#40484e] dark:text-[#9ca3af] hover:text-[#191c1e] dark:hover:text-white transition-colors" href="#">Production</a>
+<a class="text-[#40484e] dark:text-[#9ca3af] hover:text-[#191c1e] dark:hover:text-white transition-colors" href="#">Logistics</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-on-surface-variant hover:bg-[#f1f5f9] dark:hover:bg-[#1e293b] rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-[#f1f5f9] dark:hover:bg-[#1e293b] rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-secondary-container overflow-hidden">
+<img alt="User profile avatar" data-alt="Professional headshot of an industrial operations manager in a corporate office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDlCl0zLgHATWJD7yWbw6VMOicwkIiHGO3U-_MHM9_uJmSQlOgjvfDQQrAgnJABOhJabfSWyOBOA-BYHcAN9-5gh9Npaj3l6b1Ef1NAlugoZNHUmD0ky0TYsGzHopQfF1WHLjukD9FrRHAnRA1G8urKOnFpDBxY7m0GPfquOtLK_iJ12NkPidUU6fYeEWjTZxPwicefUIVSL9EqN5B5o32yNj9ZuATPGl2AhEACMtQPzUBWHee9Up37tCiG0bsRUM7Fn22QCasTs0"/>
+</div>
+</div>
+</header>
+<main class="flex h-[calc(100vh-60px)]">
+<!-- Side Navigation Anchor -->
+<aside class="h-screen w-64 border-r border-gray-200/10 dark:border-gray-800/10 bg-[#f0f4f8] dark:bg-[#191c1e] flex flex-col h-full pt-4">
+<div class="px-6 mb-8">
+<div class="flex items-center gap-3 mb-4">
+<div class="w-10 h-10 bg-primary rounded flex items-center justify-center text-white">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+</div>
+<div>
+<p class="font-mono font-bold text-[#004260] dark:text-[#005b82]">Order #8821</p>
+<p class="text-xs text-on-surface-variant uppercase tracking-wider">Industrial ERP</p>
+</div>
+</div>
+<button class="w-full bg-primary hover:bg-primary-container text-white py-2 px-4 rounded-sm font-medium transition-all duration-200 flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                    New Workflow
+                </button>
+</div>
+<nav class="flex-1 px-3 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-[#40484e] dark:text-[#9ca3af] hover:bg-gray-200/50 dark:hover:bg-gray-800/50 rounded-sm transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="info">info</span>
+<span>Order Setup</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-[#004260] text-white rounded-sm font-medium transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="list_alt">list_alt</span>
+<span>Line Items</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#40484e] dark:text-[#9ca3af] hover:bg-gray-200/50 dark:hover:bg-gray-800/50 rounded-sm transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="precision_manufacturing">precision_manufacturing</span>
+<span>Production Steps</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-[#40484e] dark:text-[#9ca3af] hover:bg-gray-200/50 dark:hover:bg-gray-800/50 rounded-sm transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="schedule">schedule</span>
+<span>ETA Planning</span>
+</a>
+</nav>
+<div class="p-4 bg-surface-container-highest/30 space-y-2">
+<a class="flex items-center gap-3 px-3 py-1 text-xs text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="help">help</span> Support
+                </a>
+<a class="flex items-center gap-3 px-3 py-1 text-xs text-on-surface-variant hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-sm" data-icon="description">description</span> Documentation
+                </a>
+</div>
+</aside>
+<!-- Main Content Area with Modal Overlay -->
+<section class="flex-1 relative overflow-hidden bg-surface-container-low p-8">
+<!-- Background Content (Simulated Order Page) -->
+<div class="opacity-40 pointer-events-none">
+<h1 class="text-2xl font-bold mb-6 text-on-surface">Order Configuration: Nord-Laks Expansion</h1>
+<div class="grid grid-cols-3 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded shadow-sm border border-outline-variant/10">
+<p class="text-sm font-medium text-on-surface-variant mb-1 uppercase tracking-tighter">Client</p>
+<p class="font-bold">Nord-Laks Aquaculture AS</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded shadow-sm border border-outline-variant/10">
+<p class="text-sm font-medium text-on-surface-variant mb-1 uppercase tracking-tighter">Due Date</p>
+<p class="font-bold">Oct 24, 2024</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded shadow-sm border border-outline-variant/10">
+<p class="text-sm font-medium text-on-surface-variant mb-1 uppercase tracking-tighter">Priority</p>
+<p class="font-bold text-error">High / Operational</p>
+</div>
+</div>
+</div>
+<!-- Modal Overlay (Inline Component Creation Sub-flow) -->
+<div class="absolute inset-0 z-40 bg-on-surface/5 backdrop-blur-sm flex items-center justify-center p-6">
+<div class="w-full max-w-4xl bg-surface-container-lowest shadow-2xl rounded-lg flex flex-col max-h-[921px] border border-outline-variant/20">
+<!-- Modal Header -->
+<div class="px-8 py-6 border-b border-outline-variant/15 flex justify-between items-center bg-surface-container-lowest">
+<div>
+<h2 class="text-xl font-bold text-primary tracking-tight">Configure Custom Component</h2>
+<p class="text-sm text-on-surface-variant">Build an ad-hoc assembly for Order #8821</p>
+</div>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+</div>
+<!-- Modal Body -->
+<div class="flex-1 overflow-y-auto p-8">
+<div class="grid grid-cols-12 gap-8">
+<!-- Identity & Details -->
+<div class="col-span-12 lg:col-span-5 space-y-6">
+<div class="space-y-4">
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/70 border-b border-outline-variant/10 pb-2">Component Identity</h3>
+<div class="space-y-1">
+<label class="text-sm font-medium text-on-surface">Component Name/SKU</label>
+<input class="w-full bg-surface-container-high border-none rounded-sm px-4 py-2 focus:ring-0 focus:border-b-2 focus:border-primary transition-all font-mono" type="text" value="Custom-CAB-004-V2"/>
+</div>
+<div class="space-y-1">
+<label class="text-sm font-medium text-on-surface">Category</label>
+<div class="relative">
+<select class="w-full appearance-none bg-surface-container-high border-none rounded-sm px-4 py-2 focus:ring-0 focus:border-b-2 focus:border-primary">
+<option>Electrical and Control</option>
+<option>Pneumatic Systems</option>
+<option>Structural Marine</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-2 pointer-events-none text-on-surface-variant" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<div class="pt-4 flex items-start gap-3">
+<input checked="" class="mt-1 h-4 w-4 rounded-sm border-outline text-primary focus:ring-primary" id="saveCatalog" type="checkbox"/>
+<label class="text-sm text-on-surface leading-tight" for="saveCatalog">
+<span class="font-semibold block">Save to Catalog for future use</span>
+<span class="text-xs text-on-surface-variant">This will add the component to the global production master list.</span>
+</label>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-sm space-y-4">
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/70">Calculated Metrics</h3>
+<div class="flex justify-between items-end">
+<span class="text-sm text-on-surface-variant">Standard Production Cost</span>
+<span class="text-2xl font-mono font-bold text-primary">€ 4,120.00</span>
+</div>
+<div class="space-y-2 pt-2 border-t border-outline-variant/20">
+<div class="flex justify-between text-xs text-on-surface-variant">
+<span>Base Materials</span>
+<span class="font-mono">€ 3,420.00</span>
+</div>
+<div class="flex justify-between text-xs text-on-surface-variant">
+<span>Default Labor (14h)</span>
+<span class="font-mono">€ 700.00</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Composition Editor -->
+<div class="col-span-12 lg:col-span-7 space-y-6">
+<div class="flex justify-between items-center border-b border-outline-variant/10 pb-2">
+<h3 class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/70">Composition Editor</h3>
+<button class="text-xs font-semibold text-primary flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-sm" data-icon="add_circle">add_circle</span> Add Item
+                                    </button>
+</div>
+<div class="space-y-3">
+<!-- Product Row 1 -->
+<div class="flex items-center gap-4 bg-surface-container-low/50 p-4 rounded-sm group hover:bg-surface-container-high transition-colors">
+<div class="flex-1">
+<p class="text-xs font-bold text-on-surface-variant uppercase mb-1">Base Product</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="view_in_ar">view_in_ar</span>
+<span class="font-medium text-on-surface">Control Cabinet - 800x600 Stainless</span>
+</div>
+</div>
+<div class="w-24 text-right">
+<p class="text-xs font-bold text-on-surface-variant uppercase mb-1">Qty</p>
+<input class="w-full text-right bg-transparent border-none focus:ring-0 font-mono text-lg font-bold" type="number" value="1"/>
+</div>
+<button class="p-2 opacity-0 group-hover:opacity-100 text-on-surface-variant hover:text-error transition-all">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+<!-- Product Row 2 -->
+<div class="flex items-center gap-4 bg-surface-container-low/50 p-4 rounded-sm group hover:bg-surface-container-high transition-colors border-l-4 border-primary/40">
+<div class="flex-1">
+<p class="text-xs font-bold text-on-surface-variant uppercase mb-1">Base Product</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="settings_input_component">settings_input_component</span>
+<span class="font-medium text-on-surface">Pneumatic Valve - Series XJ High Pressure</span>
+</div>
+</div>
+<div class="w-24 text-right">
+<p class="text-xs font-bold text-on-surface-variant uppercase mb-1">Qty</p>
+<input class="w-full text-right bg-transparent border-none focus:ring-0 font-mono text-lg font-bold" type="number" value="4"/>
+</div>
+<button class="p-2 opacity-0 group-hover:opacity-100 text-on-surface-variant hover:text-error transition-all">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+<!-- Labor Row -->
+<div class="flex items-center gap-4 bg-surface-container-lowest border border-outline-variant/10 p-4 rounded-sm">
+<div class="flex-1">
+<p class="text-xs font-bold text-on-surface-variant uppercase mb-1">Resource Allocation</p>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="engineering">engineering</span>
+<span class="text-on-surface-variant italic">Default Labor (Automatic Calculation)</span>
+</div>
+</div>
+<div class="w-24 text-right">
+<p class="text-xs font-bold text-on-surface-variant uppercase mb-1">Hours</p>
+<span class="font-mono text-lg font-bold text-on-surface-variant">14.0</span>
+</div>
+<div class="w-8"></div>
+</div>
+</div>
+<div class="mt-8">
+<div class="bg-primary/5 rounded p-4 flex gap-4 items-center">
+<span class="material-symbols-outlined text-primary" data-icon="verified_user">verified_user</span>
+<div>
+<p class="text-sm font-semibold text-primary">Compliance Check Passed</p>
+<p class="text-xs text-on-surface-variant">The current combination of pneumatic valves and housing meets IP67 standards for offshore use.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="px-8 py-6 bg-surface-container-low border-t border-outline-variant/15 flex justify-end gap-4">
+<button class="px-6 py-2.5 text-sm font-semibold text-primary hover:bg-primary/5 rounded-sm transition-colors">
+                            Cancel
+                        </button>
+<button class="px-8 py-2.5 bg-gradient-to-r from-[#004260] to-[#005b82] text-white rounded-sm font-semibold flex items-center gap-2 shadow-lg shadow-primary/20 hover:scale-[0.98] transition-transform active:scale-[0.95]">
+<span class="material-symbols-outlined text-sm" data-icon="playlist_add_check">playlist_add_check</span>
+                            Add Custom Component to Order
+                        </button>
+</div>
+</div>
+</div>
+</section>
+</main>
+</body></html>

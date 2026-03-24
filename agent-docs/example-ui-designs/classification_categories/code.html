@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Classification Categories | Lovold ERP</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#eceef1",
+              "error": "#ba1a1a",
+              "secondary": "#4c616c",
+              "surface-dim": "#d8dadd",
+              "on-secondary-fixed-variant": "#354a53",
+              "secondary-container": "#cfe6f2",
+              "on-secondary": "#ffffff",
+              "on-secondary-fixed": "#071e27",
+              "error-container": "#ffdad6",
+              "primary-fixed-dim": "#8ecefa",
+              "on-tertiary-container": "#bfccd4",
+              "surface-variant": "#e0e3e6",
+              "surface-bright": "#f7f9fc",
+              "secondary-fixed-dim": "#b4cad6",
+              "on-tertiary-fixed": "#111d23",
+              "secondary-fixed": "#cfe6f2",
+              "tertiary-container": "#4b575e",
+              "surface-container-lowest": "#ffffff",
+              "inverse-primary": "#8ecefa",
+              "on-primary": "#ffffff",
+              "surface-tint": "#17648c",
+              "primary-container": "#005b82",
+              "outline-variant": "#c0c7cf",
+              "on-primary-fixed-variant": "#004c6d",
+              "on-primary-container": "#91d2fe",
+              "on-background": "#191c1e",
+              "primary": "#004260",
+              "background": "#f7f9fc",
+              "on-secondary-container": "#526772",
+              "tertiary-fixed": "#d7e4ec",
+              "tertiary": "#344046",
+              "surface-container-highest": "#e0e3e6",
+              "on-tertiary": "#ffffff",
+              "inverse-on-surface": "#eff1f4",
+              "primary-fixed": "#c8e6ff",
+              "on-surface": "#191c1e",
+              "surface-container-low": "#f2f4f7",
+              "on-tertiary-fixed-variant": "#3c494f",
+              "surface": "#f7f9fc",
+              "on-error": "#ffffff",
+              "outline": "#70787f",
+              "tertiary-fixed-dim": "#bbc8d0",
+              "inverse-surface": "#2d3133",
+              "on-error-container": "#93000a",
+              "on-surface-variant": "#40484e",
+              "surface-container-high": "#e6e8eb",
+              "on-primary-fixed": "#001e2e"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .mono-text { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body min-h-screen flex">
+<!-- SideNavBar -->
+<aside class="h-screen sticky left-0 top-0 w-64 flex flex-col bg-slate-100 dark:bg-slate-900 border-r border-slate-200/50 dark:border-slate-800/50 z-50">
+<div class="flex flex-col h-full py-6 px-4 gap-2">
+<div class="mb-8 px-2">
+<div class="text-[#004260] dark:text-[#005b82] font-black uppercase tracking-widest text-xs mb-1">LOVOLD ERP</div>
+<div class="text-[10px] text-on-surface-variant uppercase tracking-tighter opacity-70">Aquaculture Engineering</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="font-['Inter'] text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded bg-white dark:bg-[#004260]/20 text-[#004260] dark:text-[#005b82] border-r-4 border-[#004260] transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">inventory_2</span>
+<span class="font-['Inter'] text-sm font-medium">Inventory</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">event_note</span>
+<span class="font-['Inter'] text-sm font-medium">Planning</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+<span class="font-['Inter'] text-sm font-medium">Sales</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">local_shipping</span>
+<span class="font-['Inter'] text-sm font-medium">Logistics</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-1 border-t border-slate-200/50 pt-4">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="font-['Inter'] text-sm font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded text-slate-600 dark:text-slate-400 hover:bg-slate-200/50 transition-all duration-150" href="#">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span class="font-['Inter'] text-sm font-medium">Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<div class="flex-1 flex flex-col min-w-0">
+<!-- TopNavBar -->
+<header class="w-full sticky top-0 z-40 bg-[#f7f9fc] dark:bg-slate-900 border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm flex items-center justify-between px-6 py-3 font-['Inter'] antialiased">
+<div class="flex items-center gap-4">
+<div class="relative w-64 group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+<input class="w-full bg-surface-container-high border-none text-sm py-2 pl-10 pr-4 rounded focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Global search..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors active:scale-95">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors active:scale-95">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded transition-colors active:scale-95">
+<span class="material-symbols-outlined">help</span>
+</button>
+<div class="h-8 w-[1px] bg-slate-200 mx-1"></div>
+<div class="flex items-center gap-3 pl-2">
+<div class="text-right hidden sm:block">
+<div class="text-xs font-bold text-[#191c1e] dark:text-slate-100">Arne Lovold</div>
+<div class="text-[10px] text-slate-500">Chief Engineer</div>
+</div>
+<img alt="User profile avatar" class="h-9 w-9 rounded-full object-cover border-2 border-white shadow-sm" data-alt="Close-up professional portrait of an experienced marine engineer in a high-tech office environment, soft natural window light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATg9LBDoMK-SanwI5bqwpiI3nUWf1noNUI0nkn9V3PXhOjm9R9-xPHxelb2q7W398--PcqKJQ5HGyHe-lUzexqQtrbM7nd6dUSyier7PNzQTBldfU7q3QEllq-zhjuVgUXljhJAWegb2Iml9PY3Fv1Yp_QgWH5DN-0mB1gNZIuv_og2gmPzCsYdafysR5Rm6iQB0qnMf8xSe_s4FrO9m2C10p1snyP_dT_NHgcvK76nWXfhfbFKAm9LLAOuNvrBUg4WKCl5xhZ_9Y"/>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 p-8 max-w-[1600px] mx-auto w-full">
+<!-- Breadcrumbs & Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+<div>
+<nav class="flex items-center gap-2 text-xs font-medium text-slate-500 uppercase tracking-wider mb-2">
+<a class="hover:text-primary transition-colors" href="#">Inventory</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-on-surface">Categories</span>
+</nav>
+<h1 class="text-3xl font-black text-on-background tracking-tight">Classification Categories</h1>
+</div>
+<button class="bg-gradient-to-r from-primary to-primary-container text-white px-5 py-2.5 rounded-lg flex items-center gap-2 shadow-md hover:brightness-110 active:scale-[0.98] transition-all font-semibold">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>Create Category</span>
+</button>
+</div>
+<!-- Summary Metric Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="bg-surface-container-lowest p-6 rounded-lg border-l-4 border-primary shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Total Categories</span>
+<span class="material-symbols-outlined text-primary/40">category</span>
+</div>
+<div class="text-4xl font-black text-on-background tracking-tight">8</div>
+<div class="text-[10px] text-slate-400 mt-2 uppercase tracking-tighter">Active Classification Units</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-lg border-l-4 border-secondary shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Categorized Products</span>
+<span class="material-symbols-outlined text-secondary/40">inventory_2</span>
+</div>
+<div class="text-4xl font-black text-on-background tracking-tight">142</div>
+<div class="text-[10px] text-slate-400 mt-2 uppercase tracking-tighter">SKU associations verified</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-lg border-l-4 border-tertiary shadow-sm">
+<div class="flex items-center justify-between mb-2">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Categorized Components</span>
+<span class="material-symbols-outlined text-tertiary/40">settings_input_component</span>
+</div>
+<div class="text-4xl font-black text-on-background tracking-tight">36</div>
+<div class="text-[10px] text-slate-400 mt-2 uppercase tracking-tighter">Unique engineering sub-units</div>
+</div>
+</div>
+<!-- Search and Filter Bar -->
+<div class="bg-surface-container-low p-4 rounded-t-lg flex flex-col md:flex-row gap-4 items-center">
+<div class="relative flex-1 w-full group">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+<input class="w-full bg-surface-container-lowest border-none text-sm py-2.5 pl-10 pr-4 rounded focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search categories..." type="text"/>
+</div>
+<button class="flex items-center gap-2 px-4 py-2.5 bg-surface-container-lowest border border-outline-variant/30 text-sm font-medium text-on-surface-variant hover:bg-surface-variant/20 rounded transition-all">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+<span>Filter</span>
+</button>
+</div>
+<!-- Categories Table -->
+<div class="bg-surface-container-lowest shadow-sm overflow-x-auto">
+<table class="w-full text-left border-collapse min-w-[800px]">
+<thead class="bg-surface-container-high">
+<tr>
+<th class="px-6 py-4 text-[11px] font-black text-slate-500 uppercase tracking-widest w-64">Category Name</th>
+<th class="px-6 py-4 text-[11px] font-black text-slate-500 uppercase tracking-widest">Description</th>
+<th class="px-6 py-4 text-[11px] font-black text-slate-500 uppercase tracking-widest text-center">Item Count</th>
+<th class="px-6 py-4 text-[11px] font-black text-slate-500 uppercase tracking-widest text-center">Status</th>
+<th class="px-6 py-4 text-[11px] font-black text-slate-500 uppercase tracking-widest text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="font-bold text-on-background text-sm">Feeding Systems</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-on-surface-variant text-xs leading-relaxed max-w-md">Core automated feeding hardware and pneumatic blowers.</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="mono-text text-sm font-semibold text-primary px-3 py-1 bg-primary/5 rounded-full">24</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-tighter bg-green-100 text-green-800">Active</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary text-xs font-bold hover:underline">View Details</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="font-bold text-on-background text-sm">Mechanical Installations</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-on-surface-variant text-xs leading-relaxed max-w-md">Cages, moorings, and structural farm hardware.</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="mono-text text-sm font-semibold text-primary px-3 py-1 bg-primary/5 rounded-full">42</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-tighter bg-green-100 text-green-800">Active</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary text-xs font-bold hover:underline">View Details</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="font-bold text-on-background text-sm">Pipe Systems</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-on-surface-variant text-xs leading-relaxed max-w-md">Pneumatic feed transport and water management piping.</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="mono-text text-sm font-semibold text-primary px-3 py-1 bg-primary/5 rounded-full">18</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-tighter bg-green-100 text-green-800">Active</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary text-xs font-bold hover:underline">View Details</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="font-bold text-on-background text-sm">Electrical and Control</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-on-surface-variant text-xs leading-relaxed max-w-md">Control cabinets, PLC units, and power management.</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="mono-text text-sm font-semibold text-primary px-3 py-1 bg-primary/5 rounded-full">31</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-tighter bg-green-100 text-green-800">Active</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary text-xs font-bold hover:underline">View Details</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="font-bold text-on-background text-sm">Sensors and Monitoring</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-on-surface-variant text-xs leading-relaxed max-w-md">Environmental and biometric monitoring hardware.</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="mono-text text-sm font-semibold text-primary px-3 py-1 bg-primary/5 rounded-full">15</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-tighter bg-green-100 text-green-800">Active</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary text-xs font-bold hover:underline">View Details</button>
+</td>
+</tr>
+<!-- Row 6 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="font-bold text-on-background text-sm">Spare Parts</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-on-surface-variant text-xs leading-relaxed max-w-md">Individual replacement components for field service.</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="mono-text text-sm font-semibold text-primary px-3 py-1 bg-primary/5 rounded-full">124</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-tighter bg-green-100 text-green-800">Active</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary text-xs font-bold hover:underline">View Details</button>
+</td>
+</tr>
+<!-- Row 7 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="font-bold text-on-background text-sm">Service Kits</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-on-surface-variant text-xs leading-relaxed max-w-md">Pre-packaged maintenance and repair bundles.</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="mono-text text-sm font-semibold text-primary px-3 py-1 bg-primary/5 rounded-full">9</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-tighter bg-green-100 text-green-800">Active</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary text-xs font-bold hover:underline">View Details</button>
+</td>
+</tr>
+<!-- Row 8 -->
+<tr class="hover:bg-surface-container-low transition-colors group">
+<td class="px-6 py-4">
+<div class="font-bold text-on-background text-sm">Retrofit Packages</div>
+</td>
+<td class="px-6 py-4">
+<div class="text-on-surface-variant text-xs leading-relaxed max-w-md">Upgrade kits for existing farm infrastructure.</div>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="mono-text text-sm font-semibold text-primary px-3 py-1 bg-primary/5 rounded-full">5</span>
+</td>
+<td class="px-6 py-4 text-center">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-tighter bg-green-100 text-green-800">Active</span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-primary text-xs font-bold hover:underline">View Details</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="bg-surface-container-low px-6 py-4 rounded-b-lg border-t border-slate-200/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+<div class="text-xs text-on-surface-variant font-medium">
+                    Showing <span class="font-bold text-on-surface">1</span> to <span class="font-bold text-on-surface">8</span> of <span class="font-bold text-on-surface">8</span> entries
+                </div>
+<div class="flex items-center gap-1">
+<button class="p-1.5 text-slate-400 hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-[20px]">first_page</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<div class="flex items-center gap-1 px-4">
+<span class="w-8 h-8 flex items-center justify-center bg-primary text-white text-xs font-bold rounded">1</span>
+</div>
+<button class="p-1.5 text-slate-400 hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-primary disabled:opacity-30 disabled:cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-[20px]">last_page</span>
+</button>
+</div>
+</div>
+<!-- Quick Action Floating Section (Optional Contextual Information) -->
+<div class="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div class="bg-surface-container-low p-6 rounded-lg">
+<h3 class="text-sm font-bold text-on-background uppercase tracking-wider mb-4">Categorization Insights</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between text-xs p-3 bg-surface-container-lowest rounded">
+<span class="text-on-surface-variant font-medium">Growth in "Spare Parts" (30 Days)</span>
+<span class="text-green-600 font-bold">+12%</span>
+</div>
+<div class="flex items-center justify-between text-xs p-3 bg-surface-container-lowest rounded">
+<span class="text-on-surface-variant font-medium">Uncategorized Legacy SKUs</span>
+<span class="text-error font-bold">14 Items</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-lg relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="text-sm font-bold text-on-background uppercase tracking-wider mb-2">Technical Documentation</h3>
+<p class="text-xs text-on-surface-variant leading-relaxed mb-4">View the latest engineering standards for item classification and SKU generation protocols.</p>
+<button class="text-primary text-xs font-bold flex items-center gap-1 hover:gap-2 transition-all">
+                            Open Protocol PDF <span class="material-symbols-outlined text-[16px]">arrow_right_alt</span>
+</button>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-slate-200 text-[120px] opacity-30 select-none">description</span>
+</div>
+</div>
+</main>
+</div>
+</body></html>
