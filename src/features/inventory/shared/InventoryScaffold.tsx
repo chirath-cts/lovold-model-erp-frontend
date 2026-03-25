@@ -88,8 +88,8 @@ export function DataPanel({
   actions?: ReactNode;
 }) {
   return (
-    <section className="app-card space-y-5">
-      <div className="flex flex-wrap items-start justify-between gap-3">
+    <section className="app-card overflow-hidden">
+      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-[var(--border-soft)] px-5 py-4 md:px-6">
         <div className="space-y-1">
           <h2 className="text-lg font-semibold text-[var(--text-primary)]">{title}</h2>
           {description ? (
@@ -98,7 +98,7 @@ export function DataPanel({
         </div>
         {actions ? <div className="flex gap-2">{actions}</div> : null}
       </div>
-      {children}
+      <div className="p-5 md:p-6">{children}</div>
     </section>
   );
 }

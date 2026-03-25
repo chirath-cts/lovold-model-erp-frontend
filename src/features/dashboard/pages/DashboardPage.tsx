@@ -356,19 +356,14 @@ export function DashboardPage() {
   );
 }
 
-function KpiTile({
-  label,
-  value,
-  supporting,
-  tone = "default",
-  icon: _icon,
-}: {
+function KpiTile(props: {
   label: string;
   value: string;
   supporting: string;
   tone?: "default" | "brand" | "warning";
   icon?: IconComponent;
 }) {
+  const { label, value, supporting, tone = "default" } = props;
   return (
     <div
       className={cn(

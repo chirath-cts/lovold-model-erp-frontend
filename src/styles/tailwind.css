@@ -55,7 +55,7 @@ body {
   }
 
   .app-button-primary {
-    @apply inline-flex items-center justify-center rounded-xl bg-[var(--brand-900)] px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--brand-800)] disabled:cursor-not-allowed disabled:opacity-60;
+    @apply inline-flex items-center justify-center rounded-xl bg-[var(--brand-900)] px-4 py-2.5 text-sm font-semibold !text-white no-underline transition hover:bg-[var(--brand-800)] hover:!text-white focus:!text-white visited:!text-white disabled:cursor-not-allowed disabled:opacity-60;
   }
 
   .app-button-secondary {
@@ -101,11 +101,11 @@ body {
   }
 
   .app-table th {
-    @apply px-4 py-3 text-left text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--text-muted)];
+    @apply px-5 py-3.5 text-left text-[11px] font-bold uppercase tracking-[0.16em] text-[var(--text-muted)];
   }
 
   .app-table td {
-    @apply px-4 py-3.5 align-top text-sm text-[var(--text-primary)];
+    @apply px-5 py-4 align-middle text-sm text-[var(--text-primary)];
   }
 
   .app-table tbody tr {
