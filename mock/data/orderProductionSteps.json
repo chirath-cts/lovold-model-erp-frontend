@@ -1,0 +1,104 @@
+{
+  "orderProductionSteps": [
+    {
+      "id": "ops-001",
+      "orderId": "ord-2026-0002",
+      "workCenterId": "wc-mechanical-assembly",
+      "stepName": "Mechanical assembly",
+      "description": "Assemble the feed distribution skid, pipe runs, and couplings.",
+      "cost": 1800,
+      "timeHours": 8,
+      "status": "pending"
+    },
+    {
+      "id": "ops-002",
+      "orderId": "ord-2026-0002",
+      "workCenterId": "wc-qa-packaging",
+      "stepName": "QA and packaging",
+      "description": "Check fit, pressure alignment, and prepare the skid for dispatch.",
+      "cost": 480,
+      "timeHours": 2,
+      "status": "pending"
+    },
+    {
+      "id": "ops-003",
+      "orderId": "ord-2026-0004",
+      "workCenterId": "wc-control-integration",
+      "stepName": "Control integration",
+      "description": "Wire the cabinet, validate panel logic, and integrate HMI communication.",
+      "cost": 2400,
+      "timeHours": 10,
+      "status": "in_progress"
+    },
+    {
+      "id": "ops-004",
+      "orderId": "ord-2026-0004",
+      "workCenterId": "wc-qa-packaging",
+      "stepName": "QA and packaging",
+      "description": "Final system check before moving the panel assembly to ready status.",
+      "cost": 520,
+      "timeHours": 2,
+      "status": "pending"
+    },
+    {
+      "id": "ops-005",
+      "orderId": "ord-2026-0005",
+      "workCenterId": "wc-pipe-fabrication",
+      "stepName": "Pipe fabrication",
+      "description": "Prepare the service pack pipe sections and coupling sets.",
+      "cost": 1200,
+      "timeHours": 6,
+      "status": "completed"
+    },
+    {
+      "id": "ops-006",
+      "orderId": "ord-2026-0005",
+      "workCenterId": "wc-qa-packaging",
+      "stepName": "QA and packaging",
+      "description": "Package the service pack for site dispatch.",
+      "cost": 260,
+      "timeHours": 1.5,
+      "status": "completed"
+    },
+    {
+      "id": "ops-007",
+      "orderId": "ord-2026-0006",
+      "workCenterId": "wc-field-service",
+      "stepName": "Field service prep",
+      "description": "Bundle spares, label parts, and stage for maintenance dispatch.",
+      "cost": 900,
+      "timeHours": 4,
+      "status": "completed"
+    },
+    {
+      "id": "ops-008",
+      "orderId": "ord-2026-0006",
+      "workCenterId": "wc-qa-packaging",
+      "stepName": "QA and packaging",
+      "description": "Complete outgoing inspection and dispatch packing.",
+      "cost": 200,
+      "timeHours": 1,
+      "status": "completed"
+    },
+    {
+      "id": "ops-009",
+      "orderId": "ord-2026-0007",
+      "workCenterId": "wc-sensor-calibration",
+      "stepName": "Sensor calibration",
+      "description": "Verify oxygen and temperature nodes in the retrofit bundle.",
+      "cost": 2600,
+      "timeHours": 12,
+      "status": "completed"
+    },
+    {
+      "id": "ops-010",
+      "orderId": "ord-2026-0007",
+      "workCenterId": "wc-qa-packaging",
+      "stepName": "QA and packaging",
+      "description": "Seal and label the retrofit kit for project delivery.",
+      "cost": 340,
+      "timeHours": 1.5,
+      "status": "completed"
+    }
+  ]
+}

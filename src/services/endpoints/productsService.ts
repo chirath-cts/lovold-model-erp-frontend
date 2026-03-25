@@ -1,51 +1,20 @@
-import { mockDb } from "@/services/mock/mockDb";
-import type { Product } from "@/shared/types/domain";
+import { mockDb, type ProductFilters } from "@/services/mock/mockDb";
+import type {
+  CreateProductPayload,
+  UpdateProductPayload,
+} from "@/shared/types/domain";
 
-export interface ProductFilters {
-  nameLike?: string;
-  categoryId?: string;
-}
-
-export interface CreateProductPayload {
-  id: string;
-  name: string;
-  sku: string;
-  categoryId: string;
-  imageUrl?: string | null;
-  basePrice: number;
-  purchasePrice: number;
-  stockQuantity: number;
-  reorderLevel: number;
-  unit: string;
-  status: Product["status"];
-  description?: string;
-}
-
-export interface UpdateProductPayload {
-  name: string;
-  sku: string;
-  categoryId: string;
-  imageUrl?: string | null;
-  basePrice: number;
-  purchasePrice: number;
-  stockQuantity: number;
-  reorderLevel: number;
-  unit: string;
-  status: Product["status"];
-  description?: string;
-}
+export type { ProductFilters };
 
 export const productsService = {
   getList(filters?: ProductFilters) {
     return mockDb.listProducts(filters);
   },
+  getById(id: string) {
+    return mockDb.getProductById(id);
+  },
   create(payload: CreateProductPayload) {
-    const product: Product = {
-      ...payload,
-      description: payload.description ?? "",
-    };
-
-    return mockDb.addProduct(product);
+    return mockDb.addProduct(payload);
   },
   update(id: string, payload: UpdateProductPayload) {
     return mockDb.updateProduct(id, payload);

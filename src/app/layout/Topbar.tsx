@@ -1,61 +1,7 @@
 import { useLocation } from "react-router-dom";
 
 import { UserProfileMenu } from "@/app/layout/UserProfileMenu";
-
-function MenuIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <line x1="3" x2="21" y1="6" y2="6" />
-      <line x1="3" x2="21" y1="12" y2="12" />
-      <line x1="3" x2="21" y1="18" y2="18" />
-    </svg>
-  );
-}
-
-function SearchIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <circle cx="11" cy="11" r="8" />
-      <line x1="21" x2="16.65" y1="21" y2="16.65" />
-    </svg>
-  );
-}
-
-function BellIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={2}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
-      <path d="M10.3 21a1.7 1.7 0 0 0 3.4 0" />
-    </svg>
-  );
-}
+import { BellIcon, MenuIcon, SearchIcon } from "@/shared/ui/icons";
 
 interface TopbarProps {
   onMenuClick: () => void;
@@ -64,18 +10,23 @@ interface TopbarProps {
 export function Topbar({ onMenuClick }: TopbarProps) {
   const location = useLocation();
 
-  const titleMap: Record<string, string> = {
-    "/dashboard": "Dashboard",
-    "/inventory/products": "Products",
-    "/inventory/categories": "Categories",
-    "/inventory/discounts": "Customer Pricing",
-    "/sales/orders": "Orders",
-    "/customers": "Customers",
-  };
-
-  const title = location.pathname.startsWith("/customers/")
-    ? "Customer Profile"
-    : titleMap[location.pathname] ?? "PengVinERP";
+  const title = (() => {
+    if (location.pathname === "/dashboard") return "Dashboard";
+    if (location.pathname.startsWith("/inventory/products")) return "Products";
+    if (location.pathname.startsWith("/inventory/components")) return "Components";
+    if (location.pathname.startsWith("/inventory/categories")) return "Categories";
+    if (location.pathname.startsWith("/inventory/customer-pricing")) {
+      return "Customer Pricing";
+    }
+    if (location.pathname.startsWith("/orders/new")) return "Create Order";
+    if (location.pathname.startsWith("/orders/")) return "Order Tracking";
+    if (location.pathname.startsWith("/orders")) return "Orders";
+    if (location.pathname.startsWith("/inbound/")) return "Supplier PO Detail";
+    if (location.pathname.startsWith("/inbound")) return "Inbound Tracker";
+    if (location.pathname.startsWith("/customers/")) return "Customer Profile";
+    if (location.pathname.startsWith("/customers")) return "Customers";
+    return "Lovold ERP";
+  })();
 
   return (
     <header className="sticky top-0 z-30 flex h-16 w-full items-center justify-between bg-[#f7f9fc] px-4 shadow-sm md:px-6 lg:px-8">

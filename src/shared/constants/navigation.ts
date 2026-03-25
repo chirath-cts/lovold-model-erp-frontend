@@ -1,26 +1,31 @@
-import type { SvgIconComponent } from "@mui/icons-material";
-import CategoryRoundedIcon from "@mui/icons-material/CategoryRounded";
-import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
-import GiteRoundedIcon from "@mui/icons-material/GiteRounded";
-import GroupRoundedIcon from "@mui/icons-material/GroupRounded";
-import Inventory2RoundedIcon from "@mui/icons-material/Inventory2Rounded";
-import LocalOfferRoundedIcon from "@mui/icons-material/LocalOfferRounded"; 
-import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
-import ViewListRoundedIcon from "@mui/icons-material/ViewListRounded";
+import type { ComponentType, SVGProps } from "react";
+
+import {
+  CategoryIcon,
+  ComponentIcon,
+  CustomersIcon,
+  DashboardIcon,
+  InboundIcon,
+  InventoryIcon,
+  OrdersIcon,
+  PricingIcon,
+} from "@/shared/ui/icons";
+
+type NavIcon = ComponentType<SVGProps<SVGSVGElement>>;
 
 export interface SidebarNavLink {
   id: string;
   type: "link";
   label: string;
   path: string;
-  icon: SvgIconComponent;
+  icon: NavIcon;
 }
 
 export interface SidebarNavGroup {
   id: string;
   type: "group";
   label: string;
-  icon?: SvgIconComponent;
+  icon?: NavIcon;
   children: SidebarNavLink[];
 }
 
@@ -32,57 +37,63 @@ export const sidebarNavStructure: SidebarNavItem[] = [
     type: "link",
     label: "Dashboard",
     path: "/dashboard",
-    icon: DashboardRoundedIcon,
+    icon: DashboardIcon,
+  },
+  {
+    id: "orders",
+    type: "link",
+    label: "Orders",
+    path: "/orders",
+    icon: OrdersIcon,
+  },
+  {
+    id: "inbound",
+    type: "link",
+    label: "Inbound",
+    path: "/inbound",
+    icon: InboundIcon,
+  },
+  {
+    id: "customers",
+    type: "link",
+    label: "Customers",
+    path: "/customers",
+    icon: CustomersIcon,
   },
   {
     id: "inventory",
     type: "group",
     label: "Inventory",
-    icon: GiteRoundedIcon,
+    icon: InventoryIcon,
     children: [
       {
         id: "products",
         type: "link",
         label: "Products",
         path: "/inventory/products",
-        icon: Inventory2RoundedIcon,
+        icon: InventoryIcon,
+      },
+      {
+        id: "components",
+        type: "link",
+        label: "Components",
+        path: "/inventory/components",
+        icon: ComponentIcon,
       },
       {
         id: "categories",
         type: "link",
         label: "Categories",
         path: "/inventory/categories",
-        icon: CategoryRoundedIcon,
+        icon: CategoryIcon,
       },
       {
-        id: "discounts",
+        id: "customer-pricing",
         type: "link",
         label: "Customer Pricing",
-        path: "/inventory/discounts",
-        icon: LocalOfferRoundedIcon,
+        path: "/inventory/customer-pricing",
+        icon: PricingIcon,
       },
     ],
-  },
-  {
-    id: "sales",
-    type: "group",
-    label: "Sales",
-    icon: ShoppingCartRoundedIcon,
-    children: [
-      {
-        id: "orders",
-        type: "link",
-        label: "Orders",
-        path: "/sales/orders",
-        icon: ViewListRoundedIcon,
-      },
-    ],
-  }, 
-  {
-    id: "customers",
-    type: "link",
-    label: "Customers",
-    path: "/customers",
-    icon: GroupRoundedIcon,
   },
 ];

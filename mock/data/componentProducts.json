@@ -1,0 +1,88 @@
+{
+  "componentProducts": [
+    {
+      "id": "cp-001",
+      "componentId": "comp-retrofit-monitoring-bundle",
+      "productId": "prod-oxygen-sensor-kit",
+      "quantity": 2
+    },
+    {
+      "id": "cp-002",
+      "componentId": "comp-retrofit-monitoring-bundle",
+      "productId": "prod-temperature-sensor-node",
+      "quantity": 4
+    },
+    {
+      "id": "cp-003",
+      "componentId": "comp-retrofit-monitoring-bundle",
+      "productId": "prod-control-cabinet",
+      "quantity": 1
+    },
+    {
+      "id": "cp-004",
+      "componentId": "comp-feed-distribution-skid",
+      "productId": "prod-feed-blower-unit",
+      "quantity": 1
+    },
+    {
+      "id": "cp-005",
+      "componentId": "comp-feed-distribution-skid",
+      "productId": "prod-cage-distribution-manifold",
+      "quantity": 2
+    },
+    {
+      "id": "cp-006",
+      "componentId": "comp-feed-distribution-skid",
+      "productId": "prod-pneumatic-pipeline-section",
+      "quantity": 6
+    },
+    {
+      "id": "cp-007",
+      "componentId": "comp-feed-distribution-skid",
+      "productId": "prod-feed-line-coupling",
+      "quantity": 12
+    },
+    {
+      "id": "cp-008",
+      "componentId": "comp-control-panel-assembly",
+      "productId": "prod-control-cabinet",
+      "quantity": 1
+    },
+    {
+      "id": "cp-009",
+      "componentId": "comp-control-panel-assembly",
+      "productId": "prod-barge-hmi-panel",
+      "quantity": 1
+    },
+    {
+      "id": "cp-010",
+      "componentId": "comp-pipeline-service-pack",
+      "productId": "prod-pneumatic-pipeline-section",
+      "quantity": 2
+    },
+    {
+      "id": "cp-011",
+      "componentId": "comp-pipeline-service-pack",
+      "productId": "prod-feed-line-coupling",
+      "quantity": 6
+    },
+    {
+      "id": "cp-012",
+      "componentId": "comp-barge-spares-kit",
+      "productId": "prod-silo-filter-module",
+      "quantity": 2
+    },
+    {
+      "id": "cp-013",
+      "componentId": "comp-barge-spares-kit",
+      "productId": "prod-service-filter-pack",
+      "quantity": 1
+    },
+    {
+      "id": "cp-014",
+      "componentId": "comp-barge-spares-kit",
+      "productId": "prod-dosing-valve",
+      "quantity": 2
+    }
+  ]
+}

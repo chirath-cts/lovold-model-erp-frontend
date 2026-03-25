@@ -1,0 +1,92 @@
+{
+  "supplierPurchaseOrderItems": [
+    {
+      "id": "spoi-001",
+      "purchaseOrderId": "spo-2026-0001",
+      "productId": "prod-pneumatic-pipeline-section",
+      "orderedQuantity": 24,
+      "receivedQuantity": 24,
+      "unitCost": 690
+    },
+    {
+      "id": "spoi-002",
+      "purchaseOrderId": "spo-2026-0001",
+      "productId": "prod-feed-line-coupling",
+      "orderedQuantity": 120,
+      "receivedQuantity": 120,
+      "unitCost": 155
+    },
+    {
+      "id": "spoi-003",
+      "purchaseOrderId": "spo-2026-0002",
+      "productId": "prod-oxygen-sensor-kit",
+      "orderedQuantity": 12,
+      "receivedQuantity": 8,
+      "unitCost": 3310
+    },
+    {
+      "id": "spoi-004",
+      "purchaseOrderId": "spo-2026-0002",
+      "productId": "prod-temperature-sensor-node",
+      "orderedQuantity": 18,
+      "receivedQuantity": 10,
+      "unitCost": 1375
+    },
+    {
+      "id": "spoi-005",
+      "purchaseOrderId": "spo-2026-0003",
+      "productId": "prod-control-cabinet",
+      "orderedQuantity": 3,
+      "receivedQuantity": 0,
+      "unitCost": 6500
+    },
+    {
+      "id": "spoi-006",
+      "purchaseOrderId": "spo-2026-0003",
+      "productId": "prod-barge-hmi-panel",
+      "orderedQuantity": 2,
+      "receivedQuantity": 0,
+      "unitCost": 8820
+    },
+    {
+      "id": "spoi-007",
+      "purchaseOrderId": "spo-2026-0004",
+      "productId": "prod-feed-blower-unit",
+      "orderedQuantity": 4,
+      "receivedQuantity": 0,
+      "unitCost": 12650
+    },
+    {
+      "id": "spoi-008",
+      "purchaseOrderId": "spo-2026-0004",
+      "productId": "prod-dosing-valve",
+      "orderedQuantity": 20,
+      "receivedQuantity": 0,
+      "unitCost": 1690
+    },
+    {
+      "id": "spoi-009",
+      "purchaseOrderId": "spo-2026-0005",
+      "productId": "prod-silo-filter-module",
+      "orderedQuantity": 10,
+      "receivedQuantity": 0,
+      "unitCost": 900
+    },
+    {
+      "id": "spoi-010",
+      "purchaseOrderId": "spo-2026-0005",
+      "productId": "prod-service-filter-pack",
+      "orderedQuantity": 24,
+      "receivedQuantity": 0,
+      "unitCost": 520
+    },
+    {
+      "id": "spoi-011",
+      "purchaseOrderId": "spo-2026-0006",
+      "productId": "prod-service-filter-pack",
+      "orderedQuantity": 12,
+      "receivedQuantity": 0,
+      "unitCost": 525
+    }
+  ]
+}

@@ -8,152 +8,116 @@ const __dirname = path.dirname(__filename);
 const dataFolder = path.join(__dirname, "data");
 const outputFile = path.join(__dirname, "db.json");
 
-const parseDate = (dateLike) => {
-  if (!dateLike) return null;
-  const date = new Date(dateLike);
+const canonicalFiles = [
+  "businessSettings.json",
+  "categories.json",
+  "products.json",
+  "components.json",
+  "componentProducts.json",
+  "customers.json",
+  "customerProducts.json",
+  "suppliers.json",
+  "supplierPurchaseOrders.json",
+  "supplierPurchaseOrderItems.json",
+  "orders.json",
+  "orderItems.json",
+  "orderProductionSteps.json",
+  "workCenters.json",
+  "users.json",
+];
+
+const parseDate = (value) => {
+  if (!value) return null;
+  const date = new Date(value);
   return Number.isNaN(date.getTime()) ? null : date;
 };
 
-const toIsoDateOnly = (dateLike) => {
-  const date = parseDate(dateLike);
-  if (!date) return null;
-  return date.toISOString().slice(0, 10);
+const toIsoDate = (value) => {
+  const date = parseDate(value);
+  return date ? date.toISOString() : null;
 };
 
-const deriveDiscountStatus = (item) => {
-  if (!item?.isActive) return "expired";
+const deriveCustomerProductStatus = (agreement) => {
+  if (!agreement?.isActive) return "expired";
 
   const today = new Date();
-  const start = parseDate(item.startDate);
-  const end = parseDate(item.endDate);
+  const start = parseDate(agreement.startDate);
+  const end = parseDate(agreement.endDate);
 
   if (start && start.getTime() > today.getTime()) return "future";
   if (end && end.getTime() < today.getTime()) return "expired";
   return "active";
 };
 
-const buildCompatibilityCollections = (canonical) => {
-  const products = Array.isArray(canonical.products) ? canonical.products : [];
-  const categories = Array.isArray(canonical.categories) ? canonical.categories : [];
-  const orderProducts = Array.isArray(canonical.orderProducts) ? canonical.orderProducts : [];
-  const customerProducts = Array.isArray(canonical.customerProducts) ? canonical.customerProducts : [];
-  const inventories = Array.isArray(canonical.inventories) ? canonical.inventories : [];
-  const supplierProducts = Array.isArray(canonical.supplierProducts) ? canonical.supplierProducts : [];
-
-  const productById = new Map(products.map((product) => [product.id, product]));
-  const primarySupplierByProductId = new Map();
-  const inventoryTotalsByProductId = new Map();
-
-  for (const supplierProduct of supplierProducts) {
-    const current = primarySupplierByProductId.get(supplierProduct.productId);
-
-    if (!current) {
-      primarySupplierByProductId.set(supplierProduct.productId, supplierProduct);
-      continue;
-    }
-
-    if (!current.isPrimarySupplier && supplierProduct.isPrimarySupplier) {
-      primarySupplierByProductId.set(supplierProduct.productId, supplierProduct);
-    }
-  }
-
-  for (const inventory of inventories) {
-    const current = inventoryTotalsByProductId.get(inventory.productId) ?? {
-      stockQuantity: 0,
-      reorderLevel: 0,
-    };
-
-    inventoryTotalsByProductId.set(inventory.productId, {
-      stockQuantity: current.stockQuantity + Number(inventory.stockQuantity ?? 0),
-      reorderLevel: current.reorderLevel + Number(inventory.reorderLevel ?? 0),
-    });
-  }
-
-  const runtimeProducts = products.map((product) => {
-    const inventory = inventoryTotalsByProductId.get(product.id);
-    const supplierProduct = primarySupplierByProductId.get(product.id);
-
-    return {
-      ...product,
-      purchasePrice: Number(supplierProduct?.purchasePrice ?? product.basePrice ?? 0),
-      stockQuantity: Number(inventory?.stockQuantity ?? 0),
-      reorderLevel: Number(inventory?.reorderLevel ?? 0),
-    };
-  });
-
-  const orderItems = orderProducts.map((orderProduct) => {
-    const product = productById.get(orderProduct.productId);
-    const discountPercent = Number(orderProduct.discountPercent ?? 0);
-
-    return {
-      id: orderProduct.id,
-      orderId: orderProduct.orderId,
-      productId: orderProduct.productId,
-      productSku: product?.sku ?? null,
-      productName: product?.name ?? null,
-      quantity: Number(orderProduct.quantity ?? 0),
-      productUnit: product?.unit ?? null,
-      unitPrice: Number(orderProduct.unitPrice ?? 0),
-      discountPercent,
-      discountAmount: Number(orderProduct.discountAmount ?? 0),
-      lineSubtotal: Number(orderProduct.lineSubtotal ?? 0),
-      lineTotal: Number(orderProduct.lineTotal ?? 0),
-      unitCostAtSale: Number(orderProduct.unitCostAtSale ?? orderProduct.unitPrice ?? 0),
-      profitAmount: Number(orderProduct.profitAmount ?? 0),
-    };
-  });
-
-  const runtimeCustomerProducts = customerProducts.map((customerProduct) => ({
-    customerId: customerProduct.customerId,
-    productId: customerProduct.productId,
-    discountPercent: Number(customerProduct.discountPercent ?? 0),
-    startDate: toIsoDateOnly(customerProduct.startDate),
-    endDate: toIsoDateOnly(customerProduct.endDate),
-    isActive: Boolean(customerProduct.isActive),
-    status: deriveDiscountStatus(customerProduct),
-  }));
-
-  const warehouseProducts = inventories.map((inventory) => {
-    const supplierProduct = primarySupplierByProductId.get(inventory.productId);
-    return {
-      id: inventory.id,
-      warehouseId: inventory.warehouseId,
-      productId: inventory.productId,
-      supplierId: supplierProduct?.supplierId ?? null,
-      stockQuantity: Number(inventory.stockQuantity ?? 0),
-      reorderLevel: Number(inventory.reorderLevel ?? 0),
-      supplierPrice: Number(supplierProduct?.purchasePrice ?? 0),
-      supplierDiscount: Number(supplierProduct?.supplierDiscountPercent ?? 0),
-    };
-  });
-
-  return {
-    products: runtimeProducts,
-    productCategories: categories,
-    orderItems,
-    customerProducts: runtimeCustomerProducts,
-    "customer-products": runtimeCustomerProducts,
-    discounts: runtimeCustomerProducts,
-    warehouseProducts,
-  };
-};
-
 let db = {};
 
-for (const file of fs.readdirSync(dataFolder)) {
+for (const file of canonicalFiles) {
   const filePath = path.join(dataFolder, file);
-  try {
-    const json = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-    db = { ...db, ...json };
-  } catch (err) {
-    console.error(`Error parsing ${file}:`, err.message);
+
+  if (!fs.existsSync(filePath)) {
+    throw new Error(`Missing canonical mock file: ${file}`);
   }
+
+  const json = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+  db = { ...db, ...json };
 }
 
-db = {
-  ...db,
-  ...buildCompatibilityCollections(db),
-};
+db.customerProducts = Array.isArray(db.customerProducts)
+  ? db.customerProducts.map((agreement) => ({
+      ...agreement,
+      startDate: toIsoDate(agreement.startDate),
+      endDate: toIsoDate(agreement.endDate),
+      status: deriveCustomerProductStatus(agreement),
+    }))
+  : [];
+
+db.supplierPurchaseOrderItems = Array.isArray(db.supplierPurchaseOrderItems)
+  ? db.supplierPurchaseOrderItems.map((item) => ({
+      ...item,
+      orderedQuantity: Number(item.orderedQuantity ?? 0),
+      receivedQuantity: Number(item.receivedQuantity ?? 0),
+      remainingQuantity: Math.max(
+        0,
+        Number(item.orderedQuantity ?? 0) - Number(item.receivedQuantity ?? 0),
+      ),
+      unitCost: Number(item.unitCost ?? 0),
+    }))
+  : [];
+
+db.supplierPurchaseOrders = Array.isArray(db.supplierPurchaseOrders)
+  ? db.supplierPurchaseOrders.map((purchaseOrder) => ({
+      ...purchaseOrder,
+      eta: toIsoDate(purchaseOrder.eta),
+      orderDate: toIsoDate(purchaseOrder.orderDate),
+    }))
+  : [];
+
+const itemCountByOrderId = Array.isArray(db.orderItems)
+  ? db.orderItems.reduce((map, item) => {
+      map.set(item.orderId, (map.get(item.orderId) ?? 0) + 1);
+      return map;
+    }, new Map())
+  : new Map();
+
+db.orders = Array.isArray(db.orders)
+  ? db.orders.map((order) => ({
+      ...order,
+      orderDate: toIsoDate(order.orderDate),
+      materialAvailabilityEta: toIsoDate(order.materialAvailabilityEta),
+      productionCompletionEta: toIsoDate(order.productionCompletionEta),
+      deliveryEta: toIsoDate(order.deliveryEta),
+      promisedEta: toIsoDate(order.promisedEta),
+      itemCount: itemCountByOrderId.get(order.id) ?? 0,
+    }))
+  : [];
+
+db.orderProductionSteps = Array.isArray(db.orderProductionSteps)
+  ? db.orderProductionSteps.map((step) => ({
+      ...step,
+      cost: Number(step.cost ?? 0),
+      timeHours: Number(step.timeHours ?? 0),
+    }))
+  : [];
 
 fs.writeFileSync(outputFile, JSON.stringify(db, null, 2));
 

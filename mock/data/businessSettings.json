@@ -1,0 +1,6 @@
+{
+  "businessSettings": {
+    "qualityCheckLeadDays": 1,
+    "packagingLeadDays": 1
+  }
+}
