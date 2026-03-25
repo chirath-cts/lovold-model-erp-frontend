@@ -5,7 +5,7 @@ interface AppDialogProps extends PropsWithChildren {
   title: string;
   description?: string;
   actions?: ReactNode;
-  size?: "md" | "lg" | "xl";
+  size?: "md" | "lg" | "xl" | "xxl" | "full";
   onClose: () => void;
 }
 
@@ -13,6 +13,8 @@ const sizeMap = {
   md: "max-w-2xl",
   lg: "max-w-4xl",
   xl: "max-w-6xl",
+  xxl: "max-w-7xl",
+  full: "max-w-[96vw]",
 } as const;
 
 export function AppDialog({
@@ -29,7 +31,7 @@ export function AppDialog({
   return (
     <div className="fixed inset-0 z-[70] flex items-center justify-center bg-slate-950/40 px-4 py-6 backdrop-blur-sm">
       <div
-        className={`w-full ${sizeMap[size]} overflow-hidden rounded-[1.5rem] border border-[var(--border-soft)] bg-white shadow-2xl`}
+        className={`w-full ${sizeMap[size]} overflow-hidden rounded-sm border border-[var(--border-soft)] bg-white shadow-2xl`}
         role="dialog"
         aria-modal="true"
         aria-labelledby="app-dialog-title"

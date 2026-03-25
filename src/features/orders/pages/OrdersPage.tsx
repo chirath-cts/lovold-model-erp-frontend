@@ -3,9 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { EmptyPanel } from "@/features/inventory/shared/InventoryScaffold";
 import { OrderStatusBadge } from "@/features/orders/components/OrderStatusBadge";
+import { OrderCreatePage } from "@/features/orders/pages/OrderCreatePage";
 import { isDelayedOrder } from "@/features/orders/model/orderHelpers";
 import { useCustomers, useOrders } from "@/services/hooks/useDomainQueries";
 import { formatDate, formatNok } from "@/shared/lib/format";
+import { AppDialog } from "@/shared/ui/AppDialog";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { LoadingState } from "@/shared/ui/LoadingState";
 
@@ -179,11 +181,10 @@ function EtaStatusBadge({ tone }: { tone: EtaStatusTone }) {
 
 export function OrdersPage() {
   const navigate = useNavigate();
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("");
   const [delayedOnly, setDelayedOnly] = useState(false);
-  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [selectedCustomerId, setSelectedCustomerId] = useState("");
 
   const customersQuery = useCustomers();
   const ordersQuery = useOrders();
@@ -281,14 +282,14 @@ export function OrdersPage() {
               Real-time procurement tracking
             </p>
           </div>
-          <Link
-            to="/orders/new"
-            style={{ color: "white" }}
+          <button
+            type="button"
+            onClick={() => setCreateDialogOpen(true)}
             className="mt-4 bg-gradient-to-r from-[#004260] to-[#005b82] text-white py-2 px-4 rounded-sm text-sm font-semibold flex items-center justify-center gap-2 hover:from-[#003050] hover:to-[#004565] active:scale-[0.98] transition-all"
           >
             <PlusIcon className="h-4 w-4" />
             Create New Order
-          </Link>
+          </button>
         </div>
 
         <div className="p-4 bg-white rounded-sm flex flex-col justify-between shadow-[0_4px_24px_-4px_rgba(25,28,30,0.06)]">
@@ -694,6 +695,16 @@ export function OrdersPage() {
           </svg>
         </div>
       </section>
+
+      <AppDialog
+        open={createDialogOpen}
+        onClose={() => setCreateDialogOpen(false)}
+        title="Create order"
+        description="Open the order workspace without leaving the register."
+        size="full"
+      >
+        <OrderCreatePage />
+      </AppDialog>
     </div>
   );
 }
