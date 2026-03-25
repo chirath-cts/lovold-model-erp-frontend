@@ -3,7 +3,8 @@
 
 :root {
   font-family: "Manrope", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --surface-bg: #f4faff;
+  /* Match dashboard reference background (#f7f9fc) */
+  --surface-bg: #f7f9fc;
   --surface-card: #ffffff;
   --surface-muted: #e8f6fe;
   --surface-soft: #eef4f8;

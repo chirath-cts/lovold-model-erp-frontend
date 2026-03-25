@@ -40,8 +40,6 @@ const cn = (...classes: Array<string | false | null | undefined>) =>
 
 type IconComponent = (props: SVGProps<SVGSVGElement>) => ReactNode;
 
-const timeRanges = ["Today", "Week", "Month"] as const;
-
 export function DashboardPage() {
   const ordersQuery = useOrders();
   const orderItemsQuery = useOrderItems();
@@ -175,61 +173,25 @@ export function DashboardPage() {
       : "Promise window healthy";
 
   return (
-    <div className="app-page space-y-5">
-      <section className="flex flex-col gap-4 xl:flex-row xl:items-end xl:justify-between">
-        <div className="space-y-3">
-          <div className="inline-flex items-center gap-2 rounded-lg border border-sky-200 bg-sky-50 px-3 py-1.5 text-[11px] font-extrabold uppercase tracking-[0.18em] text-sky-900">
-            <DashboardIcon className="h-4 w-4" />
-            Executive dashboard
-          </div>
-          <div className="space-y-2">
-            <h1 className="text-3xl font-extrabold tracking-tight text-slate-950 md:text-[2.2rem]">
-              Lovold executive operations dashboard
-            </h1>
-            <p className="max-w-4xl text-sm leading-6 text-slate-600">
-              Commercial, supply, and delivery visibility across the Lovold aquaculture
-              pipeline. Use this view to monitor delayed customer commitments, inbound
-              dependencies, reservation-aware inventory pressure, and the strongest revenue
-              drivers across products and components.
-            </p>
-          </div>
-        </div>
-
-        <div className="inline-flex rounded-lg border border-slate-200 bg-white p-1 shadow-sm">
-          {timeRanges.map((label, index) => (
-            <button
-              key={label}
-              type="button"
-              className={cn(
-                "rounded-md px-4 py-2 text-sm font-semibold transition",
-                index === 2
-                  ? "bg-[var(--brand-900)] text-white shadow-sm"
-                  : "text-slate-600 hover:bg-slate-100",
-              )}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-      </section>
-
-      <section className="grid gap-3 [grid-template-columns:repeat(auto-fit,minmax(11rem,1fr))]">
+    <div className="app-page mx-auto space-y-8">
+      <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8">
         <KpiTile
           label="Total sales"
           value={formatNok(viewModel.kpis.totalSales)}
-          supporting="Booked across the full mock ledger"
+          supporting="MTD"
           icon={DashboardIcon}
+          tone="brand"
         />
         <KpiTile
           label="Total orders"
           value={String(viewModel.kpis.totalOrders)}
-          supporting="Across every lifecycle state"
+          supporting="All lifecycle states"
           icon={OrdersIcon}
         />
         <KpiTile
           label="Estimated profit"
           value={formatNok(viewModel.kpis.estimatedProfit)}
-          supporting="Current stored commercial margin"
+          supporting="Current margin"
           tone="brand"
           icon={DashboardIcon}
         />
@@ -243,37 +205,42 @@ export function DashboardPage() {
         <KpiTile
           label="In production"
           value={String(viewModel.kpis.ordersInProduction)}
-          supporting="Live manufacturing workload"
+          supporting="Live manufacturing"
           icon={ComponentIcon}
         />
         <KpiTile
           label="Awaiting materials"
           value={String(viewModel.kpis.ordersAwaitingMaterials)}
-          supporting="Waiting on inbound supply"
+          supporting="Inbound supply"
           tone={viewModel.kpis.ordersAwaitingMaterials > 0 ? "warning" : "default"}
           icon={InboundIcon}
         />
         <KpiTile
           label="Active customers"
           value={String(viewModel.kpis.activeCustomers)}
-          supporting="Accounts currently in play"
+          supporting="Accounts in play"
           icon={CustomersIcon}
         />
         <KpiTile
           label="Inbound due soon"
           value={String(viewModel.kpis.inboundDueSoon)}
-          supporting="Open supplier POs within 14 days"
+          supporting="Next 14 days"
           icon={InboundIcon}
         />
       </section>
 
-      <section className="grid gap-5 xl:grid-cols-[1.25fr,0.75fr]">
+      <section className="grid gap-6 lg:grid-cols-2">
         <DashboardPanel
           icon={OrdersIcon}
           title="Delayed & risk orders"
           description="Customer commitments already behind schedule or close to their promise window."
+          variant="muted"
+          iconTone="text-rose-600"
           action={
-            <Link className="app-button-ghost !rounded-md !px-0 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[var(--brand-800)] hover:bg-transparent hover:text-[var(--brand-900)]" to="/orders">
+            <Link
+              className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--brand-800)] hover:text-[var(--brand-900)]"
+              to="/orders"
+            >
               View logistics map
             </Link>
           }
@@ -298,9 +265,14 @@ export function DashboardPage() {
           icon={InventoryIcon}
           title="Critical stock levels"
           description="Low availability and reservation-heavy items that can impact Lovold delivery commitments."
+          variant="muted"
+          iconTone="text-amber-600"
           action={
-            <Link className="app-button-ghost !rounded-md !px-0 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[var(--brand-800)] hover:bg-transparent hover:text-[var(--brand-900)]" to="/inventory/products">
-              Open stock registry
+            <Link
+              className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--brand-800)] hover:text-[var(--brand-900)]"
+              to="/inventory/products"
+            >
+              Procurement request
             </Link>
           }
         >
@@ -311,13 +283,16 @@ export function DashboardPage() {
         </DashboardPanel>
       </section>
 
-      <section className="grid gap-5 xl:grid-cols-[1.4fr,0.6fr]">
+      <section className="grid gap-6 lg:grid-cols-2">
         <DashboardPanel
           icon={OrdersIcon}
           title="Recent sales orders"
           description="Newest commercial activity across products and components."
           action={
-            <Link className="app-button-ghost !rounded-md !px-0 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[var(--brand-800)] hover:bg-transparent hover:text-[var(--brand-900)]" to="/orders">
+            <Link
+              className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600 underline-offset-4 hover:text-slate-900 hover:underline"
+              to="/orders"
+            >
               Order register
             </Link>
           }
@@ -334,7 +309,7 @@ export function DashboardPage() {
         </DashboardPanel>
       </section>
 
-      <section className="grid gap-5 xl:grid-cols-[0.82fr,0.88fr,1.3fr]">
+      <section className="grid gap-6 lg:grid-cols-3">
         <DashboardPanel
           icon={DashboardIcon}
           title="Orders by status"
@@ -353,14 +328,14 @@ export function DashboardPage() {
 
         <DashboardPanel
           icon={ComponentIcon}
-          title="Top sellable items"
-          description="Revenue leaders across both products and components."
+          title="High-volume inventory"
+          description="Key items moving fastest across systems and components."
         >
           <TopSellablePanel rows={viewModel.topSellableItems} />
         </DashboardPanel>
       </section>
 
-      <section className="grid gap-5 xl:grid-cols-[1.4fr,0.6fr]">
+      <section className="grid gap-6 lg:grid-cols-[1.5fr,0.85fr]">
         <SupplyChainPulsePanel
           materialSignal={materialSignal}
           materialSignalTone={materialSignalTone}
@@ -373,11 +348,10 @@ export function DashboardPage() {
 
         <OperationalEfficiencyCard
           onTimeRate={onTimeRate}
-          delayedOrders={viewModel.kpis.delayedOrders}
-          activeOrders={activeOrderCount}
-          inboundDueSoon={viewModel.kpis.inboundDueSoon}
         />
       </section>
+
+      
     </div>
   );
 }
@@ -386,67 +360,49 @@ function KpiTile({
   label,
   value,
   supporting,
-  icon: Icon,
   tone = "default",
+  icon: _icon,
 }: {
   label: string;
   value: string;
   supporting: string;
-  icon: IconComponent;
   tone?: "default" | "brand" | "warning";
+  icon?: IconComponent;
 }) {
   return (
     <div
       className={cn(
-        "min-w-0 rounded-lg border px-4 py-4 shadow-sm",
-        tone === "brand"
-          ? "border-[var(--brand-800)] bg-[var(--brand-900)] text-white"
-          : tone === "warning"
-            ? "border-amber-300 bg-amber-50"
-            : "border-slate-200 bg-white",
+        "group flex min-w-0 flex-col justify-between rounded-sm px-4 py-4 transition",
+        tone === "warning"
+          ? "border border-transparent border-b-2 border-red-600 bg-red-50 hover:border-red-200 hover:bg-white"
+          : "border border-transparent bg-white hover:border-slate-200 hover:bg-white",
       )}
     >
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0 space-y-3">
-          <div
-            className={cn(
-              "text-[10px] font-extrabold uppercase tracking-[0.18em]",
-              tone === "brand" ? "text-white/70" : "text-slate-500",
-              tone === "warning" && "text-amber-700",
-            )}
-          >
-            {label}
-          </div>
-          <div
-            className={cn(
-              "break-words text-[clamp(1.55rem,1.7vw,1.85rem)] font-extrabold leading-none tracking-tight",
-              tone === "warning" && "text-amber-900",
-            )}
-          >
-            {value}
-          </div>
-        </div>
-        <div
-          className={cn(
-            "flex h-10 w-10 shrink-0 items-center justify-center rounded-md border",
-            tone === "brand"
-              ? "border-white/15 bg-white/10 text-white"
-              : tone === "warning"
-                ? "border-amber-200 bg-amber-100 text-amber-800"
-                : "border-slate-200 bg-slate-50 text-[var(--brand-800)]",
-          )}
-        >
-          <Icon className="h-5 w-5" />
-        </div>
+      <div
+        className={cn(
+          "text-[10px] font-bold uppercase tracking-[0.18em]",
+          tone === "warning" ? "text-red-700" : "text-slate-500",
+        )}
+      >
+        {label}
       </div>
       <div
         className={cn(
-          "mt-3 text-xs leading-5",
-          tone === "brand" ? "text-white/75" : "text-slate-500",
-          tone === "warning" && "text-amber-800",
+          "mt-2 flex items-baseline gap-1 text-xl font-extrabold leading-none",
+          tone === "brand" ? "text-[var(--brand-900)]" : tone === "warning" ? "text-red-700" : "text-slate-900",
         )}
       >
-        {supporting}
+        <span>{value}</span>
+        {supporting ? (
+          <span
+            className={cn(
+              "text-[10px] font-mono font-semibold",
+              tone === "warning" ? "text-red-700" : "text-green-600",
+            )}
+          >
+            {supporting}
+          </span>
+        ) : null}
       </div>
     </div>
   );
@@ -458,26 +414,51 @@ function DashboardPanel({
   action,
   icon: Icon,
   children,
+  variant = "default",
+  iconTone = "text-[var(--brand-700)]",
 }: {
   title: string;
   description: string;
   action?: ReactNode;
   icon: IconComponent;
   children: ReactNode;
+  variant?: "default" | "muted";
+  iconTone?: string;
 }) {
   return (
-    <section className="overflow-hidden rounded-lg border border-slate-200/80 bg-white shadow-[0_10px_30px_rgba(15,23,42,0.05)]">
-      <div className="flex flex-wrap items-start justify-between gap-4 border-b border-slate-200/70 bg-slate-50 px-5 py-4">
+    <section
+      className={cn(
+        "overflow-hidden rounded-sm shadow-sm",
+        variant === "muted"
+          ? "border border-[var(--border-soft)] bg-[var(--surface-soft)]"
+          : "border border-slate-200 bg-white",
+      )}
+    >
+      <div
+        className={cn(
+          "flex flex-wrap items-center justify-between gap-3 px-5 py-4",
+          variant === "muted" ? "border-b border-[var(--border-soft)]" : "border-b border-slate-200",
+        )}
+      >
         <div className="space-y-1">
-          <div className="flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-500">
-            <Icon className="h-4 w-4 text-[var(--brand-700)]" />
+          <div
+            className={cn(
+              "flex items-center gap-2",
+              variant === "muted"
+                ? "text-sm font-bold uppercase tracking-[0.18em] text-slate-800"
+                : "text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-700",
+            )}
+          >
+            <Icon className={cn("h-4 w-4", iconTone)} />
             {title}
           </div>
-          <p className="text-sm leading-6 text-slate-600">{description}</p>
+          {description ? (
+            <p className="text-xs leading-5 text-slate-500">{description}</p>
+          ) : null}
         </div>
         {action}
       </div>
-      <div className="p-5">{children}</div>
+      <div className={cn("p-5", variant === "muted" && "p-6")}>{children}</div>
     </section>
   );
 }
@@ -495,14 +476,13 @@ function RiskGroup({
 }) {
   return (
     <div className="space-y-3">
-      <div
-        className={cn(
-          "inline-flex rounded-md px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.18em]",
-          tone === "danger"
-            ? "bg-rose-100 text-rose-800"
-            : "bg-amber-100 text-amber-800",
-        )}
-      >
+      <div className="flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-600">
+        <span
+          className={cn(
+            "h-2.5 w-2.5 rounded-full",
+            tone === "danger" ? "bg-rose-600" : "bg-amber-500",
+          )}
+        />
         {title}
       </div>
       {rows.length === 0 ? (
@@ -514,35 +494,27 @@ function RiskGroup({
           {rows.map((order) => (
             <Link
               key={`${title}-${order.id}`}
-              className="flex items-start justify-between gap-4 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 transition hover:border-[var(--brand-700)] hover:bg-white"
+              className="flex items-start justify-between gap-4 rounded-sm border border-[var(--border-soft)] bg-white px-4 py-4 transition hover:border-slate-300"
               to={`/orders/${order.id}`}
             >
               <div className="space-y-1">
                 <div className="text-sm font-bold text-slate-900">{order.orderNumber}</div>
-                <div className="text-[11px] font-bold uppercase tracking-[0.14em] text-slate-500">
-                  {order.customerName}
-                </div>
-                <div className="text-xs text-slate-500">
-                  Materials {displayDate(order.materialAvailabilityEta)}
+                <div className="text-[10px] font-mono text-slate-500">
+                  {order.customerName} • {displayDate(order.materialAvailabilityEta)}
                 </div>
               </div>
               <div className="space-y-2 text-right">
-                <StatusBadge value={order.status} />
-                <div className="text-[11px] font-bold uppercase tracking-[0.16em] text-slate-500">
+                <div
+                  className={cn(
+                    "text-[11px] font-bold uppercase tracking-[0.14em]",
+                    tone === "danger" ? "text-rose-700" : "text-amber-700",
+                  )}
+                >
                   Promise {displayDate(order.promisedEta)}
                 </div>
-                {order.daysFromPromise !== null ? (
-                  <div
-                    className={cn(
-                      "text-xs font-semibold",
-                      order.daysFromPromise < 0 ? "text-rose-700" : "text-amber-700",
-                    )}
-                  >
-                    {order.daysFromPromise < 0
-                      ? `${Math.abs(order.daysFromPromise)} day${Math.abs(order.daysFromPromise) === 1 ? "" : "s"} late`
-                      : `${order.daysFromPromise} day${order.daysFromPromise === 1 ? "" : "s"} remaining`}
-                  </div>
-                ) : null}
+                <div className="text-sm font-bold text-slate-900">
+                  ETA: {displayDate(order.deliveryEta ?? order.promisedEta)}
+                </div>
               </div>
             </Link>
           ))}
@@ -575,7 +547,7 @@ function StockPressurePanel({
           rows.map((item) => (
             <Link
               key={`${item.type}:${item.id}`}
-              className="flex items-center justify-between gap-4 border-b border-slate-200/80 py-3 last:border-b-0"
+              className="flex items-center justify-between gap-4 border-b border-slate-200 py-3 transition hover:bg-slate-50 last:border-b-0"
               to={
                 item.type === "component"
                   ? `/inventory/components/${item.id}`
@@ -589,7 +561,7 @@ function StockPressurePanel({
                   </span>
                   <span
                     className={cn(
-                      "rounded-full px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.14em]",
+                      "rounded-full px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.12em]",
                       item.attentionTone === "critical"
                         ? "bg-rose-100 text-rose-800"
                         : "bg-amber-100 text-amber-800",
@@ -604,7 +576,7 @@ function StockPressurePanel({
 
               <div className="grid min-w-[120px] grid-cols-2 gap-6 text-right">
                 <div>
-                  <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">
+                  <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">
                     Available
                   </div>
                   <div
@@ -617,7 +589,7 @@ function StockPressurePanel({
                   </div>
                 </div>
                 <div>
-                  <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">
+                  <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">
                     Reserved
                   </div>
                   <div className="mt-1 text-sm font-extrabold text-slate-900">
@@ -661,7 +633,7 @@ function RecentOrdersTable({
   rows: Array<DashboardOrderRow & { configurationSummary: string }>;
 }) {
   return (
-    <div className="overflow-hidden rounded-lg border border-slate-200">
+    <div className="overflow-hidden rounded-sm border border-slate-200 bg-white shadow-sm">
       <div className="overflow-x-auto">
         <table className="min-w-full border-collapse">
           <thead className="bg-slate-100">
@@ -669,7 +641,7 @@ function RecentOrdersTable({
               {["Order ID", "Customer", "Configuration", "Value", "Status"].map((label) => (
                 <th
                   key={label}
-                  className="px-5 py-3 text-left text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-500"
+                  className="px-5 py-3 text-left text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-600"
                 >
                   {label}
                 </th>
@@ -727,7 +699,7 @@ function InboundTimeline({ rows }: { rows: DashboardInboundRow[] }) {
           <Link
             key={purchaseOrder.id}
             className={cn(
-              "flex items-start gap-4 rounded-lg px-1 py-1 transition hover:bg-slate-50",
+              "flex items-start gap-4 rounded-sm px-1.5 py-1.5 transition hover:bg-slate-50",
               index >= 3 && "opacity-80",
             )}
             to={`/inbound/${purchaseOrder.id}`}
@@ -756,7 +728,7 @@ function InboundTimeline({ rows }: { rows: DashboardInboundRow[] }) {
         ))}
       </div>
       <Link
-        className="inline-flex w-full items-center justify-center rounded-md border border-slate-300 px-4 py-3 text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-700 transition hover:bg-slate-50"
+        className="inline-flex w-full items-center justify-center rounded-sm border border-slate-300 bg-white px-4 py-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-700 shadow-sm transition hover:bg-slate-50"
         to="/inbound"
       >
         Warehouse receiving dock
@@ -843,28 +815,26 @@ function TopSellablePanel({ rows }: { rows: DashboardRankRow[] }) {
         return (
           <div
             key={row.id}
-            className="rounded-lg border border-slate-200 bg-slate-50 p-4 transition hover:border-[var(--brand-700)] hover:bg-white"
+            className="flex items-center justify-between gap-4 rounded-sm border border-slate-200 bg-white p-3 shadow-sm"
           >
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex items-start gap-3">
-                <div className="flex h-9 w-9 items-center justify-center rounded-md bg-[var(--brand-100)] text-sm font-extrabold text-[var(--brand-900)]">
-                  {index + 1}
-                </div>
-                <div className="space-y-1">
-                  <div className="text-sm font-semibold text-slate-900">{row.name}</div>
-                  <div className="inline-flex rounded-full bg-white px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.14em] text-slate-600">
-                    {supporting}
-                  </div>
-                  <div className="text-xs text-slate-500">{row.supporting}</div>
-                </div>
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-slate-100 text-sm font-extrabold text-[var(--brand-800)]">
+                {index + 1}
               </div>
-              <div className="text-right">
-                <div className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-500">
-                  Revenue
+              <div className="space-y-1">
+                <div className="text-sm font-semibold text-slate-900">{row.name}</div>
+                <div className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-slate-500">
+                  {supporting}
                 </div>
-                <div className="mt-1 text-sm font-semibold text-slate-900">
-                  {formatNok(row.value)}
-                </div>
+                <div className="text-xs text-slate-500">{row.supporting}</div>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-slate-500">
+                Revenue
+              </div>
+              <div className="mt-1 text-sm font-extrabold text-slate-900">
+                {formatNok(row.value)}
               </div>
             </div>
           </div>
@@ -892,7 +862,7 @@ function SupplyChainPulsePanel({
   awaitingMaterials: number;
 }) {
   return (
-    <section className="relative overflow-hidden rounded-lg border border-slate-900 bg-slate-950 p-6 text-white shadow-[0_18px_48px_rgba(2,12,27,0.32)]">
+    <section className="relative overflow-hidden rounded-sm border border-slate-900 bg-slate-950 p-6 text-white shadow-[0_18px_48px_rgba(2,12,27,0.32)]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(14,165,233,0.28),_transparent_42%)]" />
       <div className="absolute inset-0 bg-[linear-gradient(120deg,_rgba(148,163,184,0.08)_0%,_transparent_35%,_transparent_100%)]" />
       <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(148,163,184,0.22)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.22)_1px,transparent_1px)] [background-size:28px_28px]" />
@@ -936,25 +906,20 @@ function SupplyChainPulsePanel({
           />
         </div>
       </div>
+      <div className="absolute bottom-0 left-0 h-1 w-full bg-[var(--brand-700)]" />
     </section>
   );
 }
 
 function OperationalEfficiencyCard({
   onTimeRate,
-  delayedOrders,
-  activeOrders,
-  inboundDueSoon,
 }: {
   onTimeRate: number;
-  delayedOrders: number;
-  activeOrders: number;
-  inboundDueSoon: number;
 }) {
   const gradientStop = `${Math.min(Math.max(onTimeRate, 0), 100)}%`;
 
   return (
-    <section className="rounded-lg border border-slate-200 bg-slate-50 p-6 shadow-[0_10px_30px_rgba(15,23,42,0.05)]">
+    <section className="rounded-sm border border-slate-200 bg-white p-6 shadow-sm">
       <div className="space-y-5">
         <div>
           <div className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-500">
@@ -987,15 +952,9 @@ function OperationalEfficiencyCard({
           </div>
         </div>
 
-        <div className="space-y-3">
-          <EfficiencyMetric label="Open orders" value={String(activeOrders)} />
-          <EfficiencyMetric
-            label="Delayed orders"
-            value={String(delayedOrders)}
-            tone={delayedOrders > 0 ? "warning" : "default"}
-          />
-          <EfficiencyMetric label="Inbound due soon" value={String(inboundDueSoon)} />
-        </div>
+        <p className="text-[11px] text-center font-medium leading-5 text-slate-500">
+          Calculated based on order fulfillment cycle time and inventory turnover ratio.
+        </p>
       </div>
     </section>
   );
@@ -1026,32 +985,6 @@ function SignalCard({
       </div>
       <div className="mt-3 text-lg font-extrabold tracking-tight text-white">{value}</div>
       <div className="mt-2 text-xs leading-5 text-slate-300">{supporting}</div>
-    </div>
-  );
-}
-
-function EfficiencyMetric({
-  label,
-  value,
-  tone = "default",
-}: {
-  label: string;
-  value: string;
-  tone?: "default" | "warning";
-}) {
-  return (
-    <div className="flex items-center justify-between rounded-md border border-slate-200 bg-white px-4 py-3">
-      <span className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
-        {label}
-      </span>
-      <span
-        className={cn(
-          "text-sm font-extrabold",
-          tone === "warning" ? "text-amber-800" : "text-slate-900",
-        )}
-      >
-        {value}
-      </span>
     </div>
   );
 }
