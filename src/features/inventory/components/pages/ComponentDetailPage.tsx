@@ -66,13 +66,14 @@ export function ComponentDetailPage() {
         eyebrow="Inventory / Components"
         title={component.name}
         description="Composite component detail view with ready-made stock, production-cost visibility, and a full underlying product breakdown."
+        variant="ops"
         actions={
           <>
-            <Link className="app-button-secondary" to="/inventory/components">
+            <Link className="app-button-secondary-sharp" to="/inventory/components">
               Back to components
             </Link>
             <Link
-              className="app-button-primary"
+              className="app-button-primary-sharp"
               to={`/inventory/components/${component.id}/edit`}
             >
               Edit component
@@ -82,13 +83,14 @@ export function ComponentDetailPage() {
       />
 
       <div className="grid gap-4 xl:grid-cols-4">
-        <SummaryCard label="Stock on hand" value={String(component.stockQuantity)} />
-        <SummaryCard label="Reserved" value={String(component.reservedQuantity)} />
+        <SummaryCard label="Stock on hand" value={String(component.stockQuantity)} variant="ops" />
+        <SummaryCard label="Reserved" value={String(component.reservedQuantity)} variant="ops" />
         <SummaryCard
           label="Available"
           value={String(availableQuantity)}
           tone="brand"
           supporting="Ready-made stock still free for new orders."
+          variant="ops"
         />
         <SummaryCard
           label="Standard production"
@@ -97,12 +99,14 @@ export function ComponentDetailPage() {
             currency: "NOK",
             maximumFractionDigits: 0,
           }).format(component.standardProductionCost)}
+          variant="ops"
         />
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.5fr)_minmax(340px,0.9fr)]">
-        <DataPanel title="Overview" description="Master data for the finished component assembly.">
+        <DataPanel title="Overview" description="Master data for the finished component assembly." variant="ops">
           <FieldGrid
+            variant="ops"
             fields={[
               { label: "SKU", value: <span className="font-mono">{component.sku}</span> },
               { label: "Category", value: categoryName },
@@ -126,18 +130,19 @@ export function ComponentDetailPage() {
               },
             ]}
           />
-          <div className="rounded-3xl border border-[var(--border-soft)] bg-[var(--surface-muted)] p-5">
-            <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">
+          <div className="app-ops-field-card rounded-sm p-5">
+            <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">
               Description
             </div>
-            <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">
+            <p className="mt-3 text-sm leading-6 text-slate-500">
               {component.description}
             </p>
           </div>
         </DataPanel>
 
-        <DataPanel title="Inventory state" description="Ready-made stock and reservation pressure for the finished component.">
+        <DataPanel title="Inventory state" description="Ready-made stock and reservation pressure for the finished component." variant="ops">
           <FieldGrid
+            variant="ops"
             fields={[
               { label: "Ready-made stock", value: `${component.stockQuantity} ${component.unit}` },
               { label: "Reserved quantity", value: `${component.reservedQuantity} ${component.unit}` },
@@ -148,9 +153,9 @@ export function ComponentDetailPage() {
         </DataPanel>
       </div>
 
-      <DataPanel title="Composition breakdown" description="Underlying base products consumed when this component is built or backfilled from materials.">
-        <div className="app-table-shell">
-          <table className="app-table">
+      <DataPanel title="Composition breakdown" description="Underlying base products consumed when this component is built or backfilled from materials." variant="ops">
+        <div className="app-ops-table-shell overflow-x-auto">
+          <table className="app-ops-table">
             <thead>
               <tr>
                 <th>Product</th>
@@ -167,7 +172,7 @@ export function ComponentDetailPage() {
                 return (
                   <tr key={row.id}>
                     <td>{product?.name ?? "Unknown product"}</td>
-                    <td className="font-mono text-xs uppercase tracking-[0.12em] text-[var(--text-secondary)]">
+                    <td className="font-mono text-xs uppercase tracking-[0.12em] text-slate-500">
                       {product?.sku ?? row.productId}
                     </td>
                     <td>{row.quantity}</td>

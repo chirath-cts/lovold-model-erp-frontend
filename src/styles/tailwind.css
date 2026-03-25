@@ -111,4 +111,94 @@ body {
   .app-table tbody tr {
     @apply border-t border-[var(--border-soft)] hover:bg-[var(--surface-soft)];
   }
+
+  .app-ops-card {
+    @apply rounded-sm border border-slate-200 bg-white shadow-[0_4px_24px_-4px_rgba(25,28,30,0.06)];
+  }
+
+  .app-ops-card-muted {
+    @apply rounded-sm bg-slate-100;
+  }
+
+  .app-ops-eyebrow {
+    @apply text-[10px] font-black uppercase tracking-[0.22em] text-slate-500;
+  }
+
+  .app-ops-title {
+    @apply text-3xl font-black tracking-tight text-slate-800;
+  }
+
+  .app-ops-copy {
+    @apply max-w-3xl text-sm leading-6 text-slate-500;
+  }
+
+  .app-ops-kpi-card {
+    @apply flex h-full flex-col justify-between gap-3 rounded-sm border border-slate-200 bg-white p-4 shadow-[0_4px_24px_-4px_rgba(25,28,30,0.06)];
+  }
+
+  .app-ops-kpi-card-muted {
+    @apply rounded-sm bg-slate-100 p-4;
+  }
+
+  .app-ops-kpi-label {
+    @apply text-[10px] font-bold uppercase tracking-[0.2em] text-slate-500;
+  }
+
+  .app-ops-toolbar {
+    @apply rounded-sm bg-slate-100 p-3;
+  }
+
+  .app-ops-control {
+    @apply flex items-center gap-2 rounded-sm bg-white px-3 py-2 shadow-sm ring-1 ring-slate-200/80 transition-all focus-within:ring-slate-800/20;
+  }
+
+  .app-button-primary-sharp {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm bg-gradient-to-r from-[#004260] to-[#005b82] px-4 py-2.5 text-sm font-semibold !text-white no-underline transition-all hover:from-[#003050] hover:to-[#004565] hover:!text-white focus:!text-white visited:!text-white active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .app-button-secondary-sharp {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 transition-colors hover:bg-slate-50;
+  }
+
+  .app-button-ghost-sharp {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm px-3 py-2 text-sm font-semibold text-slate-600 transition-colors hover:bg-slate-100 hover:text-slate-800;
+  }
+
+  .app-input-sharp,
+  .app-select-sharp,
+  .app-textarea-sharp {
+    @apply w-full rounded-sm border-none bg-white px-3 py-2.5 text-sm font-medium text-slate-800 shadow-sm ring-1 ring-slate-200 outline-none transition placeholder:text-slate-400 focus:ring-2 focus:ring-slate-800/20;
+  }
+
+  .app-textarea-sharp {
+    @apply min-h-[112px] resize-y;
+  }
+
+  .app-ops-table-shell {
+    @apply overflow-hidden rounded-sm border border-slate-200 bg-white shadow-[0_4px_24px_-4px_rgba(25,28,30,0.06)];
+  }
+
+  .app-ops-table {
+    @apply min-w-full border-collapse;
+  }
+
+  .app-ops-table thead {
+    @apply bg-slate-100;
+  }
+
+  .app-ops-table th {
+    @apply px-4 py-3 text-left text-[10px] font-black uppercase tracking-[0.2em] text-slate-700;
+  }
+
+  .app-ops-table td {
+    @apply px-4 py-4 align-middle text-sm text-slate-800;
+  }
+
+  .app-ops-table tbody tr {
+    @apply border-t border-slate-200 transition-colors hover:bg-slate-50;
+  }
+
+  .app-ops-field-card {
+    @apply rounded-sm border border-slate-200 bg-slate-50 px-4 py-3;
+  }
 }

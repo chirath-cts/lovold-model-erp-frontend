@@ -73,6 +73,7 @@ export function CategoriesPage() {
         eyebrow="Inventory / Categories"
         title="Classification Categories"
         description="Lightweight Lovold classifications used across both products and components."
+        variant="ops"
       />
 
       <div className="grid gap-4 xl:grid-cols-3">
@@ -80,25 +81,28 @@ export function CategoriesPage() {
           label="Total categories"
           value={String(categoriesQuery.data?.length ?? 0)}
           supporting="Shared across products and components."
+          variant="ops"
         />
         <SummaryCard
           label="Catalog assignments"
           value={String(products.length + components.length)}
           supporting="Products and components currently classified."
+          variant="ops"
         />
         <SummaryCard
           label="Unused categories"
           value={String((categoriesQuery.data ?? []).filter((category) => usageCount(category.id) === 0).length)}
           supporting="Ready for future Lovold catalog expansion."
+          variant="ops"
         />
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.4fr)_minmax(320px,0.8fr)]">
-        <DataPanel title="Categories" description="Search and review category usage across the inventory catalog.">
+        <DataPanel title="Categories" description="Search and review category usage across the inventory catalog." variant="ops">
           <label className="mb-4 block space-y-2">
             <span className="app-label">Search</span>
             <input
-              className="app-input"
+              className="app-input-sharp"
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder="Feeding, service, control..."
@@ -109,10 +113,11 @@ export function CategoriesPage() {
             <EmptyPanel
               title="No categories match this search"
               copy="Try another keyword or create a new classification."
+              variant="ops"
             />
           ) : (
-            <div className="app-table-shell">
-              <table className="app-table">
+            <div className="app-ops-table-shell overflow-x-auto">
+              <table className="app-ops-table">
                 <thead>
                   <tr>
                     <th>Category</th>
@@ -123,7 +128,7 @@ export function CategoriesPage() {
                 <tbody>
                   {categories.map((category) => (
                     <tr key={category.id}>
-                      <td className="font-medium text-[var(--text-primary)]">{category.name}</td>
+                      <td className="font-medium text-slate-800">{category.name}</td>
                       <td>{category.description}</td>
                       <td>{usageCount(category.id)}</td>
                     </tr>
@@ -134,19 +139,19 @@ export function CategoriesPage() {
           )}
         </DataPanel>
 
-        <DataPanel title="Create category" description="Current scope keeps categories lightweight: name plus description only.">
+        <DataPanel title="Create category" description="Current scope keeps categories lightweight: name plus description only." variant="ops">
           <div className="space-y-4">
             <label className="space-y-2">
               <span className="app-label">Name</span>
-              <input className="app-input" value={draftName} onChange={(event) => setDraftName(event.target.value)} />
+              <input className="app-input-sharp" value={draftName} onChange={(event) => setDraftName(event.target.value)} />
             </label>
             <label className="space-y-2">
               <span className="app-label">Description</span>
-              <textarea className="app-textarea" rows={5} value={draftDescription} onChange={(event) => setDraftDescription(event.target.value)} />
+              <textarea className="app-textarea-sharp" rows={5} value={draftDescription} onChange={(event) => setDraftDescription(event.target.value)} />
             </label>
             <button
               type="button"
-              className="app-button-primary w-full disabled:cursor-not-allowed disabled:opacity-50"
+              className="app-button-primary-sharp w-full disabled:cursor-not-allowed disabled:opacity-50"
               disabled={!draftName.trim() || !draftDescription.trim() || createMutation.isPending}
               onClick={() => createMutation.mutate()}
             >
