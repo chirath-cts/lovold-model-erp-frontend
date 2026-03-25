@@ -89,6 +89,7 @@ export function CustomerPricingPage() {
         eyebrow="Inventory / Customer Pricing"
         title="Customer Pricing Agreements"
         description="Lovold pricing agreements apply only to base products. Component pricing stays derived from their underlying products plus standard production cost."
+        variant="ops"
       />
 
       <div className="grid gap-4 xl:grid-cols-4">
@@ -96,47 +97,55 @@ export function CustomerPricingPage() {
           label="Total agreements"
           value={String(agreements.length)}
           supporting="Current product-level pricing agreements."
+          variant="ops"
         />
         <SummaryCard
           label="Active agreements"
           value={String(agreements.filter((agreement) => agreement.status === "active").length)}
           supporting="Currently valid for order pricing."
+          variant="ops"
         />
         <SummaryCard
           label="Future agreements"
           value={String(agreements.filter((agreement) => agreement.status === "future").length)}
           supporting="Signed, but not yet active."
+          variant="ops"
         />
         <SummaryCard
           label="Component pricing rule"
           value="Derived"
           tone="brand"
           supporting="Components inherit pricing visibility from base products."
+          variant="ops"
         />
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.5fr)_minmax(340px,0.85fr)]">
-        <DataPanel title="Agreements" description="Filter product pricing agreements by customer or validity status.">
+        <DataPanel title="Agreements" description="Filter product pricing agreements by customer or validity status." variant="ops">
           <div className="mb-4 grid gap-4 md:grid-cols-2">
             <label className="space-y-2">
               <span className="app-label">Customer</span>
-              <select className="app-select" value={customerId} onChange={(event) => setCustomerId(event.target.value)}>
-                <option value="">All customers</option>
-                {customers.map((customer) => (
-                  <option key={customer.id} value={customer.id}>
-                    {customer.name}
-                  </option>
-                ))}
-              </select>
+              <div className="app-ops-control">
+                <select className="app-select-sharp bg-transparent px-0 py-0 shadow-none ring-0 focus:ring-0" value={customerId} onChange={(event) => setCustomerId(event.target.value)}>
+                  <option value="">All customers</option>
+                  {customers.map((customer) => (
+                    <option key={customer.id} value={customer.id}>
+                      {customer.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </label>
             <label className="space-y-2">
               <span className="app-label">Status</span>
-              <select className="app-select" value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
-                <option value="">All statuses</option>
-                <option value="active">Active</option>
-                <option value="future">Future</option>
-                <option value="expired">Expired</option>
-              </select>
+              <div className="app-ops-control">
+                <select className="app-select-sharp bg-transparent px-0 py-0 shadow-none ring-0 focus:ring-0" value={statusFilter} onChange={(event) => setStatusFilter(event.target.value)}>
+                  <option value="">All statuses</option>
+                  <option value="active">Active</option>
+                  <option value="future">Future</option>
+                  <option value="expired">Expired</option>
+                </select>
+              </div>
             </label>
           </div>
 
@@ -144,10 +153,11 @@ export function CustomerPricingPage() {
             <EmptyPanel
               title="No agreements match these filters"
               copy="Create a product-specific agreement to support negotiated Lovold customer pricing."
+              variant="ops"
             />
           ) : (
-            <div className="app-table-shell">
-              <table className="app-table">
+            <div className="app-ops-table-shell overflow-x-auto">
+              <table className="app-ops-table">
                 <thead>
                   <tr>
                     <th>Customer</th>
@@ -164,17 +174,17 @@ export function CustomerPricingPage() {
                       <td>{customerLookup.get(agreement.customerId)?.name ?? agreement.customerId}</td>
                       <td>
                         <div className="space-y-1">
-                          <div className="font-medium text-[var(--text-primary)]">
+                          <div className="font-medium text-slate-800">
                             {productLookup.get(agreement.productId)?.name ?? agreement.productId}
                           </div>
-                          <div className="text-xs text-[var(--text-secondary)]">
+                          <div className="text-xs text-slate-500">
                             {productLookup.get(agreement.productId)?.sku}
                           </div>
                         </div>
                       </td>
                       <td>{agreement.discountPercent}%</td>
                       <td>
-                        <div className="text-sm text-[var(--text-secondary)]">
+                        <div className="text-sm text-slate-500">
                           {agreement.startDate ? agreement.startDate.slice(0, 10) : "Open"} -{" "}
                           {agreement.endDate ? agreement.endDate.slice(0, 10) : "Open"}
                         </div>
@@ -183,7 +193,7 @@ export function CustomerPricingPage() {
                         <StatusBadge value={agreement.status} />
                       </td>
                       <td className="text-right">
-                        <button type="button" className="app-button-ghost" disabled>
+                        <button type="button" className="app-button-ghost-sharp" disabled>
                           Edit
                         </button>
                       </td>
@@ -195,11 +205,11 @@ export function CustomerPricingPage() {
           )}
         </DataPanel>
 
-        <DataPanel title="Create agreement" description="Customer pricing remains product-only in the finalized Lovold spec.">
+        <DataPanel title="Create agreement" description="Customer pricing remains product-only in the finalized Lovold spec." variant="ops">
           <div className="space-y-4">
             <label className="space-y-2">
               <span className="app-label">Customer</span>
-              <select className="app-select" value={draft.customerId} onChange={(event) => setDraft((current) => ({ ...current, customerId: event.target.value }))}>
+              <select className="app-select-sharp" value={draft.customerId} onChange={(event) => setDraft((current) => ({ ...current, customerId: event.target.value }))}>
                 <option value="">Select customer</option>
                 {customers.map((customer) => (
                   <option key={customer.id} value={customer.id}>
@@ -210,7 +220,7 @@ export function CustomerPricingPage() {
             </label>
             <label className="space-y-2">
               <span className="app-label">Base product</span>
-              <select className="app-select" value={draft.productId} onChange={(event) => setDraft((current) => ({ ...current, productId: event.target.value }))}>
+              <select className="app-select-sharp" value={draft.productId} onChange={(event) => setDraft((current) => ({ ...current, productId: event.target.value }))}>
                 <option value="">Select product</option>
                 {products.map((product) => (
                   <option key={product.id} value={product.id}>
@@ -221,19 +231,19 @@ export function CustomerPricingPage() {
             </label>
             <label className="space-y-2">
               <span className="app-label">Discount percent</span>
-              <input className="app-input" type="number" min="0" value={draft.discountPercent} onChange={(event) => setDraft((current) => ({ ...current, discountPercent: event.target.value }))} />
+              <input className="app-input-sharp" type="number" min="0" value={draft.discountPercent} onChange={(event) => setDraft((current) => ({ ...current, discountPercent: event.target.value }))} />
             </label>
             <div className="grid gap-4 md:grid-cols-2">
               <label className="space-y-2">
                 <span className="app-label">Start date</span>
-                <input className="app-input" type="date" value={draft.startDate} onChange={(event) => setDraft((current) => ({ ...current, startDate: event.target.value }))} />
+                <input className="app-input-sharp" type="date" value={draft.startDate} onChange={(event) => setDraft((current) => ({ ...current, startDate: event.target.value }))} />
               </label>
               <label className="space-y-2">
                 <span className="app-label">End date</span>
-                <input className="app-input" type="date" value={draft.endDate} onChange={(event) => setDraft((current) => ({ ...current, endDate: event.target.value }))} />
+                <input className="app-input-sharp" type="date" value={draft.endDate} onChange={(event) => setDraft((current) => ({ ...current, endDate: event.target.value }))} />
               </label>
             </div>
-            <label className="flex items-center gap-3 text-sm text-[var(--text-secondary)]">
+            <label className="flex items-center gap-3 text-sm text-slate-500">
               <input
                 checked={draft.isActive}
                 onChange={(event) => setDraft((current) => ({ ...current, isActive: event.target.checked }))}
@@ -243,7 +253,7 @@ export function CustomerPricingPage() {
             </label>
             <button
               type="button"
-              className="app-button-primary w-full disabled:cursor-not-allowed disabled:opacity-50"
+              className="app-button-primary-sharp w-full disabled:cursor-not-allowed disabled:opacity-50"
               disabled={
                 !draft.customerId ||
                 !draft.productId ||

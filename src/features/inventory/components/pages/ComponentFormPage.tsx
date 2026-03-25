@@ -234,17 +234,18 @@ export function ComponentFormPage() {
         eyebrow="Inventory / Components"
         title={isEdit ? "Edit component" : "Create component"}
         description="Define a finished Lovold component, including ready-made stock, standard production cost, and the underlying product composition."
+        variant="ops"
         actions={
           <>
             <Link
-              className="app-button-secondary"
+              className="app-button-secondary-sharp"
               to={isEdit ? `/inventory/components/${componentId}` : "/inventory/components"}
             >
               Cancel
             </Link>
             <button
               type="button"
-              className="app-button-primary disabled:cursor-not-allowed disabled:opacity-50"
+              className="app-button-primary-sharp disabled:cursor-not-allowed disabled:opacity-50"
               disabled={!canSave || saveMutation.isPending}
               onClick={() => saveMutation.mutate()}
             >
@@ -258,12 +259,13 @@ export function ComponentFormPage() {
         <DataPanel
           title="Identity and composition"
           description="Components are sellable assemblies. Capture master data here, then define the base-product rows that make up one finished unit."
+          variant="ops"
         >
           <div className="grid gap-4 md:grid-cols-2">
             <label className="space-y-2 md:col-span-2">
               <span className="app-label">Component name</span>
               <input
-                className="app-input"
+                className="app-input-sharp"
                 value={form.name}
                 onChange={(event) => updateField("name", event.target.value)}
               />
@@ -271,7 +273,7 @@ export function ComponentFormPage() {
             <label className="space-y-2">
               <span className="app-label">SKU</span>
               <input
-                className="app-input"
+                className="app-input-sharp"
                 value={form.sku}
                 onChange={(event) => updateField("sku", event.target.value)}
               />
@@ -279,7 +281,7 @@ export function ComponentFormPage() {
             <label className="space-y-2">
               <span className="app-label">Category</span>
               <select
-                className="app-select"
+                className="app-select-sharp"
                 value={form.categoryId}
                 onChange={(event) => updateField("categoryId", event.target.value)}
               >
@@ -294,7 +296,7 @@ export function ComponentFormPage() {
             <label className="space-y-2">
               <span className="app-label">Unit</span>
               <input
-                className="app-input"
+                className="app-input-sharp"
                 value={form.unit}
                 onChange={(event) => updateField("unit", event.target.value)}
               />
@@ -302,7 +304,7 @@ export function ComponentFormPage() {
             <label className="space-y-2">
               <span className="app-label">Image URL</span>
               <input
-                className="app-input"
+                className="app-input-sharp"
                 value={form.imageUrl}
                 onChange={(event) => updateField("imageUrl", event.target.value)}
               />
@@ -310,7 +312,7 @@ export function ComponentFormPage() {
             <label className="space-y-2 md:col-span-2">
               <span className="app-label">Description</span>
               <textarea
-                className="app-textarea"
+                className="app-textarea-sharp"
                 rows={4}
                 value={form.description}
                 onChange={(event) => updateField("description", event.target.value)}
@@ -321,14 +323,14 @@ export function ComponentFormPage() {
           <div className="mt-8 space-y-4">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <div className="text-sm font-semibold text-[var(--text-primary)]">
+                <div className="text-sm font-semibold text-slate-800">
                   Composition rows
                 </div>
-                <div className="text-sm text-[var(--text-secondary)]">
+                <div className="text-sm text-slate-500">
                   Products and quantities required for one component unit.
                 </div>
               </div>
-              <button type="button" className="app-button-secondary" onClick={addRow}>
+              <button type="button" className="app-button-secondary-sharp" onClick={addRow}>
                 Add product row
               </button>
             </div>
@@ -336,12 +338,12 @@ export function ComponentFormPage() {
             {form.composition.map((row, index) => (
               <div
                 key={row.id}
-                className="grid gap-4 rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] p-4 md:grid-cols-[minmax(0,1fr)_140px_auto]"
+                className="grid gap-4 rounded-sm border border-slate-200 bg-slate-50 p-4 md:grid-cols-[minmax(0,1fr)_140px_auto]"
               >
                 <label className="space-y-2">
                   <span className="app-label">Product {index + 1}</span>
                   <select
-                    className="app-select"
+                    className="app-select-sharp"
                     value={row.productId}
                     onChange={(event) => updateRow(row.id, { productId: event.target.value })}
                   >
@@ -356,7 +358,7 @@ export function ComponentFormPage() {
                 <label className="space-y-2">
                   <span className="app-label">Qty / Unit</span>
                   <input
-                    className="app-input"
+                    className="app-input-sharp"
                     type="number"
                     min="1"
                     value={row.quantity}
@@ -364,7 +366,7 @@ export function ComponentFormPage() {
                   />
                 </label>
                 <div className="flex items-end">
-                  <button type="button" className="app-button-ghost" onClick={() => removeRow(row.id)}>
+                  <button type="button" className="app-button-ghost-sharp" onClick={() => removeRow(row.id)}>
                     Remove
                   </button>
                 </div>
@@ -376,12 +378,13 @@ export function ComponentFormPage() {
         <DataPanel
           title="Inventory and cost preview"
           description="Standard production cost is stored on the component master, then layered on top of the base-product composition."
+          variant="ops"
         >
           <div className="space-y-4">
             <label className="space-y-2">
               <span className="app-label">Ready-made stock</span>
               <input
-                className="app-input"
+                className="app-input-sharp"
                 type="number"
                 min="0"
                 value={form.stockQuantity}
@@ -391,7 +394,7 @@ export function ComponentFormPage() {
             <label className="space-y-2">
               <span className="app-label">Reserved stock</span>
               <input
-                className="app-input"
+                className="app-input-sharp"
                 type="number"
                 min="0"
                 value={form.reservedQuantity}
@@ -401,7 +404,7 @@ export function ComponentFormPage() {
             <label className="space-y-2">
               <span className="app-label">Standard production cost (NOK)</span>
               <input
-                className="app-input"
+                className="app-input-sharp"
                 type="number"
                 min="0"
                 value={form.standardProductionCost}
@@ -413,7 +416,7 @@ export function ComponentFormPage() {
             <label className="space-y-2">
               <span className="app-label">Status</span>
               <select
-                className="app-select"
+                className="app-select-sharp"
                 value={form.status}
                 onChange={(event) =>
                   updateField("status", event.target.value as "active" | "inactive")
@@ -465,9 +468,9 @@ function PreviewCard({
   value: React.ReactNode;
 }) {
   return (
-    <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] p-4">
-      <div className="app-label">{label}</div>
-      <div className="mt-2 text-lg font-semibold text-[var(--text-primary)]">{value}</div>
+    <div className="rounded-sm border border-slate-200 bg-slate-50 p-4">
+      <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">{label}</div>
+      <div className="mt-2 text-lg font-semibold text-slate-800">{value}</div>
     </div>
   );
 }
