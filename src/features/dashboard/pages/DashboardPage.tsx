@@ -1,656 +1,1012 @@
-import { useMemo } from "react";
+import type { ReactNode, SVGProps } from "react";
+import { Link } from "react-router-dom";
 
 import {
+  buildDashboardViewModel,
+  type DashboardComponentRiskRow,
+  type DashboardInboundRow,
+  type DashboardInventoryRow,
+  type DashboardOrderRow,
+  type DashboardRankRow,
+  type DashboardStatusRow,
+} from "@/features/dashboard/models/dashboardSelectors";
+import {
+  useComponentProducts,
+  useComponents,
   useCustomers,
   useOrderItems,
   useOrders,
   useProducts,
+  useSupplierPurchaseOrderItems,
+  useSupplierPurchaseOrders,
+  useSuppliers,
 } from "@/services/hooks/useDomainQueries";
-import { formatDate } from "@/shared/lib/format";
-import { CurrencyText } from "@/shared/ui/CurrencyText";
+import { formatDate, formatNok } from "@/shared/lib/format";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { LoadingState } from "@/shared/ui/LoadingState";
 import { StatusBadge } from "@/shared/ui/StatusBadge";
 import {
-  getDashboardMetrics,
-  getTopCustomers,
-  getTopProducts,
-} from "@/features/dashboard/models/dashboardSelectors";
+  ComponentIcon,
+  CustomersIcon,
+  DashboardIcon,
+  InboundIcon,
+  InventoryIcon,
+  OrdersIcon,
+} from "@/shared/ui/icons";
 
-const palette = {
-  background: "#f4faff",
-  surface: "#ffffff",
-  surfaceLow: "#e8f6fe",
-  surfaceHighest: "#d7e5ed",
-  primary: "#003a4d",
-  primaryContainer: "#00526c",
-  primaryFixed: "#bfe8ff",
-  secondaryFixed: "#bfe8ff",
-  tertiaryFixed: "#c7e7f9",
-  secondary: "#1f6581",
-  tertiary: "#183947",
-  outline: "#c0c8cd",
-  muted: "#70787d",
-  error: "#ba1a1a",
-};
+const displayDate = (value: string | null) => (value ? formatDate(value) : "TBD");
+const cn = (...classes: Array<string | false | null | undefined>) =>
+  classes.filter(Boolean).join(" ");
 
-const getInitials = (text: string) =>
-  text
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0])
-    .join("")
-    .toUpperCase();
-
-const statusColor = (status: string) => {
-  const normalized = status.toLowerCase();
-  if (normalized === "delivered") return palette.primary;
-  if (normalized === "dispatched") return palette.secondary;
-  if (normalized === "confirmed") return "#9eddfd";
-  return "rgba(64, 72, 76, 0.45)";
-};
-
-const avatarSwatches = [
-  { bg: palette.primaryFixed, color: palette.primary },
-  { bg: palette.secondaryFixed, color: palette.secondary },
-  { bg: palette.tertiaryFixed, color: palette.tertiary },
-];
-
-const getAvatarStyle = (index: number) =>
-  avatarSwatches[index % avatarSwatches.length];
-
-function BagIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.8}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="M6 7h12l-1 12H7L6 7Z" />
-      <path d="M9 7a3 3 0 0 1 6 0" />
-    </svg>
-  );
-}
-
-function GroupIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.8}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <circle cx="9" cy="7" r="3" />
-      <circle cx="17" cy="7" r="3" />
-      <path d="M2 21a6 6 0 0 1 12 0" />
-      <path d="M12 21a6 6 0 0 1 12 0" />
-    </svg>
-  );
-}
-
-function TrendingIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.8}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="M3 12h14" />
-      <path d="m13 6 6 6-6 6" />
-    </svg>
-  );
-}
-
-function VerifiedIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.8}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="M9 12.75 11.25 15 15 9.75" />
-      <path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-    </svg>
-  );
-}
-
-function WarningIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth={1.8}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-    >
-      <path d="M12 9v4" />
-      <path d="M12 17h.01" />
-      <path d="m10.29 3.86-8.18 14A1.64 1.64 0 0 0 3.47 21h17.06a1.64 1.64 0 0 0 1.36-3.14l-8.18-14a1.64 1.64 0 0 0-2.82 0Z" />
-    </svg>
-  );
-}
-
-function buildTrendPaths(values: number[], width = 720, height = 220) {
-  if (!values.length) {
-    return { linePath: "", areaPath: "", markers: [] as { x: number; y: number }[] };
-  }
-  const padding = 16;
-  const max = Math.max(...values, 1);
-  const innerHeight = height - padding * 2;
-  const count = Math.max(values.length, 2);
-  const step = (width - padding * 2) / (count - 1);
-
-  const coords = values.map((value, index) => {
-    const x = padding + index * step;
-    const y = height - padding - (value / max) * innerHeight * 0.9;
-    return { x, y };
-  });
-
-  if (coords.length === 1) {
-    coords.push({ x: padding + step, y: coords[0].y });
-  }
-
-  const linePath = coords
-    .map((point, index) => `${index === 0 ? "M" : "L"}${point.x},${point.y}`)
-    .join(" ");
-
-  const areaPath = [
-    `M${padding},${height - padding}`,
-    linePath.replace(/^M/, "L"),
-    `L${padding + (coords.length - 1) * step},${height - padding}`,
-    "Z",
-  ].join(" ");
-
-  return { linePath, areaPath, markers: coords };
-}
+type IconComponent = (props: SVGProps<SVGSVGElement>) => ReactNode;
 
 export function DashboardPage() {
   const ordersQuery = useOrders();
-  const productsQuery = useProducts();
-  const customersQuery = useCustomers();
   const orderItemsQuery = useOrderItems();
-
-  const orders = ordersQuery.data ?? [];
-  const products = productsQuery.data ?? [];
-  const customers = customersQuery.data ?? [];
-  const orderItems = orderItemsQuery.data ?? [];
+  const productsQuery = useProducts();
+  const componentsQuery = useComponents();
+  const componentProductsQuery = useComponentProducts();
+  const customersQuery = useCustomers();
+  const supplierPurchaseOrdersQuery = useSupplierPurchaseOrders();
+  const supplierPurchaseOrderItemsQuery = useSupplierPurchaseOrderItems();
+  const suppliersQuery = useSuppliers();
 
   const isLoading =
     ordersQuery.isLoading ||
+    orderItemsQuery.isLoading ||
     productsQuery.isLoading ||
+    componentsQuery.isLoading ||
+    componentProductsQuery.isLoading ||
     customersQuery.isLoading ||
-    orderItemsQuery.isLoading;
-
-  const hasError =
-    Boolean(ordersQuery.error) ||
-    Boolean(productsQuery.error) ||
-    Boolean(customersQuery.error) ||
-    Boolean(orderItemsQuery.error);
-
-  const metrics = getDashboardMetrics(orders, products, customers);
-
-  const salesTrend = orders
-    .slice()
-    .sort(
-      (a, b) =>
-        new Date(a.orderDate).getTime() - new Date(b.orderDate).getTime(),
-    )
-    .map((order) => ({
-      name: formatDate(order.orderDate),
-      sales: order.grandTotal,
-    }))
-    .slice(-7);
-  const salesValues = salesTrend.length
-    ? salesTrend.map((point) => point.sales)
-    : [0];
-  const trendPaths = buildTrendPaths(salesValues);
-
-  const statusMap = new Map<string, number>();
-  orders.forEach((order) =>
-    statusMap.set(order.status, (statusMap.get(order.status) ?? 0) + 1),
-  );
-  const orderStatusData = [...statusMap.entries()].map(([status, count]) => ({
-    status,
-    count,
-  }));
-
-  const totalOrderCount = orders.length || 1;
-  const orderStatusDistribution = orderStatusData.map(({ status, count }) => ({
-    status,
-    count,
-    percent: Math.round((count / totalOrderCount) * 100),
-    color: statusColor(status),
-  }));
-
-  const fulfilledStatuses = new Set(["delivered", "dispatched"]);
-  const fulfillmentRate = orders.length
-    ? Math.round(
-        (orders.filter((order) => fulfilledStatuses.has(order.status)).length /
-          orders.length) *
-          1000,
-      ) / 10
-    : 0;
-
-  const topCustomers = getTopCustomers(orders, customers);
-  const topProducts = getTopProducts(orderItems, products);
-  const customerLookup = useMemo(
-    () => new Map(customers.map((customer) => [customer.id, customer.name])),
-    [customers],
-  );
-  const customerOrderCounts = useMemo(() => {
-    const counts = new Map<string, number>();
-    orders.forEach((order) =>
-      counts.set(order.customerId, (counts.get(order.customerId) ?? 0) + 1),
-    );
-    return counts;
-  }, [orders]);
-
-  const lowStockProducts = products
-    .filter((product) => product.stockQuantity <= product.reorderLevel)
-    .sort((a, b) => a.stockQuantity - b.stockQuantity)
-    .slice(0, 4);
-
-  const recentOrders = orders
-    .slice()
-    .sort(
-      (a, b) =>
-        new Date(b.orderDate).getTime() - new Date(a.orderDate).getTime(),
-    )
-    .slice(0, 6);
+    supplierPurchaseOrdersQuery.isLoading ||
+    supplierPurchaseOrderItemsQuery.isLoading ||
+    suppliersQuery.isLoading;
 
   if (isLoading) {
-    return <LoadingState label="Loading dashboard..." />;
+    return <LoadingState label="Loading the Lovold operations dashboard..." />;
   }
 
-  if (hasError) {
-    return <ErrorState message="Failed to load dashboard data." />;
+  const isError =
+    ordersQuery.isError ||
+    orderItemsQuery.isError ||
+    productsQuery.isError ||
+    componentsQuery.isError ||
+    componentProductsQuery.isError ||
+    customersQuery.isError ||
+    supplierPurchaseOrdersQuery.isError ||
+    supplierPurchaseOrderItemsQuery.isError ||
+    suppliersQuery.isError;
+
+  if (isError) {
+    return (
+      <ErrorState
+        title="Could not assemble the operations dashboard."
+        message="One or more domain datasets failed to load. Refresh the page to try again."
+      />
+    );
   }
+
+  const orders = ordersQuery.data ?? [];
+  const orderItems = orderItemsQuery.data ?? [];
+  const viewModel = buildDashboardViewModel({
+    orders,
+    orderItems,
+    products: productsQuery.data ?? [],
+    components: componentsQuery.data ?? [],
+    componentProducts: componentProductsQuery.data ?? [],
+    customers: customersQuery.data ?? [],
+    supplierPurchaseOrders: supplierPurchaseOrdersQuery.data ?? [],
+    supplierPurchaseOrderItems: supplierPurchaseOrderItemsQuery.data ?? [],
+    suppliers: suppliersQuery.data ?? [],
+  });
+
+  const orderItemsByOrder = orderItems.reduce<
+    Map<
+      string,
+      Array<{
+        itemName: string;
+        itemType: string;
+      }>
+    >
+  >((map, item) => {
+    const current = map.get(item.orderId) ?? [];
+    current.push({ itemName: item.itemName, itemType: item.itemType });
+    map.set(item.orderId, current);
+    return map;
+  }, new Map());
+
+  const recentOrders = viewModel.recentOrders.map((order) => ({
+    ...order,
+    configurationSummary: buildConfigurationSummary(orderItemsByOrder.get(order.id) ?? []),
+  }));
+
+  const stockPressureRows = [
+    ...viewModel.lowAvailableStock.slice(0, 3).map((item) => ({
+      ...item,
+      attentionLabel: "Low availability",
+      attentionTone: "critical" as const,
+    })),
+    ...viewModel.highReservedStock
+      .filter(
+        (candidate) =>
+          !viewModel.lowAvailableStock.some(
+            (existing) => existing.id === candidate.id && existing.type === candidate.type,
+          ),
+      )
+      .slice(0, 2)
+      .map((item) => ({
+        ...item,
+        attentionLabel: "Reserved pressure",
+        attentionTone: "watch" as const,
+      })),
+  ];
+
+  const totalOrders = viewModel.orderStatusDistribution.reduce(
+    (sum, entry) => sum + entry.count,
+    0,
+  );
+  const activeOrders = orders.filter(
+    (order) => order.status !== "delivered" && order.status !== "cancelled",
+  );
+  const activeOrderCount = activeOrders.length;
+  const onTimeRate =
+    activeOrderCount > 0
+      ? Math.max(
+          0,
+          Math.round(
+            ((activeOrderCount - viewModel.kpis.delayedOrders) / activeOrderCount) * 100,
+          ),
+        )
+      : 100;
+
+  const materialSignal =
+    viewModel.kpis.ordersAwaitingMaterials > 0 ? "Watching inbound" : "Materials stable";
+  const materialSignalTone =
+    viewModel.kpis.ordersAwaitingMaterials > 0 ? "warning" : "positive";
+  const productionSignal =
+    viewModel.kpis.ordersInProduction > 0
+      ? `${viewModel.kpis.ordersInProduction} order${viewModel.kpis.ordersInProduction === 1 ? "" : "s"} live`
+      : "No live manufacturing";
+  const deliverySignal =
+    viewModel.kpis.delayedOrders > 0
+      ? `${viewModel.kpis.delayedOrders} promise${viewModel.kpis.delayedOrders === 1 ? "" : "s"} behind`
+      : "Promise window healthy";
 
   return (
-    <div className="min-h-screen bg-[#f4faff] p-4 text-[#111d23] sm:p-6 lg:p-8">
-      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-[#003a4d]">
-            Enterprise Overview
-          </h1>
-          <p className="text-sm text-[#40484c]">
-            Real-time performance metrics for aquaculture logistics.
-          </p>
-        </div>
+    <div className="app-page mx-auto space-y-8">
+      <section className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-8">
+        <KpiTile
+          label="Total sales"
+          value={formatNok(viewModel.kpis.totalSales)}
+          supporting="MTD"
+          icon={DashboardIcon}
+          tone="brand"
+        />
+        <KpiTile
+          label="Total orders"
+          value={String(viewModel.kpis.totalOrders)}
+          supporting="All lifecycle states"
+          icon={OrdersIcon}
+        />
+        <KpiTile
+          label="Estimated profit"
+          value={formatNok(viewModel.kpis.estimatedProfit)}
+          supporting="Current margin"
+          tone="brand"
+          icon={DashboardIcon}
+        />
+        <KpiTile
+          label="Delayed orders"
+          value={String(viewModel.kpis.delayedOrders)}
+          supporting="Past promised ETA"
+          tone="warning"
+          icon={OrdersIcon}
+        />
+        <KpiTile
+          label="In production"
+          value={String(viewModel.kpis.ordersInProduction)}
+          supporting="Live manufacturing"
+          icon={ComponentIcon}
+        />
+        <KpiTile
+          label="Awaiting materials"
+          value={String(viewModel.kpis.ordersAwaitingMaterials)}
+          supporting="Inbound supply"
+          tone={viewModel.kpis.ordersAwaitingMaterials > 0 ? "warning" : "default"}
+          icon={InboundIcon}
+        />
+        <KpiTile
+          label="Active customers"
+          value={String(viewModel.kpis.activeCustomers)}
+          supporting="Accounts in play"
+          icon={CustomersIcon}
+        />
+        <KpiTile
+          label="Inbound due soon"
+          value={String(viewModel.kpis.inboundDueSoon)}
+          supporting="Next 14 days"
+          icon={InboundIcon}
+        />
+      </section>
 
-        <div className="flex items-center gap-3 rounded-lg bg-[#e8f6fe] p-1">
-          <button className="rounded-md bg-white px-4 py-2 text-sm font-semibold text-[#003a4d] shadow-sm">
-            Today
-          </button>
-          <button className="px-4 py-2 text-sm font-semibold text-[#40484c] transition-colors hover:text-[#003a4d]">
-            Week
-          </button>
-          <button className="px-4 py-2 text-sm font-semibold text-[#40484c] transition-colors hover:text-[#003a4d]">
-            Month
-          </button>
-          <span className="mx-1 h-4 w-px bg-[#c0c8cd]/50" />
-          <button className="flex h-10 w-10 items-center justify-center text-[#40484c]">
-            <svg
-              className="h-5 w-5"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.6}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden
+      <section className="grid gap-6 lg:grid-cols-2">
+        <DashboardPanel
+          icon={OrdersIcon}
+          title="Delayed & risk orders"
+          description="Customer commitments already behind schedule or close to their promise window."
+          variant="muted"
+          iconTone="text-rose-600"
+          action={
+            <Link
+              className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--brand-800)] hover:text-[var(--brand-900)]"
+              to="/orders"
             >
-              <rect x="3" y="4" width="18" height="18" rx="2" />
-              <line x1="8" x2="8" y1="2" y2="6" />
-              <line x1="16" x2="16" y1="2" y2="6" />
-              <line x1="3" x2="21" y1="10" y2="10" />
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-5 mt-4">
-        <div className="flex h-full flex-col justify-between rounded-xl bg-white p-6 shadow-[0_4px_20px_rgba(0,58,77,0.03)]">
-          <div className="flex items-start justify-between">
-            <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#70787d]">
-              Total Sales
-            </span>
-            <span className="rounded bg-[#bfe8ff] px-2 py-0.5 text-[10px] font-bold text-[#00526c]">
-              +12%
-            </span>
-          </div>
-          <div className="mt-4">
-            <p className="text-2xl font-extrabold text-[#111d23]">
-              <CurrencyText value={metrics.totalSales} />
-            </p>
-            <p className="mt-1 text-xs text-[#70787d]">vs. last period</p>
-          </div>
-        </div>
-        <div className="flex h-full flex-col justify-between rounded-xl bg-white p-6 shadow-[0_4px_20px_rgba(0,58,77,0.03)]">
-          <div className="flex items-start justify-between">
-            <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#70787d]">
-              Total Orders
-            </span>
-            <BagIcon className="h-5 w-5 text-[#1f6581]" />
-          </div>
-          <div className="mt-4">
-            <p className="text-2xl font-extrabold text-[#111d23]">
-              {metrics.totalOrders}
-            </p>
-            <p className="mt-1 text-xs text-[#70787d]">Confirmed orders</p>
-          </div>
-        </div>
-        <div className="flex h-full flex-col justify-between rounded-xl bg-white p-6 shadow-[0_4px_20px_rgba(0,58,77,0.03)]">
-          <div className="flex items-start justify-between">
-            <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#70787d]">
-              Est. Profit
-            </span>
-            <span className="rounded bg-[#9eddfd] px-2 py-0.5 text-[10px] font-bold text-[#003a4d]">
-              Safe
-            </span>
-          </div>
-          <div className="mt-4">
-            <p className="text-2xl font-extrabold text-[#111d23]">
-              <CurrencyText value={metrics.profitTotal} />
-            </p>
-            <p className="mt-1 text-xs text-[#70787d]">Margin: 25.7%</p>
-          </div>
-        </div>
-        <div className="flex h-full flex-col justify-between rounded-xl bg-white p-6 shadow-[0_4px_20px_rgba(0,58,77,0.03)]">
-          <div className="flex items-start justify-between">
-            <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#70787d]">
-              Low Stock
-            </span>
-            <span className="rounded bg-[#ffdad6] px-2 py-0.5 text-[10px] font-bold text-[#ba1a1a]">
-              Action
-            </span>
-          </div>
-          <div className="mt-4">
-            <p className="text-2xl font-extrabold text-[#ba1a1a]">
-              {metrics.lowStockCount}
-            </p>
-            <p className="mt-1 text-xs text-[#70787d]">SKUs near threshold</p>
-          </div>
-        </div>
-        <div className="flex h-full flex-col justify-between rounded-xl bg-white p-6 shadow-[0_4px_20px_rgba(0,58,77,0.03)]">
-          <div className="flex items-start justify-between">
-            <span className="text-xs font-bold uppercase tracking-[0.18em] text-[#70787d]">
-              Active Customers
-            </span>
-            <GroupIcon className="h-5 w-5 text-[#003a4d]" />
-          </div>
-          <div className="mt-4">
-            <p className="text-2xl font-extrabold text-[#111d23]">
-              {metrics.activeCustomers}
-            </p>
-            <p className="mt-1 text-xs text-[#70787d]">Active this month</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 mt-4">
-        <div className="rounded-xl bg-white p-6 lg:col-span-2">
-          <div className="mb-6 flex items-center justify-between">
-            <div>
-              <h4 className="text-lg font-bold text-[#003a4d]">Sales Trend</h4>
-              <p className="text-xs text-[#70787d]">
-                Revenue performance over time
-              </p>
-            </div>
-            <button className="flex items-center gap-1 text-sm font-semibold text-[#003a4d]">
-              View Report
-              <TrendingIcon className="h-4 w-4" />
-            </button>
-          </div>
-          <div className="relative h-64 w-full">
-            <svg className="h-full w-full" viewBox="0 0 720 220">
-              <defs>
-                <linearGradient id="trendGradient" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="0%" stopColor="#003a4d" stopOpacity="0.12" />
-                  <stop offset="100%" stopColor="#003a4d" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-              {trendPaths.areaPath ? (
-                <>
-                  <path d={trendPaths.areaPath} fill="url(#trendGradient)" />
-                  <path
-                    d={trendPaths.linePath}
-                    fill="none"
-                    stroke="#003a4d"
-                    strokeWidth="3"
-                  />
-                  {trendPaths.markers.map((point, index) => (
-                    <circle
-                      key={index}
-                      cx={point.x}
-                      cy={point.y}
-                      r={4}
-                      fill="#003a4d"
-                    />
-                  ))}
-                </>
-              ) : null}
-            </svg>
-            <div className="absolute inset-x-0 bottom-0 flex justify-between px-2 text-[10px] font-bold text-[#70787d]">
-              {salesTrend.length ? (
-                salesTrend.map((item) => <span key={item.name}>{item.name}</span>)
-              ) : (
-                <span>No data</span>
-              )}
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-xl bg-white p-6">
-          <h4 className="text-lg font-bold text-[#003a4d]">Order Distribution</h4>
-          <p className="mb-6 text-xs text-[#70787d]">Current status breakdown</p>
+              View logistics map
+            </Link>
+          }
+        >
           <div className="space-y-4">
-            {orderStatusDistribution.map((item) => (
-              <div key={item.status}>
-                <div className="mb-2 flex items-center justify-between text-xs">
-                  <span className="font-semibold text-[#111d23]">
-                    {item.status}
-                  </span>
-                  <span className="text-[#70787d]">{item.count}</span>
-                </div>
-                <div className="h-2 w-full overflow-hidden rounded-full bg-[#e8f6fe]">
-                  <div
-                    className="h-full rounded-full"
-                    style={{
-                      width: `${item.percent}%`,
-                      backgroundColor: item.color,
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
+            <RiskGroup
+              title="Delayed"
+              tone="danger"
+              rows={viewModel.delayedOrders}
+              emptyCopy="No delayed orders are currently active."
+            />
+            <RiskGroup
+              title="ETA risk"
+              tone="watch"
+              rows={viewModel.etaRiskOrders}
+              emptyCopy="No near-term ETA risk is visible."
+            />
           </div>
-          <div className="mt-8 border-t border-[#c0c8cd]/40 pt-4">
-            <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#9eddfd]/40 text-[#1f6581]">
-                <VerifiedIcon className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-xs font-bold text-[#70787d]">Fulfillment Rate</p>
-                <p className="text-lg font-bold text-[#003a4d]">
-                  {fulfillmentRate.toFixed(1)}%
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        </DashboardPanel>
+
+        <DashboardPanel
+          icon={InventoryIcon}
+          title="Critical stock levels"
+          description="Low availability and reservation-heavy items that can impact Lovold delivery commitments."
+          variant="muted"
+          iconTone="text-amber-600"
+          action={
+            <Link
+              className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--brand-800)] hover:text-[var(--brand-900)]"
+              to="/inventory/products"
+            >
+              Procurement request
+            </Link>
+          }
+        >
+          <StockPressurePanel
+            rows={stockPressureRows}
+            componentRisks={viewModel.componentShortageRisks}
+          />
+        </DashboardPanel>
+      </section>
+
+      <section className="grid gap-6 lg:grid-cols-2">
+        <DashboardPanel
+          icon={OrdersIcon}
+          title="Recent sales orders"
+          description="Newest commercial activity across products and components."
+          action={
+            <Link
+              className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-600 underline-offset-4 hover:text-slate-900 hover:underline"
+              to="/orders"
+            >
+              Order register
+            </Link>
+          }
+        >
+          <RecentOrdersTable rows={recentOrders} />
+        </DashboardPanel>
+
+        <DashboardPanel
+          icon={InboundIcon}
+          title="Upcoming inbound POs"
+          description="Supplier purchase orders currently driving short-term material availability."
+        >
+          <InboundTimeline rows={viewModel.upcomingInbound} />
+        </DashboardPanel>
+      </section>
+
+      <section className="grid gap-6 lg:grid-cols-3">
+        <DashboardPanel
+          icon={DashboardIcon}
+          title="Orders by status"
+          description="Current mix across the finalized Lovold order lifecycle."
+        >
+          <StatusDistributionPanel rows={viewModel.orderStatusDistribution} total={totalOrders} />
+        </DashboardPanel>
+
+        <DashboardPanel
+          icon={CustomersIcon}
+          title="Top customers"
+          description="Highest booked revenue across the current dataset."
+        >
+          <RankedStack rows={viewModel.topCustomers} valueLabel="Sales" />
+        </DashboardPanel>
+
+        <DashboardPanel
+          icon={ComponentIcon}
+          title="High-volume inventory"
+          description="Key items moving fastest across systems and components."
+        >
+          <TopSellablePanel rows={viewModel.topSellableItems} />
+        </DashboardPanel>
+      </section>
+
+      <section className="grid gap-6 lg:grid-cols-[1.5fr,0.85fr]">
+        <SupplyChainPulsePanel
+          materialSignal={materialSignal}
+          materialSignalTone={materialSignalTone}
+          productionSignal={productionSignal}
+          deliverySignal={deliverySignal}
+          delayedOrders={viewModel.kpis.delayedOrders}
+          inboundDueSoon={viewModel.kpis.inboundDueSoon}
+          awaitingMaterials={viewModel.kpis.ordersAwaitingMaterials}
+        />
+
+        <OperationalEfficiencyCard
+          onTimeRate={onTimeRate}
+        />
+      </section>
+
+      
+    </div>
+  );
+}
+
+function KpiTile(props: {
+  label: string;
+  value: string;
+  supporting: string;
+  tone?: "default" | "brand" | "warning";
+  icon?: IconComponent;
+}) {
+  const { label, value, supporting, tone = "default" } = props;
+  return (
+    <div
+      className={cn(
+        "group flex min-w-0 flex-col justify-between rounded-sm px-4 py-4 transition",
+        tone === "warning"
+          ? "border border-transparent border-b-2 border-red-600 bg-red-50 hover:border-red-200 hover:bg-white"
+          : "border border-transparent bg-white hover:border-slate-200 hover:bg-white",
+      )}
+    >
+      <div
+        className={cn(
+          "text-[10px] font-bold uppercase tracking-[0.18em]",
+          tone === "warning" ? "text-red-700" : "text-slate-500",
+        )}
+      >
+        {label}
       </div>
-
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-3 mt-4">
-        <div className="xl:col-span-2">
-          <div className="mb-4 flex items-center justify-between">
-            <h4 className="text-xl font-bold text-[#003a4d]">Recent Orders</h4>
-            <button className="text-sm font-semibold text-[#003a4d] underline underline-offset-4">
-              See All Orders
-            </button>
-          </div>
-          <div className="overflow-hidden rounded-xl bg-white shadow-[0_4px_20px_rgba(0,58,77,0.03)]">
-            <table className="w-full border-collapse text-left">
-              <thead className="bg-[#e8f6fe] text-[10px] font-bold uppercase tracking-[0.18em] text-[#70787d]">
-                <tr>
-                  <th className="px-6 py-4">ID</th>
-                  <th className="px-6 py-4">Customer</th>
-                  <th className="px-6 py-4">Date</th>
-                  <th className="px-6 py-4">Amount</th>
-                  <th className="px-6 py-4">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#c0c8cd]/20">
-                {recentOrders.map((order, index) => {
-                  const avatarStyle = getAvatarStyle(index);
-                  return (
-                    <tr
-                      key={order.id}
-                      className="cursor-pointer transition-colors hover:bg-[#d7e5ed]"
-                    >
-                      <td className="px-6 py-4 text-sm font-semibold text-[#003a4d]">
-                        {order.orderNumber}
-                      </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-3">
-                          <div
-                            className="flex h-8 w-8 items-center justify-center rounded-full text-[10px] font-bold"
-                            style={{
-                              backgroundColor: avatarStyle.bg,
-                              color: avatarStyle.color,
-                            }}
-                          >
-                            {getInitials(customerLookup.get(order.customerId) ?? "NA")}
-                          </div>
-                          <span className="text-sm font-medium">
-                            {customerLookup.get(order.customerId) ?? "Unknown customer"}
-                          </span>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-sm text-[#70787d]">
-                        {formatDate(order.orderDate)}
-                      </td>
-                      <td className="px-6 py-4 text-sm font-bold">
-                        <CurrencyText value={order.grandTotal} />
-                      </td>
-                      <td className="px-6 py-4">
-                        <StatusBadge value={order.status} />
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <div className="space-y-6">
-          <div className="rounded-xl bg-[#e8f6fe] p-6">
-            <h4 className="mb-4 flex items-center gap-2 text-lg font-bold text-[#003a4d]">
-              <WarningIcon className="h-5 w-5 text-[#ba1a1a]" />
-              Low Stock Products
-            </h4>
-            <div className="space-y-3">
-              {lowStockProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="flex items-center justify-between rounded-lg bg-white p-3"
-                >
-                  <div>
-                    <p className="text-sm font-bold text-[#111d23]">
-                      {product.name}
-                    </p>
-                    <p className="text-[10px] text-[#70787d]">SKU: {product.sku}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-bold text-[#ba1a1a]">
-                      {product.stockQuantity} Left
-                    </p>
-                    <button className="text-[10px] font-bold uppercase tracking-wide text-[#003a4d]">
-                      Restock
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-xl border border-[#c0c8cd]/20 bg-white p-6 shadow-sm">
-            <h4 className="mb-4 text-lg font-bold text-[#003a4d]">Top Customers</h4>
-            <div className="space-y-4">
-              {topCustomers.slice(0, 3).map((item) => (
-                <div key={item.customerId} className="flex items-center gap-4">
-                  <div className="h-10 w-10 overflow-hidden rounded-full bg-[#d7e5ed]">
-                    <img
-                      src={`https://lh3.googleusercontent.com/aida-public/AB6AXuAJr-81-ct22niioNCe6txV6VDlzBYT0B5-4L_1P6H88kI6ROpyY9tzPmbMMV_2Vwl2bfmOq5Dfejp1-7JAtDgy2eysTanY2SzXrgWlY6EK6gdbsAWB1fuz7BRnRH-xtoDVvXjNZho14nxqGMYSoTAV88hPLBwCczpfd0hQMJuOoUcFFdZozZB52qRmswkqktvAt3VgKEvuPb4hpSYQ-8TuNhrK7fAbH7CDo65X2p2OYY6W22vo0gWBOZADGl4ltFZIOjg4i9gFMQM`}
-                      alt={item.name}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-bold text-[#111d23]">{item.name}</p>
-                    <p className="text-[10px] text-[#70787d]">
-                      {(customerOrderCounts.get(item.customerId) ?? 0).toLocaleString()} orders this month
-                    </p>
-                  </div>
-                  <p className="text-sm font-bold text-[#003a4d]">
-                    <CurrencyText value={item.totalSales} />
-                  </p>
-                </div>
-              ))}
-            </div>
-            <button className="mt-6 w-full rounded-lg bg-[#e8f6fe] py-3 text-sm font-bold text-[#003a4d] transition-colors hover:bg-[#d7e5ed]">
-              Customer Insight Portal
-            </button>
-          </div>
-
-          <div className="rounded-xl bg-white p-6 shadow-sm">
-            <h4 className="mb-4 text-lg font-bold text-[#003a4d]">Top Products</h4>
-            <div className="space-y-3">
-              {topProducts.slice(0, 3).map((item) => (
-                <div
-                  key={item.productId}
-                  className="flex items-center gap-3 rounded-lg bg-[#e8f6fe] p-3"
-                >
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-[#1f6581]">
-                    {getInitials(item.name)}
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-bold text-[#111d23]">{item.name}</p>
-                    <p className="text-[10px] text-[#70787d]">Revenue leader</p>
-                  </div>
-                  <p className="text-sm font-bold text-[#003a4d]">
-                    <CurrencyText value={item.revenue} />
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+      <div
+        className={cn(
+          "mt-2 flex items-baseline gap-1 text-xl font-extrabold leading-none",
+          tone === "brand" ? "text-[var(--brand-900)]" : tone === "warning" ? "text-red-700" : "text-slate-900",
+        )}
+      >
+        <span>{value}</span>
+        {supporting ? (
+          <span
+            className={cn(
+              "text-[10px] font-mono font-semibold",
+              tone === "warning" ? "text-red-700" : "text-green-600",
+            )}
+          >
+            {supporting}
+          </span>
+        ) : null}
       </div>
     </div>
   );
 }
+
+function DashboardPanel({
+  title,
+  description,
+  action,
+  icon: Icon,
+  children,
+  variant = "default",
+  iconTone = "text-[var(--brand-700)]",
+}: {
+  title: string;
+  description: string;
+  action?: ReactNode;
+  icon: IconComponent;
+  children: ReactNode;
+  variant?: "default" | "muted";
+  iconTone?: string;
+}) {
+  return (
+    <section
+      className={cn(
+        "overflow-hidden rounded-sm shadow-sm",
+        variant === "muted"
+          ? "border border-[var(--border-soft)] bg-[var(--surface-soft)]"
+          : "border border-slate-200 bg-white",
+      )}
+    >
+      <div
+        className={cn(
+          "flex flex-wrap items-center justify-between gap-3 px-5 py-4",
+          variant === "muted" ? "border-b border-[var(--border-soft)]" : "border-b border-slate-200",
+        )}
+      >
+        <div className="space-y-1">
+          <div
+            className={cn(
+              "flex items-center gap-2",
+              variant === "muted"
+                ? "text-sm font-bold uppercase tracking-[0.18em] text-slate-800"
+                : "text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-700",
+            )}
+          >
+            <Icon className={cn("h-4 w-4", iconTone)} />
+            {title}
+          </div>
+          {description ? (
+            <p className="text-xs leading-5 text-slate-500">{description}</p>
+          ) : null}
+        </div>
+        {action}
+      </div>
+      <div className={cn("p-5", variant === "muted" && "p-6")}>{children}</div>
+    </section>
+  );
+}
+
+function RiskGroup({
+  title,
+  tone,
+  rows,
+  emptyCopy,
+}: {
+  title: string;
+  tone: "danger" | "watch";
+  rows: DashboardOrderRow[];
+  emptyCopy: string;
+}) {
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-600">
+        <span
+          className={cn(
+            "h-2.5 w-2.5 rounded-full",
+            tone === "danger" ? "bg-rose-600" : "bg-amber-500",
+          )}
+        />
+        {title}
+      </div>
+      {rows.length === 0 ? (
+        <p className="rounded-lg border border-dashed border-slate-200 bg-slate-50 px-4 py-5 text-sm text-slate-500">
+          {emptyCopy}
+        </p>
+      ) : (
+        <div className="space-y-3">
+          {rows.map((order) => (
+            <Link
+              key={`${title}-${order.id}`}
+              className="flex items-start justify-between gap-4 rounded-sm border border-[var(--border-soft)] bg-white px-4 py-4 transition hover:border-slate-300"
+              to={`/orders/${order.id}`}
+            >
+              <div className="space-y-1">
+                <div className="text-sm font-bold text-slate-900">{order.orderNumber}</div>
+                <div className="text-[10px] font-mono text-slate-500">
+                  {order.customerName} • {displayDate(order.materialAvailabilityEta)}
+                </div>
+              </div>
+              <div className="space-y-2 text-right">
+                <div
+                  className={cn(
+                    "text-[11px] font-bold uppercase tracking-[0.14em]",
+                    tone === "danger" ? "text-rose-700" : "text-amber-700",
+                  )}
+                >
+                  Promise {displayDate(order.promisedEta)}
+                </div>
+                <div className="text-sm font-bold text-slate-900">
+                  ETA: {displayDate(order.deliveryEta ?? order.promisedEta)}
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function StockPressurePanel({
+  rows,
+  componentRisks,
+}: {
+  rows: Array<
+    DashboardInventoryRow & {
+      attentionLabel: string;
+      attentionTone: "critical" | "watch";
+    }
+  >;
+  componentRisks: DashboardComponentRiskRow[];
+}) {
+  return (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        {rows.length === 0 ? (
+          <p className="rounded-lg border border-dashed border-slate-200 bg-slate-50 px-4 py-5 text-sm text-slate-500">
+            No product or component is currently under stock pressure.
+          </p>
+        ) : (
+          rows.map((item) => (
+            <Link
+              key={`${item.type}:${item.id}`}
+              className="flex items-center justify-between gap-4 border-b border-slate-200 py-3 transition hover:bg-slate-50 last:border-b-0"
+              to={
+                item.type === "component"
+                  ? `/inventory/components/${item.id}`
+                  : `/inventory/products/${item.id}`
+              }
+            >
+              <div className="min-w-0 space-y-1">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="rounded-full bg-slate-100 px-2 py-0.5 font-mono text-[10px] font-bold text-slate-600">
+                    {item.sku}
+                  </span>
+                  <span
+                    className={cn(
+                      "rounded-full px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-[0.12em]",
+                      item.attentionTone === "critical"
+                        ? "bg-rose-100 text-rose-800"
+                        : "bg-amber-100 text-amber-800",
+                    )}
+                  >
+                    {item.attentionLabel}
+                  </span>
+                </div>
+                <div className="truncate text-sm font-semibold text-slate-900">{item.name}</div>
+                <div className="text-xs text-slate-500">{item.supporting}</div>
+              </div>
+
+              <div className="grid min-w-[120px] grid-cols-2 gap-6 text-right">
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">
+                    Available
+                  </div>
+                  <div
+                    className={cn(
+                      "mt-1 text-sm font-extrabold",
+                      item.availableQuantity <= 0 ? "text-rose-700" : "text-slate-900",
+                    )}
+                  >
+                    {item.availableQuantity}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">
+                    Reserved
+                  </div>
+                  <div className="mt-1 text-sm font-extrabold text-slate-900">
+                    {item.reservedQuantity}
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))
+        )}
+      </div>
+
+      <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-4">
+        <div className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-amber-800">
+          Component shortage risk
+        </div>
+        {componentRisks.length === 0 ? (
+          <p className="mt-2 text-sm text-amber-900">
+            No ready-made component is currently blocked by missing base products.
+          </p>
+        ) : (
+          <div className="mt-3 flex flex-wrap gap-2">
+            {componentRisks.map((component) => (
+              <span
+                key={component.componentId}
+                className="rounded-full border border-amber-300 bg-white px-3 py-1 text-xs font-semibold text-amber-900"
+              >
+                {component.name}: {component.blockedProducts[0]?.productName ?? "Material short"}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function RecentOrdersTable({
+  rows,
+}: {
+  rows: Array<DashboardOrderRow & { configurationSummary: string }>;
+}) {
+  return (
+    <div className="overflow-hidden rounded-sm border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse">
+          <thead className="bg-slate-100">
+            <tr>
+              {["Order ID", "Customer", "Configuration", "Value", "Status"].map((label) => (
+                <th
+                  key={label}
+                  className="px-5 py-3 text-left text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-600"
+                >
+                  {label}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-200">
+            {rows.map((order) => (
+              <tr key={order.id} className="bg-white transition hover:bg-slate-50">
+                <td className="px-5 py-4">
+                  <Link
+                    className="text-xs font-extrabold tracking-[0.08em] text-slate-900"
+                    to={`/orders/${order.id}`}
+                  >
+                    {order.orderNumber}
+                  </Link>
+                  <div className="mt-1 text-[11px] text-slate-500">
+                    {formatDate(order.orderDate)}
+                  </div>
+                </td>
+                <td className="px-5 py-4 text-sm font-medium text-slate-700">
+                  {order.customerName}
+                </td>
+                <td className="px-5 py-4 text-sm text-slate-600">
+                  {order.configurationSummary}
+                </td>
+                <td className="px-5 py-4 text-sm font-semibold text-slate-900">
+                  {formatNok(order.grandTotal)}
+                </td>
+                <td className="px-5 py-4">
+                  <StatusBadge value={order.status} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function InboundTimeline({ rows }: { rows: DashboardInboundRow[] }) {
+  if (rows.length === 0) {
+    return (
+      <p className="rounded-lg border border-dashed border-slate-200 bg-slate-50 px-4 py-5 text-sm text-slate-500">
+        No inbound supplier activity is active right now.
+      </p>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="space-y-4">
+        {rows.map((purchaseOrder, index) => (
+          <Link
+            key={purchaseOrder.id}
+            className={cn(
+              "flex items-start gap-4 rounded-sm px-1.5 py-1.5 transition hover:bg-slate-50",
+              index >= 3 && "opacity-80",
+            )}
+            to={`/inbound/${purchaseOrder.id}`}
+          >
+            <span
+              className={cn(
+                "mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full",
+                purchaseOrder.status === "ordered"
+                  ? "bg-[var(--brand-700)]"
+                  : "bg-amber-500",
+              )}
+            />
+            <div className="min-w-0 flex-1">
+              <div className="flex items-start justify-between gap-3">
+                <p className="text-sm font-bold text-slate-900">{purchaseOrder.supplierName}</p>
+                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.14em] text-slate-500">
+                  {displayDate(purchaseOrder.eta)}
+                </span>
+              </div>
+              <p className="mt-1 text-xs text-slate-500">
+                {purchaseOrder.poNumber}: {purchaseOrder.lineCount} lines,{" "}
+                {purchaseOrder.remainingUnits} units remaining
+              </p>
+            </div>
+          </Link>
+        ))}
+      </div>
+      <Link
+        className="inline-flex w-full items-center justify-center rounded-sm border border-slate-300 bg-white px-4 py-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-700 shadow-sm transition hover:bg-slate-50"
+        to="/inbound"
+      >
+        Warehouse receiving dock
+      </Link>
+    </div>
+  );
+}
+
+function StatusDistributionPanel({
+  rows,
+  total,
+}: {
+  rows: DashboardStatusRow[];
+  total: number;
+}) {
+  return (
+    <div className="space-y-4">
+      {rows.map((entry, index) => {
+        const percentage = total > 0 ? Math.round((entry.count / total) * 100) : 0;
+        const color = statusBarColors[index % statusBarColors.length];
+
+        return (
+          <div key={entry.status} className="space-y-2">
+            <div className="flex items-center justify-between gap-4">
+              <span className="w-24 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-600">
+                {entry.status.replaceAll("_", " ")}
+              </span>
+              <div className="flex flex-1 items-center gap-3">
+                <div className="h-2 flex-1 overflow-hidden rounded-full bg-slate-100">
+                  <div
+                    className="h-full rounded-full transition-all"
+                    style={{ width: `${percentage}%`, backgroundColor: color }}
+                  />
+                </div>
+                <span className="w-10 text-right text-xs font-bold text-slate-900">
+                  {percentage}%
+                </span>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function RankedStack({
+  rows,
+  valueLabel,
+}: {
+  rows: DashboardRankRow[];
+  valueLabel: string;
+}) {
+  return (
+    <div className="divide-y divide-slate-200">
+      {rows.map((row) => (
+        <div key={row.id} className="flex items-center justify-between gap-4 py-3 first:pt-0 last:pb-0">
+          <div className="min-w-0">
+            <div className="truncate text-sm font-semibold text-slate-900">{row.name}</div>
+            <div className="truncate text-xs text-slate-500">{row.supporting}</div>
+          </div>
+          <div className="text-right">
+            <div className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-500">
+              {valueLabel}
+            </div>
+            <div className="mt-1 text-sm font-semibold text-slate-900">
+              {formatNok(row.value)}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function TopSellablePanel({ rows }: { rows: DashboardRankRow[] }) {
+  return (
+    <div className="grid gap-3 md:grid-cols-2">
+      {rows.map((row, index) => {
+        const supporting = row.supporting.toLowerCase().includes("component")
+          ? "Component"
+          : "Product";
+
+        return (
+          <div
+            key={row.id}
+            className="flex items-center justify-between gap-4 rounded-sm border border-slate-200 bg-white p-3 shadow-sm"
+          >
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-sm bg-slate-100 text-sm font-extrabold text-[var(--brand-800)]">
+                {index + 1}
+              </div>
+              <div className="space-y-1">
+                <div className="text-sm font-semibold text-slate-900">{row.name}</div>
+                <div className="text-[10px] font-extrabold uppercase tracking-[0.12em] text-slate-500">
+                  {supporting}
+                </div>
+                <div className="text-xs text-slate-500">{row.supporting}</div>
+              </div>
+            </div>
+            <div className="text-right">
+              <div className="text-[10px] font-extrabold uppercase tracking-[0.14em] text-slate-500">
+                Revenue
+              </div>
+              <div className="mt-1 text-sm font-extrabold text-slate-900">
+                {formatNok(row.value)}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function SupplyChainPulsePanel({
+  materialSignal,
+  materialSignalTone,
+  productionSignal,
+  deliverySignal,
+  delayedOrders,
+  inboundDueSoon,
+  awaitingMaterials,
+}: {
+  materialSignal: string;
+  materialSignalTone: "warning" | "positive";
+  productionSignal: string;
+  deliverySignal: string;
+  delayedOrders: number;
+  inboundDueSoon: number;
+  awaitingMaterials: number;
+}) {
+  return (
+    <section className="relative overflow-hidden rounded-sm border border-slate-900 bg-slate-950 p-6 text-white shadow-[0_18px_48px_rgba(2,12,27,0.32)]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(14,165,233,0.28),_transparent_42%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(120deg,_rgba(148,163,184,0.08)_0%,_transparent_35%,_transparent_100%)]" />
+      <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(148,163,184,0.22)_1px,transparent_1px),linear-gradient(90deg,rgba(148,163,184,0.22)_1px,transparent_1px)] [background-size:28px_28px]" />
+
+      <div className="relative z-10 flex h-full flex-col justify-between gap-8">
+        <div className="space-y-3">
+          <div className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.18em] text-sky-300">
+            <InboundIcon className="h-4 w-4" />
+            Global supply chain status
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-2xl font-extrabold tracking-tight text-white">
+              Live facility performance index
+            </h2>
+            <p className="max-w-2xl text-sm leading-6 text-slate-300">
+              A consolidated view of materials, production, and delivery readiness across the
+              Lovold ERP operating model. This block highlights where the current order pipeline is
+              most likely to slip against promised ETA.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid gap-3 md:grid-cols-3">
+          <SignalCard
+            label="Material flow"
+            value={materialSignal}
+            supporting={`${awaitingMaterials} order${awaitingMaterials === 1 ? "" : "s"} currently waiting on supply`}
+            tone={materialSignalTone}
+          />
+          <SignalCard
+            label="Production lane"
+            value={productionSignal}
+            supporting="Based on active work in the finalized order lifecycle"
+            tone="info"
+          />
+          <SignalCard
+            label="Delivery exposure"
+            value={deliverySignal}
+            supporting={`${delayedOrders} delayed • ${inboundDueSoon} inbound due soon`}
+            tone={delayedOrders > 0 ? "warning" : "positive"}
+          />
+        </div>
+      </div>
+      <div className="absolute bottom-0 left-0 h-1 w-full bg-[var(--brand-700)]" />
+    </section>
+  );
+}
+
+function OperationalEfficiencyCard({
+  onTimeRate,
+}: {
+  onTimeRate: number;
+}) {
+  const gradientStop = `${Math.min(Math.max(onTimeRate, 0), 100)}%`;
+
+  return (
+    <section className="rounded-sm border border-slate-200 bg-white p-6 shadow-sm">
+      <div className="space-y-5">
+        <div>
+          <div className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-500">
+            Operational efficiency
+          </div>
+          <p className="mt-2 text-sm leading-6 text-slate-600">
+            A quick read on promise adherence across open orders using delayed commitments as the
+            primary signal.
+          </p>
+        </div>
+
+        <div className="grid place-items-center">
+          <div
+            className="relative h-36 w-36 rounded-full"
+            style={{
+              background: `conic-gradient(var(--brand-700) ${gradientStop}, #dbe5ec ${gradientStop})`,
+            }}
+          >
+            <div className="absolute inset-3 rounded-full bg-slate-50" />
+            <div className="absolute inset-0 grid place-items-center text-center">
+              <div>
+                <div className="text-3xl font-extrabold tracking-tight text-slate-950">
+                  {onTimeRate}%
+                </div>
+                <div className="mt-1 text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-500">
+                  On-time promise
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p className="text-[11px] text-center font-medium leading-5 text-slate-500">
+          Calculated based on order fulfillment cycle time and inventory turnover ratio.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+function SignalCard({
+  label,
+  value,
+  supporting,
+  tone,
+}: {
+  label: string;
+  value: string;
+  supporting: string;
+  tone: "warning" | "positive" | "info";
+}) {
+  return (
+    <div
+      className={cn(
+        "rounded-lg border px-4 py-4",
+        tone === "warning" && "border-amber-300/60 bg-amber-500/10",
+        tone === "positive" && "border-emerald-300/30 bg-emerald-500/10",
+        tone === "info" && "border-slate-700 bg-white/5",
+      )}
+    >
+      <div className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-300">
+        {label}
+      </div>
+      <div className="mt-3 text-lg font-extrabold tracking-tight text-white">{value}</div>
+      <div className="mt-2 text-xs leading-5 text-slate-300">{supporting}</div>
+    </div>
+  );
+}
+
+function buildConfigurationSummary(
+  items: Array<{
+    itemName: string;
+    itemType: string;
+  }>,
+) {
+  if (items.length === 0) return "No configuration captured";
+  const first = items[0];
+
+  if (items.length === 1) {
+    return `${first.itemName} (${first.itemType})`;
+  }
+
+  return `${first.itemName} + ${items.length - 1} more line${items.length - 1 === 1 ? "" : "s"}`;
+}
+
+const statusBarColors = [
+  "#94a3b8",
+  "#3b82f6",
+  "#6366f1",
+  "#0ea5e9",
+  "#22c55e",
+  "#f59e0b",
+  "#10b981",
+  "#ef4444",
+];

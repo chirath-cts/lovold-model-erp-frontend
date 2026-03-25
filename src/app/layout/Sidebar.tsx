@@ -2,61 +2,12 @@ import { useMemo, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 
 import { sidebarNavStructure } from "@/shared/constants/navigation";
+import { ChevronDownIcon, ChevronUpIcon, WaterDropIcon } from "@/shared/ui/icons";
 
 const drawerWidth = 256;
 
-const cn = (
-  ...classes: Array<string | false | null | undefined>
-): string => classes.filter(Boolean).join(" ");
-
-type IconProps = { className?: string };
-
-function ChevronDownIcon({ className }: IconProps) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden
-    >
-      <path d="M6 9l6 6 6-6" />
-    </svg>
-  );
-}
-
-function ChevronUpIcon({ className }: IconProps) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden
-    >
-      <path d="M18 15l-6-6-6 6" />
-    </svg>
-  );
-}
-
-function WaterDropIcon({ className }: IconProps) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      className={className}
-      aria-hidden
-    >
-      <path d="M12 2c-.3 0-.6.12-.8.35-1.7 1.94-6.2 7.35-6.2 11.15A7 7 0 0019 13.5c0-3.8-4.5-9.21-6.2-11.15A1 1 0 0012 2zm0 19a5 5 0 01-5-5c0-2.24 2.44-5.88 5-8.8 2.56 2.92 5 6.56 5 8.8a5 5 0 01-5 5z" />
-    </svg>
-  );
-}
+const cn = (...classes: Array<string | false | null | undefined>): string =>
+  classes.filter(Boolean).join(" ");
 
 interface SidebarProps {
   mobileOpen: boolean;
@@ -97,10 +48,10 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
         </div>
         <div>
           <div className="text-lg font-bold leading-none text-[#003a4d]">
-            PengVinERP
+            Lovold ERP
           </div>
           <div className="text-[10px] font-medium tracking-wider text-[#70787f]">
-            Enterprise Portal
+            Aquaculture Operations
           </div>
         </div>
       </div>

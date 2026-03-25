@@ -1,26 +1,19 @@
 import type {
   CreateCustomerProductPayload,
-  CustomerProduct,
   UpdateCustomerProductPayload,
 } from "@/shared/types/domain";
-import { mockDb } from "@/services/mock/mockDb";
+import { mockDb, type CustomerProductFilters } from "@/services/mock/mockDb";
 
-export interface CustomerProductFilters {
-  customerId?: string;
-  status?: string;
-}
+export type { CustomerProductFilters };
 
 export const customerProductsService = {
   getList(filters?: CustomerProductFilters) {
     return mockDb.listCustomerProducts(filters);
   },
   create(payload: CreateCustomerProductPayload) {
-    return mockDb.addCustomerProduct({
-      ...payload,
-      status: "active",
-    } satisfies CustomerProduct);
+    return mockDb.addCustomerProduct(payload);
   },
   update(id: string, payload: UpdateCustomerProductPayload) {
-    return mockDb.updateCustomerProduct(id, payload as Partial<CustomerProduct>);
+    return mockDb.updateCustomerProduct(id, payload);
   },
 };

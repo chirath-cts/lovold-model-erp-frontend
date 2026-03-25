@@ -1,130 +1,110 @@
 {
   "customerProducts": [
     {
-      "customerId": "1e8b6a3f-9e51-4d6c-8a34-4a0d2c9c8b77",
-      "productId": "5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
-      "discountPercent": 8.0,
-      "startDate": "2026-02-01",
-      "endDate": "2026-11-30",
-      "isActive": true
-    },
-    {
-      "customerId": "1e8b6a3f-9e51-4d6c-8a34-4a0d2c9c8b77",
-      "productId": "beaf9a6b-2c75-4d46-bf8d-ab6e5c7d6066",
-      "discountPercent": 8.0,
-      "startDate": "2026-02-01",
-      "endDate": "2026-11-30",
-      "isActive": true
-    },
-    {
-      "customerId": "6c9d7b2f-0f6b-4c23-9a1a-8e4b9a2f1e33",
-      "productId": "4d1a7c94-9f6e-4e66-c045-5b9d0f4a3c44",
-      "discountPercent": 10.0,
-      "startDate": "2026-03-01",
-      "endDate": "2026-07-31",
-      "isActive": true
-    },
-    {
-      "customerId": "73d291a4-56cb-4fd7-8f4a-120a4cbb1101",
-      "productId": "6f4e9ab1-3c67-49c1-95b9-0b7a8f6d1011",
-      "discountPercent": 12.0,
-      "startDate": "2026-01-15",
-      "endDate": "2026-06-15",
-      "isActive": true
-    },
-    {
-      "customerId": "73d291a4-56cb-4fd7-8f4a-120a4cbb1101",
-      "productId": "7a6b5c2d-8e31-4f02-9b4f-6d2a1c3e2022",
-      "discountPercent": 12.0,
-      "startDate": "2026-01-15",
-      "endDate": "2026-06-15",
-      "isActive": true
-    },
-    {
-      "customerId": "84e3a2b5-67dc-40e8-9a5b-231b5dcc2202",
-      "productId": "6f4e9ab1-3c67-49c1-95b9-0b7a8f6d1011",
-      "discountPercent": 11.0,
-      "startDate": "2025-11-01",
-      "endDate": "2026-01-31",
-      "isActive": false
-    },
-    {
-      "customerId": "84e3a2b5-67dc-40e8-9a5b-231b5dcc2202",
-      "productId": "8b7c6d3e-9f42-4a13-8c5a-7e3b2d4f3033",
-      "discountPercent": 3.0702,
-      "startDate": "2026-01-20",
-      "endDate": "2026-04-30",
-      "isActive": true
-    },
-    {
-      "customerId": "95f4b3c6-78ed-41f9-ab6c-342c6edd3303",
-      "productId": "8b7c6d3e-9f42-4a13-8c5a-7e3b2d4f3033",
-      "discountPercent": 7.0,
-      "startDate": "2026-02-10",
-      "endDate": "2026-12-01",
-      "isActive": true
-    },
-    {
-      "customerId": "95f4b3c6-78ed-41f9-ab6c-342c6edd3303",
-      "productId": "9c8d7e4f-0a53-4b24-9d6b-8f4c3e5a4044",
-      "discountPercent": 3.876,
-      "startDate": "2026-03-10",
-      "endDate": "2026-08-31",
-      "isActive": true
-    },
-    {
-      "customerId": "9a2c2f1a-4a5f-4fcb-9f3b-3e7a1c1b8d01",
-      "productId": "1a7c4f61-9c4d-4b32-bd51-2a5e7c1f0a11",
-      "discountPercent": 6.0,
+      "id": "cpa-001",
+      "customerId": "cust-fjordblue",
+      "productId": "prod-feed-blower-unit",
+      "discountPercent": 8,
       "startDate": "2026-01-01",
       "endDate": "2026-12-31",
       "isActive": true
     },
     {
-      "customerId": "9a2c2f1a-4a5f-4fcb-9f3b-3e7a1c1b8d01",
-      "productId": "5e2b8da5-0a7f-4f77-d156-6cad1f5b4d55",
-      "discountPercent": 4.0,
-      "startDate": "2026-03-01",
-      "endDate": "2026-06-30",
-      "isActive": true
-    },
-    {
-      "customerId": "a665c4d7-89fe-420a-bc7d-453d7fee4404",
-      "productId": "ad9e8f5a-1b64-4c35-ae7c-9a5d4f6b5055",
-      "discountPercent": 5.0,
+      "id": "cpa-002",
+      "customerId": "cust-fjordblue",
+      "productId": "prod-control-cabinet",
+      "discountPercent": 6,
       "startDate": "2026-01-01",
       "endDate": "2026-12-31",
       "isActive": true
     },
     {
-      "customerId": "b3d4e51c-0a22-4c78-98c6-2b9c1f0e7d45",
-      "productId": "beaf9a6b-2c75-4d46-bf8d-ab6e5c7d6066",
-      "discountPercent": 5.8824,
+      "id": "cpa-003",
+      "customerId": "cust-northsea",
+      "productId": "prod-oxygen-sensor-kit",
+      "discountPercent": 10,
+      "startDate": "2026-02-01",
+      "endDate": "2026-11-30",
+      "isActive": true
+    },
+    {
+      "id": "cpa-004",
+      "customerId": "cust-northsea",
+      "productId": "prod-temperature-sensor-node",
+      "discountPercent": 10,
+      "startDate": "2026-02-01",
+      "endDate": "2026-11-30",
+      "isActive": true
+    },
+    {
+      "id": "cpa-005",
+      "customerId": "cust-arcticcrest",
+      "productId": "prod-barge-hmi-panel",
+      "discountPercent": 12,
+      "startDate": "2026-01-15",
+      "endDate": "2026-10-15",
+      "isActive": true
+    },
+    {
+      "id": "cpa-006",
+      "customerId": "cust-arcticcrest",
+      "productId": "prod-cage-distribution-manifold",
+      "discountPercent": 12,
+      "startDate": "2026-01-15",
+      "endDate": "2026-10-15",
+      "isActive": true
+    },
+    {
+      "id": "cpa-007",
+      "customerId": "cust-patagonia",
+      "productId": "prod-feed-line-coupling",
+      "discountPercent": 9,
+      "startDate": "2026-03-01",
+      "endDate": "2026-12-31",
+      "isActive": true
+    },
+    {
+      "id": "cpa-008",
+      "customerId": "cust-highland",
+      "productId": "prod-pneumatic-pipeline-section",
+      "discountPercent": 7,
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "isActive": true
+    },
+    {
+      "id": "cpa-009",
+      "customerId": "cust-atlanticfjord",
+      "productId": "prod-service-filter-pack",
+      "discountPercent": 5,
+      "startDate": "2026-01-01",
+      "endDate": "2026-12-31",
+      "isActive": true
+    },
+    {
+      "id": "cpa-010",
+      "customerId": "cust-atlanticfjord",
+      "productId": "prod-silo-filter-module",
+      "discountPercent": 4,
+      "startDate": "2026-05-01",
+      "endDate": "2026-12-31",
+      "isActive": true
+    },
+    {
+      "id": "cpa-011",
+      "customerId": "cust-fjordblue",
+      "productId": "prod-dosing-valve",
+      "discountPercent": 6,
       "startDate": "2025-01-01",
       "endDate": "2025-12-31",
       "isActive": false
     },
     {
-      "customerId": "b7a6d5e8-90af-431b-cd8e-564e8a0f5505",
-      "productId": "cfb0ab7c-3d86-4e57-c09e-bc7f6d8e7077",
-      "discountPercent": 7.0093,
-      "startDate": "2026-02-01",
-      "endDate": "2026-10-31",
-      "isActive": true
-    },
-    {
-      "customerId": "f0c6d8a2-93d5-4c17-b71b-9e0d7f1a2a11",
-      "productId": "1a7c4f61-9c4d-4b32-bd51-2a5e7c1f0a11",
-      "discountPercent": 9.0,
-      "startDate": "2026-10-01",
-      "endDate": "2026-12-31",
-      "isActive": false
-    },
-    {
-      "customerId": "f0c6d8a2-93d5-4c17-b71b-9e0d7f1a2a11",
-      "productId": "2b8e5a72-7d4f-4c44-ae23-3f7b8d2e1a22",
-      "discountPercent": 2.8571,
-      "startDate": "2026-01-10",
+      "id": "cpa-012",
+      "customerId": "cust-patagonia",
+      "productId": "prod-control-cabinet",
+      "discountPercent": 9,
+      "startDate": "2026-02-15",
       "endDate": "2026-09-30",
       "isActive": true
     }

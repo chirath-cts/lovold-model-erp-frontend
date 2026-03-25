@@ -7,6 +7,9 @@ export const ordersService = {
   getList(filters?: OrderFilters) {
     return mockDb.listOrders(filters);
   },
+  getById(id: string) {
+    return mockDb.getOrderById(id);
+  },
   create(payload: CreateOrderPayload) {
     return mockDb.addOrder(payload);
   },

@@ -1,93 +1,57 @@
 {
   "customers": [
     {
-      "id": "9a2c2f1a-4a5f-4fcb-9f3b-3e7a1c1b8d01",
+      "id": "cust-fjordblue",
       "customerCode": "CUS-1001",
-      "name": "Nordmann Marine Services AS",
-      "email": "ola.nordmann@example.no",
-      "phone": "+47 915 34 221",
-      "address": "Karl Johans gate 15, 0154 Oslo, Norway",
+      "name": "FjordBlue Salmon AS",
+      "email": "projects@fjordblue.no",
+      "phone": "+47 55 11 82 10",
+      "address": "Bergen, Norway",
       "status": "active"
     },
     {
-      "id": "f0c6d8a2-93d5-4c17-b71b-9e0d7f1a2a11",
+      "id": "cust-northsea",
       "customerCode": "CUS-1002",
-      "name": "Bergen Seafood AS",
-      "email": "contact@bergenseafood.no",
-      "phone": "+47 482 19 774",
-      "address": "Bryggen 12, 5003 Bergen, Norway",
+      "name": "NorthSea Aquaculture",
+      "email": "procurement@northseaaq.no",
+      "phone": "+47 70 24 67 10",
+      "address": "Alesund, Norway",
       "status": "active"
     },
     {
-      "id": "b3d4e51c-0a22-4c78-98c6-2b9c1f0e7d45",
+      "id": "cust-arcticcrest",
       "customerCode": "CUS-1003",
-      "name": "Hansen Coastal Equipment",
-      "email": "lars.hansen@example.no",
-      "phone": "+47 907 55 663",
-      "address": "Storgata 44, 9008 Tromso, Norway",
-      "status": "inactive"
+      "name": "Arctic Crest Farming",
+      "email": "ops@arcticcrest.is",
+      "phone": "+354 531 9910",
+      "address": "Akureyri, Iceland",
+      "status": "active"
     },
     {
-      "id": "1e8b6a3f-9e51-4d6c-8a34-4a0d2c9c8b77",
+      "id": "cust-patagonia",
       "customerCode": "CUS-1004",
-      "name": "Nordic Aqua Supplies AS",
-      "email": "sales@nordicaqua.no",
-      "phone": "+47 468 72 990",
-      "address": "Haakon VIIs gate 7, 7041 Trondheim, Norway",
+      "name": "Patagonia Fish Systems",
+      "email": "engineering@patagoniafish.cl",
+      "phone": "+56 65 224 1138",
+      "address": "Puerto Montt, Chile",
       "status": "active"
     },
     {
-      "id": "6c9d7b2f-0f6b-4c23-9a1a-8e4b9a2f1e33",
+      "id": "cust-highland",
       "customerCode": "CUS-1005",
-      "name": "Solberg Aqua Logistics",
-      "email": "ingrid.solberg@example.no",
-      "phone": "+47 934 88 102",
-      "address": "Kirkegata 21, 4006 Stavanger, Norway",
+      "name": "Highland Cage Operations",
+      "email": "service@highlandcage.co.uk",
+      "phone": "+44 1463 114220",
+      "address": "Inverness, Scotland",
       "status": "active"
     },
     {
-      "id": "73d291a4-56cb-4fd7-8f4a-120a4cbb1101",
+      "id": "cust-atlanticfjord",
       "customerCode": "CUS-1006",
-      "name": "FjordTech Aquaculture AB",
-      "email": "procurement@fjordtech.se",
-      "phone": "+46 73 211 44 78",
-      "address": "Skeppsbron 12, 414 51 Gothenburg, Sweden",
-      "status": "active"
-    },
-    {
-      "id": "84e3a2b5-67dc-40e8-9a5b-231b5dcc2202",
-      "customerCode": "CUS-1007",
-      "name": "Arctic Hatchery Partners",
-      "email": "n.nilsen@arctichatchery.no",
-      "phone": "+47 902 14 667",
-      "address": "Havneveien 8, 9600 Hammerfest, Norway",
-      "status": "active"
-    },
-    {
-      "id": "95f4b3c6-78ed-41f9-ab6c-342c6edd3303",
-      "customerCode": "CUS-1008",
-      "name": "BlueCurrent Farms Oy",
-      "email": "orders@bluecurrent.fi",
-      "phone": "+358 40 334 9912",
-      "address": "Satamakatu 3, 20100 Turku, Finland",
-      "status": "active"
-    },
-    {
-      "id": "a665c4d7-89fe-420a-bc7d-453d7fee4404",
-      "customerCode": "CUS-1009",
-      "name": "Northline Marine Controls",
-      "email": "service@northlinemarine.no",
-      "phone": "+47 476 01 448",
-      "address": "Dronningens gate 9, 7011 Trondheim, Norway",
-      "status": "active"
-    },
-    {
-      "id": "b7a6d5e8-90af-431b-cd8e-564e8a0f5505",
-      "customerCode": "CUS-1010",
-      "name": "Oceanic Process Systems Ltd",
-      "email": "sales@oceanicprocess.dk",
-      "phone": "+45 31 44 77 20",
-      "address": "Havnegade 28, 1058 Copenhagen, Denmark",
+      "name": "Atlantic Fjord Foods",
+      "email": "capital.projects@atlanticfjord.ca",
+      "phone": "+1 709 334 5566",
+      "address": "St. John's, Canada",
       "status": "active"
     }
   ]

@@ -1,0 +1,58 @@
+{
+  "supplierPurchaseOrders": [
+    {
+      "id": "spo-2026-0001",
+      "poNumber": "PO-2026-4001",
+      "supplierId": "sup-aquaflow-pipeworks",
+      "orderDate": "2026-02-18T10:00:00.000Z",
+      "eta": "2026-03-08T15:00:00.000Z",
+      "status": "received",
+      "notes": "Pipe sections and couplings for the NorthSea cage upgrade."
+    },
+    {
+      "id": "spo-2026-0002",
+      "poNumber": "PO-2026-4002",
+      "supplierId": "sup-arctic-sensors",
+      "orderDate": "2026-02-20T10:00:00.000Z",
+      "eta": "2026-03-12T15:00:00.000Z",
+      "status": "partially_received",
+      "notes": "Sensor replenishment for monitoring bundles and environmental kits."
+    },
+    {
+      "id": "spo-2026-0003",
+      "poNumber": "PO-2026-4003",
+      "supplierId": "sup-fjord-mechanical",
+      "orderDate": "2026-02-25T10:00:00.000Z",
+      "eta": "2026-03-18T15:00:00.000Z",
+      "status": "ordered",
+      "notes": "Control cabinets and HMI panels for current confirmed orders."
+    },
+    {
+      "id": "spo-2026-0004",
+      "poNumber": "PO-2026-4004",
+      "supplierId": "sup-nordic-feed-systems",
+      "orderDate": "2026-03-01T10:00:00.000Z",
+      "eta": "2026-03-20T15:00:00.000Z",
+      "status": "ordered",
+      "notes": "Feed blower units and dosing valves for project commitments."
+    },
+    {
+      "id": "spo-2026-0005",
+      "poNumber": "PO-2026-4005",
+      "supplierId": "sup-oceanic-controls",
+      "orderDate": "2026-03-04T10:00:00.000Z",
+      "eta": "2026-03-15T15:00:00.000Z",
+      "status": "cancelled",
+      "notes": "Cancelled spare parts replenishment after stock review."
+    },
+    {
+      "id": "spo-2026-0006",
+      "poNumber": "PO-2026-4006",
+      "supplierId": "sup-oceanic-controls",
+      "orderDate": "2026-03-06T10:00:00.000Z",
+      "eta": "2026-03-17T15:00:00.000Z",
+      "status": "draft",
+      "notes": "Draft reorder awaiting internal approval for spare filtering packs."
+    }
+  ]
+}

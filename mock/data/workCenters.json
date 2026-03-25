@@ -1,0 +1,34 @@
+{
+  "workCenters": [
+    {
+      "id": "wc-mechanical-assembly",
+      "name": "Mechanical Assembly Bay",
+      "description": "Assembly space for feeders, manifolds, skids, and field bundles."
+    },
+    {
+      "id": "wc-control-integration",
+      "name": "Control Integration Bench",
+      "description": "Bench for cabinet wiring, PLC integration, and panel checkout."
+    },
+    {
+      "id": "wc-sensor-calibration",
+      "name": "Sensor Calibration Station",
+      "description": "Station for oxygen, temperature, and monitoring sensor verification."
+    },
+    {
+      "id": "wc-qa-packaging",
+      "name": "QA and Packaging Cell",
+      "description": "Quality checks, packing, and shipment readiness for outgoing orders."
+    },
+    {
+      "id": "wc-pipe-fabrication",
+      "name": "Pipe Fabrication Bay",
+      "description": "Fabrication and prep area for feed transport lines and couplings."
+    },
+    {
+      "id": "wc-field-service",
+      "name": "Field Service Prep Cell",
+      "description": "Preparation area for service kits and site-ready spare parts bundles."
+    }
+  ]
+}
