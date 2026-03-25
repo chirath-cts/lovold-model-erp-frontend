@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { EmptyPanel } from "@/features/inventory/shared/InventoryScaffold";
 import { OrderStatusBadge } from "@/features/orders/components/OrderStatusBadge";
@@ -178,9 +178,12 @@ function EtaStatusBadge({ tone }: { tone: EtaStatusTone }) {
 }
 
 export function OrdersPage() {
+  const navigate = useNavigate();
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("");
   const [delayedOnly, setDelayedOnly] = useState(false);
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
+  const [selectedCustomerId, setSelectedCustomerId] = useState("");
 
   const customersQuery = useCustomers();
   const ordersQuery = useOrders();
@@ -243,19 +246,28 @@ export function OrdersPage() {
     : "Pending";
 
   // Calculate order distribution by status
-  const inProduction = rows.filter((order) => order.status === "in_production").length;
+  const inProduction = rows.filter(
+    (order) => order.status === "in_production",
+  ).length;
   const reserved = rows.filter((order) => order.status === "reserved").length;
   const ready = rows.filter((order) => order.status === "ready").length;
-  const other = rows.filter((order) => !["in_production", "reserved", "ready"].includes(order.status)).length;
+  const other = rows.filter(
+    (order) => !["in_production", "reserved", "ready"].includes(order.status),
+  ).length;
   const totalOrders = rows.length;
 
-  const productionPercent = totalOrders > 0 ? Math.round((inProduction / totalOrders) * 100) : 0;
-  const reservedPercent = totalOrders > 0 ? Math.round((reserved / totalOrders) * 100) : 0;
-  const readyPercent = totalOrders > 0 ? Math.round((ready / totalOrders) * 100) : 0;
-  const otherPercent = totalOrders > 0 ? Math.round((other / totalOrders) * 100) : 0;
+  const productionPercent =
+    totalOrders > 0 ? Math.round((inProduction / totalOrders) * 100) : 0;
+  const reservedPercent =
+    totalOrders > 0 ? Math.round((reserved / totalOrders) * 100) : 0;
+  const readyPercent =
+    totalOrders > 0 ? Math.round((ready / totalOrders) * 100) : 0;
+  const otherPercent =
+    totalOrders > 0 ? Math.round((other / totalOrders) * 100) : 0;
 
   // Calculate trend - comparing delayed orders ratio
-  const delayedRatio = totalOrders > 0 ? (delayedOrders / totalOrders) * 100 : 0;
+  const delayedRatio =
+    totalOrders > 0 ? (delayedOrders / totalOrders) * 100 : 0;
 
   return (
     <div className="app-page space-y-6">
@@ -497,7 +509,8 @@ export function OrdersPage() {
                   return (
                     <tr
                       key={order.id}
-                      className="hover:bg-slate-50 transition-colors group"
+                      className="hover:bg-slate-50 transition-colors group cursor-pointer"
+                      onClick={() => navigate(`/orders/${order.id}`)}
                     >
                       <td className="px-4 py-4 text-xs font-mono font-bold text-slate-800">
                         #{order.orderNumber}
@@ -680,7 +693,7 @@ export function OrdersPage() {
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
           </svg>
         </div>
-      </section >
+      </section>
     </div>
   );
 }

@@ -46,27 +46,27 @@ export function OrderStatusTimeline({ status }: { status: OrderStatus }) {
       : ORDER_STATUS_FLOW.filter((step) => step !== "cancelled");
 
   return (
-    <section className="rounded-[1.9rem] border border-[var(--border-soft)] bg-white p-6 shadow-[0_18px_48px_-28px_rgba(15,23,42,0.25)]">
+    <section className="rounded-sm border border-slate-200 bg-white p-6 shadow-[0_4px_24px_-6px_rgba(25,28,30,0.08)]">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <div className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[var(--text-muted)]">
+          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
             Lifecycle progress
           </div>
-          <h2 className="text-xl font-semibold tracking-tight text-[var(--text-primary)]">
+          <h2 className="text-xl font-semibold tracking-tight text-slate-800">
             Lifecycle Progress
           </h2>
-          <p className="text-sm text-[var(--text-secondary)]">
+          <p className="text-sm text-slate-600">
             Orders move from commercial intake through reservation, production, and delivery.
           </p>
         </div>
-        <div className="rounded-full border border-[var(--brand-200)] bg-[var(--brand-100)] px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-[var(--brand-900)]">
+        <div className="rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-blue-900">
           Active: {status.replaceAll("_", " ")}
         </div>
       </div>
 
       <div className="mt-5 overflow-x-auto">
-        <div className="relative flex min-w-[700px] items-start justify-between gap-3 pb-2">
-          <div className="absolute left-5 right-5 top-5 h-[4px] rounded-full bg-[var(--surface-muted)]" />
+        <div className="relative flex min-w-[700px] items-start justify-between gap-3 pb-2 mt-4">
+          <div className="absolute left-5 right-5 top-5 h-[4px] rounded-full bg-slate-100" />
           {visibleSteps.map((step) => {
             const state = getStepState(step, status);
 
@@ -75,9 +75,9 @@ export function OrderStatusTimeline({ status }: { status: OrderStatus }) {
                 <div
                   className={[
                     "flex h-10 w-10 items-center justify-center rounded-full border-4 border-white shadow-sm",
-                    state === "done" && "bg-[var(--brand-900)] text-white",
-                    state === "current" && "bg-[var(--brand-700)] text-white ring-4 ring-[var(--brand-100)]",
-                    state === "upcoming" && "bg-[var(--surface-muted)] text-[var(--text-muted)]",
+                    state === "done" && "bg-slate-800 text-white",
+                    state === "current" && "bg-blue-600 text-white ring-4 ring-blue-100",
+                    state === "upcoming" && "bg-slate-100 text-slate-400",
                   ]
                     .filter(Boolean)
                     .join(" ")}
@@ -89,12 +89,12 @@ export function OrderStatusTimeline({ status }: { status: OrderStatus }) {
                 <div className="text-center">
                   <div
                     className={[
-                      "text-[11px] font-bold uppercase tracking-[0.14em]",
+                      "text-[10px] font-bold uppercase tracking-[0.14em]",
                       state === "current"
-                        ? "text-[var(--brand-900)]"
+                        ? "text-blue-900"
                         : state === "done"
-                          ? "text-[var(--text-primary)]"
-                          : "text-[var(--text-muted)]",
+                          ? "text-slate-800"
+                          : "text-slate-500",
                     ]
                       .filter(Boolean)
                       .join(" ")}

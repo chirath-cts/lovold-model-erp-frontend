@@ -81,14 +81,16 @@ export function DataPanel({
   description,
   children,
   actions,
+  className,
 }: {
   title: string;
   description?: string;
   children: ReactNode;
   actions?: ReactNode;
+  className?: string;
 }) {
   return (
-    <section className="app-card overflow-hidden">
+    <section className={`app-card overflow-hidden rounded-sm ${className || ""}`}>
       <div className="flex flex-wrap items-start justify-between gap-3 border-b border-[var(--border-soft)] px-5 py-4 md:px-6">
         <div className="space-y-1">
           <h2 className="text-lg font-semibold text-[var(--text-primary)]">{title}</h2>
@@ -113,12 +115,12 @@ export function FieldGrid({
       {fields.map((field) => (
         <div
           key={field.label}
-          className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3"
+          className="rounded-sm border border-slate-200 bg-slate-50 px-4 py-3"
         >
-          <div className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">
+          <div className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
             {field.label}
           </div>
-          <div className="mt-2 text-sm font-medium text-[var(--text-primary)]">
+          <div className="mt-2 text-sm font-medium text-slate-800">
             {field.value}
           </div>
         </div>

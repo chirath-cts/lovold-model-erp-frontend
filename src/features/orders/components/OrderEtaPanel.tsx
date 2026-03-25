@@ -15,22 +15,22 @@ function EtaCard({
   return (
     <div
       className={[
-        "rounded-[1.4rem] border px-4 py-4 shadow-[0_16px_34px_-28px_rgba(15,23,42,0.35)]",
-        tone === "default" && "border-[var(--border-soft)] bg-[var(--surface-muted)]",
-        tone === "brand" && "border-[var(--brand-700)] bg-[var(--brand-900)] text-white",
+        "rounded-sm border px-4 py-4 shadow-[0_4px_24px_-8px_rgba(25,28,30,0.08)]",
+        tone === "default" && "border-slate-200 bg-slate-50",
+        tone === "brand" && "border-blue-300 bg-blue-50 text-blue-900",
         tone === "warning" && "border-amber-200 bg-amber-50",
       ]
         .filter(Boolean)
         .join(" ")}
     >
-      <div className={tone === "brand" ? "text-xs font-bold uppercase tracking-[0.14em] text-white/70" : "text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]"}>
+      <div className={tone === "brand" ? "text-xs font-bold uppercase tracking-[0.14em] text-blue-700" : tone === "warning" ? "text-xs font-bold uppercase tracking-[0.14em] text-amber-700" : "text-xs font-bold uppercase tracking-[0.14em] text-slate-600"}>
         {label}
       </div>
       <div className="mt-3 text-lg font-semibold tracking-tight">
         {value}
       </div>
       {supporting ? (
-        <div className={tone === "brand" ? "mt-2 text-xs text-white/80" : "mt-2 text-xs text-[var(--text-secondary)]"}>
+        <div className={tone === "brand" ? "mt-2 text-xs text-blue-700/80" : tone === "warning" ? "mt-2 text-xs text-amber-700/80" : "mt-2 text-xs text-slate-600"}>
           {supporting}
         </div>
       ) : null}
@@ -50,16 +50,16 @@ export function OrderEtaPanel({
   packagingLeadDays?: number;
 }) {
   return (
-    <section className="rounded-[1.9rem] border border-[var(--border-soft)] bg-white p-6 shadow-[0_18px_48px_-28px_rgba(15,23,42,0.25)]">
+    <section className="rounded-sm border border-slate-200 bg-white p-6 shadow-[0_4px_24px_-6px_rgba(25,28,30,0.08)]">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="space-y-1">
-          <div className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[var(--text-muted)]">
+          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">
             ETA planning
           </div>
-          <h2 className="text-xl font-semibold tracking-tight text-[var(--text-primary)]">
+          <h2 className="text-xl font-semibold tracking-tight text-slate-800">
             ETA Planning
           </h2>
-          <p className="text-sm text-[var(--text-secondary)]">
+          <p className="text-sm text-slate-600">
             Promised ETA is derived from material availability, production, QC, packaging, and delivery.
           </p>
         </div>
@@ -104,44 +104,44 @@ export function OrderEtaPanel({
       </div>
 
       <div className="mt-5 grid gap-4 lg:grid-cols-2">
-        <div className="rounded-[1.4rem] border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-4">
-          <div className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">
+        <div className="rounded-sm border border-slate-200 bg-slate-50 px-4 py-4">
+          <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
             Fixed business lead items
           </div>
           <div className="mt-3 grid gap-3 md:grid-cols-2">
             <div>
-              <div className="text-sm font-semibold text-[var(--text-primary)]">
+              <div className="text-sm font-semibold text-slate-800">
                 Quality check
               </div>
-              <div className="text-sm text-[var(--text-secondary)]">
+              <div className="text-sm text-slate-600">
                 {qualityCheckLeadDays ?? 0} day(s)
               </div>
             </div>
             <div>
-              <div className="text-sm font-semibold text-[var(--text-primary)]">
+              <div className="text-sm font-semibold text-slate-800">
                 Packaging
               </div>
-              <div className="text-sm text-[var(--text-secondary)]">
+              <div className="text-sm text-slate-600">
                 {packagingLeadDays ?? 0} day(s)
               </div>
             </div>
           </div>
         </div>
 
-        <div className="rounded-[1.4rem] border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-4">
-          <div className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">
+        <div className="rounded-sm border border-slate-200 bg-slate-50 px-4 py-4">
+          <div className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">
             Planning notes
           </div>
           {eta.blockers.length ? (
-            <ul className="mt-3 space-y-2 text-sm text-[var(--text-secondary)]">
+            <ul className="mt-3 space-y-2 text-sm text-slate-600">
               {eta.blockers.map((blocker) => (
-                <li key={blocker} className="rounded-xl border border-rose-200 bg-rose-50 px-3 py-2 text-rose-800">
+                <li key={blocker} className="rounded-sm border border-rose-200 bg-rose-50 px-3 py-2 text-rose-800">
                   {blocker}
                 </li>
               ))}
             </ul>
           ) : (
-            <div className="mt-3 space-y-2 text-sm text-[var(--text-secondary)]">
+            <div className="mt-3 space-y-2 text-sm text-slate-600">
               <p>ETA preview is based on the current line items, production steps, and business lead settings.</p>
               <p>
                 Components consume ready-made stock first, then fall back to underlying products and inbound availability for the remaining quantity.
