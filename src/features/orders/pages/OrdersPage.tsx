@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { EmptyPanel } from "@/features/inventory/shared/InventoryScaffold";
@@ -182,6 +182,7 @@ function EtaStatusBadge({ tone }: { tone: EtaStatusTone }) {
 export function OrdersPage() {
   const navigate = useNavigate();
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [dialogActions, setDialogActions] = useState<ReactNode | null>(null);
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("");
   const [delayedOnly, setDelayedOnly] = useState(false);
@@ -698,12 +699,16 @@ export function OrdersPage() {
 
       <AppDialog
         open={createDialogOpen}
-        onClose={() => setCreateDialogOpen(false)}
+        onClose={() => {
+          setCreateDialogOpen(false);
+          setDialogActions(null);
+        }}
         title="Create order"
-        description="Open the order workspace without leaving the register."
+        description="Capture Lovold customer orders with product and component lines, inline component creation, production steps, and reservation-aware ETA planning."
         size="full"
+        actions={dialogActions}
       >
-        <OrderCreatePage />
+        <OrderCreatePage onActionsChange={setDialogActions} />
       </AppDialog>
     </div>
   );

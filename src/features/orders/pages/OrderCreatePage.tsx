@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -45,6 +45,10 @@ import {
 } from "@/features/orders/model/orderHelpers";
 import type { OrderStatus } from "@/shared/types/domain";
 
+type OrderCreatePageProps = {
+  onActionsChange?: (actions: ReactNode) => void;
+};
+
 function SnapshotCard({
   label,
   value,
@@ -59,43 +63,48 @@ function SnapshotCard({
   return (
     <div
       className={[
-        "min-h-[10rem] rounded-[1.7rem] border p-5 shadow-[0_16px_40px_-28px_rgba(15,23,42,0.3)]",
+        "min-h-[9.5rem] h-[9.5rem] rounded-sm border p-4 shadow-[0_4px_24px_-4px_rgba(25,28,30,0.06)] bg-white flex flex-col gap-3",
         tone === "brand" &&
-          "border-[var(--brand-700)] bg-[var(--brand-900)] text-white",
-        tone === "warning" && "border-amber-300 bg-amber-50",
-        tone === "default" && "border-[var(--border-soft)] bg-white",
+          "bg-gradient-to-r from-[#004260] to-[#005b82] text-white border-transparent shadow-[0_10px_30px_-12px_rgba(0,66,96,0.35)]",
+        tone === "warning" && "bg-amber-50 border-amber-200",
       ]
         .filter(Boolean)
         .join(" ")}
     >
       <div
         className={[
-          "text-[11px] font-extrabold uppercase tracking-[0.22em]",
-          tone === "brand" ? "text-white/70" : "text-[var(--text-muted)]",
-        ]
-          .filter(Boolean)
-          .join(" ")}
+          "text-[10px] font-black uppercase tracking-[0.18em]",
+          tone === "brand" ? "text-white/80" : "text-slate-500",
+        ].join(" ")}
       >
         {label}
       </div>
       <div
         className={[
-          "mt-4 text-[clamp(1.7rem,1.8vw,2.2rem)] font-black leading-none tracking-[-0.03em]",
-          tone === "warning" && "text-amber-900",
-        ]
-          .filter(Boolean)
-          .join(" ")}
+          "text-2xl font-black leading-tight tracking-tight",
+          tone === "brand"
+            ? "text-white"
+            : tone === "warning"
+              ? "text-amber-900"
+              : "text-slate-900",
+        ].join(" ")}
       >
         {value}
       </div>
-      <p className={tone === "brand" ? "mt-4 text-sm text-white/80" : "mt-4 text-sm text-[var(--text-secondary)]"}>
+      <p
+        className={
+          tone === "brand" ? "text-xs text-white/80" : "text-xs text-slate-600"
+        }
+      >
         {supporting}
       </p>
     </div>
   );
 }
 
-export function OrderCreatePage() {
+export function OrderCreatePage({
+  onActionsChange,
+}: OrderCreatePageProps = {}) {
   const navigate = useNavigate();
   const [customerId, setCustomerId] = useState("");
   const [orderDate, setOrderDate] = useState(toDateInputValue());
@@ -104,11 +113,12 @@ export function OrderCreatePage() {
   const [lines, setLines] = useState<OrderLineDraft[]>([
     createEmptyOrderLine("product"),
   ]);
-  const [productionSteps, setProductionSteps] = useState<ProductionStepDraft[]>([]);
-  const [inlineComponentOpen, setInlineComponentOpen] = useState(false);
-  const [inlineComponentDraft, setInlineComponentDraft] = useState<InlineComponentDraft>(
-    createEmptyInlineComponentDraft(),
+  const [productionSteps, setProductionSteps] = useState<ProductionStepDraft[]>(
+    [],
   );
+  const [inlineComponentOpen, setInlineComponentOpen] = useState(false);
+  const [inlineComponentDraft, setInlineComponentDraft] =
+    useState<InlineComponentDraft>(createEmptyInlineComponentDraft());
 
   const customersQuery = useCustomers();
   const categoriesQuery = useCategories();
@@ -158,8 +168,12 @@ export function OrderCreatePage() {
     qualityCheckLeadDays: 0,
     packagingLeadDays: 0,
   };
-  const productLookup = new Map(products.map((product) => [product.id, product]));
-  const componentLookup = new Map(components.map((component) => [component.id, component]));
+  const productLookup = new Map(
+    products.map((product) => [product.id, product]),
+  );
+  const componentLookup = new Map(
+    components.map((component) => [component.id, component]),
+  );
   const preview = buildOrderPreview({
     customerId,
     orderDate: toIsoFromDateInput(orderDate),
@@ -206,10 +220,14 @@ export function OrderCreatePage() {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: queryKeys.orders }),
         queryClient.invalidateQueries({ queryKey: queryKeys.orderItems }),
-        queryClient.invalidateQueries({ queryKey: queryKeys.orderProductionSteps }),
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.orderProductionSteps,
+        }),
         queryClient.invalidateQueries({ queryKey: queryKeys.products }),
         queryClient.invalidateQueries({ queryKey: queryKeys.components }),
-        queryClient.invalidateQueries({ queryKey: queryKeys.componentProducts }),
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.componentProducts,
+        }),
       ]);
       navigate(`/orders/${order.id}`);
     },
@@ -247,7 +265,9 @@ export function OrderCreatePage() {
     onSuccess: async (component) => {
       await Promise.all([
         queryClient.invalidateQueries({ queryKey: queryKeys.components }),
-        queryClient.invalidateQueries({ queryKey: queryKeys.componentProducts }),
+        queryClient.invalidateQueries({
+          queryKey: queryKeys.componentProducts,
+        }),
       ]);
 
       setLines((current) => [
@@ -263,7 +283,8 @@ export function OrderCreatePage() {
   });
 
   const hasValidLines = preview.lines.length > 0;
-  const canSaveDraft = Boolean(customerId) && hasValidLines && !createOrderMutation.isPending;
+  const canSaveDraft =
+    Boolean(customerId) && hasValidLines && !createOrderMutation.isPending;
   const canConfirm =
     Boolean(customerId) &&
     hasValidLines &&
@@ -280,17 +301,21 @@ export function OrderCreatePage() {
       preview.lines
         .map((line) =>
           line.itemType === "product"
-            ? productLookup.get(line.itemId)?.categoryId ?? ""
-            : componentLookup.get(line.itemId)?.categoryId ?? "",
+            ? (productLookup.get(line.itemId)?.categoryId ?? "")
+            : (componentLookup.get(line.itemId)?.categoryId ?? ""),
         )
         .filter(Boolean),
     ),
   );
-  const bottleneckRows = preview.lines.flatMap((line) => line.componentBreakdown).slice(0, 4);
+  const bottleneckRows = preview.lines
+    .flatMap((line) => line.componentBreakdown)
+    .slice(0, 4);
   const workflowSteps = [
     {
       name: "Order setup",
-      detail: selectedCustomer ? selectedCustomer.name : "Select customer and commitment date",
+      detail: selectedCustomer
+        ? selectedCustomer.name
+        : "Select customer and commitment date",
       done: Boolean(customerId),
     },
     {
@@ -305,15 +330,52 @@ export function OrderCreatePage() {
     },
     {
       name: "ETA planning",
-      detail: preview.eta.promisedEta ? formatDate(preview.eta.promisedEta) : "Pending promise window",
+      detail: preview.eta.promisedEta
+        ? formatDate(preview.eta.promisedEta)
+        : "Pending promise window",
       done: Boolean(preview.eta.promisedEta),
     },
     {
       name: "Review",
-      detail: canConfirm ? "Ready to confirm" : "Resolve missing commercial or material inputs",
+      detail: canConfirm
+        ? "Ready to confirm"
+        : "Resolve missing commercial or material inputs",
       done: canConfirm,
     },
   ];
+
+  const actionButtons = useMemo(
+    () => (
+      <>
+        {/* <Link className="app-button-secondary" to="/orders">
+          Back to orders
+        </Link> */}
+        <button
+          type="button"
+          className="app-button-secondary"
+          disabled={!canSaveDraft}
+          onClick={() => createOrderMutation.mutate("draft")}
+        >
+          {createOrderMutation.isPending ? "Saving..." : "Save draft"}
+        </button>
+        <button
+          type="button"
+          className="app-button-primary"
+          disabled={!canConfirm}
+          onClick={() => createOrderMutation.mutate("confirmed")}
+        >
+          {createOrderMutation.isPending ? "Confirming..." : "Confirm order"}
+        </button>
+      </>
+    ),
+    [canSaveDraft, canConfirm, createOrderMutation],
+  );
+
+  useEffect(() => {
+    if (onActionsChange) {
+      onActionsChange(actionButtons);
+    }
+  }, [onActionsChange, actionButtons]);
 
   if (isLoading) {
     return <LoadingState label="Preparing order workspace..." />;
@@ -325,130 +387,17 @@ export function OrderCreatePage() {
 
   return (
     <div className="app-page space-y-6">
-      <InventoryPageHeader
+      {/* <InventoryPageHeader
         eyebrow="Sales / Orders"
         title="Create order"
         description="Capture Lovold customer orders with product and component lines, inline component creation, production steps, and reservation-aware ETA planning."
-        actions={
-          <>
-            <Link className="app-button-secondary" to="/orders">
-              Back to orders
-            </Link>
-            <button
-              type="button"
-              className="app-button-secondary"
-              disabled={!canSaveDraft}
-              onClick={() => createOrderMutation.mutate("draft")}
-            >
-              {createOrderMutation.isPending ? "Saving..." : "Save draft"}
-            </button>
-            <button
-              type="button"
-              className="app-button-primary"
-              disabled={!canConfirm}
-              onClick={() => createOrderMutation.mutate("confirmed")}
-            >
-              {createOrderMutation.isPending ? "Confirming..." : "Confirm order"}
-            </button>
-          </>
-        }
-      />
-
-      <section className="grid gap-4 2xl:grid-cols-[minmax(0,1.35fr)_minmax(20rem,0.85fr)]">
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-          <SnapshotCard
-            label="Lines ready"
-            value={String(preview.itemCount)}
-            supporting="Resolved sellable lines with pricing and quantity inputs."
-          />
-          <SnapshotCard
-            label="Grand total"
-            value={formatNok(preview.grandTotal)}
-            supporting="Live selling value from the current commercial draft."
-            tone="brand"
-          />
-          <SnapshotCard
-            label="Estimated profit"
-            value={formatNok(preview.profitTotal)}
-            supporting="Derived using material cost, production cost, and discounts."
-          />
-          <SnapshotCard
-            label="Material status"
-            value={materialStatus}
-            supporting={
-              preview.eta.blocked
-                ? "At least one line lacks enough available or inbound material."
-                : preview.eta.waitingOnInbound
-                  ? "Inbound supply is part of the earliest promise path."
-                  : "Current stock and ready-made inventory support the order."
-            }
-            tone={preview.eta.blocked ? "warning" : "default"}
-          />
-        </div>
-
-        <div className="rounded-[1.8rem] border border-[var(--border-soft)] bg-[linear-gradient(145deg,rgba(255,255,255,0.96),rgba(231,243,252,0.92))] p-5 shadow-[0_18px_48px_-28px_rgba(15,23,42,0.35)]">
-          <div className="flex items-center justify-between gap-3">
-            <div className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[var(--text-muted)]">
-              Draft workflow
-            </div>
-            <div
-              className={[
-                "rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.16em]",
-                preview.eta.blocked
-                  ? "bg-rose-100 text-rose-700"
-                  : preview.eta.waitingOnInbound
-                    ? "bg-amber-100 text-amber-800"
-                    : "bg-emerald-100 text-emerald-700",
-              ]
-                .filter(Boolean)
-                .join(" ")}
-            >
-              {preview.eta.blocked
-                ? "Material blocked"
-                : preview.eta.waitingOnInbound
-                  ? "Waiting on inbound"
-                  : "Ready to promise"}
-            </div>
-          </div>
-
-          <div className="mt-5 space-y-4">
-            <div>
-              <div className="text-sm font-semibold text-[var(--text-primary)]">
-                {selectedCustomer?.name ?? "Customer not selected"}
-              </div>
-              <div className="mt-1 text-sm text-[var(--text-secondary)]">
-                Order date {formatDate(toIsoFromDateInput(orderDate))} • Delivery lead {deliveryLeadDays} day(s)
-              </div>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className="rounded-2xl border border-[var(--border-soft)] bg-white px-4 py-3">
-                <div className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">
-                  Stored promise
-                </div>
-                <div className="mt-2 text-base font-semibold text-[var(--text-primary)]">
-                  {preview.eta.promisedEta ? formatDate(preview.eta.promisedEta) : "Pending"}
-                </div>
-              </div>
-              <div className="rounded-2xl border border-[var(--border-soft)] bg-white px-4 py-3">
-                <div className="text-xs font-bold uppercase tracking-[0.16em] text-[var(--text-muted)]">
-                  Production plan
-                </div>
-                <div className="mt-2 text-base font-semibold text-[var(--text-primary)]">
-                  {productionSteps.length} step(s)
-                </div>
-              </div>
-            </div>
-            <div className="rounded-2xl border border-[var(--border-soft)] bg-white px-4 py-4 text-sm text-[var(--text-secondary)]">
-              Components can be created inline from this workspace when ready-made stock does not exist but the underlying products are available.
-            </div>
-          </div>
-        </div>
-      </section>
+        actions={actionButtons}
+      /> */}
 
       <div className="grid gap-6 xl:grid-cols-[280px_minmax(0,1fr)]">
         <aside className="space-y-4 xl:sticky xl:top-24 self-start">
-          <section className="rounded-[1.8rem] border border-[var(--border-soft)] bg-white p-5 shadow-[0_18px_48px_-28px_rgba(15,23,42,0.25)]">
-            <div className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[var(--text-muted)]">
+          <section className="rounded-sm border border-slate-200 bg-white p-4 shadow-[0_4px_24px_-4px_rgba(25,28,30,0.06)]">
+            <div className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">
               Workflow navigator
             </div>
             <div className="mt-4 space-y-3">
@@ -456,10 +405,10 @@ export function OrderCreatePage() {
                 <div
                   key={step.name}
                   className={[
-                    "rounded-2xl border px-4 py-3",
+                    "rounded-sm border px-4 py-3",
                     step.done
-                      ? "border-[var(--brand-200)] bg-[var(--brand-100)]"
-                      : "border-[var(--border-soft)] bg-[var(--surface-muted)]",
+                      ? "border-emerald-200 bg-emerald-50"
+                      : "border-slate-200 bg-slate-50",
                   ]
                     .filter(Boolean)
                     .join(" ")}
@@ -469,8 +418,8 @@ export function OrderCreatePage() {
                       className={[
                         "mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold",
                         step.done
-                          ? "bg-[var(--brand-900)] text-white"
-                          : "bg-white text-[var(--text-secondary)]",
+                          ? "bg-slate-900 text-white"
+                          : "bg-white text-slate-600 border border-slate-200",
                       ]
                         .filter(Boolean)
                         .join(" ")}
@@ -478,10 +427,10 @@ export function OrderCreatePage() {
                       {index + 1}
                     </div>
                     <div>
-                      <div className="text-sm font-semibold text-[var(--text-primary)]">
+                      <div className="text-sm font-semibold text-slate-900">
                         {step.name}
                       </div>
-                      <div className="mt-1 text-xs text-[var(--text-secondary)]">
+                      <div className="mt-1 text-xs text-slate-600">
                         {step.detail}
                       </div>
                     </div>
@@ -491,16 +440,16 @@ export function OrderCreatePage() {
             </div>
           </section>
 
-          <section className="rounded-[1.8rem] border border-[var(--border-soft)] bg-white p-5 shadow-[0_18px_48px_-28px_rgba(15,23,42,0.25)]">
-            <div className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[var(--text-muted)]">
+          <section className="rounded-sm border border-slate-200 bg-white p-4 shadow-[0_4px_24px_-4px_rgba(25,28,30,0.06)]">
+            <div className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">
               Commitments
             </div>
-            <div className="mt-4 space-y-3 text-sm text-[var(--text-secondary)]">
-              <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3">
+            <div className="mt-4 space-y-3 text-sm text-slate-600">
+              <div className="rounded-sm border border-dashed border-slate-200 bg-slate-50 px-4 py-3">
                 Reservation is triggered only when the order is confirmed.
               </div>
-              <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3">
-                QC: {businessSettings.qualityCheckLeadDays} day(s) • Packaging:{" "}
+              <div className="rounded-sm border border-dashed border-slate-200 bg-slate-50 px-4 py-3">
+                QC: {businessSettings.qualityCheckLeadDays} day(s) | Packaging:{" "}
                 {businessSettings.packagingLeadDays} day(s)
               </div>
             </div>
@@ -545,14 +494,16 @@ export function OrderCreatePage() {
                     type="number"
                     min="0"
                     value={deliveryLeadDays}
-                    onChange={(event) => setDeliveryLeadDays(event.target.value)}
+                    onChange={(event) =>
+                      setDeliveryLeadDays(event.target.value)
+                    }
                   />
                 </label>
-                <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3">
+                <div className="rounded-sm border border-dashed border-slate-200 bg-slate-50 px-4 py-3">
                   <div className="app-label">Fixed lead items</div>
-                  <div className="mt-2 text-sm text-[var(--text-secondary)]">
-                    QC: {businessSettings.qualityCheckLeadDays} day(s) • Packaging:{" "}
-                    {businessSettings.packagingLeadDays} day(s)
+                  <div className="mt-2 text-sm text-slate-600">
+                    QC: {businessSettings.qualityCheckLeadDays} day(s) |
+                    Packaging: {businessSettings.packagingLeadDays} day(s)
                   </div>
                 </div>
                 <label className="space-y-2 md:col-span-2">
@@ -574,12 +525,20 @@ export function OrderCreatePage() {
               <FieldGrid
                 fields={[
                   { label: "Subtotal", value: formatNok(preview.subtotal) },
-                  { label: "Discount total", value: formatNok(preview.discountTotal) },
-                  { label: "Material + standard cost", value: formatNok(preview.costTotal) },
+                  {
+                    label: "Discount total",
+                    value: formatNok(preview.discountTotal),
+                  },
+                  {
+                    label: "Material + standard cost",
+                    value: formatNok(preview.costTotal),
+                  },
                   { label: "Profit", value: formatNok(preview.profitTotal) },
                   {
                     label: "Promised ETA",
-                    value: preview.eta.promisedEta ? formatDate(preview.eta.promisedEta) : "Pending",
+                    value: preview.eta.promisedEta
+                      ? formatDate(preview.eta.promisedEta)
+                      : "Pending",
                   },
                   {
                     label: "Customer selected",
@@ -589,8 +548,9 @@ export function OrderCreatePage() {
               />
 
               {!customerId ? (
-                <div className="rounded-2xl border border-dashed border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-4 text-sm text-[var(--text-secondary)]">
-                  Select a customer to apply product-specific pricing agreements to base products and derived component pricing.
+                <div className="rounded-sm border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+                  Select a customer to apply product-specific pricing agreements
+                  to base products and derived component pricing.
                 </div>
               ) : null}
             </DataPanel>
@@ -604,12 +564,24 @@ export function OrderCreatePage() {
             components={components}
             componentProducts={componentProducts}
             customerProducts={customerProducts}
-            onAddProduct={() => setLines((current) => [...current, createEmptyOrderLine("product")])}
-            onAddComponent={() => setLines((current) => [...current, createEmptyOrderLine("component")])}
+            onAddProduct={() =>
+              setLines((current) => [
+                ...current,
+                createEmptyOrderLine("product"),
+              ])
+            }
+            onAddComponent={() =>
+              setLines((current) => [
+                ...current,
+                createEmptyOrderLine("component"),
+              ])
+            }
             onCreateInlineComponent={() => setInlineComponentOpen(true)}
             onChange={(id, patch) =>
               setLines((current) =>
-                current.map((line) => (line.id === id ? { ...line, ...patch } : line)),
+                current.map((line) =>
+                  line.id === id ? { ...line, ...patch } : line,
+                ),
               )
             }
             onRemove={(id) =>
@@ -625,14 +597,23 @@ export function OrderCreatePage() {
             <ProductionStepsEditor
               steps={productionSteps}
               workCenters={workCenters}
-              onAdd={() => setProductionSteps((current) => [...current, createEmptyProductionStep()])}
+              onAdd={() =>
+                setProductionSteps((current) => [
+                  ...current,
+                  createEmptyProductionStep(),
+                ])
+              }
               onChange={(id, patch) =>
                 setProductionSteps((current) =>
-                  current.map((step) => (step.id === id ? { ...step, ...patch } : step)),
+                  current.map((step) =>
+                    step.id === id ? { ...step, ...patch } : step,
+                  ),
                 )
               }
               onRemove={(id) =>
-                setProductionSteps((current) => current.filter((step) => step.id !== id))
+                setProductionSteps((current) =>
+                  current.filter((step) => step.id !== id),
+                )
               }
             />
 
@@ -643,51 +624,155 @@ export function OrderCreatePage() {
             />
           </div>
 
-          <DataPanel
-            title="Execution notes"
-            description="Operational references derived from the current draft."
-          >
-            <div className="grid gap-4 xl:grid-cols-3">
-              <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-4">
-                <div className="app-label">Inline component creation</div>
-                <p className="mt-2 text-sm text-[var(--text-secondary)]">
-                  Use the inline component dialog when the customer is ordering an assembly that is not yet in ready-made stock. If &quot;save for future&quot; is off, the component is stored as inactive to avoid active-catalog reuse.
-                </p>
+          <section className="grid gap-4 2xl:grid-cols-2">
+            <div className="rounded-sm border border-slate-200 bg-white p-4 shadow-[0_4px_24px_-4px_rgba(25,28,30,0.06)]">
+              <div className="flex items-center justify-between gap-3">
+                <div className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">
+                  Draft workflow
+                </div>
+                <div
+                  className={[
+                    "rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em]",
+                    preview.eta.blocked
+                      ? "bg-rose-100 text-rose-700"
+                      : preview.eta.waitingOnInbound
+                        ? "bg-amber-100 text-amber-800"
+                        : "bg-emerald-100 text-emerald-700",
+                  ]
+                    .filter(Boolean)
+                    .join(" ")}
+                >
+                  {preview.eta.blocked
+                    ? "Material blocked"
+                    : preview.eta.waitingOnInbound
+                      ? "Waiting on inbound"
+                      : "Ready to promise"}
+                </div>
               </div>
-              <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-4">
-                <div className="app-label">Bottleneck materials</div>
-                <ul className="mt-2 space-y-2 text-sm text-[var(--text-secondary)]">
-                  {bottleneckRows.map((row) => (
-                    <li key={`${row.productId}-${row.totalQuantity}`}>
-                      {row.productName}: need {row.totalQuantity}, available {row.availableQuantity}
-                    </li>
-                  ))}
-                  {bottleneckRows.length === 0 ? (
-                    <li>Current lines do not include component breakdown requirements yet.</li>
-                  ) : null}
-                </ul>
-              </div>
-              <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-4">
-                <div className="app-label">Included categories</div>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {uniqueCategoryIds.length > 0 ? (
-                    uniqueCategoryIds.map((categoryId) => (
-                      <span
-                        key={categoryId}
-                        className="rounded-full bg-white px-3 py-1 text-xs font-semibold text-[var(--text-secondary)]"
-                      >
-                        {getCategoryName(categories, categoryId)}
-                      </span>
-                    ))
-                  ) : (
-                    <span className="text-sm text-[var(--text-secondary)]">
-                      Categories will appear after you select products or components.
-                    </span>
-                  )}
+
+              <div className="mt-5 space-y-4">
+                <div>
+                  <div className="text-sm font-semibold text-slate-900">
+                    {selectedCustomer?.name ?? "Customer not selected"}
+                  </div>
+                  <div className="mt-1 text-sm text-slate-600">
+                    Order date {formatDate(toIsoFromDateInput(orderDate))} |
+                    Delivery lead {deliveryLeadDays} day(s)
+                  </div>
+                </div>
+                <div className="grid gap-3 sm:grid-cols-2">
+                  <div className="rounded-sm border border-slate-200 bg-white px-4 py-3">
+                    <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">
+                      Stored promise
+                    </div>
+                    <div className="mt-2 text-base font-semibold text-slate-900">
+                      {preview.eta.promisedEta
+                        ? formatDate(preview.eta.promisedEta)
+                        : "Pending"}
+                    </div>
+                  </div>
+                  <div className="rounded-sm border border-slate-200 bg-white px-4 py-3">
+                    <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-slate-500">
+                      Production plan
+                    </div>
+                    <div className="mt-2 text-base font-semibold text-slate-900">
+                      {productionSteps.length} step(s)
+                    </div>
+                  </div>
+                </div>
+                <div className="rounded-sm border border-dashed border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+                  Components can be created inline from this workspace when
+                  ready-made stock does not exist but the underlying products
+                  are available.
                 </div>
               </div>
             </div>
-          </DataPanel>
+            <DataPanel
+              title="Execution notes"
+              description="Operational references derived from the current draft."
+            >
+              <div className="grid gap-4 xl:grid-cols-3">
+                <div className="rounded-sm border border-slate-200 bg-white px-4 py-4">
+                  <div className="app-label">Inline component creation</div>
+                  <p className="mt-2 text-sm text-slate-600">
+                    Use the inline component dialog when the customer is
+                    ordering an assembly that is not yet in ready-made stock. If
+                    &quot;save for future&quot; is off, the component is stored
+                    as inactive to avoid active-catalog reuse.
+                  </p>
+                </div>
+                <div className="rounded-sm border border-slate-200 bg-white px-4 py-4">
+                  <div className="app-label">Bottleneck materials</div>
+                  <ul className="mt-2 space-y-2 text-sm text-slate-600">
+                    {bottleneckRows.map((row) => (
+                      <li key={`${row.productId}-${row.totalQuantity}`}>
+                        {row.productName}: need {row.totalQuantity}, available{" "}
+                        {row.availableQuantity}
+                      </li>
+                    ))}
+                    {bottleneckRows.length === 0 ? (
+                      <li>
+                        Current lines do not include component breakdown
+                        requirements yet.
+                      </li>
+                    ) : null}
+                  </ul>
+                </div>
+                <div className="rounded-sm border border-slate-200 bg-white px-4 py-4">
+                  <div className="app-label">Included categories</div>
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {uniqueCategoryIds.length > 0 ? (
+                      uniqueCategoryIds.map((categoryId) => (
+                        <span
+                          key={categoryId}
+                          className="rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-700"
+                        >
+                          {getCategoryName(categories, categoryId)}
+                        </span>
+                      ))
+                    ) : (
+                      <span className="text-sm text-slate-600">
+                        Categories will appear after you select products or
+                        components.
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </DataPanel>
+          </section>
+
+          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+            <SnapshotCard
+              label="Grand total"
+              value={formatNok(preview.grandTotal)}
+              supporting="Live selling value from the current commercial draft."
+              tone="brand"
+            />
+            <SnapshotCard
+              label="Lines ready"
+              value={String(preview.itemCount)}
+              supporting="Resolved sellable lines with pricing and quantity inputs."
+            />
+
+            <SnapshotCard
+              label="Estimated profit"
+              value={formatNok(preview.profitTotal)}
+              supporting="Derived using material cost, production cost, and discounts."
+            />
+            <SnapshotCard
+              label="Material status"
+              value={materialStatus}
+              supporting={
+                preview.eta.blocked
+                  ? "At least one line lacks enough available or inbound material."
+                  : preview.eta.waitingOnInbound
+                    ? "Inbound supply is part of the earliest promise path."
+                    : "Current stock and ready-made inventory support the order."
+              }
+              tone={preview.eta.blocked ? "warning" : "default"}
+            />
+          </div>
         </div>
       </div>
 
@@ -702,7 +787,9 @@ export function OrderCreatePage() {
           setInlineComponentDraft(createEmptyInlineComponentDraft());
         }}
         onChange={setInlineComponentDraft}
-        onSave={() => createInlineComponentMutation.mutate(inlineComponentDraft)}
+        onSave={() =>
+          createInlineComponentMutation.mutate(inlineComponentDraft)
+        }
       />
     </div>
   );
