@@ -146,12 +146,14 @@ export function DataPanel({
   children,
   actions,
   className,
+  variant = "default",
 }: {
   title: string;
   description?: string;
   children: ReactNode;
   actions?: ReactNode;
   className?: string;
+  variant?: "default" | "ops";
 }) {
   return (
     <section className={`app-card overflow-hidden rounded-sm ${className || ""}`}>
