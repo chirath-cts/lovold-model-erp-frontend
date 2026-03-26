@@ -121,8 +121,23 @@ export function CustomerPricingPage() {
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.5fr)_minmax(340px,0.85fr)]">
-        <DataPanel title="Agreements" description="Filter product pricing agreements by customer or validity status." variant="ops">
-          <div className="mb-4 grid gap-4 md:grid-cols-2">
+        <div className="space-y-4">
+          <section className="app-ops-toolbar space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 className="text-base font-bold tracking-tight text-slate-800">
+                  Agreement filters
+                </h2>
+                <p className="text-sm text-slate-500">
+                  Filter base-product pricing agreements by customer or validity status.
+                </p>
+              </div>
+              <div className="rounded-sm border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-600 shadow-sm">
+                Active filters: {[customerId, statusFilter].filter(Boolean).length}
+              </div>
+            </div>
+
+            <div className="grid gap-4 md:grid-cols-2">
             <label className="space-y-2">
               <span className="app-label">Customer</span>
               <div className="app-ops-control">
@@ -147,7 +162,8 @@ export function CustomerPricingPage() {
                 </select>
               </div>
             </label>
-          </div>
+            </div>
+          </section>
 
           {agreements.length === 0 ? (
             <EmptyPanel
@@ -156,21 +172,30 @@ export function CustomerPricingPage() {
               variant="ops"
             />
           ) : (
-            <div className="app-ops-table-shell overflow-x-auto">
-              <table className="app-ops-table">
+            <section className="app-registry-table-block">
+              <div className="app-registry-table-header">
+                <div className="space-y-1">
+                  <h2 className="app-registry-table-header-title">Pricing agreements</h2>
+                  <p className="app-registry-table-header-copy">
+                    Product-only customer agreements. Component pricing remains derived from the underlying base products.
+                  </p>
+                </div>
+              </div>
+              <div className="app-registry-table-scroll">
+                <table className="app-registry-table app-registry-table-compact">
                 <thead>
                   <tr>
                     <th>Customer</th>
                     <th>Product</th>
-                    <th>Discount</th>
+                    <th className="text-right">Discount</th>
                     <th>Validity</th>
                     <th>Status</th>
-                    <th aria-label="Actions" />
+                    <th className="w-[60px] text-right" aria-label="Actions" />
                   </tr>
                 </thead>
                 <tbody>
                   {agreements.map((agreement) => (
-                    <tr key={agreement.id}>
+                    <tr key={agreement.id} className="app-registry-table-row">
                       <td>{customerLookup.get(agreement.customerId)?.name ?? agreement.customerId}</td>
                       <td>
                         <div className="space-y-1">
@@ -182,7 +207,9 @@ export function CustomerPricingPage() {
                           </div>
                         </div>
                       </td>
-                      <td>{agreement.discountPercent}%</td>
+                      <td className="text-right text-xs font-mono font-semibold text-slate-800">
+                        {agreement.discountPercent}%
+                      </td>
                       <td>
                         <div className="text-sm text-slate-500">
                           {agreement.startDate ? agreement.startDate.slice(0, 10) : "Open"} -{" "}
@@ -193,17 +220,62 @@ export function CustomerPricingPage() {
                         <StatusBadge value={agreement.status} />
                       </td>
                       <td className="text-right">
-                        <button type="button" className="app-button-ghost-sharp" disabled>
+                        <button
+                          type="button"
+                          className="inline-flex rounded-sm border border-slate-200 px-2 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-slate-400"
+                          disabled
+                        >
                           Edit
                         </button>
                       </td>
                     </tr>
                   ))}
                 </tbody>
-              </table>
-            </div>
+                </table>
+              </div>
+              <div className="app-registry-table-footer">
+                <span className="app-registry-table-footer-label">
+                  Showing 1-{agreements.length} of {agreements.length} agreements
+                </span>
+                <div className="app-registry-table-pagination">
+                  <button className="app-registry-table-pagination-button" disabled>
+                    <svg
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                  </button>
+                  <div className="flex items-center gap-1">
+                    <span className="app-registry-table-pagination-current">1</span>
+                  </div>
+                  <button className="app-registry-table-pagination-button">
+                    <svg
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </section>
           )}
-        </DataPanel>
+        </div>
 
         <DataPanel title="Create agreement" description="Customer pricing remains product-only in the finalized Lovold spec." variant="ops">
           <div className="space-y-4">

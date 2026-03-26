@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   useCategories,
@@ -13,7 +13,6 @@ import { ErrorState } from "@/shared/ui/ErrorState";
 import { LoadingState } from "@/shared/ui/LoadingState";
 import { StatusBadge } from "@/shared/ui/StatusBadge";
 import {
-  DataPanel,
   EmptyPanel,
   InventoryPageHeader,
   SummaryCard,
@@ -24,6 +23,7 @@ import {
 } from "@/features/inventory/shared/catalogHelpers";
 
 export function ComponentsPage() {
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [status, setStatus] = useState("");
@@ -193,24 +193,29 @@ export function ComponentsPage() {
           }
         />
       ) : (
-        <DataPanel
-          title="Components"
-          description="Composite sellable items with ready-made stock and a production-cost layer."
-          variant="ops"
-        >
-          <div className="app-ops-table-shell overflow-x-auto">
-            <table className="app-ops-table">
+        <section className="app-registry-table-block">
+          <div className="app-registry-table-header">
+            <div className="space-y-1">
+              <h2 className="app-registry-table-header-title">Components</h2>
+              <p className="app-registry-table-header-copy">
+                Composite sellable items with ready-made stock, derived pricing,
+                and a stored production-cost layer.
+              </p>
+            </div>
+          </div>
+          <div className="app-registry-table-scroll">
+            <table className="app-registry-table app-registry-table-compact">
               <thead>
                 <tr>
-                  <th>SKU</th>
-                  <th>Component</th>
-                  <th>Category</th>
-                  <th>Derived price</th>
-                  <th>Standard production</th>
-                  <th>Available</th>
-                  <th>BOM rows</th>
-                  <th>Status</th>
-                  <th aria-label="Actions" />
+                  <th className="w-[120px]">SKU</th>
+                  <th className="w-[30%]">Component</th>
+                  <th className="w-[14%]">Category</th>
+                  <th className="w-[12%] text-right">Derived price</th>
+                  <th className="w-[12%] text-right">Standard production</th>
+                  <th className="w-[7%] text-right">Available</th>
+                  <th className="w-[8%] text-right">BOM rows</th>
+                  <th className="w-[8%]">Status</th>
+                  <th className="w-[52px] text-right" aria-label="Actions" />
                 </tr>
               </thead>
               <tbody>
@@ -224,32 +229,58 @@ export function ComponentsPage() {
                   );
 
                   return (
-                    <tr key={component.id}>
-                      <td className="font-mono text-xs uppercase tracking-[0.12em] text-slate-500">
+                    <tr
+                      key={component.id}
+                      className="app-registry-table-row group cursor-pointer"
+                      onClick={() => navigate(`/inventory/components/${component.id}`)}
+                    >
+                      <td className="text-xs font-mono font-bold text-slate-800">
                         {component.sku}
                       </td>
                       <td>
-                        <div className="space-y-1">
-                          <div className="font-medium text-slate-800">
-                            {component.name}
+                        <div className="flex min-w-0 items-start gap-3">
+                          <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-sm border border-slate-200 bg-slate-50">
+                            {component.imageUrl ? (
+                              <img
+                                className="h-full w-full object-cover"
+                                src={component.imageUrl}
+                                alt={component.name}
+                              />
+                            ) : (
+                              <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">
+                                CMP
+                              </span>
+                            )}
                           </div>
-                          <div className="text-xs text-slate-500">
-                            {component.description}
+                          <div className="min-w-0 max-w-[260px] space-y-1">
+                            <div className="text-sm font-semibold leading-5 text-slate-800">
+                              {component.name}
+                            </div>
+                            <div className="line-clamp-2 text-xs leading-5 text-slate-500">
+                              {component.description}
+                            </div>
+                            <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">
+                              {component.unit}
+                            </div>
                           </div>
                         </div>
                       </td>
-                      <td>{categoryLookup.get(component.categoryId) ?? "Unassigned"}</td>
-                      <td>
+                      <td className="max-w-[140px] text-sm leading-6 text-slate-600">
+                        {categoryLookup.get(component.categoryId) ?? "Unassigned"}
+                      </td>
+                      <td className="text-right">
                         <CurrencyText
                           value={getComponentDerivedBasePrice(component, rows, products)}
                         />
                       </td>
-                      <td>
+                      <td className="text-right">
                         <CurrencyText value={component.standardProductionCost} />
                       </td>
-                      <td className="font-semibold text-[var(--brand-900)]">{available}</td>
-                      <td>
-                        <span className="rounded-sm bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
+                      <td className="text-right text-xs font-mono font-semibold text-emerald-600">
+                        {available}
+                      </td>
+                      <td className="text-right">
+                        <span className="rounded-sm bg-slate-100 px-2.5 py-1 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-600">
                           {rows.length} items
                         </span>
                       </td>
@@ -258,10 +289,24 @@ export function ComponentsPage() {
                       </td>
                       <td className="text-right">
                         <Link
-                          className="app-button-ghost-sharp px-2 py-1 text-xs text-[var(--brand-900)]"
+                          className="inline-flex rounded-sm p-1 text-slate-500 transition-all hover:bg-slate-200 hover:text-slate-700 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-300"
                           to={`/inventory/components/${component.id}`}
+                          aria-label={`View ${component.name}`}
+                          onClick={(event) => event.stopPropagation()}
                         >
-                          View
+                          <svg
+                            className="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            strokeWidth={2}
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M12 5v14m0 0-7-7m7 7 7-7"
+                            />
+                          </svg>
                         </Link>
                       </td>
                     </tr>
@@ -270,7 +315,47 @@ export function ComponentsPage() {
               </tbody>
             </table>
           </div>
-        </DataPanel>
+          <div className="app-registry-table-footer">
+            <span className="app-registry-table-footer-label">
+              Showing 1-{components.length} of {components.length} components
+            </span>
+            <div className="app-registry-table-pagination">
+              <button className="app-registry-table-pagination-button" disabled>
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
+              <div className="flex items-center gap-1">
+                <span className="app-registry-table-pagination-current">1</span>
+              </div>
+              <button className="app-registry-table-pagination-button">
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </section>
       )}
     </div>
   );

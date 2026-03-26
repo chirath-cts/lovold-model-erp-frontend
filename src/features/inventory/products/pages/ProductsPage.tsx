@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useCategories, useProducts } from "@/services/hooks/useDomainQueries";
 import { SearchIcon } from "@/shared/ui/icons";
@@ -8,7 +8,6 @@ import { ErrorState } from "@/shared/ui/ErrorState";
 import { LoadingState } from "@/shared/ui/LoadingState";
 import { StatusBadge } from "@/shared/ui/StatusBadge";
 import {
-  DataPanel,
   EmptyPanel,
   InventoryPageHeader,
 } from "@/features/inventory/shared/InventoryScaffold";
@@ -20,6 +19,7 @@ import {
 const compactNumber = new Intl.NumberFormat("en-US");
 
 export function ProductsPage() {
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [categoryId, setCategoryId] = useState("");
   const [status, setStatus] = useState("");
@@ -234,25 +234,30 @@ export function ProductsPage() {
           }
         />
       ) : (
-        <DataPanel
-          title="Products"
-          description="Base inventory items that can be sold directly or consumed inside components."
-          variant="ops"
-        >
-          <div className="app-ops-table-shell overflow-x-auto">
-            <table className="app-ops-table w-full table-fixed">
+        <section className="app-registry-table-block">
+          <div className="app-registry-table-header">
+            <div className="space-y-1">
+              <h2 className="app-registry-table-header-title">Products</h2>
+              <p className="app-registry-table-header-copy">
+                Base inventory items that can be sold directly or consumed inside
+                components.
+              </p>
+            </div>
+          </div>
+          <div className="app-registry-table-scroll">
+            <table className="app-registry-table app-registry-table-compact w-full">
               <thead>
                 <tr>
                   <th className="w-[96px]">SKU</th>
-                  <th className="w-[35%]">Product</th>
-                  <th className="w-[124px]">Category</th>
-                  <th className="w-[118px] text-right">Base price</th>
-                  <th className="w-[68px] text-right">Stock</th>
-                  <th className="w-[78px] text-right">Reserved</th>
-                  <th className="w-[78px] text-right">Available</th>
-                  <th className="w-[84px]">Health</th>
-                  <th className="w-[84px]">Status</th>
-                  <th className="w-[78px] text-right" aria-label="Actions" />
+                  <th className="w-[30%]">Product</th>
+                  <th className="w-[14%]">Category</th>
+                  <th className="w-[12%] text-right">Base price</th>
+                  <th className="w-[6%] text-right">Stock</th>
+                  <th className="w-[7%] text-right">Reserved</th>
+                  <th className="w-[7%] text-right">Available</th>
+                  <th className="w-[8%]">Health</th>
+                  <th className="w-[8%]">Status</th>
+                  <th className="w-[52px] text-right" aria-label="Actions" />
                 </tr>
               </thead>
               <tbody>
@@ -264,12 +269,16 @@ export function ProductsPage() {
                   const health = getProductStockHealth(product);
 
                   return (
-                    <tr key={product.id}>
-                      <td className="font-mono text-xs uppercase tracking-[0.12em] text-[var(--brand-700)]">
+                    <tr
+                      key={product.id}
+                      className="app-registry-table-row group cursor-pointer"
+                      onClick={() => navigate(`/inventory/products/${product.id}`)}
+                    >
+                      <td className="text-xs font-mono font-bold text-slate-800">
                         {product.sku}
                       </td>
                       <td>
-                        <div className="flex items-start gap-3">
+                        <div className="flex min-w-0 items-start gap-3">
                           <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-sm border border-slate-200 bg-slate-50">
                             {product.imageUrl ? (
                               <img
@@ -283,37 +292,39 @@ export function ProductsPage() {
                               </span>
                             )}
                           </div>
-                          <div className="min-w-0 space-y-1 pr-2">
-                            <div className="text-[15px] font-semibold leading-5 text-slate-800">
+                          <div className="min-w-0 max-w-[240px] space-y-1">
+                            <div className="text-sm font-semibold leading-5 text-slate-800">
                               {product.name}
                             </div>
-                            <div className="truncate text-xs leading-5 text-slate-500">
+                            <div className="line-clamp-2 text-xs leading-5 text-slate-500">
                               {product.description}
                             </div>
-                            <div className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
+                            <div className="text-[11px] font-bold uppercase tracking-[0.18em] text-slate-500">
                               {product.unit}
                             </div>
                           </div>
                         </div>
                       </td>
-                      <td className="text-sm leading-6 text-slate-600">
+                      <td className="max-w-[140px] text-sm leading-6 text-slate-600">
                         {categoryLookup.get(product.categoryId) ?? "Unassigned"}
                       </td>
-                      <td>
-                        <div className="space-y-1 whitespace-nowrap text-right">
-                          <div className="font-semibold text-[var(--text-primary)]">
+                      <td className="text-right">
+                        <div className="space-y-1 whitespace-nowrap">
+                          <div className="text-xs font-mono font-bold text-slate-800">
                             <CurrencyText value={product.basePrice} />
                           </div>
-                          <div className="text-xs text-[var(--text-muted)]">
+                          <div className="text-xs text-slate-500">
                             Buy <CurrencyText value={product.purchasePrice} />
                           </div>
                         </div>
                       </td>
-                      <td className="text-right font-semibold">{product.stockQuantity}</td>
-                      <td className="text-right font-semibold text-slate-600">
+                      <td className="text-right text-xs font-mono font-bold text-slate-800">
+                        {product.stockQuantity}
+                      </td>
+                      <td className="text-right text-xs font-medium text-slate-600">
                         {product.reservedQuantity}
                       </td>
-                      <td className="text-right font-semibold text-[var(--brand-900)]">
+                      <td className="text-right text-xs font-mono font-semibold text-emerald-600">
                         {available}
                       </td>
                       <td>
@@ -323,18 +334,46 @@ export function ProductsPage() {
                         <StatusBadge value={product.status} />
                       </td>
                       <td className="text-right">
-                        <div className="flex justify-end gap-1 text-sm font-semibold">
+                        <div className="flex justify-end gap-1 opacity-100 transition-all sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-within:opacity-100">
                           <Link
-                            className="app-button-ghost-sharp px-2 py-1 text-xs"
+                            className="inline-flex rounded-sm p-1 text-slate-500 transition-all hover:bg-slate-200 hover:text-slate-700 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-300"
                             to={`/inventory/products/${product.id}/edit`}
+                            aria-label={`Edit ${product.name}`}
+                            onClick={(event) => event.stopPropagation()}
                           >
-                            Edit
+                            <svg
+                              className="h-4 w-4"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth={2}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5m-1.414-9.414a2 2 0 1 1 2.828 2.828L12 15l-4 1 1-4 8.586-8.586Z"
+                              />
+                            </svg>
                           </Link>
                           <Link
-                            className="app-button-ghost-sharp px-2 py-1 text-xs text-[var(--brand-900)]"
+                            className="inline-flex rounded-sm p-1 text-slate-500 transition-all hover:bg-slate-200 hover:text-slate-700 focus:opacity-100 focus:outline-none focus:ring-2 focus:ring-slate-300"
                             to={`/inventory/products/${product.id}`}
+                            aria-label={`View ${product.name}`}
+                            onClick={(event) => event.stopPropagation()}
                           >
-                            View
+                            <svg
+                              className="h-4 w-4"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                              strokeWidth={2}
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M12 5v14m0 0-7-7m7 7 7-7"
+                              />
+                            </svg>
                           </Link>
                         </div>
                       </td>
@@ -344,7 +383,47 @@ export function ProductsPage() {
               </tbody>
             </table>
           </div>
-        </DataPanel>
+          <div className="app-registry-table-footer">
+            <span className="app-registry-table-footer-label">
+              Showing 1-{products.length} of {products.length} products
+            </span>
+            <div className="app-registry-table-pagination">
+              <button className="app-registry-table-pagination-button" disabled>
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
+              <div className="flex items-center gap-1">
+                <span className="app-registry-table-pagination-current">1</span>
+              </div>
+              <button className="app-registry-table-pagination-button">
+                <svg
+                  className="h-5 w-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </section>
       )}
     </div>
   );

@@ -1,12 +1,11 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { queryClient } from "@/app/queryClient";
 import {
   DataPanel,
   FieldGrid,
-  InventoryPageHeader,
 } from "@/features/inventory/shared/InventoryScaffold";
 import { InlineComponentDialog } from "@/features/orders/components/InlineComponentDialog";
 import { OrderEtaPanel } from "@/features/orders/components/OrderEtaPanel";
