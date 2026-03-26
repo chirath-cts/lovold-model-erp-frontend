@@ -173,14 +173,15 @@ export function ProductFormPage() {
         eyebrow="Inventory / Products"
         title={isEdit ? "Edit product" : "Create product"}
         description="Maintain a base Lovold sellable product with reservation-aware stock, pricing, and category classification."
+        variant="ops"
         actions={
           <>
-            <Link className="app-button-secondary" to={isEdit ? `/inventory/products/${productId}` : "/inventory/products"}>
+            <Link className="app-button-secondary-sharp" to={isEdit ? `/inventory/products/${productId}` : "/inventory/products"}>
               Cancel
             </Link>
             <button
               type="button"
-              className="app-button-primary disabled:cursor-not-allowed disabled:opacity-50"
+              className="app-button-primary-sharp disabled:cursor-not-allowed disabled:opacity-50"
               disabled={!canSave || saveMutation.isPending}
               onClick={() => saveMutation.mutate()}
             >
@@ -190,18 +191,18 @@ export function ProductFormPage() {
         }
       />
 
-      <div className="flex flex-wrap items-end justify-between gap-4 rounded-3xl border border-[var(--border-soft)] bg-[var(--surface-soft)] px-5 py-4">
+      <div className="app-ops-toolbar flex flex-wrap items-end justify-between gap-4">
         <div>
-          <div className="text-[11px] font-black uppercase tracking-[0.22em] text-[var(--brand-700)]/70">
+          <div className="app-ops-eyebrow">
             Catalog entry
           </div>
-          <p className="mt-1 text-sm text-[var(--text-secondary)]">
+          <p className="mt-1 text-sm text-slate-500">
             {isEdit
               ? "Refine pricing, stock thresholds, and catalog identity for this Lovold product."
               : "Initialize a new industrial asset inside the Lovold product ledger."}
           </p>
         </div>
-        <div className="rounded-full border border-[var(--border-soft)] bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-[var(--text-secondary)]">
+        <div className="rounded-sm border border-slate-200 bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600 shadow-sm">
           {isEdit ? "Editing live record" : "Draft mode"}
         </div>
       </div>
@@ -211,12 +212,13 @@ export function ProductFormPage() {
           <DataPanel
             title="General information"
             description="Capture the identity fields that control catalog display and commercial lookup."
+            variant="ops"
           >
             <div className="grid gap-4 md:grid-cols-2">
               <label className="space-y-2 md:col-span-2">
                 <span className="app-label">Product name</span>
                 <input
-                  className="app-input"
+                  className="app-input-sharp"
                   value={form.name}
                   onChange={(event) => updateField("name", event.target.value)}
                   placeholder="Feed blower unit, cage distribution manifold..."
@@ -226,14 +228,14 @@ export function ProductFormPage() {
                 <span className="app-label">SKU identification</span>
                 <div className="flex gap-2">
                   <input
-                    className="app-input font-mono"
+                    className="app-input-sharp font-mono"
                     value={form.sku}
                     onChange={(event) => updateField("sku", event.target.value)}
                     placeholder="LOV-FEED-BLOW-420"
                   />
                   <button
                     type="button"
-                    className="app-button-secondary shrink-0 px-3"
+                    className="app-button-secondary-sharp shrink-0 px-3"
                     onClick={() =>
                       updateField(
                         "sku",
@@ -248,7 +250,7 @@ export function ProductFormPage() {
               <label className="space-y-2">
                 <span className="app-label">Asset category</span>
                 <select
-                  className="app-select"
+                  className="app-select-sharp"
                   value={form.categoryId}
                   onChange={(event) => updateField("categoryId", event.target.value)}
                 >
@@ -263,7 +265,7 @@ export function ProductFormPage() {
               <label className="space-y-2 md:col-span-2">
                 <span className="app-label">Technical description</span>
                 <textarea
-                  className="app-textarea"
+                  className="app-textarea-sharp"
                   rows={5}
                   value={form.description}
                   onChange={(event) => updateField("description", event.target.value)}
@@ -273,7 +275,7 @@ export function ProductFormPage() {
               <label className="space-y-2 md:col-span-2">
                 <span className="app-label">Image URL</span>
                 <input
-                  className="app-input"
+                  className="app-input-sharp"
                   value={form.imageUrl}
                   onChange={(event) => updateField("imageUrl", event.target.value)}
                   placeholder="https://..."
@@ -285,12 +287,13 @@ export function ProductFormPage() {
           <DataPanel
             title="Pricing strategy"
             description="Maintain the list price and purchase cost that drive order pricing and margin visibility."
+            variant="ops"
           >
             <div className="grid gap-4 md:grid-cols-3">
               <label className="space-y-2">
                 <span className="app-label">Base price (NOK)</span>
                 <input
-                  className="app-input text-right font-mono"
+                  className="app-input-sharp text-right font-mono"
                   type="number"
                   min="0"
                   value={form.basePrice}
@@ -300,7 +303,7 @@ export function ProductFormPage() {
               <label className="space-y-2">
                 <span className="app-label">Purchase price (NOK)</span>
                 <input
-                  className="app-input text-right font-mono"
+                  className="app-input-sharp text-right font-mono"
                   type="number"
                   min="0"
                   value={form.purchasePrice}
@@ -309,31 +312,31 @@ export function ProductFormPage() {
               </label>
               <div className="space-y-2">
                 <span className="app-label">Gross margin preview</span>
-                <div className="flex h-[42px] items-center justify-end rounded-xl border border-[var(--border-soft)] bg-[var(--surface-soft)] px-3.5 font-mono text-sm font-bold text-[var(--brand-900)]">
+                <div className="flex h-[42px] items-center justify-end rounded-sm border border-slate-200 bg-slate-50 px-3.5 font-mono text-sm font-bold text-[var(--brand-900)]">
                   {grossMargin}%
                 </div>
               </div>
             </div>
             <div className="grid gap-4 md:grid-cols-2">
-              <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-soft)] p-4">
-                <div className="text-[10px] font-black uppercase tracking-[0.18em] text-[var(--text-muted)]">
+              <div className="rounded-sm border border-slate-200 bg-slate-50 p-4">
+                <div className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">
                   Gross spread
                 </div>
                 <div className="mt-2 text-2xl font-black tracking-tight text-[var(--text-primary)]">
                   {compactCurrency.format(grossSpread)}
                 </div>
-                <p className="mt-1 text-sm text-[var(--text-secondary)]">
+                <p className="mt-1 text-sm text-slate-500">
                   Difference between list price and purchase price.
                 </p>
               </div>
-              <div className="rounded-2xl border border-[var(--border-soft)] bg-white p-4">
-                <div className="text-[10px] font-black uppercase tracking-[0.18em] text-[var(--text-muted)]">
+              <div className="rounded-sm border border-slate-200 bg-white p-4">
+                <div className="text-[10px] font-black uppercase tracking-[0.18em] text-slate-500">
                   Category assignment
                 </div>
                 <div className="mt-2 text-lg font-semibold text-[var(--text-primary)]">
                   {selectedCategoryName}
                 </div>
-                <p className="mt-1 text-sm text-[var(--text-secondary)]">
+                <p className="mt-1 text-sm text-slate-500">
                   Used by product filters and customer pricing lookup.
                 </p>
               </div>
@@ -342,20 +345,20 @@ export function ProductFormPage() {
         </div>
 
         <aside className="space-y-6">
-          <section className="app-card border-l-4 border-l-[var(--brand-700)] bg-[var(--surface-soft)] p-6">
+          <section className="app-ops-card app-ops-card-muted border-l-4 border-l-[var(--brand-700)] p-5">
             <div className="space-y-4">
               <div>
-                <div className="text-[11px] font-black uppercase tracking-[0.22em] text-[var(--brand-700)]/70">
+                <div className="app-ops-eyebrow">
                   Inventory thresholds
                 </div>
-                <p className="mt-1 text-sm text-[var(--text-secondary)]">
+                <p className="mt-1 text-sm text-slate-500">
                   Reservation-aware inputs that affect availability and reorder alerts.
                 </p>
               </div>
               <label className="space-y-2">
                 <span className="app-label">Unit</span>
                 <input
-                  className="app-input"
+                  className="app-input-sharp"
                   value={form.unit}
                   onChange={(event) => updateField("unit", event.target.value)}
                 />
@@ -363,7 +366,7 @@ export function ProductFormPage() {
               <label className="space-y-2">
                 <span className="app-label">Stock quantity</span>
                 <input
-                  className="app-input font-mono"
+                  className="app-input-sharp font-mono"
                   type="number"
                   min="0"
                   value={form.stockQuantity}
@@ -373,7 +376,7 @@ export function ProductFormPage() {
               <label className="space-y-2">
                 <span className="app-label">Reserved quantity</span>
                 <input
-                  className="app-input font-mono"
+                  className="app-input-sharp font-mono"
                   type="number"
                   min="0"
                   value={form.reservedQuantity}
@@ -383,7 +386,7 @@ export function ProductFormPage() {
               <label className="space-y-2">
                 <span className="app-label">Reorder level</span>
                 <input
-                  className="app-input font-mono"
+                  className="app-input-sharp font-mono"
                   type="number"
                   min="0"
                   value={form.reorderLevel}
@@ -393,7 +396,7 @@ export function ProductFormPage() {
               <label className="space-y-2">
                 <span className="app-label">Status</span>
                 <select
-                  className="app-select"
+                  className="app-select-sharp"
                   value={form.status}
                   onChange={(event) =>
                     updateField("status", event.target.value as "active" | "inactive")
@@ -406,8 +409,8 @@ export function ProductFormPage() {
             </div>
           </section>
 
-          <section className="app-card p-5">
-            <div className="overflow-hidden rounded-2xl border-2 border-dashed border-[var(--border-soft)] bg-[var(--surface-soft)]">
+          <section className="app-ops-card p-4">
+            <div className="overflow-hidden rounded-sm border border-dashed border-slate-200 bg-slate-50">
               <div className="aspect-square">
                 {form.imageUrl ? (
                   <img
@@ -416,7 +419,7 @@ export function ProductFormPage() {
                     alt={form.name || "Product preview"}
                   />
                 ) : (
-                  <div className="flex h-full flex-col items-center justify-center gap-2 text-center text-sm text-[var(--text-muted)]">
+                  <div className="flex h-full flex-col items-center justify-center gap-2 text-center text-sm text-slate-500">
                     <span className="text-[11px] font-black uppercase tracking-[0.18em]">
                       Product preview
                     </span>
@@ -426,32 +429,32 @@ export function ProductFormPage() {
               </div>
             </div>
             <div className="mt-4 space-y-3">
-              <div className="text-[11px] font-black uppercase tracking-[0.18em] text-[var(--text-muted)]">
+              <div className="text-[11px] font-black uppercase tracking-[0.18em] text-slate-500">
                 Save readiness
               </div>
-              <div className="text-sm font-semibold text-[var(--text-primary)]">
+              <div className="text-sm font-semibold text-slate-800">
                 {completedChecks}/4 core fields completed
               </div>
-              <div className="h-2 overflow-hidden rounded-full bg-[var(--surface-soft)]">
+              <div className="h-2 overflow-hidden rounded-full bg-slate-200">
                 <div
                   className="h-full rounded-full bg-[var(--brand-700)]"
                   style={{ width: `${(completedChecks / 4) * 100}%` }}
                 />
               </div>
               <div className="grid gap-3">
-                <div className="rounded-2xl border border-[var(--border-soft)] bg-white p-3">
-                  <div className="text-[10px] font-black uppercase tracking-[0.16em] text-[var(--text-muted)]">
+                <div className="rounded-sm border border-slate-200 bg-white p-3">
+                  <div className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-500">
                     Available quantity
                   </div>
-                  <div className="mt-2 text-xl font-black tracking-tight text-[var(--text-primary)]">
+                  <div className="mt-2 text-xl font-black tracking-tight text-slate-800">
                     {availableQuantity} {form.unit || "units"}
                   </div>
                 </div>
-                <div className="rounded-2xl border border-[var(--border-soft)] bg-white p-3">
-                  <div className="text-[10px] font-black uppercase tracking-[0.16em] text-[var(--text-muted)]">
+                <div className="rounded-sm border border-slate-200 bg-white p-3">
+                  <div className="text-[10px] font-black uppercase tracking-[0.16em] text-slate-500">
                     Reorder buffer
                   </div>
-                  <div className="mt-2 text-xl font-black tracking-tight text-[var(--text-primary)]">
+                  <div className="mt-2 text-xl font-black tracking-tight text-slate-800">
                     {Math.max(availableQuantity - reorderLevel, 0)} {form.unit || "units"}
                   </div>
                 </div>

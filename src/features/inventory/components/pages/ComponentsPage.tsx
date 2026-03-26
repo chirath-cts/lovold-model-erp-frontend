@@ -7,6 +7,7 @@ import {
   useComponents,
   useProducts,
 } from "@/services/hooks/useDomainQueries";
+import { SearchIcon } from "@/shared/ui/icons";
 import { CurrencyText } from "@/shared/ui/CurrencyText";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { LoadingState } from "@/shared/ui/LoadingState";
@@ -79,8 +80,9 @@ export function ComponentsPage() {
         eyebrow="Inventory / Components"
         title="Components Registry"
         description="Manage ready-made component assemblies, standard production cost, and composition across Lovold aquaculture solutions."
+        variant="ops"
         actions={
-          <Link className="app-button-primary" to="/inventory/components/new">
+          <Link className="app-button-primary-sharp" to="/inventory/components/new">
             Create component
           </Link>
         }
@@ -91,16 +93,19 @@ export function ComponentsPage() {
           label="Active components"
           value={String(components.filter((component) => component.status === "active").length)}
           supporting="Composite sellable assemblies in the registry."
+          variant="ops"
         />
         <SummaryCard
           label="Ready-made stock"
           value={String(totalReadyMade)}
           supporting="Finished component units currently on hand."
+          variant="ops"
         />
         <SummaryCard
           label="Reserved assemblies"
           value={String(totalReserved)}
           supporting="Committed units already allocated to customer orders."
+          variant="ops"
         />
         <SummaryCard
           label="Standard production cost"
@@ -111,59 +116,78 @@ export function ComponentsPage() {
           }).format(standardProductionTotal)}
           tone="brand"
           supporting="Stored fixed production layer across all components."
+          variant="ops"
         />
       </div>
 
-      <DataPanel
-        title="Catalog filters"
-        description="Search by component identity, then narrow the registry by category and status."
-      >
+      <section className="app-ops-toolbar space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 className="text-base font-bold tracking-tight text-slate-800">
+              Catalog filters
+            </h2>
+            <p className="text-sm text-slate-500">
+              Search by component identity, then narrow the registry by category and status.
+            </p>
+          </div>
+          <div className="rounded-sm border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-600 shadow-sm">
+            Active filters: {[search.trim(), categoryId, status].filter(Boolean).length}
+          </div>
+        </div>
         <div className="grid gap-4 md:grid-cols-3">
           <label className="space-y-2">
             <span className="app-label">Search</span>
-            <input
-              className="app-input"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder="Monitoring bundle, LOV-COMP..."
-            />
+            <div className="app-ops-control">
+              <SearchIcon className="h-4 w-4 shrink-0 text-slate-400" />
+              <input
+                className="app-input-sharp min-w-0 flex-1 bg-transparent px-0 py-0 shadow-none ring-0 focus:ring-0"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder="Monitoring bundle, LOV-COMP..."
+              />
+            </div>
           </label>
           <label className="space-y-2">
             <span className="app-label">Category</span>
-            <select
-              className="app-select"
-              value={categoryId}
-              onChange={(event) => setCategoryId(event.target.value)}
-            >
-              <option value="">All categories</option>
-              {categories.map((category) => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-            </select>
+            <div className="app-ops-control">
+              <select
+                className="app-select-sharp bg-transparent px-0 py-0 shadow-none ring-0 focus:ring-0"
+                value={categoryId}
+                onChange={(event) => setCategoryId(event.target.value)}
+              >
+                <option value="">All categories</option>
+                {categories.map((category) => (
+                  <option key={category.id} value={category.id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </label>
           <label className="space-y-2">
             <span className="app-label">Status</span>
-            <select
-              className="app-select"
-              value={status}
-              onChange={(event) => setStatus(event.target.value)}
-            >
-              <option value="">All statuses</option>
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-            </select>
+            <div className="app-ops-control">
+              <select
+                className="app-select-sharp bg-transparent px-0 py-0 shadow-none ring-0 focus:ring-0"
+                value={status}
+                onChange={(event) => setStatus(event.target.value)}
+              >
+                <option value="">All statuses</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+            </div>
           </label>
         </div>
-      </DataPanel>
+      </section>
 
       {components.length === 0 ? (
         <EmptyPanel
           title="No components match these filters"
           copy="Create a component assembly when Lovold needs a reusable bundle built from one or more base products."
+          variant="ops"
           action={
-            <Link className="app-button-secondary" to="/inventory/components/new">
+            <Link className="app-button-secondary-sharp" to="/inventory/components/new">
               Add component
             </Link>
           }
@@ -172,9 +196,10 @@ export function ComponentsPage() {
         <DataPanel
           title="Components"
           description="Composite sellable items with ready-made stock and a production-cost layer."
+          variant="ops"
         >
-          <div className="app-table-shell">
-            <table className="app-table">
+          <div className="app-ops-table-shell overflow-x-auto">
+            <table className="app-ops-table">
               <thead>
                 <tr>
                   <th>SKU</th>
@@ -200,15 +225,15 @@ export function ComponentsPage() {
 
                   return (
                     <tr key={component.id}>
-                      <td className="font-mono text-xs uppercase tracking-[0.12em] text-[var(--text-secondary)]">
+                      <td className="font-mono text-xs uppercase tracking-[0.12em] text-slate-500">
                         {component.sku}
                       </td>
                       <td>
                         <div className="space-y-1">
-                          <div className="font-medium text-[var(--text-primary)]">
+                          <div className="font-medium text-slate-800">
                             {component.name}
                           </div>
-                          <div className="text-xs text-[var(--text-secondary)]">
+                          <div className="text-xs text-slate-500">
                             {component.description}
                           </div>
                         </div>
@@ -224,7 +249,7 @@ export function ComponentsPage() {
                       </td>
                       <td className="font-semibold text-[var(--brand-900)]">{available}</td>
                       <td>
-                        <span className="rounded-full bg-[var(--surface-muted)] px-3 py-1 text-xs font-semibold text-[var(--text-secondary)]">
+                        <span className="rounded-sm bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-600">
                           {rows.length} items
                         </span>
                       </td>
@@ -233,7 +258,7 @@ export function ComponentsPage() {
                       </td>
                       <td className="text-right">
                         <Link
-                          className="text-sm font-semibold text-[var(--brand-900)] hover:underline"
+                          className="app-button-ghost-sharp px-2 py-1 text-xs text-[var(--brand-900)]"
                           to={`/inventory/components/${component.id}`}
                         >
                           View
