@@ -255,10 +255,24 @@ export function ComponentFormPage() {
         }
       />
 
+      <div className="app-ops-toolbar flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <div className="app-ops-eyebrow">Component assembly</div>
+          <p className="mt-1 text-sm text-slate-500">
+            {isEdit
+              ? "Refine the finished assembly, bill of materials, and standard production layer."
+              : "Initialize a reusable Lovold component built from one or more base products."}
+          </p>
+        </div>
+        <div className="rounded-sm border border-slate-200 bg-white px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-slate-600 shadow-sm">
+          {isEdit ? "Editing live record" : "Draft mode"}
+        </div>
+      </div>
+
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.5fr)_minmax(360px,0.9fr)]">
         <DataPanel
-          title="Identity and composition"
-          description="Components are sellable assemblies. Capture master data here, then define the base-product rows that make up one finished unit."
+          title="General information"
+          description="Capture the component identity used in the sellable catalog, then define the base-product rows that make up one finished unit."
           variant="ops"
         >
           <div className="grid gap-4 md:grid-cols-2">
@@ -323,10 +337,10 @@ export function ComponentFormPage() {
           <div className="mt-8 space-y-4">
             <div className="flex items-center justify-between gap-3">
               <div>
-                <div className="text-sm font-semibold text-slate-800">
+                <div className="app-ops-eyebrow text-slate-500">
                   Composition rows
                 </div>
-                <div className="text-sm text-slate-500">
+                <div className="mt-1 text-sm text-slate-500">
                   Products and quantities required for one component unit.
                 </div>
               </div>
@@ -338,7 +352,7 @@ export function ComponentFormPage() {
             {form.composition.map((row, index) => (
               <div
                 key={row.id}
-                className="grid gap-4 rounded-sm border border-slate-200 bg-slate-50 p-4 md:grid-cols-[minmax(0,1fr)_140px_auto]"
+                className="app-ops-card grid gap-4 border-slate-200 bg-slate-50/70 p-4 md:grid-cols-[minmax(0,1fr)_140px_auto]"
               >
                 <label className="space-y-2">
                   <span className="app-label">Product {index + 1}</span>
@@ -432,6 +446,7 @@ export function ComponentFormPage() {
             <PreviewCard
               label="Derived price"
               value={<CurrencyText value={previewFinancials.derivedPrice} />}
+              tone="brand"
             />
             <PreviewCard
               label="Derived cost"
@@ -463,14 +478,38 @@ export function ComponentFormPage() {
 function PreviewCard({
   label,
   value,
+  tone = "default",
 }: {
   label: string;
   value: React.ReactNode;
+  tone?: "default" | "brand";
 }) {
   return (
-    <div className="rounded-sm border border-slate-200 bg-slate-50 p-4">
-      <div className="text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500">{label}</div>
-      <div className="mt-2 text-lg font-semibold text-slate-800">{value}</div>
+    <div
+      className={
+        tone === "brand"
+          ? "rounded-sm border border-[var(--brand-700)] bg-[var(--brand-900)] p-4 text-white"
+          : "rounded-sm border border-slate-200 bg-slate-50 p-4"
+      }
+    >
+      <div
+        className={
+          tone === "brand"
+            ? "text-[10px] font-bold uppercase tracking-[0.18em] text-white/70"
+            : "text-[10px] font-bold uppercase tracking-[0.18em] text-slate-500"
+        }
+      >
+        {label}
+      </div>
+      <div
+        className={
+          tone === "brand"
+            ? "mt-2 text-lg font-semibold text-white"
+            : "mt-2 text-lg font-semibold text-slate-800"
+        }
+      >
+        {value}
+      </div>
     </div>
   );
 }

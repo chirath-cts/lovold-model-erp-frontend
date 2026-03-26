@@ -98,16 +98,32 @@ export function CategoriesPage() {
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[minmax(0,1.4fr)_minmax(320px,0.8fr)]">
-        <DataPanel title="Categories" description="Search and review category usage across the inventory catalog." variant="ops">
-          <label className="mb-4 block space-y-2">
-            <span className="app-label">Search</span>
-            <input
-              className="app-input-sharp"
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-              placeholder="Feeding, service, control..."
-            />
-          </label>
+        <div className="space-y-4">
+          <section className="app-ops-toolbar space-y-4">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <h2 className="text-base font-bold tracking-tight text-slate-800">
+                  Classification filters
+                </h2>
+                <p className="text-sm text-slate-500">
+                  Search categories used across products and components.
+                </p>
+              </div>
+              <div className="rounded-sm border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-slate-600 shadow-sm">
+                Active search: {search.trim() ? "1" : "0"}
+              </div>
+            </div>
+
+            <label className="space-y-2">
+              <span className="app-label">Search</span>
+              <input
+                className="app-input-sharp"
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                placeholder="Feeding, service, control..."
+              />
+            </label>
+          </section>
 
           {categories.length === 0 ? (
             <EmptyPanel
@@ -116,28 +132,80 @@ export function CategoriesPage() {
               variant="ops"
             />
           ) : (
-            <div className="app-ops-table-shell overflow-x-auto">
-              <table className="app-ops-table">
+            <section className="app-registry-table-block">
+              <div className="app-registry-table-header">
+                <div className="space-y-1">
+                  <h2 className="app-registry-table-header-title">Categories</h2>
+                  <p className="app-registry-table-header-copy">
+                    Shared classifications across the Lovold inventory catalog.
+                  </p>
+                </div>
+              </div>
+              <div className="app-registry-table-scroll">
+                <table className="app-registry-table app-registry-table-compact">
                 <thead>
                   <tr>
                     <th>Category</th>
                     <th>Description</th>
-                    <th>Catalog items</th>
+                    <th className="text-right">Catalog items</th>
                   </tr>
                 </thead>
                 <tbody>
                   {categories.map((category) => (
-                    <tr key={category.id}>
-                      <td className="font-medium text-slate-800">{category.name}</td>
+                    <tr key={category.id} className="app-registry-table-row">
+                      <td className="font-semibold text-slate-800">{category.name}</td>
                       <td>{category.description}</td>
-                      <td>{usageCount(category.id)}</td>
+                      <td className="text-right text-xs font-mono font-semibold text-slate-800">
+                        {usageCount(category.id)}
+                      </td>
                     </tr>
                   ))}
                 </tbody>
-              </table>
-            </div>
+                </table>
+              </div>
+              <div className="app-registry-table-footer">
+                <span className="app-registry-table-footer-label">
+                  Showing 1-{categories.length} of {categories.length} categories
+                </span>
+                <div className="app-registry-table-pagination">
+                  <button className="app-registry-table-pagination-button" disabled>
+                    <svg
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                  </button>
+                  <div className="flex items-center gap-1">
+                    <span className="app-registry-table-pagination-current">1</span>
+                  </div>
+                  <button className="app-registry-table-pagination-button">
+                    <svg
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </section>
           )}
-        </DataPanel>
+        </div>
 
         <DataPanel title="Create category" description="Current scope keeps categories lightweight: name plus description only." variant="ops">
           <div className="space-y-4">

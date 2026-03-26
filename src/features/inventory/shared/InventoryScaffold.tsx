@@ -156,8 +156,22 @@ export function DataPanel({
   variant?: "default" | "ops";
 }) {
   return (
-    <section className={`app-card overflow-hidden rounded-sm ${className || ""}`}>
-      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-[var(--border-soft)] px-5 py-4 md:px-6">
+    <section
+      className={cn(
+        variant === "ops"
+          ? "app-ops-card overflow-hidden rounded-sm"
+          : "app-card overflow-hidden rounded-sm",
+        className,
+      )}
+    >
+      <div
+        className={cn(
+          "flex flex-wrap items-start justify-between gap-3 border-b px-5 py-4 md:px-6",
+          variant === "ops"
+            ? "border-slate-200 bg-white"
+            : "border-[var(--border-soft)]",
+        )}
+      >
         <div className="space-y-1">
           <h2
             className={cn(
@@ -180,14 +194,15 @@ export function DataPanel({
         </div>
         {actions ? <div className="flex gap-2">{actions}</div> : null}
       </div>
-      <div className={cn("p-5 md:p-6", variant === "ops" && "p-4 md:p-4")}>{children}</div>
+      <div className={cn("p-5 md:p-6", variant === "ops" && "p-5 md:p-6")}>
+        {children}
+      </div>
     </section>
   );
 }
 
 export function FieldGrid({
   fields,
-  variant = "default",
 }: {
   fields: Array<{ label: string; value: ReactNode }>;
   variant?: "default" | "ops";

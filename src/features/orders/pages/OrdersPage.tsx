@@ -469,49 +469,49 @@ export function OrdersPage() {
           }
         />
       ) : (
-        <section className="bg-white rounded-sm overflow-hidden shadow-[0_4px_24px_-4px_rgba(25,28,30,0.06)]">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
-              <thead className="bg-slate-100 sticky top-0 z-10">
+        <section className="app-registry-table-block">
+          <div className="app-registry-table-scroll">
+            <table className="app-registry-table">
+              <thead>
                 <tr>
-                  <th className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-700">
+                  <th>
                     Order #
                   </th>
-                  <th className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-700">
+                  <th>
                     Customer
                   </th>
-                  <th className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-700">
+                  <th>
                     Order Date
                   </th>
-                  <th className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-700">
+                  <th>
                     Status
                   </th>
-                  <th className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-700">
+                  <th>
                     Items
                   </th>
-                  <th className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-700 text-right">
+                  <th className="text-right">
                     Total Value (NOK)
                   </th>
-                  <th className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-700 text-right">
+                  <th className="text-right">
                     Est. Profit
                   </th>
-                  <th className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-700">
+                  <th>
                     Promised ETA
                   </th>
-                  <th className="px-4 py-3 text-[10px] font-black uppercase tracking-widest text-slate-700">
+                  <th>
                     ETA Status
                   </th>
-                  <th className="px-4 py-3"></th>
+                  <th></th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody>
                 {rows.map((order) => {
                   const etaStatus = getEtaStatus(order);
 
                   return (
                     <tr
                       key={order.id}
-                      className="hover:bg-slate-50 transition-colors group cursor-pointer"
+                      className="app-registry-table-row group cursor-pointer"
                       onClick={() => navigate(`/orders/${order.id}`)}
                     >
                       <td className="px-4 py-4 text-xs font-mono font-bold text-slate-800">
@@ -575,13 +575,13 @@ export function OrdersPage() {
               </tbody>
             </table>
           </div>
-          <div className="px-4 py-3 bg-slate-100 flex items-center justify-between border-t border-slate-200">
-            <span className="text-[10px] font-bold text-slate-500 uppercase">
+          <div className="app-registry-table-footer">
+            <span className="app-registry-table-footer-label">
               Showing 1-{rows.length} of {orders.length} active orders
             </span>
-            <div className="flex items-center gap-1">
+            <div className="app-registry-table-pagination">
               <button
-                className="p-1 hover:bg-white rounded-sm disabled:opacity-30"
+                className="app-registry-table-pagination-button"
                 disabled
               >
                 <svg
@@ -598,12 +598,12 @@ export function OrdersPage() {
                   />
                 </svg>
               </button>
-              <div className="flex items-center gap-1 mx-2">
-                <span className="w-6 h-6 flex items-center justify-center bg-slate-800 text-white text-[10px] font-bold rounded-sm">
+              <div className="flex items-center gap-1">
+                <span className="app-registry-table-pagination-current">
                   1
                 </span>
               </div>
-              <button className="p-1 hover:bg-white rounded-sm">
+              <button className="app-registry-table-pagination-button">
                 <svg
                   className="h-5 w-5"
                   fill="none"
