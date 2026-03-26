@@ -103,7 +103,7 @@ function BreakdownTable({
   if (!rows.length) return null;
 
   return (
-    <div className="mt-4 overflow-hidden rounded-2xl border border-[var(--border-soft)] bg-white">
+    <div className="mt-4 overflow-hidden rounded-sm border border-[var(--border-soft)] bg-white">
       <table className="app-table">
         <thead>
           <tr>
@@ -164,7 +164,7 @@ export function OrderLineBuilder({
   const componentLookup = new Map(components.map((component) => [component.id, component]));
 
   return (
-    <section className="rounded-[1.9rem] border border-[var(--border-soft)] bg-white p-6 shadow-[0_18px_48px_-28px_rgba(15,23,42,0.25)]">
+    <section className="rounded-sm border border-[var(--border-soft)] bg-white p-6 shadow-[0_18px_48px_-28px_rgba(15,23,42,0.25)]">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="space-y-1">
           <div className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[var(--text-muted)]">
@@ -193,7 +193,7 @@ export function OrderLineBuilder({
       </div>
 
       <div className="mt-5 grid gap-3 md:grid-cols-3">
-        <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3">
+        <div className="rounded-sm border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3">
           <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[var(--text-muted)]">
             Product lines
           </div>
@@ -201,7 +201,7 @@ export function OrderLineBuilder({
             {lines.filter((line) => line.itemType === "product").length}
           </div>
         </div>
-        <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3">
+        <div className="rounded-sm border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3">
           <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[var(--text-muted)]">
             Component lines
           </div>
@@ -209,7 +209,7 @@ export function OrderLineBuilder({
             {lines.filter((line) => line.itemType === "component").length}
           </div>
         </div>
-        <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3">
+        <div className="rounded-sm border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3">
           <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[var(--text-muted)]">
             Pricing agreements
           </div>
@@ -233,13 +233,13 @@ export function OrderLineBuilder({
           return (
             <div
               key={line.id}
-              className="rounded-[1.75rem] border border-[var(--border-soft)] bg-[linear-gradient(180deg,rgba(255,255,255,1),rgba(242,247,251,0.88))] p-5 shadow-[0_18px_32px_-28px_rgba(15,23,42,0.4)]"
+              className="rounded-sm border border-[var(--border-soft)] bg-[linear-gradient(180deg,rgba(255,255,255,1),rgba(242,247,251,0.88))] p-5 shadow-[0_18px_32px_-28px_rgba(15,23,42,0.4)]"
             >
               <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-start gap-4">
                   <div
                     className={[
-                      "flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border",
+                      "flex h-12 w-12 shrink-0 items-center justify-center rounded-sm border",
                       line.itemType === "product"
                         ? "border-[var(--border-soft)] bg-[var(--surface-muted)] text-[var(--brand-900)]"
                         : "border-sky-200 bg-sky-50 text-sky-700",
@@ -365,7 +365,7 @@ export function OrderLineBuilder({
 
                 <div className="space-y-2 xl:col-span-2">
                   <span className="app-label">Pricing source</span>
-                  <label className="flex items-center gap-3 rounded-2xl border border-[var(--border-soft)] bg-white px-4 py-3 text-sm text-[var(--text-secondary)]">
+                  <label className="flex items-center gap-3 rounded-sm border border-[var(--border-soft)] bg-white px-4 py-3 text-sm text-[var(--text-secondary)]">
                     <input
                       className="h-4 w-4 rounded border-[var(--border-strong)] text-[var(--brand-900)]"
                       type="checkbox"
@@ -405,7 +405,7 @@ export function OrderLineBuilder({
 
               {resolved ? (
                 <div className="mt-5 grid gap-3 xl:grid-cols-5">
-                  <div className="rounded-2xl border border-[var(--border-soft)] bg-white px-4 py-3">
+                  <div className="rounded-sm border border-[var(--border-soft)] bg-white px-4 py-3">
                     <div className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">
                       Unit price
                     </div>
@@ -413,7 +413,7 @@ export function OrderLineBuilder({
                       <CurrencyText value={resolved.unitPrice} />
                     </div>
                   </div>
-                  <div className="rounded-2xl border border-[var(--border-soft)] bg-white px-4 py-3">
+                  <div className="rounded-sm border border-[var(--border-soft)] bg-white px-4 py-3">
                     <div className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">
                       Subtotal
                     </div>
@@ -421,7 +421,7 @@ export function OrderLineBuilder({
                       <CurrencyText value={resolved.lineSubtotal} />
                     </div>
                   </div>
-                  <div className="rounded-2xl border border-[var(--border-soft)] bg-white px-4 py-3">
+                  <div className="rounded-sm border border-[var(--border-soft)] bg-white px-4 py-3">
                     <div className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">
                       Discount
                     </div>
@@ -429,7 +429,7 @@ export function OrderLineBuilder({
                       <CurrencyText value={resolved.discountAmount} />
                     </div>
                   </div>
-                  <div className="rounded-2xl border border-[var(--border-soft)] bg-white px-4 py-3">
+                  <div className="rounded-sm border border-[var(--border-soft)] bg-white px-4 py-3">
                     <div className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">
                       Line total
                     </div>
@@ -437,7 +437,7 @@ export function OrderLineBuilder({
                       <CurrencyText value={resolved.lineTotal} />
                     </div>
                   </div>
-                  <div className="rounded-2xl border border-[var(--border-soft)] bg-white px-4 py-3">
+                  <div className="rounded-sm border border-[var(--border-soft)] bg-white px-4 py-3">
                     <div className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">
                       Profit
                     </div>
@@ -449,7 +449,7 @@ export function OrderLineBuilder({
               ) : null}
 
               {resolved?.itemType === "component" ? (
-                <div className="mt-5 rounded-2xl border border-[var(--border-soft)] bg-[linear-gradient(180deg,rgba(230,244,255,0.82),rgba(244,249,252,0.96))] p-4">
+                <div className="mt-5 rounded-sm border border-[var(--border-soft)] bg-[linear-gradient(180deg,rgba(230,244,255,0.82),rgba(244,249,252,0.96))] p-4">
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
                       <h3 className="text-sm font-semibold text-[var(--text-primary)]">
@@ -472,7 +472,7 @@ export function OrderLineBuilder({
       </div>
 
       {customerId ? (
-        <div className="mt-5 rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-4 text-sm text-[var(--text-secondary)]">
+        <div className="mt-5 rounded-sm border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-4 text-sm text-[var(--text-secondary)]">
           Product pricing agreements currently loaded:{" "}
           <span className="font-semibold text-[var(--text-primary)]">
             {customerProducts.filter((agreement) => agreement.customerId === customerId).length}

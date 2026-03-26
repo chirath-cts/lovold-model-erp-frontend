@@ -1,11 +1,13 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, type ReactNode } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import { EmptyPanel } from "@/features/inventory/shared/InventoryScaffold";
 import { OrderStatusBadge } from "@/features/orders/components/OrderStatusBadge";
+import { OrderCreatePage } from "@/features/orders/pages/OrderCreatePage";
 import { isDelayedOrder } from "@/features/orders/model/orderHelpers";
 import { useCustomers, useOrders } from "@/services/hooks/useDomainQueries";
 import { formatDate, formatNok } from "@/shared/lib/format";
+import { AppDialog } from "@/shared/ui/AppDialog";
 import { ErrorState } from "@/shared/ui/ErrorState";
 import { LoadingState } from "@/shared/ui/LoadingState";
 
@@ -178,6 +180,9 @@ function EtaStatusBadge({ tone }: { tone: EtaStatusTone }) {
 }
 
 export function OrdersPage() {
+  const navigate = useNavigate();
+  const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [dialogActions, setDialogActions] = useState<ReactNode | null>(null);
   const [query, setQuery] = useState("");
   const [status, setStatus] = useState("");
   const [delayedOnly, setDelayedOnly] = useState(false);
@@ -243,19 +248,28 @@ export function OrdersPage() {
     : "Pending";
 
   // Calculate order distribution by status
-  const inProduction = rows.filter((order) => order.status === "in_production").length;
+  const inProduction = rows.filter(
+    (order) => order.status === "in_production",
+  ).length;
   const reserved = rows.filter((order) => order.status === "reserved").length;
   const ready = rows.filter((order) => order.status === "ready").length;
-  const other = rows.filter((order) => !["in_production", "reserved", "ready"].includes(order.status)).length;
+  const other = rows.filter(
+    (order) => !["in_production", "reserved", "ready"].includes(order.status),
+  ).length;
   const totalOrders = rows.length;
 
-  const productionPercent = totalOrders > 0 ? Math.round((inProduction / totalOrders) * 100) : 0;
-  const reservedPercent = totalOrders > 0 ? Math.round((reserved / totalOrders) * 100) : 0;
-  const readyPercent = totalOrders > 0 ? Math.round((ready / totalOrders) * 100) : 0;
-  const otherPercent = totalOrders > 0 ? Math.round((other / totalOrders) * 100) : 0;
+  const productionPercent =
+    totalOrders > 0 ? Math.round((inProduction / totalOrders) * 100) : 0;
+  const reservedPercent =
+    totalOrders > 0 ? Math.round((reserved / totalOrders) * 100) : 0;
+  const readyPercent =
+    totalOrders > 0 ? Math.round((ready / totalOrders) * 100) : 0;
+  const otherPercent =
+    totalOrders > 0 ? Math.round((other / totalOrders) * 100) : 0;
 
   // Calculate trend - comparing delayed orders ratio
-  const delayedRatio = totalOrders > 0 ? (delayedOrders / totalOrders) * 100 : 0;
+  const delayedRatio =
+    totalOrders > 0 ? (delayedOrders / totalOrders) * 100 : 0;
 
   return (
     <div className="app-page space-y-6">
@@ -269,14 +283,14 @@ export function OrdersPage() {
               Real-time procurement tracking
             </p>
           </div>
-          <Link
-            to="/orders/new"
-            style={{ color: "white" }}
+          <button
+            type="button"
+            onClick={() => setCreateDialogOpen(true)}
             className="mt-4 bg-gradient-to-r from-[#004260] to-[#005b82] text-white py-2 px-4 rounded-sm text-sm font-semibold flex items-center justify-center gap-2 hover:from-[#003050] hover:to-[#004565] active:scale-[0.98] transition-all"
           >
             <PlusIcon className="h-4 w-4" />
             Create New Order
-          </Link>
+          </button>
         </div>
 
         <div className="p-4 bg-white rounded-sm flex flex-col justify-between shadow-[0_4px_24px_-4px_rgba(25,28,30,0.06)]">
@@ -497,7 +511,8 @@ export function OrdersPage() {
                   return (
                     <tr
                       key={order.id}
-                      className="hover:bg-slate-50 transition-colors group"
+                      className="hover:bg-slate-50 transition-colors group cursor-pointer"
+                      onClick={() => navigate(`/orders/${order.id}`)}
                     >
                       <td className="px-4 py-4 text-xs font-mono font-bold text-slate-800">
                         #{order.orderNumber}
@@ -680,7 +695,21 @@ export function OrdersPage() {
             <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
           </svg>
         </div>
-      </section >
+      </section>
+
+      <AppDialog
+        open={createDialogOpen}
+        onClose={() => {
+          setCreateDialogOpen(false);
+          setDialogActions(null);
+        }}
+        title="Create order"
+        description="Capture Lovold customer orders with product and component lines, inline component creation, production steps, and reservation-aware ETA planning."
+        size="full"
+        actions={dialogActions}
+      >
+        <OrderCreatePage onActionsChange={setDialogActions} />
+      </AppDialog>
     </div>
   );
 }

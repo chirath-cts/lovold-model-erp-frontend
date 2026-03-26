@@ -54,7 +54,7 @@ export function ProductionStepsEditor({
   onRemove: (id: string) => void;
 }) {
   return (
-    <section className="rounded-[1.9rem] border border-[var(--border-soft)] bg-white p-6 shadow-[0_18px_48px_-28px_rgba(15,23,42,0.25)]">
+    <section className="rounded-sm border border-[var(--border-soft)] bg-white p-6 shadow-[0_18px_48px_-28px_rgba(15,23,42,0.25)]">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="space-y-1">
           <div className="text-[11px] font-extrabold uppercase tracking-[0.22em] text-[var(--text-muted)]">
@@ -74,13 +74,13 @@ export function ProductionStepsEditor({
       </div>
 
       <div className="mt-5 grid gap-3 md:grid-cols-3">
-        <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3">
+        <div className="rounded-sm border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3">
           <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[var(--text-muted)]">
             Active steps
           </div>
           <div className="mt-2 text-lg font-semibold text-[var(--text-primary)]">{steps.length}</div>
         </div>
-        <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3">
+        <div className="rounded-sm border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3">
           <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[var(--text-muted)]">
             Work centers
           </div>
@@ -88,7 +88,7 @@ export function ProductionStepsEditor({
             {new Set(steps.map((step) => step.workCenterId).filter(Boolean)).size}
           </div>
         </div>
-        <div className="rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3">
+        <div className="rounded-sm border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3">
           <div className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[var(--text-muted)]">
             Actual effort
           </div>
@@ -99,7 +99,7 @@ export function ProductionStepsEditor({
       </div>
 
       {steps.length === 0 ? (
-        <div className="mt-5 rounded-2xl border border-dashed border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-8 text-sm text-[var(--text-secondary)]">
+        <div className="mt-5 rounded-sm border border-dashed border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-8 text-sm text-[var(--text-secondary)]">
           This order has no explicit production steps yet. Add one or more work-center activities to improve ETA planning and execution visibility.
         </div>
       ) : (
@@ -107,7 +107,7 @@ export function ProductionStepsEditor({
           {steps.map((step, index) => (
             <div
               key={step.id}
-              className="rounded-[1.75rem] border border-[var(--border-soft)] bg-[linear-gradient(180deg,rgba(255,255,255,1),rgba(242,247,251,0.88))] p-5 shadow-[0_18px_32px_-28px_rgba(15,23,42,0.35)]"
+              className="rounded-sm border border-[var(--border-soft)] bg-[linear-gradient(180deg,rgba(255,255,255,1),rgba(242,247,251,0.88))] p-5 shadow-[0_18px_32px_-28px_rgba(15,23,42,0.35)]"
             >
               <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
                 <div>

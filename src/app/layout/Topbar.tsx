@@ -19,7 +19,7 @@ export function Topbar({ onMenuClick }: TopbarProps) {
       return "Customer Pricing";
     }
     if (location.pathname.startsWith("/orders/new")) return "Create Order";
-    if (location.pathname.startsWith("/orders/")) return "Order Tracking";
+    if (location.pathname.startsWith("/orders/")) return "Order Detail";
     if (location.pathname.startsWith("/orders")) return "Orders";
     if (location.pathname.startsWith("/inbound/")) return "Supplier PO Detail";
     if (location.pathname.startsWith("/inbound")) return "Inbound Tracker";

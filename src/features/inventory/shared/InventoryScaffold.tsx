@@ -145,27 +145,17 @@ export function DataPanel({
   description,
   children,
   actions,
-  variant = "default",
+  className,
 }: {
   title: string;
   description?: string;
   children: ReactNode;
   actions?: ReactNode;
-  variant?: "default" | "ops";
+  className?: string;
 }) {
   return (
-    <section
-      className={cn(
-        "app-card overflow-hidden",
-        variant === "ops" && "app-ops-card rounded-sm border-slate-200",
-      )}
-    >
-      <div
-        className={cn(
-          "flex flex-wrap items-start justify-between gap-3 border-b border-[var(--border-soft)] px-5 py-4 md:px-6",
-          variant === "ops" && "border-slate-200 px-4 py-3 md:px-4",
-        )}
-      >
+    <section className={`app-card overflow-hidden rounded-sm ${className || ""}`}>
+      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-[var(--border-soft)] px-5 py-4 md:px-6">
         <div className="space-y-1">
           <h2
             className={cn(
@@ -205,25 +195,12 @@ export function FieldGrid({
       {fields.map((field) => (
         <div
           key={field.label}
-          className={cn(
-            "rounded-2xl border border-[var(--border-soft)] bg-[var(--surface-muted)] px-4 py-3",
-            variant === "ops" && "app-ops-field-card rounded-sm border-slate-200 bg-slate-50",
-          )}
+          className="rounded-sm border border-slate-200 bg-slate-50 px-4 py-3"
         >
-          <div
-            className={cn(
-              "text-xs font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]",
-              variant === "ops" && "text-[10px] font-bold tracking-[0.18em] text-slate-500",
-            )}
-          >
+          <div className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
             {field.label}
           </div>
-          <div
-            className={cn(
-              "mt-2 text-sm font-medium text-[var(--text-primary)]",
-              variant === "ops" && "text-sm font-semibold text-slate-800",
-            )}
-          >
+          <div className="mt-2 text-sm font-medium text-slate-800">
             {field.value}
           </div>
         </div>
